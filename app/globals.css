@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap");
+
+:root {
+  color-scheme: dark;
+}
+
+html, body {
+  background: #0a0202;
+  color: #d4c4a8;
+  font-family: var(--font-body, "Crimson Text", Georgia, serif);
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4 {
+  font-family: "Cinzel", Georgia, serif;
+  color: #d4a070;
+  letter-spacing: 0.05em;
+}
+
+a {
+  color: #c8302a;
+  text-decoration: none;
+}
+a:hover { text-decoration: underline; }
