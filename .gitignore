@@ -1,0 +1,35 @@
+# Dependencias
+node_modules/
+.pnp
+.pnp.js
+
+# Next.js
+.next/
+out/
+build/
+
+# Secretos y entornos
+.env
+.env.local
+.env*.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Superpowers (brainstorm artifacts, sesiones efímeras)
+.superpowers/
+
+# Vault local (si lo ponen dentro del repo accidentalmente)
+vault-mysha/
+
+# Obsidian local config (cache, layout, plugins instalados localmente)
+.obsidian/
