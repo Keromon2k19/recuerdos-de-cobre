@@ -1,9 +1,13 @@
 "use server";
 
-// app/actions/extract.ts — Server action: texto → lore extraído vía Claude
+// app/actions/extract.ts — Server action: texto → lore extraído vía Gemini (gratis).
+// Claude está disponible en lib/claude.ts si en el futuro se agregan créditos.
 
 import { loadConfig } from "@/lib/config";
-import { extractLore, retryExtractLore } from "@/lib/claude";
+import {
+  extractLoreWithGemini,
+  retryExtractLoreWithGemini,
+} from "@/lib/gemini";
 import type { ExtractionResult } from "@/lib/types";
 
 export type ExtractResult =
@@ -90,10 +94,18 @@ export async function extractLoreAction(
   }
 
   try {
-    const config = loadConfig();
+    const apiKey = process.env.GEMINI_API_KEY?.trim();
+    if (!apiKey) {
+      return {
+        success: false,
+        error: "GEMINI_API_KEY no está definida en .env.local",
+      };
+    }
+    // loadConfig valida que el vault exista; no necesitamos anthropicApiKey acá.
+    loadConfig();
 
-    const data = await extractLore(
-      config.anthropicApiKey,
+    const data = await extractLoreWithGemini(
+      apiKey,
       resumen,
       numeroEpisodio,
       titulo
@@ -103,12 +115,11 @@ export async function extractLoreAction(
   } catch (err) {
     const errorMsg = err instanceof Error ? err.message : String(err);
 
-    // Si falló por validación, reintentar con temperature=0
     if (errorMsg.includes("no pasó validación")) {
       try {
-        const config = loadConfig();
-        const data = await retryExtractLore(
-          config.anthropicApiKey,
+        const apiKey = process.env.GEMINI_API_KEY!.trim();
+        const data = await retryExtractLoreWithGemini(
+          apiKey,
           resumen,
           numeroEpisodio,
           errorMsg,

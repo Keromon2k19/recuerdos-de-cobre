@@ -6,8 +6,21 @@ import { useRouter } from "next/navigation";
 import { extractLoreAction } from "@/app/actions/extract";
 
 const LOCALSTORAGE_KEY = "mysha-draft-resumen";
+const PREFILL_KEY = "mysha-prefill-from-job";
 
-export default function LoadEpisodeForm() {
+export type PlaylistOption = {
+  numero: number;
+  titulo: string;
+  url: string;
+  publicado_en?: string;
+  procesado: boolean;
+};
+
+type Props = {
+  playlistOptions?: PlaylistOption[];
+};
+
+export default function LoadEpisodeForm({ playlistOptions = [] }: Props) {
   const router = useRouter();
   const [resumen, setResumen] = useState("");
   const [numero, setNumero] = useState<number | "">("");
@@ -17,8 +30,38 @@ export default function LoadEpisodeForm() {
   const [error, setError] = useState<string | null>(null);
   const [hasDraft, setHasDraft] = useState(false);
 
-  // Restaurar borrador de localStorage
+  function handlePlaylistPick(value: string) {
+    if (!value) return;
+    const num = Number(value);
+    const opt = playlistOptions.find((o) => o.numero === num);
+    if (!opt) return;
+    setNumero(opt.numero);
+    setTitulo(opt.titulo);
+    if (opt.publicado_en) {
+      setFecha(opt.publicado_en.slice(0, 10));
+    }
+  }
+
+  // Pre-fill desde un job procesado (sessionStorage) tiene prioridad sobre el borrador
   useEffect(() => {
+    const prefillRaw = sessionStorage.getItem(PREFILL_KEY);
+    if (prefillRaw) {
+      try {
+        const prefill = JSON.parse(prefillRaw);
+        if (prefill.resumen) {
+          setResumen(prefill.resumen);
+          setNumero(prefill.numero ?? "");
+          setTitulo(prefill.titulo ?? "");
+          setFecha(prefill.fecha ?? "");
+          sessionStorage.removeItem(PREFILL_KEY);
+          return; // no mostrar banner de borrador
+        }
+      } catch {
+        // ignore
+      }
+    }
+
+    // Restaurar borrador de localStorage
     const saved = localStorage.getItem(LOCALSTORAGE_KEY);
     if (saved) {
       try {
@@ -90,10 +133,10 @@ export default function LoadEpisodeForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="load-form">
+    <form onSubmit={handleSubmit} className="load-form rdc-rise">
       {hasDraft && (
         <div className="draft-banner">
-          <p>📝 Tenés un borrador guardado.</p>
+          <p>Tenés un borrador guardado de una carga anterior.</p>
           <button type="button" onClick={restoreDraft} className="btn-ghost">
             Restaurar
           </button>
@@ -107,6 +150,29 @@ export default function LoadEpisodeForm() {
           >
             Descartar
           </button>
+        </div>
+      )}
+
+      {playlistOptions.length > 0 && (
+        <div className="form-group">
+          <label htmlFor="ep-playlist">Elegir de la playlist</label>
+          <select
+            id="ep-playlist"
+            className="input"
+            value={numero || ""}
+            onChange={(e) => handlePlaylistPick(e.target.value)}
+          >
+            <option value="">— seleccionar episodio —</option>
+            {playlistOptions.map((opt) => (
+              <option key={opt.numero} value={opt.numero}>
+                {opt.procesado ? "[procesado] " : ""}
+                Ep {String(opt.numero).padStart(2, "0")} · {opt.titulo}
+              </option>
+            ))}
+          </select>
+          <p className="form-hint">
+            Se autocompleta número y título. Los marcados como procesado ya están en el archivo.
+          </p>
         </div>
       )}
 
@@ -167,8 +233,8 @@ export default function LoadEpisodeForm() {
       </div>
 
       {error && (
-        <div className="error-box">
-          <p className="error-title">⚠️ Error de extracción</p>
+        <div className="error-box" role="alert">
+          <p className="error-title">Error de extracción</p>
           <pre className="error-detail">{error}</pre>
         </div>
       )}
@@ -180,10 +246,10 @@ export default function LoadEpisodeForm() {
       >
         {loading ? (
           <span className="btn-loading">
-            <span className="spinner" /> Extrayendo lore con Claude...
+            <span className="spinner" /> Extrayendo lore...
           </span>
         ) : (
-          "⛧ Extraer Lore"
+          "Extraer Lore"
         )}
       </button>
     </form>

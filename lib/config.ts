@@ -4,6 +4,8 @@ import fs from "node:fs";
 export type AppConfig = {
   anthropicApiKey: string;
   vaultPath: string; // absoluto
+  youtubeApiKey?: string;
+  youtubePlaylistId?: string;
 };
 
 export function loadConfig(env: Record<string, string | undefined> = process.env): AppConfig {
@@ -22,5 +24,26 @@ export function loadConfig(env: Record<string, string | undefined> = process.env
     throw new Error(`VAULT_PATH no existe en disco: ${vaultPath}`);
   }
 
-  return { anthropicApiKey: key, vaultPath };
+  const youtubeApiKey = env.YOUTUBE_API_KEY?.trim() || undefined;
+  const youtubePlaylistId = env.YOUTUBE_PLAYLIST_ID?.trim() || undefined;
+
+  return { anthropicApiKey: key, vaultPath, youtubeApiKey, youtubePlaylistId };
+}
+
+/**
+ * Variante estricta: exige que las vars de YouTube estén definidas.
+ * Usar en flujos que necesitan sí o sí la integración (e.g. sync de playlist).
+ */
+export function loadYoutubeConfig(
+  env: Record<string, string | undefined> = process.env
+): { apiKey: string; playlistId: string } {
+  const apiKey = env.YOUTUBE_API_KEY?.trim();
+  const playlistId = env.YOUTUBE_PLAYLIST_ID?.trim();
+  if (!apiKey) {
+    throw new Error("YOUTUBE_API_KEY no está definida en .env.local");
+  }
+  if (!playlistId) {
+    throw new Error("YOUTUBE_PLAYLIST_ID no está definida en .env.local");
+  }
+  return { apiKey, playlistId };
 }

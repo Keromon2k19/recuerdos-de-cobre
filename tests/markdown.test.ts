@@ -72,7 +72,7 @@ describe("buildEpisodeMarkdown", () => {
 
     expect(parsed.frontmatter.tipo).toBe("episodio");
     expect(parsed.frontmatter.numero).toBe(67);
-    expect(parsed.body).toContain("## Resumen original (Gemini)");
+    expect(parsed.body).toContain("## Resumen");
     expect(parsed.body).toContain("Un resumen de prueba");
     expect(parsed.body).toContain("**[[Mysha]]**");
     expect(parsed.body).toContain("**[[Bosque de Espinas]]**");

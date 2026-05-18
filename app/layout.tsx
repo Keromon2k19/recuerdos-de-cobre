@@ -1,37 +1,29 @@
-import "./globals.css";
-import { getVaultStats } from "@/lib/vault";
-import Sidebar from "@/components/Sidebar";
+// app/layout.tsx — Root shell mínimo. La identidad visual vive en cada
+// route group: (public) = antología read-only, (local) = panel de pipeline.
 
 export const metadata = {
-  title: "Mysha — Grimorio de Lore",
-  description: "Base de datos de lore TTRPG para la campaña Mysha. Extracción IA, persistencia Markdown, compatible con Obsidian.",
+  title: "Recuerdos de Cobre · Antología de campaña",
+  description:
+    "Antología de la campaña TTRPG Recuerdos de Cobre. Crónicas, personajes, lugares y misterios del archivo.",
 };
 
-async function getSafeStats(): Promise<Record<string, number>> {
-  try {
-    const vaultPath = process.env.VAULT_PATH?.trim();
-    if (!vaultPath) return {};
-    return await getVaultStats(vaultPath);
-  } catch {
-    return {};
-  }
-}
+// Pre-paint para el panel local (tema rdc claro/oscuro). La parte pública
+// fija su propia paleta y no depende de data-mode.
+const THEME_INIT_SCRIPT = `
+(function(){var r=document.documentElement;try{var s=localStorage.getItem('rdc-mode');r.setAttribute('data-mode',s==='light'?'light':'dark');}catch(e){r.setAttribute('data-mode','dark');}})();
+`;
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const stats = await getSafeStats();
-
   return (
-    <html lang="es">
-      <body>
-        <div className="app-layout">
-          <Sidebar stats={stats} />
-          <main className="main-content">{children}</main>
-        </div>
-      </body>
+    <html lang="es" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+      </head>
+      <body>{children}</body>
     </html>
   );
 }

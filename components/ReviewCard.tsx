@@ -8,7 +8,6 @@ export type ReviewItemStatus = "accepted" | "edited" | "discarded";
 type ReviewCardProps = {
   id: string;
   category: string;
-  categoryIcon: string;
   nombre: string;
   descripcion: string;
   alias?: string[];
@@ -22,7 +21,6 @@ type ReviewCardProps = {
 export default function ReviewCard({
   id,
   category,
-  categoryIcon,
   nombre,
   descripcion,
   alias,
@@ -60,15 +58,14 @@ export default function ReviewCard({
     return (
       <div className="review-card review-card-discarded">
         <div className="review-card-header">
-          <span className="review-card-icon">{categoryIcon}</span>
           <span className="review-card-name discarded">{nombre}</span>
-          <span className="badge badge-discarded">Descartado</span>
+          <span className="badge-discarded">Descartado</span>
         </div>
         <button
           onClick={() => onRestore(id)}
-          className="btn-ghost btn-ghost-sm"
+          className="btn-ghost btn-sm"
         >
-          ↩ Restaurar
+          Restaurar
         </button>
       </div>
     );
@@ -77,7 +74,6 @@ export default function ReviewCard({
   return (
     <div className={`review-card ${status === "edited" ? "review-card-edited" : ""}`}>
       <div className="review-card-header">
-        <span className="review-card-icon">{categoryIcon}</span>
         {editing ? (
           <input
             type="text"
@@ -89,12 +85,12 @@ export default function ReviewCard({
           <span className="review-card-name">{nombre}</span>
         )}
         {existsInVault && (
-          <span className="badge badge-exists" title="Ya existe en el vault — se agregará mención">
+          <span className="badge-exists" title="Ya existe en el vault, se agrega una mención">
             Ya existe
           </span>
         )}
         {status === "edited" && (
-          <span className="badge badge-edited">Editado</span>
+          <span className="badge-edited">Editado</span>
         )}
       </div>
 
@@ -123,7 +119,7 @@ export default function ReviewCard({
           )}
           <div className="review-card-actions">
             <button onClick={handleSave} className="btn-sm btn-confirm">
-              ✓ Guardar
+              Guardar
             </button>
             <button onClick={handleCancel} className="btn-sm btn-ghost">
               Cancelar
@@ -143,13 +139,13 @@ export default function ReviewCard({
               onClick={() => setEditing(true)}
               className="btn-sm btn-ghost"
             >
-              ✏️ Editar
+              Editar
             </button>
             <button
               onClick={() => onDiscard(id)}
               className="btn-sm btn-ghost btn-ghost-danger"
             >
-              ✕ Descartar
+              Descartar
             </button>
           </div>
         </>

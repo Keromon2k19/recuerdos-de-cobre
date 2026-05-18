@@ -1,9 +1,13 @@
 // lib/vault.ts — CRUD filesystem para el vault Markdown
 import fs from "node:fs/promises";
 import path from "node:path";
-import { ENTITY_FOLDERS, type EntityType } from "./types";
+import { ENTITY_FOLDERS, type EntityType, type PlaylistCache, type Job, type JobEstado } from "./types";
 import { slugify, episodeFilename } from "./slugify";
 import { parseMarkdown } from "./markdown";
+
+const PLAYLIST_FILE = "_playlist.json";
+const JOBS_DIR = "_jobs";
+const ACTIVE_STATES: JobEstado[] = ["queued", "downloading", "transcribing", "summarizing"];
 
 const VAULT_SUBFOLDERS = [
   "episodios",
@@ -133,20 +137,63 @@ export async function writeEntity(
   return filePath;
 }
 
+export type EntityListItem = {
+  nombre: string;
+  slug: string;
+  apariciones: number[];
+  origen?: string;
+  rol?: string;
+  jugador?: string;
+  facciones?: string[];
+  region?: string;
+  categoria?: string;
+  acto?: number;
+  /** Primer fragmento de la sección Canon, o fallback a la primera mención. */
+  descripcion?: string;
+};
+
 /**
- * Lista todas las entidades de un tipo. Retorna array de objetos con
- * nombre (del frontmatter), slug (del filename), y apariciones.
+ * Extrae un fragmento descriptivo del body de una entidad.
+ * Prioridad: Canon (del DM) → primera mención por episodio → undefined.
+ */
+function extractDescription(body: string): string | undefined {
+  const cleanAndTruncate = (raw: string, maxLen = 180): string => {
+    const plain = raw
+      .replace(/\*\*([^*]+)\*\*/g, "$1")
+      .replace(/\*([^*]+)\*/g, "$1")
+      .replace(/\[\[([^|\]]+)\|([^\]]+)\]\]/g, "$2")
+      .replace(/\[\[([^\]]+)\]\]/g, "$1")
+      .replace(/\n+/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+    if (plain.length <= maxLen) return plain;
+    const truncated = plain.slice(0, maxLen);
+    const lastSpace = truncated.lastIndexOf(" ");
+    return (lastSpace > 100 ? truncated.slice(0, lastSpace) : truncated) + "…";
+  };
+
+  const canonMatch = body.match(
+    /^## Canon \(del DM\)\s*\n+([\s\S]+?)(?=\n## |\n*$)/m
+  );
+  if (canonMatch) {
+    const cleaned = cleanAndTruncate(canonMatch[1]);
+    if (cleaned) return cleaned;
+  }
+
+  const mentionMatch = body.match(/^### [^\n]+\n+- (.+)/m);
+  if (mentionMatch) return cleanAndTruncate(mentionMatch[1]);
+
+  return undefined;
+}
+
+/**
+ * Lista todas las entidades de un tipo. Retorna array con frontmatter
+ * relevante (nombre, slug, apariciones, y todos los campos de taxonomía).
  */
 export async function listByType(
   vaultPath: string,
   tipo: EntityType
-): Promise<
-  Array<{
-    nombre: string;
-    slug: string;
-    apariciones: number[];
-  }>
-> {
+): Promise<EntityListItem[]> {
   const folder = ENTITY_FOLDERS[tipo];
   const dir = path.join(vaultPath, folder);
 
@@ -160,12 +207,21 @@ export async function listByType(
           path.join(dir, filename),
           "utf-8"
         );
-        const { frontmatter } = parseMarkdown(content);
-        return {
+        const { frontmatter, body } = parseMarkdown(content);
+        const item: EntityListItem = {
           nombre: (frontmatter.nombre as string) ?? filename.replace(".md", ""),
           slug: filename.replace(".md", ""),
           apariciones: (frontmatter.apariciones as number[]) ?? [],
+          origen: frontmatter.origen as string | undefined,
+          rol: frontmatter.rol as string | undefined,
+          jugador: frontmatter.jugador as string | undefined,
+          facciones: frontmatter.facciones as string[] | undefined,
+          region: frontmatter.region as string | undefined,
+          categoria: frontmatter.categoria as string | undefined,
+          acto: frontmatter.acto as number | undefined,
+          descripcion: extractDescription(body),
         };
+        return item;
       })
     );
 
@@ -253,6 +309,119 @@ export async function findEntity(
   }
 
   return null;
+}
+
+// ─── Playlist cache ───
+
+/**
+ * Lee la cache local de la playlist de YouTube. Retorna null si nunca se sincronizó.
+ */
+export async function readPlaylist(
+  vaultPath: string
+): Promise<PlaylistCache | null> {
+  const filePath = path.join(vaultPath, PLAYLIST_FILE);
+  try {
+    const content = await fs.readFile(filePath, "utf-8");
+    return JSON.parse(content) as PlaylistCache;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Escribe la cache de la playlist de forma atómica.
+ */
+export async function writePlaylist(
+  vaultPath: string,
+  cache: PlaylistCache
+): Promise<string> {
+  await fs.mkdir(vaultPath, { recursive: true });
+  const filePath = path.join(vaultPath, PLAYLIST_FILE);
+  await atomicWrite(filePath, JSON.stringify(cache, null, 2));
+  return filePath;
+}
+
+// ─── Jobs (procesamiento de episodios) ───
+
+function jobPath(vaultPath: string, numero: number): string {
+  const padded = String(numero).padStart(3, "0");
+  return path.join(vaultPath, JOBS_DIR, `${padded}.json`);
+}
+
+/**
+ * Lee el job de un episodio. null si no existe.
+ */
+export async function readJob(
+  vaultPath: string,
+  numero: number
+): Promise<Job | null> {
+  try {
+    const content = await fs.readFile(jobPath(vaultPath, numero), "utf-8");
+    return JSON.parse(content) as Job;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Escribe un job al disco de forma atómica. Setea actualizado_en automaticamente.
+ */
+export async function writeJob(vaultPath: string, job: Job): Promise<string> {
+  const dir = path.join(vaultPath, JOBS_DIR);
+  await fs.mkdir(dir, { recursive: true });
+  const filePath = jobPath(vaultPath, job.numero);
+  const updated: Job = { ...job, actualizado_en: new Date().toISOString() };
+  await atomicWrite(filePath, JSON.stringify(updated, null, 2));
+  return filePath;
+}
+
+/**
+ * Lista todos los jobs (cualquier estado), ordenados por número.
+ */
+export async function listJobs(vaultPath: string): Promise<Job[]> {
+  const dir = path.join(vaultPath, JOBS_DIR);
+  try {
+    const files = await fs.readdir(dir);
+    const jsonFiles = files.filter((f) => f.endsWith(".json"));
+    const jobs = await Promise.all(
+      jsonFiles.map(async (f) => {
+        try {
+          const content = await fs.readFile(path.join(dir, f), "utf-8");
+          return JSON.parse(content) as Job;
+        } catch {
+          return null;
+        }
+      })
+    );
+    return jobs
+      .filter((j): j is Job => j !== null)
+      .sort((a, b) => a.numero - b.numero);
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * Borra el archivo de job (para cancelar o limpiar).
+ */
+export async function deleteJob(
+  vaultPath: string,
+  numero: number
+): Promise<void> {
+  try {
+    await fs.unlink(jobPath(vaultPath, numero));
+  } catch {
+    // ya no existe, ignorar
+  }
+}
+
+/**
+ * Retorna true si hay algún job en estado activo (descargando/transcribiendo/etc).
+ * Útil para forzar cola serial: 1 job a la vez.
+ */
+export async function hasActiveJob(vaultPath: string): Promise<boolean> {
+  const jobs = await listJobs(vaultPath);
+  return jobs.some((j) => ACTIVE_STATES.includes(j.estado));
 }
 
 /**

@@ -52,7 +52,7 @@ export function buildEpisodeMarkdown(ep: Episodio): string {
 
   let body = "";
 
-  body += "## Resumen original (Gemini)\n\n";
+  body += "## Resumen\n\n";
   body += ep.resumen_original + "\n\n";
 
   body += "## Lore extraído\n\n";
@@ -169,6 +169,46 @@ export function buildMentionSection(
  * Construye o actualiza un archivo de entidad .md.
  * Si existingContent es null, crea uno nuevo. Si existe, actualiza la sección del episodio.
  */
+/** Tag de grafo (Obsidian) según el rol del personaje. */
+function rolTag(rol: string): string {
+  if (rol === "PJ") return "pj";
+  if (rol === "familiar") return "familiar";
+  if (rol === "antagonista") return "antagonista";
+  return "npc";
+}
+
+const ROL_TAGS = ["pj", "npc", "antagonista", "familiar"];
+
+/**
+ * Aplica `rol` + `tags` al frontmatter de un personaje.
+ * - PJ/familiar canónicos: se imponen (corrige etiquetados viejos).
+ * - antagonista/PJ/familiar ya existentes: se preservan (override manual).
+ * - resto: NPC.
+ * Mantiene tags no relacionados al rol y dedupea.
+ */
+function applyRol(
+  fm: Record<string, unknown>,
+  desiredRol: string,
+  existingRol?: string
+): void {
+  let finalRol: string;
+  if (desiredRol === "PJ" || desiredRol === "familiar") {
+    finalRol = desiredRol;
+  } else if (
+    existingRol === "antagonista" ||
+    existingRol === "PJ" ||
+    existingRol === "familiar"
+  ) {
+    finalRol = existingRol;
+  } else {
+    finalRol = "NPC";
+  }
+  fm.rol = finalRol;
+  const prev = Array.isArray(fm.tags) ? (fm.tags as string[]) : [];
+  const kept = prev.filter((t) => !ROL_TAGS.includes(t));
+  fm.tags = [...kept, rolTag(finalRol)];
+}
+
 export function updateEntityMarkdown(
   existingContent: string | null,
   entity: {
@@ -179,7 +219,8 @@ export function updateEntityMarkdown(
   },
   episodio: number,
   titulo: string,
-  descripcion: string
+  descripcion: string,
+  personajeRol?: string
 ): string {
   const mentionSection = buildMentionSection(episodio, titulo, descripcion);
 
@@ -192,6 +233,7 @@ export function updateEntityMarkdown(
       apariciones: [episodio],
       ultima_actualizacion: new Date().toISOString(),
     };
+    if (personajeRol) applyRol(fm, personajeRol);
     if (entity.relaciones && entity.relaciones.length > 0) {
       fm.relaciones = entity.relaciones.map((r) => ({
         con: `[[${r.de === entity.nombre ? r.a : r.de}]]`,
@@ -207,6 +249,10 @@ export function updateEntityMarkdown(
   // Actualizar entidad existente
   const parsed = parseMarkdown(existingContent);
   const fm = { ...parsed.frontmatter };
+
+  if (personajeRol) {
+    applyRol(fm, personajeRol, parsed.frontmatter.rol as string | undefined);
+  }
 
   // Actualizar apariciones
   const apariciones = (fm.apariciones as number[]) ?? [];

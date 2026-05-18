@@ -1,0 +1,1663 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mysha · Grimorio de Lore</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* =========================
+     Design tokens
+     ========================= */
+  :root {
+    --font-display: "Cinzel", "EB Garamond", Georgia, serif;
+    --font-serif: "EB Garamond", Georgia, serif;
+    --font-sans: "EB Garamond", Georgia, serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+    /* Light mode — aged parchment */
+    --bg: #e4d3a8;
+    --bg-sidebar: #d8c391;
+    --surface: #efe0b8;
+    --surface-2: #e6d4a2;
+    --border: #b39a6c;
+    --border-strong: #8a7245;
+    --text: #2a1d0f;
+    --text-soft: #4a3620;
+    --muted: #7a6238;
+    --accent: #7d2e2e;          /* deep wine / blood */
+    --accent-soft: #e8d2cf;
+    --accent-ink: #4d1818;
+    --danger: #9a3838;
+    --success: #4a6a3a;
+    --paper-grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='4' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.25 0 0 0 0 0.18 0 0 0 0 0.08 0 0 0 0.10 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    --shadow-sm: 0 1px 2px rgba(60, 35, 10, 0.10), 0 1px 1px rgba(60, 35, 10, 0.06);
+    --shadow-md: 0 2px 4px rgba(60, 35, 10, 0.10), 0 6px 14px rgba(60, 35, 10, 0.08);
+    --shadow-lg: 0 6px 12px rgba(60, 35, 10, 0.12), 0 16px 32px rgba(60, 35, 10, 0.12);
+    --shadow-inset: inset -1px 0 0 rgba(60, 35, 10, 0.08);
+
+    --radius-sm: 4px;
+    --radius: 6px;
+    --radius-lg: 10px;
+
+    --sidebar-w: 248px;
+    --content-max: 960px;
+  }
+
+  [data-theme="dark"] {
+    --bg: #1a1308;
+    --bg-sidebar: #110b04;
+    --surface: #261d10;
+    --surface-2: #322816;
+    --border: #4a3a1f;
+    --border-strong: #6b5530;
+    --text: #ede0bd;
+    --text-soft: #c0ad84;
+    --muted: #8a7752;
+    --accent: #d4a85a;          /* old gold / brass */
+    --accent-soft: #3d2e15;
+    --accent-ink: #f0c97a;
+    --danger: #e08a6a;
+    --success: #9bc586;
+    --paper-grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='4' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.9 0 0 0 0 0.75 0 0 0 0 0.45 0 0 0 0.04 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 220, 150, 0.03) inset;
+    --shadow-md: 0 2px 6px rgba(0, 0, 0, 0.55), 0 8px 16px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 220, 150, 0.04) inset;
+    --shadow-lg: 0 8px 20px rgba(0, 0, 0, 0.6), 0 16px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 220, 150, 0.05) inset;
+    --shadow-inset: inset -1px 0 0 rgba(0, 0, 0, 0.55);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    background-image: var(--paper-grain);
+    background-repeat: repeat;
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 180ms ease, color 180ms ease;
+  }
+
+  ::selection { background: var(--accent-soft); color: var(--accent-ink); }
+
+  /* =========================
+     Layout
+     ========================= */
+  .app {
+    display: grid;
+    grid-template-columns: var(--sidebar-w) 1fr;
+    min-height: 100vh;
+  }
+
+  /* ---- Sidebar ---- */
+  .sidebar {
+    background: var(--bg-sidebar);
+    background-image: var(--paper-grain);
+    border-right: 1px solid var(--border-strong);
+    padding: 28px 18px 24px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow-inset);
+  }
+  .brand {
+    padding: 4px 10px 22px;
+    margin-bottom: 14px;
+    border-bottom: 1px solid var(--border-strong);
+  }
+  .brand-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .brand-eyebrow .mark {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+  .brand h1 {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.15;
+    margin: 0 0 10px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+  .brand h1 .of {
+    display: block;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--text-soft);
+    font-size: 22px;
+    padding-left: 18px;
+    letter-spacing: 0.01em;
+    text-transform: none;
+  }
+  .brand-sub {
+    font-family: var(--font-display);
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  .nav-section {
+    margin-bottom: 22px;
+  }
+  .nav-title {
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--muted);
+    padding: 0 10px;
+    margin-bottom: 6px;
+  }
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: var(--radius);
+    color: var(--text-soft);
+    cursor: pointer;
+    user-select: none;
+    font-family: var(--font-serif);
+    font-size: 16px;
+    font-weight: 400;
+    transition: background 120ms ease, color 120ms ease;
+    border: 1px solid transparent;
+  }
+  .nav-item:hover {
+    background: var(--surface-2);
+    color: var(--text);
+  }
+  .nav-item.active {
+    background: var(--accent-soft);
+    color: var(--accent-ink);
+    font-weight: 500;
+  }
+  .nav-item .ico {
+    width: 16px; height: 16px;
+    color: var(--muted);
+    flex-shrink: 0;
+  }
+  .nav-item.active .ico { color: var(--accent); }
+  .nav-item .count {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--muted);
+    background: transparent;
+    border: 1px solid var(--border);
+    padding: 1px 6px;
+    border-radius: 6px;
+    min-width: 22px;
+    text-align: center;
+  }
+  .nav-item.active .count {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* ---- Main ---- */
+  .main {
+    padding: 56px 64px 96px;
+    min-width: 0;
+  }
+  .content {
+    max-width: var(--content-max);
+    margin: 0 auto;
+  }
+
+  /* Top bar with theme toggle */
+  .topbar {
+    max-width: var(--content-max);
+    margin: 0 auto 32px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+  }
+  .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--text-soft);
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 140ms ease;
+    box-shadow: var(--shadow-sm);
+  }
+  .theme-toggle:hover {
+    border-color: var(--border-strong);
+    color: var(--text);
+    box-shadow: var(--shadow-md);
+  }
+  .theme-toggle svg { width: 14px; height: 14px; }
+
+  /* Page header */
+  .page-eyebrow {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .page-title {
+    font-family: var(--font-display);
+    font-size: 40px;
+    font-weight: 600;
+    line-height: 1.15;
+    margin: 0 0 14px;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+  }
+  .page-subtitle {
+    font-family: var(--font-serif);
+    font-size: 17px;
+    color: var(--text-soft);
+    margin: 0 0 40px;
+    font-style: italic;
+    max-width: 640px;
+  }
+  .page-count {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 40px;
+  }
+
+  /* =========================
+     Forms
+     ========================= */
+  .field { margin-bottom: 24px; }
+  .field label {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  .input, .select, .textarea {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+    font-family: var(--font-sans);
+    font-size: 15px;
+    color: var(--text);
+    transition: border-color 140ms ease, box-shadow 140ms ease;
+    appearance: none;
+    box-shadow: var(--shadow-sm);
+  }
+  .input::placeholder, .textarea::placeholder { color: var(--muted); }
+  .input:focus, .select:focus, .textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+  .select {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none'><path d='M1 1.5L6 6.5L11 1.5' stroke='%23888272' stroke-width='1.5' stroke-linecap='round'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 12px;
+    padding-right: 36px;
+  }
+  .textarea { resize: vertical; min-height: 200px; font-family: var(--font-sans); }
+  .help {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+
+  .field-row {
+    display: grid;
+    grid-template-columns: 140px 1fr 200px;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 18px;
+    border-radius: var(--radius);
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 140ms ease;
+    background: transparent;
+    color: var(--text);
+    text-decoration: none;
+    line-height: 1;
+  }
+  .btn svg { width: 14px; height: 14px; }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+    box-shadow: var(--shadow-sm);
+  }
+  .btn-primary:hover { box-shadow: var(--shadow-md); }
+  [data-theme="dark"] .btn-primary { color: #1a1014; }
+  .btn-primary:hover { background: var(--accent-ink); border-color: var(--accent-ink); }
+  [data-theme="dark"] .btn-primary:hover { background: var(--accent-ink); color: #fff; }
+  .btn-secondary {
+    background: var(--surface);
+    color: var(--text);
+    border-color: var(--border);
+    box-shadow: var(--shadow-sm);
+  }
+  .btn-secondary:hover { border-color: var(--border-strong); background: var(--surface-2); box-shadow: var(--shadow-md); }
+  .btn-ghost {
+    color: var(--text-soft);
+  }
+  .btn-ghost:hover { background: var(--surface-2); color: var(--text); }
+  .btn-danger {
+    color: var(--danger);
+    border-color: var(--border);
+    background: var(--surface);
+  }
+  .btn-danger:hover { background: var(--surface-2); border-color: var(--danger); }
+  .btn-block { width: 100%; justify-content: center; padding: 14px 18px; }
+  .btn[disabled] { opacity: 0.5; cursor: not-allowed; }
+
+  .btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
+
+  /* =========================
+     Tables (data)
+     ========================= */
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  .table th {
+    text-align: left;
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--muted);
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-strong);
+  }
+  .table td {
+    padding: 16px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    vertical-align: top;
+  }
+  .table tbody tr:hover { background: var(--surface-2); }
+  .table .num {
+    font-family: var(--font-mono);
+    color: var(--muted);
+    width: 50px;
+  }
+  .table .date {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  /* Meta table (key-value) */
+  .meta {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 40px;
+  }
+  .meta th {
+    text-align: left;
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--muted);
+    padding: 14px 0;
+    width: 180px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .meta td {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+  }
+
+  /* =========================
+     Cards / list items
+     ========================= */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    transition: border-color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+  }
+  .card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+  .card-title {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin: 0 0 6px;
+    color: var(--text);
+  }
+  .card-sub {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 14px;
+    color: var(--muted);
+  }
+  .card-tag {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--text-soft);
+    padding: 3px 8px;
+    border-radius: var(--radius-sm);
+    margin-right: 6px;
+    margin-top: 8px;
+  }
+
+  /* Episode row (list of episodes) */
+  .episode-row {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 18px 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: border-color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+    box-shadow: var(--shadow-sm);
+  }
+  .episode-row:hover {
+    border-color: var(--accent);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+  }
+  .episode-num {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    width: 36px;
+    flex-shrink: 0;
+  }
+  .episode-title {
+    font-family: var(--font-serif);
+    font-size: 19px;
+    color: var(--text);
+    flex-grow: 1;
+  }
+  .episode-date {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* Section heading inside detail pages */
+  .section-h {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin: 56px 0 20px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border-strong);
+    position: relative;
+    color: var(--text);
+  }
+  .section-h::after {
+    content: "❧";
+    position: absolute;
+    right: 0;
+    bottom: -11px;
+    background: var(--bg);
+    padding: 0 10px;
+    color: var(--accent);
+    font-size: 14px;
+  }
+  .group-h {
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin: 44px 0 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--text-soft);
+  }
+  .group-h::before {
+    content: "❖";
+    color: var(--accent);
+    font-size: 10px;
+  }
+  .group-h .group-count {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 1px 8px;
+    border-radius: 4px;
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+  .group-h::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+    margin-left: 4px;
+  }
+
+  /* =========================
+     Filter bar
+     ========================= */
+  .filter {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 22px;
+    margin-bottom: 32px;
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 12px 16px;
+    align-items: center;
+    box-shadow: var(--shadow-sm);
+  }
+  .filter-label {
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-size: 14px;
+    color: var(--text-soft);
+    background: transparent;
+    cursor: pointer;
+    transition: all 120ms ease;
+    font-family: var(--font-serif);
+  }
+  .chip:hover { border-color: var(--border-strong); color: var(--text); }
+  .chip.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+    box-shadow: var(--shadow-sm);
+  }
+  [data-theme="dark"] .chip.active { color: #1a1014; }
+  .chip .chip-count {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    opacity: 0.7;
+  }
+
+  /* Status badges */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--font-display);
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 4px 9px;
+    border-radius: 4px;
+    border: 1px solid;
+  }
+  .badge-done {
+    color: var(--success);
+    border-color: var(--success);
+    background: transparent;
+  }
+  .badge-ready {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+  .badge-pending {
+    color: var(--muted);
+    border-color: var(--border);
+  }
+  .badge-loading {
+    color: var(--text-soft);
+    border-color: var(--border-strong);
+    background: var(--surface-2);
+  }
+  .badge-loading::before {
+    content: "";
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 1.4s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+  /* Quote block */
+  .quote {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 24px 28px;
+    margin: 24px 0;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.4;
+    color: var(--text);
+    box-shadow: var(--shadow-sm);
+    position: relative;
+  }
+  .quote::before {
+    content: "“";
+    position: absolute;
+    top: 6px;
+    left: 18px;
+    font-family: var(--font-serif);
+    font-size: 56px;
+    color: var(--accent);
+    opacity: 0.25;
+    line-height: 1;
+    pointer-events: none;
+  }
+  .quote-author {
+    display: block;
+    font-family: var(--font-display);
+    font-style: normal;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 10px;
+  }
+
+  /* Detail entity */
+  .entity-type {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--accent);
+  }
+  .prose {
+    font-family: var(--font-serif);
+    font-size: 17px;
+    color: var(--text);
+    line-height: 1.7;
+    margin-bottom: 32px;
+  }
+  .prose a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-soft); }
+  .prose a:hover { border-color: var(--accent); }
+
+  .mention {
+    margin-bottom: 24px;
+  }
+  .mention-ep {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--accent);
+    margin-bottom: 8px;
+    cursor: pointer;
+  }
+  .mention-ep:hover { text-decoration: underline; }
+  .mention-body {
+    color: var(--text-soft);
+    padding-left: 16px;
+    border-left: 1px solid var(--border);
+  }
+
+  /* List inside detail */
+  .lore-list { margin: 0; padding: 0; list-style: none; }
+  .lore-list li {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 14px;
+  }
+  .lore-list li:last-child { border-bottom: none; }
+  .lore-list .lore-name {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    flex-shrink: 0;
+    min-width: 200px;
+    padding-top: 2px;
+  }
+  .lore-list .lore-desc { color: var(--text-soft); font-family: var(--font-serif); font-size: 16px; }
+
+  /* Pages */
+  .page { display: none; }
+  .page.active { display: block; animation: fadeIn 240ms ease; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  /* Mentions chips inline */
+  .mentions-inline span {
+    color: var(--accent);
+  }
+  .mentions-inline span + span::before {
+    content: ", ";
+    color: var(--muted);
+  }
+
+  /* Responsive */
+  @media (max-width: 960px) {
+    .app { grid-template-columns: 1fr; }
+    .sidebar { position: relative; height: auto; }
+    .main { padding: 32px 24px 80px; }
+    .field-row { grid-template-columns: 1fr; }
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    .page-title { font-size: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-eyebrow"><span class="mark"></span><span>Antología</span></div>
+      <h1>Recuerdos<span class="of">de Cobre</span></h1>
+      <div class="brand-sub">Grimorio de Lore</div>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-title">Principal</div>
+      <div class="nav-item active" data-page="cargar">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h12l4 4v12H4z"/><path d="M16 4v4h4"/><path d="M8 13h8M8 17h5"/></svg>
+        <span>Cargar Episodio</span>
+      </div>
+      <div class="nav-item" data-page="episodios">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 9h18M8 5v14"/></svg>
+        <span>Episodios</span>
+        <span class="count">1</span>
+      </div>
+      <div class="nav-item" data-page="importar">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>
+        <span>Importar Playlist</span>
+      </div>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-title">Entidades</div>
+      <div class="nav-item" data-page="personajes">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a8 8 0 0116 0v1"/></svg>
+        <span>Personajes</span>
+        <span class="count">47</span>
+      </div>
+      <div class="nav-item" data-page="lugares">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s-7-7.5-7-13a7 7 0 1114 0c0 5.5-7 13-7 13z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        <span>Lugares</span>
+        <span class="count">13</span>
+      </div>
+      <div class="nav-item" data-page="eventos">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 19L19 5M5 5l14 14"/></svg>
+        <span>Eventos</span>
+        <span class="count">4</span>
+      </div>
+      <div class="nav-item" data-page="objetos">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3l8 5-8 13-8-13z"/><path d="M4 8h16M12 3v18"/></svg>
+        <span>Objetos</span>
+        <span class="count">4</span>
+      </div>
+      <div class="nav-item" data-page="facciones">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 21V4l8 3 6-2v13l-6 2-8-3"/></svg>
+        <span>Facciones</span>
+        <span class="count">21</span>
+      </div>
+      <div class="nav-item" data-page="worldbuilding">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18"/></svg>
+        <span>Worldbuilding</span>
+        <span class="count">28</span>
+      </div>
+      <div class="nav-item" data-page="misterios">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 015 0c0 1.5-2.5 2-2.5 4M12 17.5v.01"/></svg>
+        <span>Misterios</span>
+        <span class="count">3</span>
+      </div>
+      <div class="nav-item" data-page="quotes">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 12a9 9 0 11-3.5-7.1L21 4v5h-5"/></svg>
+        <span>Quotes</span>
+        <span class="count">1</span>
+      </div>
+      <div class="nav-item" data-page="decisiones">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3v18M6 8l-3 4 3 4M18 8l3 4-3 4"/></svg>
+        <span>Decisiones</span>
+        <span class="count">2</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <main class="main">
+
+    <!-- Top bar (theme toggle) -->
+    <div class="topbar">
+      <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema" style="width: 116.4px">
+        <svg id="iconSun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <svg id="iconMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="display:none"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg>
+        <span id="themeLabel">Modo oscuro</span>
+      </button>
+    </div>
+
+    <!-- ============ PAGE: CARGAR EPISODIO ============ -->
+    <div class="page active" id="page-cargar">
+      <div class="content">
+        <div class="page-eyebrow">Principal</div>
+        <h1 class="page-title">Cargar Episodio</h1>
+        <p class="page-subtitle">Pegá el resumen de Gemini y dejá que la IA extraiga el lore.</p>
+
+        <div class="field">
+          <label>Elegir de la playlist</label>
+          <select class="select">
+            <option>— seleccionar episodio —</option>
+            <option>✓ Ep 01 · Recuerdos de Cobre 1: Un Voto de Confianza</option>
+            <option>Ep 02 · Recuerdos de cobre 2, Parte 1: Bajo la Sombra del Tsunami</option>
+            <option>Ep 03 · Recuerdos de Cobre 2 Parte 2: Bajo la sombra del Tsunami</option>
+            <option>Ep 04 · Recuerdos de Cobre 3 Parte 1: Cariño, vendí a nuestra hija a una secta</option>
+          </select>
+          <div class="help">Se autocompleta número y título. Los marcados con ✓ ya fueron procesados.</div>
+        </div>
+
+        <div class="field-row">
+          <div>
+            <label>Episodio Nº</label>
+            <input class="input" value="67" />
+          </div>
+          <div>
+            <label>Título</label>
+            <input class="input" value="La hoguera" />
+          </div>
+          <div>
+            <label>Fecha (opcional)</label>
+            <input class="input" type="text" placeholder="dd/mm/aaaa" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Resumen (de Gemini / YouTube)</label>
+          <textarea class="textarea" placeholder="Pegá acá el resumen automático del episodio…"></textarea>
+        </div>
+
+        <button class="btn btn-primary btn-block">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l2 6h6l-5 4 2 7-7-4-7 4 2-7-5-4h6z"/></svg>
+          Extraer Lore
+        </button>
+      </div>
+    </div>
+
+    <!-- ============ PAGE: EPISODIOS ============ -->
+    <div class="page" id="page-episodios">
+      <div class="content">
+        <div class="page-eyebrow">Principal</div>
+        <h1 class="page-title">Episodios</h1>
+        <p class="page-count">1 episodio procesado</p>
+
+        <div class="episode-row" data-target="episodio-detalle">
+          <span class="episode-num">01</span>
+          <span class="episode-title">Recuerdos de Cobre 1: Un Voto de Confianza</span>
+          <span class="episode-date">14 / 5 / 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ PAGE: EPISODIO DETALLE ============ -->
+    <div class="page" id="page-episodio-detalle">
+      <div class="content">
+        <div class="page-eyebrow">Episodio 01</div>
+        <h1 class="page-title">Un Voto de Confianza</h1>
+        <p class="page-subtitle">Procesado el 14/5/2026 · 07:31</p>
+
+        <table class="meta">
+          <tr>
+            <th>Personajes</th>
+            <td class="mentions-inline">
+              <span>Mysha</span><span>Borok</span><span>Annora</span><span>Layyra</span><span>Lords</span><span>Doctora Margarita</span><span>David Ilcard</span><span>Narcissa</span><span>Señor Johnson</span>
+            </td>
+          </tr>
+          <tr>
+            <th>Lugares</th>
+            <td class="mentions-inline">
+              <span>Metrópolis de Cobre</span><span>Plumas Doradas</span><span>Alcantarillas de la Metrópolis</span>
+            </td>
+          </tr>
+          <tr>
+            <th>Facciones</th>
+            <td class="mentions-inline"><span>Hermandad de Cobre</span><span>Mates y Mazmorras</span></td>
+          </tr>
+          <tr>
+            <th>Eventos</th>
+            <td class="mentions-inline"><span>Llegada a la Metrópolis</span><span>Emboscada en Plumas Doradas</span><span>Contrato de sangre</span><span>Enfrentamiento con trogloditas</span></td>
+          </tr>
+          <tr>
+            <th>Objetos</th>
+            <td class="mentions-inline"><span>Licor azul</span><span>Contrato de sangre</span></td>
+          </tr>
+          <tr><th>Misterios</th><td>3</td></tr>
+          <tr><th>Quotes</th><td>1</td></tr>
+          <tr><th>Decisiones</th><td>2</td></tr>
+          <tr><th>Worldbuilding</th><td>2</td></tr>
+        </table>
+
+        <h2 class="section-h">Eventos</h2>
+        <ul class="lore-list">
+          <li>
+            <span class="lore-name">Emboscada en Plumas Doradas</span>
+            <span class="lore-desc">El grupo cae inconsciente tras consumir un licor azul de cortesía en el casino.</span>
+          </li>
+          <li>
+            <span class="lore-name">Contrato de sangre</span>
+            <span class="lore-desc">Annora propone un voto de confianza sellado con contrato de sangre, formalizando el ingreso del grupo a la Hermandad.</span>
+          </li>
+          <li>
+            <span class="lore-name">Enfrentamiento con trogloditas</span>
+            <span class="lore-desc">Combate feroz en las alcantarillas contra trogloditas que emboscan al grupo desde la oscuridad.</span>
+          </li>
+        </ul>
+
+        <h2 class="section-h">Objetos</h2>
+        <ul class="lore-list">
+          <li>
+            <span class="lore-name">Licor azul</span>
+            <span class="lore-desc">Bebida de cortesía en el casino que deja inconsciente a quien la consume.</span>
+          </li>
+          <li>
+            <span class="lore-name">Contrato de sangre</span>
+            <span class="lore-desc">Documento mágico que sella el voto de confianza entre el grupo y la Hermandad de Cobre.</span>
+          </li>
+        </ul>
+
+        <h2 class="section-h">Misterios</h2>
+        <ul class="lore-list">
+          <li><span class="lore-desc">¿Qué información delicada debe recibir el señor Johnson?</span></li>
+          <li><span class="lore-desc">¿Por qué la Hermandad de Cobre necesita reclutar forasteros como iniciados?</span></li>
+          <li><span class="lore-desc">¿Qué relación tiene Layyra con el casino o la Hermandad?</span></li>
+        </ul>
+
+        <h2 class="section-h">Quote</h2>
+        <div class="quote">
+          "Un voto de confianza mutuo."
+          <span class="quote-author">— Annora</span>
+        </div>
+
+        <h2 class="section-h">Decisiones clave</h2>
+        <ul class="lore-list">
+          <li>
+            <span class="lore-desc">El grupo acepta el contrato de sangre y se une a la Hermandad de Cobre como iniciados <em style="color:var(--accent)">(Mysha, Borok)</em></span>
+          </li>
+          <li>
+            <span class="lore-desc">Aceptan la misión de interceptar al señor Johnson en las alcantarillas <em style="color:var(--accent)">(Mysha, Borok)</em></span>
+          </li>
+        </ul>
+
+        <div class="btn-row" style="margin-top:48px">
+          <button class="btn btn-secondary" data-target="episodios">← Todos los episodios</button>
+          <button class="btn btn-danger">Eliminar episodio</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ PAGE: IMPORTAR PLAYLIST ============ -->
+    <div class="page" id="page-importar">
+      <div class="content">
+        <div class="page-eyebrow">Principal</div>
+        <h1 class="page-title">Importar Playlist</h1>
+        <p class="page-subtitle">Sincronizá la lista de episodios y procesalos automáticamente: URL → transcripción → resumen → cargar al formulario.</p>
+
+        <div style="display:flex; align-items:center; gap:20px; margin-bottom:32px; flex-wrap:wrap">
+          <button class="btn btn-primary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>
+            Re-sincronizar
+          </button>
+          <div style="font-size:13px; color:var(--muted); font-family:var(--font-mono)">
+            Última sincronización: 14/5/2026 · 09:04 · 80 videos · <span class="badge badge-loading">procesando…</span>
+          </div>
+        </div>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th style="width:50px">N°</th>
+              <th>Título</th>
+              <th style="width:120px">Publicado</th>
+              <th style="width:140px">Estado</th>
+              <th style="width:140px">Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="num">01</td>
+              <td>Recuerdos de Cobre 1: Un Voto de Confianza</td>
+              <td class="date">15/4/2023</td>
+              <td><span class="badge badge-done">✓ Procesado</span></td>
+              <td><button class="btn btn-ghost" style="padding:6px 10px; font-size:13px">Ver</button></td>
+            </tr>
+            <tr>
+              <td class="num">02</td>
+              <td>Recuerdos de cobre 2, Parte 1: Bajo la Sombra del Tsunami</td>
+              <td class="date">22/4/2023</td>
+              <td><span class="badge badge-ready">✓ Listo</span></td>
+              <td><button class="btn btn-primary" style="padding:6px 12px; font-size:13px">Cargar</button></td>
+            </tr>
+            <tr>
+              <td class="num">03</td>
+              <td>Recuerdos de Cobre 2 Parte 2: Bajo la sombra del Tsunami</td>
+              <td class="date">27/2/2026</td>
+              <td><span class="badge badge-loading">Transcribiendo</span></td>
+              <td><button class="btn btn-ghost" style="padding:6px 10px; font-size:13px">Cancelar</button></td>
+            </tr>
+            <tr>
+              <td class="num">04</td>
+              <td>Recuerdos de Cobre 3 Parte 1: Cariño, vendí a nuestra hija a una secta</td>
+              <td class="date">12/5/2023</td>
+              <td><span class="badge badge-pending">Pendiente</span></td>
+              <td><button class="btn btn-secondary" style="padding:6px 12px; font-size:13px">Procesar</button></td>
+            </tr>
+            <tr>
+              <td class="num">05</td>
+              <td>Recuerdos de Cobre 3 Parte 2: Cariño, vendí a nuestra hija a una secta</td>
+              <td class="date">12/5/2023</td>
+              <td><span class="badge badge-pending">Pendiente</span></td>
+              <td><button class="btn btn-secondary" style="padding:6px 12px; font-size:13px">Procesar</button></td>
+            </tr>
+            <tr>
+              <td class="num">06</td>
+              <td>Recuerdos de Cobre 4 Parte 1: Cultista se pasa de rosca</td>
+              <td class="date">13/5/2023</td>
+              <td><span class="badge badge-pending">Pendiente</span></td>
+              <td><button class="btn btn-secondary" style="padding:6px 12px; font-size:13px">Procesar</button></td>
+            </tr>
+            <tr>
+              <td class="num">07</td>
+              <td>Recuerdos de Cobre 4 Parte 2: Cultista se pasa de rosca</td>
+              <td class="date">13/5/2023</td>
+              <td><span class="badge badge-pending">Pendiente</span></td>
+              <td><button class="btn btn-secondary" style="padding:6px 12px; font-size:13px">Procesar</button></td>
+            </tr>
+            <tr>
+              <td class="num">08</td>
+              <td>Recuerdos de Cobre 5: La Mansión y el Presagio Sangriento</td>
+              <td class="date">2/10/2023</td>
+              <td><span class="badge badge-pending">Pendiente</span></td>
+              <td><button class="btn btn-secondary" style="padding:6px 12px; font-size:13px">Procesar</button></td>
+            </tr>
+            <tr>
+              <td class="num">09</td>
+              <td>Recuerdos de Cobre 6: Aracnofobia</td>
+              <td class="date">2/10/2023</td>
+              <td><span class="badge badge-pending">Pendiente</span></td>
+              <td><button class="btn btn-secondary" style="padding:6px 12px; font-size:13px">Procesar</button></td>
+            </tr>
+            <tr>
+              <td class="num">10</td>
+              <td>Recuerdos de Cobre 7: Train Heist</td>
+              <td class="date">2/10/2023</td>
+              <td><span class="badge badge-pending">Pendiente</span></td>
+              <td><button class="btn btn-secondary" style="padding:6px 12px; font-size:13px">Procesar</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ============ PAGE: PERSONAJES ============ -->
+    <div class="page" id="page-personajes">
+      <div class="content">
+        <div class="page-eyebrow">Entidades</div>
+        <h1 class="page-title">Personajes</h1>
+        <p class="page-count">47 personajes en el grimorio</p>
+
+        <div class="filter">
+          <div class="filter-label">Rol</div>
+          <div class="chips">
+            <button class="chip active">Todas</button>
+            <button class="chip">PJ <span class="chip-count">7</span></button>
+            <button class="chip">NPC <span class="chip-count">28</span></button>
+            <button class="chip">Familiar <span class="chip-count">2</span></button>
+            <button class="chip">Antagonista <span class="chip-count">10</span></button>
+          </div>
+
+          <div class="filter-label">Facción</div>
+          <div class="chips">
+            <button class="chip active">Todas</button>
+            <button class="chip">Coven Rojo <span class="chip-count">1</span></button>
+            <button class="chip">Hermandad de Cobre <span class="chip-count">11</span></button>
+            <button class="chip">Imperio de los Grandes <span class="chip-count">1</span></button>
+            <button class="chip">Los Nefarios <span class="chip-count">2</span></button>
+            <button class="chip">Plumas Doradas <span class="chip-count">2</span></button>
+            <button class="chip">Sin clasificar <span class="chip-count">16</span></button>
+          </div>
+
+          <div class="filter-label">Región</div>
+          <div class="chips">
+            <button class="chip active">Todas</button>
+            <button class="chip">Metrópolis de Cobre <span class="chip-count">15</span></button>
+            <button class="chip">Sanctuario de los Libres <span class="chip-count">9</span></button>
+            <button class="chip">Lorenza <span class="chip-count">4</span></button>
+            <button class="chip">Sin clasificar <span class="chip-count">10</span></button>
+          </div>
+
+          <div class="filter-label">Agrupar</div>
+          <div class="chips">
+            <button class="chip">Sin grupo</button>
+            <button class="chip active">Rol</button>
+            <button class="chip">Facción</button>
+            <button class="chip">Región</button>
+          </div>
+        </div>
+
+        <h3 class="group-h">PJ <span class="group-count">7</span></h3>
+        <div class="grid-2">
+          <div class="card" data-target="borok">
+            <h4 class="card-title">Borok</h4>
+            <span class="card-tag">Mati</span><span class="card-tag">1 ep</span>
+          </div>
+          <div class="card">
+            <h4 class="card-title">David Ilcard</h4>
+            <span class="card-tag">Lucho</span><span class="card-tag">1 ep</span>
+          </div>
+          <div class="card">
+            <h4 class="card-title">Eryon</h4>
+            <span class="card-tag">Tiago</span><span class="card-tag">Solo canon</span>
+          </div>
+          <div class="card">
+            <h4 class="card-title">Io Campbell</h4>
+            <span class="card-tag">Mile / Kuzu / Sis / Nico</span><span class="card-tag">Solo canon</span>
+          </div>
+          <div class="card">
+            <h4 class="card-title">Layra</h4>
+            <span class="card-tag">Layla</span><span class="card-tag">1 ep</span>
+          </div>
+          <div class="card">
+            <h4 class="card-title">Mysha</h4>
+            <span class="card-tag">Kero</span><span class="card-tag">1 ep</span>
+          </div>
+          <div class="card">
+            <h4 class="card-title">Narcissa</h4>
+            <span class="card-tag">Mica</span><span class="card-tag">1 ep</span>
+          </div>
+        </div>
+
+        <h3 class="group-h">NPC <span class="group-count">28</span></h3>
+        <div class="grid-2">
+          <div class="card">
+            <h4 class="card-title">Amari Zaled</h4>
+            <span class="card-tag">Solo canon</span>
+          </div>
+          <div class="card">
+            <h4 class="card-title">Annora</h4>
+            <span class="card-tag">1 ep</span>
+          </div>
+          <div class="card">
+            <h4 class="card-title">Carl Johnson</h4>
+            <span class="card-tag">1 ep</span>
+          </div>
+          <div class="card">
+            <h4 class="card-title">Celeste</h4>
+            <span class="card-tag">1 ep</span>
+          </div>
+          <div class="card">
+            <h4 class="card-title">Clara</h4>
+            <span class="card-tag">1 ep</span>
+          </div>
+          <div class="card">
+            <h4 class="card-title">Doctora Margarita</h4>
+            <span class="card-tag">1 ep</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ PAGE: BOROK DETAIL ============ -->
+    <div class="page" id="page-borok">
+      <div class="content">
+        <div class="page-eyebrow">Personaje · PJ</div>
+        <h1 class="page-title">Borok</h1>
+        <p class="page-subtitle">Semi-orco · Jugado por Mati</p>
+
+        <table class="meta">
+          <tr><th>Apariciones</th><td><span style="color:var(--accent)">Ep. 1</span></td></tr>
+          <tr><th>Relaciones</th><td>↔ Mysha — compañeros de viaje (ep. 1)</td></tr>
+          <tr><th>Última actualización</th><td class="date">14/5/2026 · 07:43</td></tr>
+        </table>
+
+        <h2 class="section-h">Canon (del DM)</h2>
+        <p class="prose">
+          PJ semi-orco. Jugado por Mati. Tiene visiones. Al final del Acto IV sella un pacto con Vecna y se convierte en su campeón. Busca a su maestro orco Puck en la Metrópolis de Cobre.
+        </p>
+
+        <h2 class="section-h">Menciones por episodio</h2>
+        <div class="mention">
+          <div class="mention-ep" data-target="episodio-detalle">Ep. 1 — Recuerdos de Cobre 1: Un Voto de Confianza</div>
+          <div class="mention-body">Un semiorco, compañero de viaje de Mysha. Llegan juntos a la Metrópolis de Cobre.</div>
+        </div>
+
+        <div class="btn-row" style="margin-top:40px">
+          <button class="btn btn-primary">✎ Editar</button>
+          <button class="btn btn-danger">Eliminar</button>
+          <button class="btn btn-secondary" data-target="personajes">← Todos los personajes</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ PAGE: LUGARES ============ -->
+    <div class="page" id="page-lugares">
+      <div class="content">
+        <div class="page-eyebrow">Entidades</div>
+        <h1 class="page-title">Lugares</h1>
+        <p class="page-count">13 lugares en el grimorio</p>
+
+        <div class="filter">
+          <div class="filter-label">Categoría</div>
+          <div class="chips">
+            <button class="chip active">Todas</button>
+            <button class="chip">Aldea <span class="chip-count">1</span></button>
+            <button class="chip">Ciudad <span class="chip-count">4</span></button>
+            <button class="chip">Continente <span class="chip-count">1</span></button>
+            <button class="chip">Edificio <span class="chip-count">1</span></button>
+            <button class="chip">Geografía <span class="chip-count">3</span></button>
+            <button class="chip">Plano <span class="chip-count">1</span></button>
+            <button class="chip">Subterráneo <span class="chip-count">1</span></button>
+          </div>
+          <div class="filter-label">Región</div>
+          <div class="chips">
+            <button class="chip active">Todas</button>
+            <button class="chip">Eyra <span class="chip-count">7</span></button>
+            <button class="chip">Lorenza <span class="chip-count">1</span></button>
+            <button class="chip">Metrópolis de Cobre <span class="chip-count">1</span></button>
+            <button class="chip">Otros planos <span class="chip-count">2</span></button>
+          </div>
+        </div>
+
+        <h3 class="group-h">Eyra <span class="group-count">7</span></h3>
+        <div class="grid-2">
+          <div class="card"><h4 class="card-title">Arkala</h4><span class="card-tag">Solo canon</span></div>
+          <div class="card"><h4 class="card-title">Desierto de los Espejos</h4><span class="card-tag">Solo canon</span></div>
+          <div class="card"><h4 class="card-title">Lorenza</h4><span class="card-tag">Solo canon</span></div>
+          <div class="card"><h4 class="card-title">Mar del Leviatán</h4><span class="card-tag">Solo canon</span></div>
+          <div class="card"><h4 class="card-title">Metrópolis de Cobre</h4><span class="card-tag">1 ep</span></div>
+          <div class="card"><h4 class="card-title">Montañas de Frío Eterno</h4><span class="card-tag">Solo canon</span></div>
+          <div class="card"><h4 class="card-title">Sanctuario de los Libres</h4><span class="card-tag">Solo canon</span></div>
+        </div>
+
+        <h3 class="group-h">Metrópolis de Cobre <span class="group-count">1</span></h3>
+        <div class="grid-2">
+          <div class="card"><h4 class="card-title">Plumas Doradas</h4><span class="card-tag">1 ep</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ PAGE: EVENTOS ============ -->
+    <div class="page" id="page-eventos">
+      <div class="content">
+        <div class="page-eyebrow">Entidades</div>
+        <h1 class="page-title">Eventos</h1>
+        <p class="page-count">4 eventos en el grimorio</p>
+
+        <div class="filter">
+          <div class="filter-label">Acto</div>
+          <div class="chips">
+            <button class="chip active" style="background-color: rgb(169, 145, 152)">Todas</button>
+            <button class="chip">Sin clasificar <span class="chip-count">4</span></button>
+          </div>
+          <div class="filter-label">Región</div>
+          <div class="chips">
+            <button class="chip active">Todas</button>
+            <button class="chip">Sin clasificar <span class="chip-count">4</span></button>
+          </div>
+        </div>
+
+        <h3 class="group-h">Sin clasificar <span class="group-count">4</span></h3>
+        <div class="grid-2">
+          <div class="card"><h4 class="card-title">Contrato de sangre</h4><span class="card-tag">1 ep</span></div>
+          <div class="card"><h4 class="card-title">Emboscada en Plumas Doradas</h4><span class="card-tag">1 ep</span></div>
+          <div class="card"><h4 class="card-title">Enfrentamiento con trogloditas</h4><span class="card-tag">1 ep</span></div>
+          <div class="card"><h4 class="card-title">Llegada a la Metrópolis de Cobre</h4><span class="card-tag">1 ep</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ PAGE: OBJETOS ============ -->
+    <div class="page" id="page-objetos">
+      <div class="content">
+        <div class="page-eyebrow">Entidades</div>
+        <h1 class="page-title">Objetos</h1>
+        <p class="page-count">4 objetos en el grimorio</p>
+
+        <div class="filter">
+          <div class="filter-label">Categoría</div>
+          <div class="chips">
+            <button class="chip active">Todas</button>
+            <button class="chip">Artefacto <span class="chip-count">1</span></button>
+            <button class="chip">Carta de tarot <span class="chip-count">1</span></button>
+            <button class="chip">Libro <span class="chip-count">1</span></button>
+            <button class="chip">Sin clasificar <span class="chip-count">1</span></button>
+          </div>
+        </div>
+
+        <h3 class="group-h">Artefacto <span class="group-count">1</span></h3>
+        <div class="grid-2">
+          <div class="card"><h4 class="card-title">Artefacto disipador</h4><span class="card-tag">Solo canon</span></div>
+        </div>
+
+        <h3 class="group-h">Carta de tarot <span class="group-count">1</span></h3>
+        <div class="grid-2">
+          <div class="card"><h4 class="card-title">Wheel of Fortune</h4><span class="card-tag">Solo canon</span></div>
+        </div>
+
+        <h3 class="group-h">Libro <span class="group-count">1</span></h3>
+        <div class="grid-2">
+          <div class="card"><h4 class="card-title">Libro del Ritual de Ascensión</h4><span class="card-tag">Solo canon</span></div>
+        </div>
+
+        <h3 class="group-h">Sin clasificar <span class="group-count">1</span></h3>
+        <div class="grid-2">
+          <div class="card"><h4 class="card-title">Licor azul</h4><span class="card-tag">1 ep</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ PAGE: FACCIONES ============ -->
+    <div class="page" id="page-facciones">
+      <div class="content">
+        <div class="page-eyebrow">Entidades</div>
+        <h1 class="page-title">Facciones</h1>
+        <p class="page-count">21 facciones en el grimorio</p>
+
+        <div class="filter">
+          <div class="filter-label">Categoría</div>
+          <div class="chips">
+            <button class="chip active">Todas</button>
+            <button class="chip">Aldea <span class="chip-count">4</span></button>
+            <button class="chip">Banda <span class="chip-count">1</span></button>
+            <button class="chip">Coven <span class="chip-count">5</span></button>
+            <button class="chip">Evento <span class="chip-count">1</span></button>
+            <button class="chip">Gremio <span class="chip-count">2</span></button>
+            <button class="chip">Militar <span class="chip-count">3</span></button>
+            <button class="chip">Política <span class="chip-count">5</span></button>
+          </div>
+        </div>
+
+        <h3 class="group-h">Coven <span class="group-count">5</span></h3>
+        <div class="grid-2">
+          <div class="card"><h4 class="card-title">Coven Blanco</h4><span class="card-tag">Solo canon</span></div>
+          <div class="card"><h4 class="card-title">Coven Negro</h4><span class="card-tag">Solo canon</span></div>
+          <div class="card"><h4 class="card-title">Coven Rojo</h4><span class="card-tag">Solo canon</span></div>
+          <div class="card"><h4 class="card-title">Coven Rosa</h4><span class="card-tag">Solo canon</span></div>
+          <div class="card"><h4 class="card-title">Coven Verde</h4><span class="card-tag">Solo canon</span></div>
+        </div>
+
+        <h3 class="group-h">Aldea <span class="group-count">4</span></h3>
+        <div class="grid-2">
+          <div class="card"><h4 class="card-title">Aldea de Guerreros Espirituales</h4><span class="card-tag">Solo canon</span></div>
+          <div class="card"><h4 class="card-title">Aldea de Movedores de Montañas</h4><span class="card-tag">Solo canon</span></div>
+          <div class="card"><h4 class="card-title">Aldeas de los Molinos</h4><span class="card-tag">Solo canon</span></div>
+          <div class="card"><h4 class="card-title">Manada de los Rompehuesos</h4><span class="card-tag">Solo canon</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ PAGE: WORLDBUILDING ============ -->
+    <div class="page" id="page-worldbuilding">
+      <div class="content">
+        <div class="page-eyebrow">Entidades</div>
+        <h1 class="page-title">Worldbuilding</h1>
+        <p class="page-count">28 elementos en el grimorio</p>
+
+        <div class="filter">
+          <div class="filter-label">Categoría</div>
+          <div class="chips">
+            <button class="chip active">Todas</button>
+            <button class="chip">Dios principal <span class="chip-count">10</span></button>
+            <button class="chip">Dios secundario <span class="chip-count">9</span></button>
+            <button class="chip">Entidad planar <span class="chip-count">1</span></button>
+            <button class="chip">Concepto <span class="chip-count">3</span></button>
+            <button class="chip">Magia <span class="chip-count">2</span></button>
+            <button class="chip">Ritual <span class="chip-count">1</span></button>
+          </div>
+        </div>
+
+        <h3 class="group-h">Dios principal <span class="group-count">10</span></h3>
+        <div class="grid-2">
+          <div class="card"><h4 class="card-title">Druidia</h4><span class="card-tag">Solo canon</span></div>
+          <div class="card"><h4 class="card-title">Leira</h4><span class="card-tag">Solo canon</span></div>
+          <div class="card"><h4 class="card-title">Locky</h4><span class="card-tag">Solo canon</span></div>
+          <div class="card"><h4 class="card-title">Luzne</h4><span class="card-tag">Solo canon</span></div>
+          <div class="card"><h4 class="card-title">Myrkul</h4><span class="card-tag">Solo canon</span></div>
+          <div class="card"><h4 class="card-title">Mystra</h4><span class="card-tag">Solo canon</span></div>
+          <div class="card"><h4 class="card-title">Raven Queen</h4><span class="card-tag">Solo canon</span></div>
+          <div class="card"><h4 class="card-title">Selune</h4><span class="card-tag">Solo canon</span></div>
+          <div class="card"><h4 class="card-title">Tyr</h4><span class="card-tag">Solo canon</span></div>
+          <div class="card"><h4 class="card-title">Vecna</h4><span class="card-tag">Solo canon</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ PAGE: MISTERIOS ============ -->
+    <div class="page" id="page-misterios">
+      <div class="content">
+        <div class="page-eyebrow">Entidades</div>
+        <h1 class="page-title">Misterios</h1>
+        <p class="page-count">3 misterios en el grimorio</p>
+
+        <div class="grid-2">
+          <div class="card">
+            <h4 class="card-title">¿Por qué la Hermandad de Cobre necesita reclutar forasteros…?</h4>
+            <span class="card-tag">1 ep</span>
+          </div>
+          <div class="card">
+            <h4 class="card-title">¿Qué información delicada debe recibir el señor Johnson?</h4>
+            <span class="card-tag">1 ep</span>
+          </div>
+          <div class="card">
+            <h4 class="card-title">¿Qué relación tiene Layyra con el casino o la Hermandad?</h4>
+            <span class="card-tag">1 ep</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ PAGE: QUOTES ============ -->
+    <div class="page" id="page-quotes">
+      <div class="content">
+        <div class="page-eyebrow">Entidades</div>
+        <h1 class="page-title">Quotes</h1>
+        <p class="page-count">1 quote en el grimorio</p>
+
+        <div class="quote">
+          "Un voto de confianza mutuo."
+          <span class="quote-author">— Annora · Ep. 1</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ PAGE: DECISIONES ============ -->
+    <div class="page" id="page-decisiones">
+      <div class="content">
+        <div class="page-eyebrow">Entidades</div>
+        <h1 class="page-title">Decisiones</h1>
+        <p class="page-count">2 decisiones en el grimorio</p>
+
+        <div class="grid-2">
+          <div class="card">
+            <h4 class="card-title">Aceptan la misión de interceptar al señor Johnson en las alcantarillas</h4>
+            <span class="card-tag">1 ep</span>
+          </div>
+          <div class="card">
+            <h4 class="card-title">El grupo acepta el contrato de sangre y se une a la Hermandad</h4>
+            <span class="card-tag">1 ep</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+  // ===== Theme toggle =====
+  const themeToggle = document.getElementById('themeToggle');
+  const themeLabel = document.getElementById('themeLabel');
+  const iconSun = document.getElementById('iconSun');
+  const iconMoon = document.getElementById('iconMoon');
+
+  function setTheme(theme) {
+    document.documentElement.dataset.theme = theme;
+    if (theme === 'dark') {
+      themeLabel.textContent = 'Modo claro';
+      iconSun.style.display = 'none';
+      iconMoon.style.display = 'block';
+    } else {
+      themeLabel.textContent = 'Modo oscuro';
+      iconSun.style.display = 'block';
+      iconMoon.style.display = 'none';
+    }
+    try { localStorage.setItem('mysha-theme', theme); } catch(e) {}
+  }
+  try {
+    const saved = localStorage.getItem('mysha-theme');
+    if (saved) setTheme(saved);
+  } catch(e) {}
+
+  themeToggle.addEventListener('click', () => {
+    const cur = document.documentElement.dataset.theme;
+    setTheme(cur === 'dark' ? 'light' : 'dark');
+  });
+
+  // ===== Page navigation =====
+  function go(pageId) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    const el = document.getElementById('page-' + pageId);
+    if (el) el.classList.add('active');
+    document.querySelectorAll('.nav-item').forEach(i => i.classList.toggle('active', i.dataset.page === pageId));
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
+
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const page = item.dataset.page;
+      if (page) go(page);
+    });
+  });
+  document.querySelectorAll('[data-target]').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      go(el.dataset.target);
+    });
+  });
+
+  // ===== Chip toggle (visual only) =====
+  document.querySelectorAll('.filter').forEach(filter => {
+    filter.querySelectorAll('.chips').forEach(group => {
+      group.querySelectorAll('.chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          group.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+        });
+      });
+    });
+  });
+</script>
+
+</body>
+</html>

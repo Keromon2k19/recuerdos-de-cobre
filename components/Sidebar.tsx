@@ -1,89 +1,128 @@
 "use client";
 
-// components/Sidebar.tsx — Navegación lateral con links a tipos + stats
+// components/Sidebar.tsx — Sidebar del códice (sistema rdc, edición III fija).
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ENTITY_TYPES, ENTITY_FOLDERS, type EntityType } from "@/lib/types";
+import { ENTITY_TYPES, type EntityType } from "@/lib/types";
+import ThemeToggle from "@/components/ThemeToggle";
 
-const TYPE_LABELS: Record<EntityType, string> = {
-  personaje: "🧙 Personajes",
-  lugar: "🗺️ Lugares",
-  evento: "⚔️ Eventos",
-  objeto: "💎 Objetos",
-  faccion: "🏴 Facciones",
-  worldbuilding: "🌍 Worldbuilding",
-  misterio: "❓ Misterios",
-  quote: "💬 Quotes",
-  decision: "⚖️ Decisiones",
+const ENTITY_LABELS: Record<EntityType, string> = {
+  personaje: "Personajes",
+  lugar: "Lugares",
+  evento: "Eventos",
+  objeto: "Objetos",
+  faccion: "Facciones",
+  worldbuilding: "Worldbuilding",
+  misterio: "Misterios",
+  quote: "Quotes",
+  decision: "Decisiones",
 };
 
 type SidebarProps = {
   stats: Record<string, number>;
 };
 
+function pad(n: number): string {
+  return String(n).padStart(2, "0");
+}
+
 export default function Sidebar({ stats }: SidebarProps) {
   const pathname = usePathname();
+  const totalFiles = Object.values(stats).reduce((a, b) => a + b, 0);
 
   return (
-    <aside className="sidebar">
-      <div className="sidebar-header">
-        <Link href="/" className="sidebar-logo">
-          <span className="logo-icon">⛧</span>
-          <span className="logo-text">Mysha</span>
+    <aside className="rdc-sidebar">
+      <div className="rdc-brand">
+        <Link href="/procesar">
+          <div className="rdc-mark">PANEL LOCAL</div>
+          <h1>Recuerdos de Cobre</h1>
+          <div className="rdc-sub">Pipeline de procesamiento</div>
         </Link>
-        <p className="sidebar-subtitle">Grimorio de Lore</p>
       </div>
 
-      <nav className="sidebar-nav">
-        <div className="nav-section">
-          <h3 className="nav-section-title">Principal</h3>
-          <Link
-            href="/"
-            className={`nav-link ${pathname === "/" ? "active" : ""}`}
-          >
-            <span className="nav-icon">📜</span>
-            <span>Cargar Episodio</span>
-          </Link>
-          <Link
-            href="/episodios"
-            className={`nav-link ${pathname.startsWith("/episodios") ? "active" : ""}`}
-          >
-            <span className="nav-icon">📚</span>
-            <span>Episodios</span>
-            {stats.episodios > 0 && (
-              <span className="nav-badge">{stats.episodios}</span>
-            )}
-          </Link>
+      <div
+        className="rdc-nav-group rdc-rise"
+        style={{ "--rdc-rise-i": 0 } as React.CSSProperties}
+      >
+        <div className="rdc-nav-label">El Pipeline</div>
+
+        <Link
+          href="/procesar"
+          className="rdc-nav-item"
+          data-active={pathname === "/procesar"}
+        >
+          <span className="rdc-name">Cargar Episodio</span>
+          <span className="rdc-count" />
+        </Link>
+
+        <Link
+          href="/episodios"
+          className="rdc-nav-item"
+          data-active={pathname.startsWith("/episodios")}
+        >
+          <span className="rdc-name">Episodios</span>
+          <span className="rdc-count">
+            {stats.episodios ? pad(stats.episodios) : ""}
+          </span>
+        </Link>
+
+        <Link
+          href="/importar"
+          className="rdc-nav-item"
+          data-active={pathname.startsWith("/importar")}
+        >
+          <span className="rdc-name">Importar Playlist</span>
+          <span className="rdc-count" />
+        </Link>
+      </div>
+
+      <div
+        className="rdc-nav-group rdc-rise"
+        style={{ "--rdc-rise-i": 1 } as React.CSSProperties}
+      >
+        <div className="rdc-nav-label">Las Entradas</div>
+        {ENTITY_TYPES.map((tipo) => {
+          const count = stats[tipo] ?? 0;
+          const href = `/entidades/${tipo}`;
+          return (
+            <Link
+              key={tipo}
+              href={href}
+              className="rdc-nav-item"
+              data-active={pathname.startsWith(href)}
+            >
+              <span className="rdc-name">{ENTITY_LABELS[tipo]}</span>
+              <span className="rdc-count">{count ? pad(count) : ""}</span>
+            </Link>
+          );
+        })}
+      </div>
+
+      <div
+        className="rdc-side-controls rdc-rise"
+        style={{ "--rdc-rise-i": 2 } as React.CSSProperties}
+      >
+        <div className="rdc-theme-row">
+          <span className="rdc-nav-label" style={{ margin: 0 }}>
+            Lámpara
+          </span>
+          <ThemeToggle />
         </div>
-
-        <div className="nav-section">
-          <h3 className="nav-section-title">Entidades</h3>
-          {ENTITY_TYPES.map((tipo) => {
-            const folder = ENTITY_FOLDERS[tipo];
-            const count = stats[tipo] ?? 0;
-            const href = `/entidades/${tipo}`;
-            const isActive = pathname.startsWith(href);
-
-            return (
-              <Link
-                key={tipo}
-                href={href}
-                className={`nav-link ${isActive ? "active" : ""}`}
-              >
-                <span className="nav-icon">
-                  {TYPE_LABELS[tipo].split(" ")[0]}
-                </span>
-                <span>{TYPE_LABELS[tipo].split(" ").slice(1).join(" ")}</span>
-                {count > 0 && <span className="nav-badge">{count}</span>}
-              </Link>
-            );
-          })}
-        </div>
-      </nav>
-
-      <div className="sidebar-footer">
-        <p className="sidebar-footer-text">
-          Vault: {Object.values(stats).reduce((a, b) => a + b, 0)} archivos
+        <Link
+          href="/"
+          className="rdc-nav-item"
+          style={{ marginTop: 4 }}
+          data-active={false}
+        >
+          <span className="rdc-name">Ver sitio público →</span>
+          <span className="rdc-count" />
+        </Link>
+        <p
+          className="rdc-sub"
+          style={{ margin: 0, fontFamily: "var(--rdc-mono)", fontSize: 10.5 }}
+        >
+          Vault · {totalFiles} archivos
         </p>
       </div>
     </aside>

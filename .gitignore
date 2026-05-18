@@ -34,3 +34,23 @@ vault-mysha/
 
 # Obsidian local config (cache, layout, plugins instalados localmente)
 .obsidian/
+
+# Pipeline output y media local (pesados, no van a git)
+output/
+*.webm
+*.mp4
+*.mp3
+ep01.txt
+test-transcript.txt
+resumen-ep01-*.txt
+
+# Config local de Claude Code (permisos por máquina, no compartible)
+.claude/settings.local.json
+
+# Artefactos efímeros de herramientas / sesiones de agentes
+.codex/
+.impeccable/
+.design-bundle/
+.design-bundle2/
+.design-bundle3/
+.playwright-mcp/
