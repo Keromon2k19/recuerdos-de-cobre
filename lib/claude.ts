@@ -1,7 +1,11 @@
 // lib/claude.ts — Cliente Anthropic con prompt caching y tool use
 import Anthropic from "@anthropic-ai/sdk";
 import { SYSTEM_PROMPT, buildUserMessage } from "./prompts";
-import { ExtractionResultSchema, extractionJsonSchema } from "./schema";
+import {
+  ExtractionResultSchema,
+  extractionJsonSchema,
+  normalizeExtraction,
+} from "./schema";
 import type { ExtractionResult } from "./types";
 
 const MODEL = "claude-sonnet-4-6";
@@ -74,7 +78,7 @@ export async function extractLore(
     );
   }
 
-  return parsed.data;
+  return normalizeExtraction(parsed.data, numeroEpisodio);
 }
 
 /**
@@ -137,5 +141,5 @@ export async function retryExtractLore(
     );
   }
 
-  return parsed.data;
+  return normalizeExtraction(parsed.data, numeroEpisodio);
 }

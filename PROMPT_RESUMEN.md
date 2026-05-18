@@ -1,12 +1,12 @@
 # Prompt canónico de resumen — Recuerdos de Cobre
 
-**Fuente única de verdad.** Los resúmenes los hace Claude Code a mano (Gemini bloquea el contenido oscuro de la campaña). Cuando el usuario pida resumir un episodio:
+**Fuente única de verdad.** Los resúmenes los hace Claude Code a mano: el transcript es enorme y de máximo criterio narrativo — los modelos chicos (local/cloud) no dan la talla en esta tarea (probado; ver `docs/GOAL.md`). La *extracción* (resumen → JSON) sí la hace Ollama local. Cuando el usuario pida resumir un episodio:
 
 1. Leer el transcript en `output/epNN.transcript.txt` (lo deja el pipeline; el job queda en estado `esperando_resumen`).
 2. Aplicar **exactamente** el prompt de abajo.
 3. Escribir el resultado en `output/epNN.resumen.md`.
 4. Inyectarlo en el job: editar `vault-mysha/_jobs/0NN.json` → setear `"resumen"` con el texto y `"estado": "done"`, `"etapa_actual": "Resumen listo — cargá al formulario"`. (No tocar `committed_entities`: su ausencia hace que la UI muestre el botón "📤 Cargar".)
-5. El usuario carga el resumen al formulario → Gemini extrae → revisa en `/review` → commit al vault.
+5. El usuario carga el resumen al formulario → **Ollama** extrae (qwen2.5:7b; fallback Gemini) → revisa en `/review` → commit al vault.
 
 ---
 
@@ -20,6 +20,7 @@
 > 3. **Acciones grupales:** no detalles cada frase trivial; agrupá ("mientras Mysha y Narcissa revisaban el altar, Borok e Io cubrían la salida"). **EXCEPCIÓN — NPCs:** nunca omitas un NPC con nombre ni lo que aporta. De cada NPC dejá explícito: oficio o rol, si tiene tienda/taberna/negocio y qué vende u ofrece, qué servicios presta, si ayuda o estorba al grupo, y qué información/misión/recompensa entrega — aunque aparezca poco.
 > 4. **Ignorar el recap:** si la sesión arranca con "en episodios anteriores…", excluí esa parte por completo (no duplicar lore entre episodios).
 > 5. **El DM:** narra la historia, lo llaman **Ra**, **Rammis** o **DM**. No es un personaje del mundo — nunca lo registres como NPC.
+> 6. **Diferencial, no redundante:** no reafirmes lo que una entidad ES por definición en cada mención (el lector ya está en su ficha y su descripción canónica lo dice). Contá lo NUEVO/específico del episodio: qué hace, en qué parte del lugar aparece, qué cambia. Ej.: en vez de «Ciudad a la que regresan los PJs» → «El grupo regresa al gremio al terminar la misión; aparece el barrio acomodado cerca de la estación». En vez de «PJ semi-orco que rompe huevos de araña» → «Rompe los huevos de araña y halla la caja oculta con el anillo-artefacto». Nunca arranques una mención con «Ciudad…», «La ciudad…», «PJ semi-orco que…», «NPC que…».
 >
 > ### Glosario canónico de normalización
 > Whisper transcribe mal los nombres. Corregí según esta lista; ante un nombre fonéticamente parecido, asumí error y usá el canónico.

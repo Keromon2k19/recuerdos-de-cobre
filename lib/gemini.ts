@@ -9,7 +9,11 @@ import {
   type Schema,
 } from "@google/generative-ai";
 import { SYSTEM_PROMPT, buildUserMessage } from "./prompts";
-import { ExtractionResultSchema, extractionJsonSchema } from "./schema";
+import {
+  ExtractionResultSchema,
+  extractionJsonSchema,
+  normalizeExtraction,
+} from "./schema";
 import type { ExtractionResult } from "./types";
 
 const MODEL = "gemini-2.5-flash";
@@ -132,7 +136,7 @@ export async function extractLoreWithGemini(
       `Output de Gemini no pasó validación: ${validation.error.message}`
     );
   }
-  return validation.data;
+  return normalizeExtraction(validation.data, numeroEpisodio);
 }
 
 /**
@@ -174,5 +178,5 @@ export async function retryExtractLoreWithGemini(
       `Reintento también falló: ${validation.error.message}\n\nJSON crudo:\n${JSON.stringify(parsed, null, 2)}`
     );
   }
-  return validation.data;
+  return normalizeExtraction(validation.data, numeroEpisodio);
 }

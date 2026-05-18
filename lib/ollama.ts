@@ -12,7 +12,11 @@
 // `format` = JSON Schema, así el modelo devuelve JSON conforme al schema.
 
 import { SYSTEM_PROMPT, buildUserMessage } from "./prompts";
-import { ExtractionResultSchema, extractionJsonSchema } from "./schema";
+import {
+  ExtractionResultSchema,
+  extractionJsonSchema,
+  normalizeExtraction,
+} from "./schema";
 import type { ExtractionResult } from "./types";
 
 const HOST = (process.env.OLLAMA_HOST?.trim() || "http://localhost:11434").replace(/\/$/, "");
@@ -130,7 +134,7 @@ export async function extractLoreWithOllama(
       `Output de Ollama no pasó validación: ${validation.error.message}`
     );
   }
-  return validation.data;
+  return normalizeExtraction(validation.data, numeroEpisodio);
 }
 
 /**
@@ -153,5 +157,5 @@ export async function retryExtractLoreWithOllama(
       `Reintento de Ollama también falló: ${validation.error.message}`
     );
   }
-  return validation.data;
+  return normalizeExtraction(validation.data, numeroEpisodio);
 }

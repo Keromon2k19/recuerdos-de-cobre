@@ -1,6 +1,6 @@
 // lib/prompts.ts — Prompt versionado para extracción de lore
 
-export const EXTRACTION_PROMPT_VERSION = "1.2";
+export const EXTRACTION_PROMPT_VERSION = "1.4";
 
 export const SYSTEM_PROMPT = `Sos un asistente especializado en extraer lore estructurado de resúmenes de episodios de campañas de rol (TTRPG).
 
@@ -51,15 +51,16 @@ Mystra, Vecna, Locky, Tyr, Leira, Druidia, Myrkul, Raven Queen, Luzne, Selune, O
 2. **Personajes incluye TODO ser con nombre propio**: PJs, NPCs principales y secundarios, mascotas/familiares con nombre (búhos, arañas, etc.), monstruos nombrados. Si un nombre propio aparece aunque sea una sola vez con una acción atribuida, es un personaje. En la descripción de cada NPC registrá su función concreta: oficio o rol, si tiene una tienda/taberna/negocio y qué vende u ofrece, qué servicios presta, si ayuda o estorba a los PJs, y qué información, misión o recompensa entrega.
 3. **No fusiones personajes**: si en el resumen aparecen "Mysha" e "Io" como entidades distintas, son personajes distintos aunque interactúen mucho.
 4. Los nombres deben mantener mayúsculas y acentos originales del resumen, EXCEPTO cuando el glosario de arriba indique una grafía canónica (ej. "Milla" → registrar como "Mysha" con "Milla" en alias).
-5. Las descripciones deben ser concisas pero informativas (1-2 oraciones).
+5. Las descripciones deben ser concisas (1-2 oraciones) y **DIFERENCIALES por episodio**: contá qué hace, dónde aparece o qué cambia la entidad EN ESE EPISODIO. NO reafirmes lo que la entidad es por definición — su tipo/identidad ya vive en su ficha canónica y quien lee la mención ya está en su página. PROHIBIDO empezar una descripción reafirmando identidad: nada de "Ciudad…", "La ciudad…", "Una ciudad donde…", "PJ semi-orco que…", "NPC que…". Ejemplos: lugar ya conocido → en vez de "Ciudad a la que regresan los PJs", poné "El grupo regresa al gremio al terminar la misión; aparece el barrio acomodado cerca de la estación de trenes"; personaje → en vez de "PJ semi-orco que rompe huevos de araña", poné "Rompe los huevos de araña y halla la caja oculta con el anillo-artefacto".
 6. Si un personaje tiene apodos o alias, incluílos en el campo "alias".
-7. Las relaciones son bidireccionales: si A está relacionado con B, registrá la relación una sola vez.
+7. Relaciones: registrá UNA por cada interacción o vínculo concreto entre dos entidades con nombre (combate, ayuda, traición, viaje conjunto, mentoría, entrega de objeto, vínculo afectivo, pertenencia a facción, etc.). Sé EXHAUSTIVO: es normal y esperable tener MUCHAS relaciones por episodio si el resumen describe muchas interacciones — no te quedes en 2 o 3. No registres la misma relación dos veces en el mismo sentido (A→B y B→A son la misma).
 8. Los misterios son preguntas sin respuesta o cosas que quedan abiertas.
 9. Las quotes son **baja prioridad**: registrá una frase textual solo si tiene peso narrativo o de lore real. Si ninguna lo amerita, devolvé la lista vacía. Nunca parafrasees.
 10. Las decisiones son momentos donde los personajes tomaron una decisión importante que afecta la trama.
 11. Worldbuilding incluye reglas del mundo, mecánicas mágicas, costumbres, historia del mundo — todo lo que no sea una entidad concreta.
 12. Respondé SIEMPRE en español.
-13. DEBÉS llamar a la tool "registrar_lore" con los datos extraídos. No respondas en texto libre.`;
+13. DEBÉS devolver TODOS los datos mediante el formato estructurado provisto (la herramienta o el esquema JSON, según el proveedor). No agregues texto, explicaciones ni markdown fuera de esa estructura.
+14. El campo "episodio" de CADA relación debe ser EXACTAMENTE el número del episodio que estás analizando (te lo indico explícitamente en el mensaje del usuario). Nunca uses 1 por defecto ni inventes otro número.`;
 
 /**
  * Construye el mensaje de usuario para la extracción.
@@ -75,9 +76,11 @@ export function buildUserMessage(
 
   return `Analizá el siguiente resumen del ${header} y extraé todo el lore estructurado.
 
+NÚMERO DE EPISODIO = ${numeroEpisodio}. El campo "episodio" de TODAS las relaciones debe ser exactamente ${numeroEpisodio} (no 1, no otro número).
+
 ---
 ${resumen}
 ---
 
-Recordá: llamá a la tool "registrar_lore" con TODOS los datos que encuentres. No omitas nada.`;
+Recordá: devolvé TODOS los datos en la estructura provista (tool o JSON Schema). Sé exhaustivo, sobre todo con las relaciones. No omitas nada.`;
 }

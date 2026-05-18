@@ -1,6 +1,7 @@
 // lib/schema.ts — Zod schemas para validar output del LLM
 import { z } from "zod";
 import { zodToJsonSchema } from "zod-to-json-schema";
+import type { ExtractionResult } from "./types";
 
 export const RelacionSchema = z.object({
   de: z.string().min(1, "Nombre de origen requerido"),
@@ -73,3 +74,23 @@ export const extractionJsonSchema = zodToJsonSchema(
   ExtractionResultSchema,
   "ExtractionResult"
 );
+
+/**
+ * Normaliza datos deterministas que NO conviene delegar al LLM. Hoy: el
+ * `episodio` de cada relación es SIEMPRE el episodio analizado — los
+ * modelos (sobre todo locales como qwen2.5:7b) suelen errarlo y ya
+ * conocemos el número. Idempotente; se aplica tras la validación Zod en
+ * TODOS los proveedores (Ollama / Gemini / Claude).
+ */
+export function normalizeExtraction(
+  data: ExtractionResult,
+  numeroEpisodio: number
+): ExtractionResult {
+  return {
+    ...data,
+    relaciones: data.relaciones.map((r) => ({
+      ...r,
+      episodio: numeroEpisodio,
+    })),
+  };
+}
