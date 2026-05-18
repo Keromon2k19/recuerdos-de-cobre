@@ -103,7 +103,45 @@ export default async function ExpedientePage({ params }: Props) {
           <AtlasImage img={cover} priority />
         </div>
 
-        <div className="dossier">
+        <div className="expediente">
+          <div className="exp-meta rise">
+            <div className="exp-id">
+              <span className="exp-id-key">Registro</span>
+              <span>№ {String(numero).padStart(3, "0")}</span>
+              {castN > 0 && <span>· {castN} en escena</span>}
+              {procesado && <span>· archivado {fmtDate(procesado)}</span>}
+            </div>
+            <div className="exp-drops">
+              {RAIL_CATS.map(({ key, label }) => {
+                const items = menciones[key];
+                if (!Array.isArray(items) || items.length === 0) return null;
+                return (
+                  <details className="meta-drop" name="exp-drop" key={key}>
+                    <summary>
+                      <span>{label}</span>
+                      <b>{items.length}</b>
+                    </summary>
+                    <div className="meta-pop">
+                      <div className="rail-chips">
+                        {items.map((raw, i) => {
+                          const name = clean(raw);
+                          const href = resolve(name);
+                          return href ? (
+                            <Link key={i} href={href}>
+                              {name}
+                            </Link>
+                          ) : (
+                            <span key={i}>{name}</span>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </details>
+                );
+              })}
+            </div>
+          </div>
+
           <article className="read-panel rise" style={{ "--i": 1 } as React.CSSProperties}>
             <div className="prose">
               {sections.length === 0 && <p>Este registro todavía no tiene contenido.</p>}
@@ -119,52 +157,6 @@ export default async function ExpedientePage({ params }: Props) {
               ))}
             </div>
           </article>
-
-          <aside className="rail" aria-label="Datos del registro">
-            <div className="rail-block">
-              <p className="label">Registro</p>
-              <p className="val">
-                № {String(numero).padStart(3, "0")}
-                {castN > 0 && (
-                  <>
-                    <br />
-                    {castN} en escena
-                  </>
-                )}
-                {procesado && (
-                  <>
-                    <br />
-                    Archivado {fmtDate(procesado)}
-                  </>
-                )}
-              </p>
-            </div>
-
-            {RAIL_CATS.map(({ key, label }) => {
-              const items = menciones[key];
-              if (!Array.isArray(items) || items.length === 0) return null;
-              return (
-                <div className="rail-block" key={key}>
-                  <p className="label">
-                    {label} · {items.length}
-                  </p>
-                  <div className="rail-chips">
-                    {items.map((raw, i) => {
-                      const name = clean(raw);
-                      const href = resolve(name);
-                      return href ? (
-                        <Link key={i} href={href}>
-                          {name}
-                        </Link>
-                      ) : (
-                        <span key={i}>{name}</span>
-                      );
-                    })}
-                  </div>
-                </div>
-              );
-            })}
-          </aside>
         </div>
 
         <nav className="prevnext" aria-label="Navegación entre registros">

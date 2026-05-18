@@ -12,6 +12,12 @@ export type PublicEntityConfig = {
   eyebrow: string;
   blurb: string;
   img: ImgKind;
+  /**
+   * Cómo se presenta la imagen en la ficha:
+   * - "portrait": retrato 3:4 en tarjeta lateral (personajes).
+   * - "hero": imagen ancha cinematográfica + galería (lugares, facciones…).
+   */
+  media: "portrait" | "hero";
 };
 
 // Orden = orden en el índice del archivo / nav.
@@ -24,6 +30,7 @@ export const PUBLIC_ENTITIES: PublicEntityConfig[] = [
     eyebrow: "El elenco",
     blurb: "Quién es quién en la campaña.",
     img: "personajes",
+    media: "portrait",
   },
   {
     tipo: "lugar",
@@ -33,6 +40,7 @@ export const PUBLIC_ENTITIES: PublicEntityConfig[] = [
     eyebrow: "La geografía",
     blurb: "Dónde ocurrió cada cosa.",
     img: "lugares",
+    media: "hero",
   },
   {
     tipo: "faccion",
@@ -42,6 +50,7 @@ export const PUBLIC_ENTITIES: PublicEntityConfig[] = [
     eyebrow: "Los poderes",
     blurb: "Gremios, covens y poderes en juego.",
     img: "facciones",
+    media: "hero",
   },
   {
     tipo: "objeto",
@@ -51,6 +60,7 @@ export const PUBLIC_ENTITIES: PublicEntityConfig[] = [
     eyebrow: "El inventario",
     blurb: "Artefactos y objetos con peso narrativo.",
     img: "objetos",
+    media: "hero",
   },
   {
     tipo: "misterio",
@@ -60,6 +70,7 @@ export const PUBLIC_ENTITIES: PublicEntityConfig[] = [
     eyebrow: "Hilos abiertos",
     blurb: "Lo que sigue sin respuesta.",
     img: "misterios",
+    media: "hero",
   },
   {
     tipo: "worldbuilding",
@@ -69,6 +80,7 @@ export const PUBLIC_ENTITIES: PublicEntityConfig[] = [
     eyebrow: "El mundo",
     blurb: "Cómo funciona el mundo de Cobre.",
     img: "worldbuilding",
+    media: "hero",
   },
 ];
 
