@@ -1294,6 +1294,46 @@ a.rel-name:hover { color: var(--copper-bright); }
   .lb-prev { left: 1rem; }
   .lb-next { right: 1rem; }
 }
+/* -- Loading states (rutas dinamicas) --------------------------------- */
+.atlas-loading {
+  min-height: 60vh;
+  display: grid;
+  place-items: center;
+}
+.atlas-loading-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  padding: clamp(2rem, 5vw, 3rem) clamp(1.5rem, 4vw, 3rem);
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--r-lg);
+  background:
+    linear-gradient(180deg, oklch(0.215 0.014 58 / 0.88), oklch(0.165 0.011 58 / 0.94));
+  box-shadow: var(--shadow-soft);
+  text-align: center;
+}
+.atlas-loading-label {
+  font-family: var(--display);
+  font-size: clamp(1.2rem, 2.2vw, 1.6rem);
+  color: var(--ink-soft);
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+.atlas-loading-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: var(--copper);
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--copper) 28%, transparent);
+  animation: atlas-loading-pulse 1100ms var(--ease) infinite;
+}
+@keyframes atlas-loading-pulse {
+  0%, 100% { opacity: 0.4; transform: scale(0.85); }
+  50%      { opacity: 1;   transform: scale(1.12); }
+}
+
 /* -- Atlas geografico -------------------------------------------------- */
 .map-section {
   padding-top: clamp(1.6rem, 4vw, 3rem);
@@ -1309,10 +1349,8 @@ a.rel-name:hover { color: var(--copper-bright); }
   margin-top: 1rem;
 }
 .atlas-map {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(300px, 340px);
-  gap: clamp(1rem, 3vw, 1.5rem);
-  align-items: start;
+  position: relative;
+  display: block;
 }
 .map-stage,
 .map-panel {
@@ -1326,13 +1364,67 @@ a.rel-name:hover { color: var(--copper-bright); }
   min-width: 0;
   overflow: hidden;
 }
+/* Drawer flotante sobre el mapa. Slide-in desde la derecha.
+   Border-radius solo a la derecha: la izquierda queda flush contra el mapa. */
+.map-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: clamp(320px, 34vw, 420px);
+  transform: translateX(calc(100% + 24px));
+  transition: transform 320ms var(--ease);
+  z-index: 5;
+  overflow-y: auto;
+  border-radius: 0 var(--r-lg) var(--r-lg) 0;
+  border-left: 1px solid var(--rule-soft);
+  box-shadow: -22px 0 60px -28px oklch(0.04 0.02 60 / 0.85);
+}
+.map-panel[data-open="true"] { transform: translateX(0); }
+.map-panel-head {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.7rem 0.7rem 0;
+  background: linear-gradient(180deg, oklch(0.215 0.014 58 / 0.96), transparent);
+}
+.map-panel-close {
+  appearance: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  border: 1px solid var(--rule);
+  background: oklch(0.17 0.012 58 / 0.7);
+  color: var(--ink-soft);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: color var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+.map-panel-close:hover {
+  color: var(--copper-bright);
+  border-color: var(--copper);
+}
+.map-panel-body {
+  padding: 0 clamp(1.1rem, 2.5vw, 1.35rem) clamp(1.3rem, 3vw, 1.6rem);
+}
 .map-toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 0.85rem;
+  border-bottom: 1px solid var(--rule-soft);
+}
+.map-toolbar-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
-  padding: 0.85rem;
-  border-bottom: 1px solid var(--rule-soft);
+  flex-wrap: wrap;
 }
 .map-filters,
 .map-zoom {
@@ -1340,6 +1432,63 @@ a.rel-name:hover { color: var(--copper-bright); }
   flex-wrap: wrap;
   gap: 0.42rem;
   align-items: center;
+}
+.map-search {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex: 1 1 240px;
+  min-width: 200px;
+}
+.map-search input {
+  flex: 1;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-sm);
+  background: oklch(0.15 0.011 58 / 0.84);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  padding: 0.5rem 0.7rem;
+  transition: border-color var(--dur) var(--ease);
+}
+.map-search input::placeholder { color: var(--ink-faint); }
+.map-search input:focus {
+  outline: none;
+  border-color: var(--copper);
+}
+.map-search span {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  white-space: nowrap;
+}
+.map-episode {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.36rem 0.7rem;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-sm);
+  background: oklch(0.17 0.012 58 / 0.6);
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.map-episode input[type="range"] {
+  width: 110px;
+  accent-color: var(--copper);
+  cursor: pointer;
+}
+.map-episode b {
+  min-width: 1.6rem;
+  text-align: right;
+  color: var(--copper);
+  font-weight: 600;
 }
 .map-filters button,
 .map-zoom button,
@@ -1407,24 +1556,45 @@ a.rel-name:hover { color: var(--copper-bright); }
 }
 .map-viewport {
   position: relative;
-  height: clamp(680px, 72vh, 900px);
+  max-height: 82vh;
   overflow: auto;
   background: oklch(0.12 0.01 58);
   overscroll-behavior: contain;
+  /* Canvas centrado via margin auto (block, no flex). Con flex + justify
+     center + overflow, la mitad izquierda del contenido queda inaccesible
+     cuando desborda. Con block + margin auto: centra mientras entra,
+     alinea al inicio cuando desborda — el scroll cubre todo el rango. */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
 }
+.map-viewport::-webkit-scrollbar { display: none; }
+.map-viewport[data-zoomed="false"] { overflow-x: hidden; }
+.map-viewport[data-zoomed="true"] .map-canvas { cursor: grab; }
+.map-viewport[data-panning="true"] .map-canvas { cursor: grabbing; }
+/* width = base * zoom, donde base = min(100% del viewport, 82vh * aspect).
+   Asi a zoom 1 el mapa entra completo (sin scroll); a zoom > 1 desborda y
+   activa el scroll. aspect-ratio mantiene la proporcion 4:3 del .webp.
+   Block-inline + margin auto: centra cuando entra, alinea al start cuando
+   desborda — permite scrollear a la izquierda con drag. */
 .map-canvas {
   position: relative;
-  width: 100%;
-  min-width: 100%;
-  transform-origin: center;
+  display: block;
+  margin: 0 auto;
+  width: calc(min(100%, 82vh * 2400 / 1800) * var(--zoom, 1));
+  aspect-ratio: 2400 / 1800;
   transition: width 420ms var(--ease);
 }
 .map-canvas img {
   width: 100%;
-  height: auto;
+  height: 100%;
+  display: block;
   user-select: none;
 }
-.map-canvas[data-calibrating="true"] {
+.map-canvas[data-calibrating="true"],
+.map-viewport[data-zoomed="true"] .map-canvas[data-calibrating="true"] {
   cursor: crosshair;
 }
 .map-marker {
@@ -1436,19 +1606,23 @@ a.rel-name:hover { color: var(--copper-bright); }
   border: 0;
   background: transparent;
   color: var(--ink);
-  display: grid;
-  justify-items: center;
-  align-items: center;
-  gap: 0.3rem;
+  width: 14px;
+  height: 14px;
   padding: 0;
   cursor: pointer;
 }
-.map-marker span {
-  grid-row: 2;
+/* Hit area expandido sin afectar layout (24x24 invisible alrededor del punto) */
+.map-marker::before {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  border-radius: 999px;
 }
+.map-marker:hover,
+.map-marker[data-active="true"] { z-index: 4; }
 .map-marker span {
-  width: 14px;
-  height: 14px;
+  position: absolute;
+  inset: 0;
   border-radius: 999px;
   background: var(--marker-color);
   border: 2px solid oklch(0.96 0.02 80 / 0.92);
@@ -1458,12 +1632,16 @@ a.rel-name:hover { color: var(--copper-bright); }
   transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
 }
 .map-marker b {
-  grid-row: 1;
-  max-width: 128px;
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translate(-50%, 4px);
+  max-width: 168px;
+  width: max-content;
   padding: 0.2rem 0.42rem;
   border: 1px solid oklch(0.96 0.02 80 / 0.42);
   border-radius: var(--r-sm);
-  background: oklch(0.14 0.012 58 / 0.76);
+  background: oklch(0.14 0.012 58 / 0.86);
   backdrop-filter: blur(8px);
   font-family: var(--mono);
   font-size: 9.5px;
@@ -1471,8 +1649,8 @@ a.rel-name:hover { color: var(--copper-bright); }
   letter-spacing: 0.08em;
   text-transform: uppercase;
   text-align: center;
+  white-space: nowrap;
   opacity: 0;
-  transform: translateY(4px);
   pointer-events: none;
   transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
 }
@@ -1486,13 +1664,34 @@ a.rel-name:hover { color: var(--copper-bright); }
 .map-marker:hover b,
 .map-marker[data-active="true"] b {
   opacity: 1;
-  transform: translateY(0);
+  transform: translate(-50%, 0);
 }
 .map-marker[data-tone="copper"] { --marker-color: var(--copper); }
 .map-marker[data-tone="petrol"] { --marker-color: var(--petrol); }
 .map-marker[data-tone="moss"] { --marker-color: var(--moss); }
 .map-marker[data-tone="gold"] { --marker-color: var(--gold); }
 .map-marker[data-tone="wine"] { --marker-color: var(--wine); }
+/* Lugares no visitados: dot apagado, anillo mas sutil. Asi se ve a simple
+   vista cuanto del mapa ya conoce el party. */
+.map-marker[data-visited="false"] span {
+  background: oklch(0.32 0.014 58);
+  border-color: oklch(0.55 0.012 70 / 0.55);
+  box-shadow: 0 0 0 3px oklch(0.32 0.014 58 / 0.45);
+}
+.map-marker[data-visited="false"]:hover span {
+  background: var(--marker-color);
+  border-color: oklch(0.96 0.02 80 / 0.92);
+}
+/* Tooltip con dos lineas: nombre + meta (X eps / no visitado) */
+.map-marker b em {
+  display: block;
+  margin-top: 0.18rem;
+  font-style: normal;
+  font-size: 8.5px;
+  letter-spacing: 0.16em;
+  color: var(--ink-faint);
+}
+.map-marker[data-visited="false"] b em { color: oklch(0.55 0.012 70); }
 .map-pick {
   position: absolute;
   z-index: 3;
@@ -1521,13 +1720,6 @@ a.rel-name:hover { color: var(--copper-bright); }
   letter-spacing: 0.08em;
   white-space: nowrap;
 }
-.map-panel {
-  position: sticky;
-  top: 96px;
-  padding: clamp(1.1rem, 2.5vw, 1.35rem);
-  max-height: calc(100vh - 120px);
-  overflow-y: auto;
-}
 .map-panel-kicker {
   font-family: var(--mono);
   font-size: 10.5px;
@@ -1552,8 +1744,79 @@ a.rel-name:hover { color: var(--copper-bright); }
   flex-wrap: wrap;
   gap: 0.55rem;
 }
+.map-panel-kicker span {
+  color: var(--ink-faint);
+  font-weight: 500;
+}
+.map-panel-desc {
+  font-size: 0.96rem;
+  line-height: 1.55;
+}
+.map-panel-section {
+  margin-top: 1.2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule-soft);
+}
+.map-panel-label {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--copper);
+  margin-bottom: 0.55rem;
+}
+.map-panel-label em {
+  font-style: normal;
+  color: var(--ink-faint);
+  margin-left: 0.25rem;
+}
+.map-panel-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.32rem;
+}
+.map-panel-chip {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-sm);
+  padding: 0.28rem 0.55rem;
+  color: var(--ink-soft);
+  background: oklch(0.17 0.012 58 / 0.6);
+  transition: color var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+.map-panel-chip:hover {
+  color: var(--copper-bright);
+  border-color: var(--copper);
+}
+.map-panel-chip[data-tone="habitante"] {
+  border-color: color-mix(in oklab, var(--copper) 50%, var(--rule));
+  background: color-mix(in oklab, var(--copper) 14%, oklch(0.17 0.012 58));
+  color: var(--ink);
+}
+.map-panel-chip[data-tone="habitante"]:hover {
+  border-color: var(--copper);
+  background: color-mix(in oklab, var(--copper) 22%, oklch(0.17 0.012 58));
+}
+.map-panel-eps .map-panel-chip {
+  text-transform: uppercase;
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+}
+.map-panel-note {
+  font-size: 0.86rem;
+  color: var(--ink-faint);
+  font-style: italic;
+  margin-top: 0.6rem;
+}
 .map-panel-actions button.map-panel-link {
   margin-top: 1.1rem;
+}
+.map-panel-link[data-toggle="on"] {
+  border-color: var(--moss);
+  background: color-mix(in oklab, var(--moss) 14%, oklch(0.17 0.012 58));
+  color: var(--ink);
 }
 .map-calibrator {
   margin-top: 1.2rem;
@@ -1611,6 +1874,11 @@ a.rel-name:hover { color: var(--copper-bright); }
 .map-calibrator-actions button {
   padding: 0.58rem 0.62rem;
 }
+.map-calibrator-actions button[data-copied="true"] {
+  border-color: var(--moss);
+  background: color-mix(in oklab, var(--moss) 18%, oklch(0.17 0.012 58));
+  color: var(--ink);
+}
 .map-calibrator pre {
   margin: 0.75rem 0 0;
   max-height: 170px;
@@ -1649,6 +1917,20 @@ a.rel-name:hover { color: var(--copper-bright); }
   letter-spacing: 0;
   text-transform: none;
 }
+.map-list button i {
+  display: block;
+  margin-top: 0.18rem;
+  font-style: normal;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.map-list button[data-visited="false"] {
+  opacity: 0.65;
+}
+.map-list button[data-visited="false"] b { color: var(--ink-faint); }
 .map-list-empty {
   margin: 0;
   border: 1px dashed var(--rule);
@@ -1661,28 +1943,13 @@ a.rel-name:hover { color: var(--copper-bright); }
   padding: 0.8rem;
   text-transform: uppercase;
 }
-@media (max-width: 1040px) {
-  .atlas-map { grid-template-columns: 1fr; }
-  .map-panel {
-    position: static;
-    max-height: none;
-    display: grid;
-    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-    gap: 1rem;
-  }
-  .map-list {
-    margin-top: 0;
-    padding-top: 0;
-    border-top: 0;
-  }
-}
 @media (max-width: 720px) {
-  .map-toolbar {
-    align-items: stretch;
-    flex-direction: column;
+  .map-panel {
+    width: 100%;
+    border-radius: 0;
+    box-shadow: 0 -10px 30px -10px oklch(0.04 0.02 60 / 0.7);
   }
-  .map-viewport { height: min(72vh, 620px); }
-  .map-canvas { min-width: 760px; }
-  .map-panel { display: block; }
-  .map-list { margin-top: 1.1rem; padding-top: 1rem; border-top: 1px solid var(--rule-soft); }
+  .map-toolbar-row {
+    align-items: stretch;
+  }
 }
