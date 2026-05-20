@@ -12,7 +12,9 @@ import { renderMarkdown } from "@/lib/markdown-render";
 import { buildWikiResolver } from "@/lib/wiki-resolver";
 import { resolveImage } from "@/lib/images";
 import { buildEpisodeMetadata } from "@/lib/public-meta";
+import { episodioLabel, episodioLabelCorto } from "@/lib/episode-number";
 import AtlasImage from "@/components/public/AtlasImage";
+import EpisodeBook, { type EpisodeBookPage } from "@/components/public/EpisodeBook";
 import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
@@ -43,6 +45,51 @@ const RAIL_CATS: Array<{ key: string; label: string }> = [
   { key: "objetos", label: "Objetos" },
 ];
 
+function sectionId(title: string, index: number): string {
+  const slug = title
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+  return `parte-${index + 1}-${slug || "registro"}`;
+}
+
+function shortSectionTitle(title: string): string {
+  if (/cast|reparto/i.test(title)) return "Reparto";
+  if (/crono/i.test(title)) return "Cronología";
+  if (/decisiones|misterios/i.test(title)) return "Misterios";
+  if (/lore extra/i.test(title)) return "Archivo";
+  if (/lore|objetos/i.test(title)) return "Lore y objetos";
+  return title;
+}
+
+function sectionIcon(title: string): EpisodeBookPage["icon"] {
+  if (/cast|reparto/i.test(title)) return "cast";
+  if (/crono/i.test(title)) return "chronology";
+  if (/decisiones|misterios/i.test(title)) return "mystery";
+  if (/lore extra/i.test(title)) return "archive";
+  if (/lore|objetos/i.test(title)) return "relic";
+  return "page";
+}
+
+function sectionTone(title: string): EpisodeBookPage["tone"] {
+  if (/cast|reparto/i.test(title)) return "copper";
+  if (/crono/i.test(title)) return "petrol";
+  if (/decisiones|misterios/i.test(title)) return "wine";
+  if (/lore extra/i.test(title)) return "ink";
+  if (/lore|objetos/i.test(title)) return "gold";
+  return "moss";
+}
+
+function summaryExcerpt(md: string): string {
+  const blocks = md
+    .split(/\n{2,}/)
+    .map((block) => block.trim())
+    .filter(Boolean);
+  return blocks.length > 0 ? blocks.slice(0, 2).join("\n\n") : md;
+}
+
 export default async function ExpedientePage({ params }: Props) {
   const { num } = await params;
   const numero = parseInt(num, 10);
@@ -60,11 +107,32 @@ export default async function ExpedientePage({ params }: Props) {
 
   const { frontmatter, body } = parseMarkdown(content);
   const titulo = (frontmatter.titulo as string) || `Registro ${numero}`;
+  const epLabel = episodioLabel(titulo, numero);
   const procesado = frontmatter.procesado as string | undefined;
   const menciones =
     (frontmatter.menciones as Record<string, string[]> | undefined) ?? {};
 
   const sections = splitEpisodeSections(body);
+  const exactSummary = sections.find((s) => /^resumen$/i.test(s.title)) || null;
+  const chronologicalSummary = sections.find((s) => /crono/i.test(s.title)) || null;
+  const summarySource = exactSummary || chronologicalSummary;
+  const summaryHtml = summarySource
+    ? renderMarkdown(
+        exactSummary ? summarySource.body : summaryExcerpt(summarySource.body),
+        resolve,
+      )
+    : "";
+  const bookPages: EpisodeBookPage[] = sections
+    .filter((s) => s !== exactSummary)
+    .map((s, i) => ({
+      id: sectionId(s.title || `parte-${i + 1}`, i),
+      title: s.title || `Parte ${i + 1}`,
+      shortTitle: shortSectionTitle(s.title || `Parte ${i + 1}`),
+      eyebrow: `Parte ${String(i + 1).padStart(2, "0")}`,
+      icon: sectionIcon(s.title),
+      tone: sectionTone(s.title),
+      html: renderMarkdown(s.body, resolve),
+    }));
 
   const idx = episodes.findIndex((e) => e.numero === numero);
   const prev = idx > 0 ? episodes[idx - 1] : null;
@@ -81,11 +149,10 @@ export default async function ExpedientePage({ params }: Props) {
         <div className="doc-head">
           <p className="crumb">
             <Link href="/">Archivo</Link> /{" "}
-            <Link href="/cronicas">Crónicas</Link> / Registro{" "}
-            {String(numero).padStart(3, "0")}
+            <Link href="/cronicas">Crónicas</Link> / {epLabel}
           </p>
           <p className="eyebrow">
-            Registro {String(numero).padStart(3, "0")}
+            {epLabel}
             {procesado && (
               <>
                 {"  ·  "}
@@ -94,7 +161,7 @@ export default async function ExpedientePage({ params }: Props) {
             )}
           </p>
           <h1>
-            <span className="reg-no">№ {String(numero).padStart(3, "0")} — </span>
+            <span className="reg-no">{epLabel} — </span>
             {titulo}
           </h1>
         </div>
@@ -107,7 +174,7 @@ export default async function ExpedientePage({ params }: Props) {
           <div className="exp-meta rise">
             <div className="exp-id">
               <span className="exp-id-key">Registro</span>
-              <span>№ {String(numero).padStart(3, "0")}</span>
+              <span>{epLabel}</span>
               {castN > 0 && <span>· {castN} en escena</span>}
               {procesado && <span>· archivado {fmtDate(procesado)}</span>}
             </div>
@@ -142,34 +209,24 @@ export default async function ExpedientePage({ params }: Props) {
             </div>
           </div>
 
-          <article className="read-panel rise" style={{ "--i": 1 } as React.CSSProperties}>
-            <div className="prose">
-              {sections.length === 0 && <p>Este registro todavía no tiene contenido.</p>}
-              {sections.map((s, i) => (
-                <div key={i}>
-                  {s.title && <h2>{s.title}</h2>}
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: renderMarkdown(s.body, resolve),
-                    }}
-                  />
-                </div>
-              ))}
-            </div>
-          </article>
+          <EpisodeBook
+            summaryTitle={exactSummary?.title || "Resumen"}
+            summaryHtml={summaryHtml}
+            pages={bookPages}
+          />
         </div>
 
         <nav className="prevnext" aria-label="Navegación entre registros">
           {prev ? (
             <Link href={`/cronicas/${prev.numero}`}>
-              ← № {String(prev.numero).padStart(3, "0")} · {prev.titulo}
+              ← {episodioLabelCorto(prev.titulo, prev.numero)} · {prev.titulo}
             </Link>
           ) : (
             <span className="disabled">← Inicio del archivo</span>
           )}
           {next ? (
             <Link href={`/cronicas/${next.numero}`}>
-              № {String(next.numero).padStart(3, "0")} · {next.titulo} →
+              {episodioLabelCorto(next.titulo, next.numero)} · {next.titulo} →
             </Link>
           ) : (
             <span className="disabled">Fin del archivo →</span>

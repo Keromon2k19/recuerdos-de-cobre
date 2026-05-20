@@ -3,6 +3,7 @@
 // archivo, escaneable de un vistazo aunque sean decenas.
 import Link from "next/link";
 import { listEpisodes } from "@/lib/vault";
+import { episodioLedger } from "@/lib/episode-number";
 
 export const dynamic = "force-dynamic";
 
@@ -52,7 +53,9 @@ export default async function CronicasPage() {
           </div>
         ) : (
           <div className="ledger" role="list">
-            {episodes.map((ep, i) => (
+            {episodes.map((ep, i) => {
+              const reg = episodioLedger(ep.titulo, ep.numero);
+              return (
               <Link
                 key={ep.numero}
                 href={`/cronicas/${ep.numero}`}
@@ -61,13 +64,14 @@ export default async function CronicasPage() {
                 style={{ "--i": Math.min(i, 12) } as React.CSSProperties}
               >
                 <span className="reg">
-                  {String(ep.numero).padStart(3, "0")}
-                  <small>REGISTRO</small>
+                  {reg.main}
+                  <small>{reg.sub}</small>
                 </span>
                 <h3>{ep.titulo || `Registro ${ep.numero}`}</h3>
                 <span className="date">{fmtDate(ep.procesado)}</span>
               </Link>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>
