@@ -212,7 +212,7 @@ export default function ReviewPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const raw = sessionStorage.getItem("mysha-extraction");
+    const raw = sessionStorage.getItem("recuerdos-de-cobre-extraction");
     if (!raw) {
       router.push("/");
       return;
@@ -272,8 +272,8 @@ export default function ReviewPage() {
 
       if (result.success) {
         // Limpiar sesión
-        sessionStorage.removeItem("mysha-extraction");
-        localStorage.removeItem("mysha-draft-resumen");
+        sessionStorage.removeItem("recuerdos-de-cobre-extraction");
+        localStorage.removeItem("recuerdos-de-cobre-draft-resumen");
         router.push(`/episodios/${session.numero}`);
       } else {
         setError(result.error);

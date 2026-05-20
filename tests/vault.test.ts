@@ -18,7 +18,7 @@ import type { Episodio } from "@/lib/types";
 let tmpDir: string;
 
 beforeEach(() => {
-  tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "mysha-vault-test-"));
+  tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "recuerdos-vault-test-"));
 });
 
 afterEach(() => {

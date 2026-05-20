@@ -5,7 +5,7 @@
 1. Leer el transcript en `output/epNN.transcript.txt` (lo deja el pipeline; el job queda en estado `esperando_resumen`).
 2. Aplicar **exactamente** el prompt de abajo.
 3. Escribir el resultado en `output/epNN.resumen.md`.
-4. Inyectarlo en el job: editar `vault-mysha/_jobs/0NN.json` → setear `"resumen"` con el texto y `"estado": "done"`, `"etapa_actual": "Resumen listo — cargá al formulario"`. (No tocar `committed_entities`: su ausencia hace que la UI muestre el botón "📤 Cargar".)
+4. Inyectarlo en el job: editar `vault-recuerdos-de-cobre/_jobs/0NN.json` → setear `"resumen"` con el texto y `"estado": "done"`, `"etapa_actual": "Resumen listo — cargá al formulario"`. (No tocar `committed_entities`: su ausencia hace que la UI muestre el botón "📤 Cargar".)
 5. Codex/Claude también genera `output/epNN.extraccion.json` (schema `lib/schema.ts`). Joaquín revisa en `/review` o corre `scripts/commit-manual.ts` → commit al vault.
 
 ---

@@ -98,7 +98,7 @@ mysha/                            # repo del proyecto
 ```
 
 ```
-vault-mysha/                      # carpeta separada apuntable desde Obsidian
+vault-recuerdos-de-cobre/                      # carpeta separada apuntable desde Obsidian
 ├── episodios/
 │   ├── 001-prologo.md
 │   ├── 002-...md
@@ -117,7 +117,7 @@ vault-mysha/                      # carpeta separada apuntable desde Obsidian
 └── worldbuilding/
 ```
 
-**Nota sobre la ubicación del vault:** `VAULT_PATH` es una ruta absoluta configurable. Puede vivir en cualquier lado (incluso dentro de un vault Obsidian existente). Por defecto sugerimos `../vault-mysha/` relativo al repo, pero la app la lee desde `.env.local` y soporta cualquier path.
+**Nota sobre la ubicación del vault:** `VAULT_PATH` es una ruta absoluta configurable. Puede vivir en cualquier lado (incluso dentro de un vault Obsidian existente). Por defecto sugerimos `../vault-recuerdos-de-cobre/` relativo al repo, pero la app la lee desde `.env.local` y soporta cualquier path.
 
 **Nota sobre relaciones:** las relaciones entre personajes (`Mysha`↔`Selenne`) no tienen carpeta propia — viven en el frontmatter del personaje (campo `relaciones`). Son edges entre nodos, no nodos. La carpeta `relaciones/` que aparecería intuitivamente NO existe. Las 10 categorías de extracción de la IA mapean a 9 tipos de archivo + relaciones embebidas.
 
@@ -362,7 +362,7 @@ Sonnet 4.6 a ~$3/MTok input, ~$15/MTok output. Con prompt caching el input cae ~
 
 ```bash
 ANTHROPIC_API_KEY=sk-ant-...
-VAULT_PATH=C:/Users/joaqu/Obsidian/MyshaVault
+VAULT_PATH=C:/Users/joaqu/Obsidian/RecuerdosDeCobreVault
 ```
 
 ### 7.2 `.env.example` (commiteado)

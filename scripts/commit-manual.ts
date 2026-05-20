@@ -54,7 +54,7 @@ async function main(): Promise<void> {
   }
   const extraido = normalizeExtraction(parsed.data, numero);
 
-  const vaultPath = path.resolve(process.env.VAULT_PATH || "vault-mysha");
+  const vaultPath = path.resolve(process.env.VAULT_PATH || "vault-recuerdos-de-cobre");
   const { commitEpisode } = await import("../lib/commit");
   const r = await commitEpisode({
     vaultPath,

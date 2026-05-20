@@ -54,9 +54,9 @@ from faster_whisper import WhisperModel, BatchedInferencePipeline
 # capas siguientes (resumen/extraccion manual), donde no hay limite de tokens
 # y se puede normalizar mejor.
 #
-# Fuente de verdad completa: vault-mysha/_glossary.md
+# Fuente de verdad completa: vault-recuerdos-de-cobre/_glossary.md
 INITIAL_PROMPT = (
-    "Podcast de rol Mysha en espanol. Protagonista: Mysha (no Milla, no "
+    "Podcast de rol Recuerdos de Cobre en espanol. Personaje: Mysha (no Milla, no "
     "Misha), con tres personalidades en una sola persona: Mysha, Selenne, "
     "Veltra. Su buho se llama Champi. Otros PJs: Borok, Layra, Narcissa, "
     "David Ilcard, Io Campbell. 'Io' es nombre propio, no el pronombre 'yo'."
@@ -87,7 +87,7 @@ def main():
         or os.path.splitext(audio_path)[0] + ".txt"
     )
 
-    print(f"\n🎙️  Mysha — Transcriptor (faster-whisper {model_name}, GPU)")
+    print(f"\n🎙️  Recuerdos de Cobre — Transcriptor (faster-whisper {model_name}, GPU)")
     print(f"   Audio:   {audio_path}")
     print(f"   Idioma:  {language}")
     print(f"   Beam:    {beam_size}")

@@ -35,12 +35,12 @@ Para no pisarse, respetá el dominio de archivos **al pie de la letra**.
 
 | Acción | Archivos |
 |---|---|
-| **Leer** | `output/epNN.transcript.txt`, `PROMPT_RESUMEN.md`, `docs/GOAL.md`, `vault-mysha/_glossary.md`, `lib/schema.ts`, `lib/prompts.ts`, `vault-mysha/_jobs/0NN.json` |
+| **Leer** | `output/epNN.transcript.txt`, `PROMPT_RESUMEN.md`, `docs/GOAL.md`, `vault-recuerdos-de-cobre/_glossary.md`, `lib/schema.ts`, `lib/prompts.ts`, `vault-recuerdos-de-cobre/_jobs/0NN.json` |
 | **Escribir** | `output/epNN.resumen.md` y `output/epNN.extraccion.json` |
-| **Editar** | `vault-mysha/_jobs/0NN.json` (solo los campos indicados abajo) |
+| **Editar** | `vault-recuerdos-de-cobre/_jobs/0NN.json` (solo los campos indicados abajo) |
 | **Prohibido tocar** | todo lo demás del repo |
 
-`output/` y `vault-mysha/` están en `.gitignore`: tu trabajo nunca entra en
+`output/` y `vault-recuerdos-de-cobre/` están en `.gitignore`: tu trabajo nunca entra en
 commits ni genera conflictos de git. Ese es el contrato con Claude Code.
 
 ### Flujo por episodio
@@ -51,7 +51,7 @@ commits ni genera conflictos de git. Ese es el contrato con Claude Code.
    recap inicial; normalizar nombres con el glosario; NPCs con rol/oficio/qué
    aportan; negritas en primera aparición de lugares/facciones; exactamente las
    4 secciones). Escribir `output/epNN.resumen.md`.
-3. Inyectar el resumen en `vault-mysha/_jobs/0NN.json` (3 dígitos): setear
+3. Inyectar el resumen en `vault-recuerdos-de-cobre/_jobs/0NN.json` (3 dígitos): setear
    `"resumen"` = contenido del `.md`, `"estado": "done"`,
    `"etapa_actual": "Resumen listo — cargá al formulario"`,
    `"actualizado_en"` = ISO actual; **eliminar** `"committed_entities"`,
@@ -95,15 +95,15 @@ Patrón del script de inyección del job (paso 3):
 ```js
 // output/_inject_epNN.cjs  (borrar tras correr)
 const fs = require('fs');
-const base = 'C:/Users/joaqu/OneDrive/Documentos/claudeprojects/Mysha';
-const job = JSON.parse(fs.readFileSync(base+'/vault-mysha/_jobs/0NN.json','utf8'));
+const base = 'C:/Users/joaqu/OneDrive/Documentos/claudeprojects/recuerdos-de-cobre';
+const job = JSON.parse(fs.readFileSync(base+'/vault-recuerdos-de-cobre/_jobs/0NN.json','utf8'));
 job.resumen = fs.readFileSync(base+'/output/epNN.resumen.md','utf8');
 job.estado = 'done';
 job.etapa_actual = 'Resumen listo — cargá al formulario';
 job.actualizado_en = new Date().toISOString();
 delete job.committed_entities;
 delete job.pid; delete job.progress; delete job.progress_detail;
-fs.writeFileSync(base+'/vault-mysha/_jobs/0NN.json', JSON.stringify(job,null,2)+'\n','utf8');
+fs.writeFileSync(base+'/vault-recuerdos-de-cobre/_jobs/0NN.json', JSON.stringify(job,null,2)+'\n','utf8');
 ```
 
 Node preserva UTF-8 con acentos literales e indentación de 2 espacios.
@@ -132,7 +132,7 @@ escritura al workspace (confirmá el flag con `codex --help`; según versión es
 `codex --full-auto` o `codex --ask-for-approval never --sandbox workspace-write`):
 
 ```
-codex --full-auto "Leé AGENTS.md, PROMPT_RESUMEN.md, lib/schema.ts y lib/prompts.ts. Por cada episodio pendiente: hacé el resumen (PROMPT_RESUMEN.md) en output/epNN.resumen.md, inyectalo al job, y la extracción en output/epNN.extraccion.json (shape de AGENTS.md / schema de lib/schema.ts). Empezá por la extracción de ep06 y ep07 (su resumen ya está), después ep08..ep12 resumen+extracción, después ep13+. No toques nada fuera de output/ y vault-mysha/_jobs/. Sin git, npm, commits ni API. Escribí 'epNN OK' tras cada uno."
+codex --full-auto "Leé AGENTS.md, PROMPT_RESUMEN.md, lib/schema.ts y lib/prompts.ts. Por cada episodio pendiente: hacé el resumen (PROMPT_RESUMEN.md) en output/epNN.resumen.md, inyectalo al job, y la extracción en output/epNN.extraccion.json (shape de AGENTS.md / schema de lib/schema.ts). Empezá por la extracción de ep06 y ep07 (su resumen ya está), después ep08..ep12 resumen+extracción, después ep13+. No toques nada fuera de output/ y vault-recuerdos-de-cobre/_jobs/. Sin git, npm, commits ni API. Escribí 'epNN OK' tras cada uno."
 ```
 
 Recomendado: revisar a mano el primero para calibrar antes de soltar el resto.
@@ -159,14 +159,14 @@ Sin Gemini, sin Ollama, sin API de pago: resumen y extracción los hace un
 modelo grande a mano (Claude/Codex). El criterio narrativo del transcript es
 demasiado alto para modelos chicos y la API quedó descartada por costo.
 
-> El nombre de la carpeta (`Mysha/`) y del vault (`vault-mysha/`) son legacy y
-> se mantienen para no romper paths. La app/branding se llama **Antología ·
-> Recuerdos de Cobre**. **Campaña coral de 6 PJs: Mysha NO es la
-> protagonista**, es una más del grupo (su nombre quedó en los paths legacy).
+> El proyecto vive en `recuerdos-de-cobre/` y el vault local por defecto es
+> `vault-recuerdos-de-cobre/`. **Campaña coral de 6 PJs: Mysha NO es la
+> protagonista**, es una más del grupo; el nombre del personaje se conserva
+> solo donde corresponde al lore.
 
 ## Personajes y facciones clave (cheat-sheet para normalizar nombres)
 
-> Fuente completa: `vault-mysha/_glossary.md`. El glosario de normalización
+> Fuente completa: `vault-recuerdos-de-cobre/_glossary.md`. El glosario de normalización
 > canónico vive dentro de `PROMPT_RESUMEN.md` — usalo siempre.
 
 - **Mysha** (jugadora Kero) — PJ, una más del grupo, NO la protagonista. Bruja
@@ -188,4 +188,4 @@ demasiado alto para modelos chicos y la API quedó descartada por costo.
 - `PROMPT_RESUMEN.md` (resumen) y `lib/prompts.ts` (extracción) son la misma
   campaña: si se edita uno, alinear el otro.
 - La persistencia es Markdown plano, compatible con Obsidian. El vault
-  (`vault-mysha/`) es la fuente de verdad editable.
+  (`vault-recuerdos-de-cobre/`) es la fuente de verdad editable.

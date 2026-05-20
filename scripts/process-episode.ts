@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 /**
- * Mysha — Orquestador del pipeline de procesamiento.
+ * Recuerdos de Cobre — Orquestador del pipeline de procesamiento.
  *
  * Pipeline: yt-dlp (audio) → transcribe.py (Whisper) → Gemini (resumen + extracción).
  *
- * Lee y va actualizando vault-mysha/_jobs/<numero>.json en cada etapa.
+ * Lee y va actualizando vault-recuerdos-de-cobre/_jobs/<numero>.json en cada etapa.
  * Diseñado para correr detached desde un server action.
  *
  * Uso: npx tsx scripts/process-episode.ts <numero>
@@ -428,7 +428,7 @@ async function main() {
     process.exit(1);
   }
   const env = { ...process.env, ...loadEnv() } as Record<string, string>;
-  const vaultPath = path.resolve(env.VAULT_PATH || "vault-mysha");
+  const vaultPath = path.resolve(env.VAULT_PATH || "vault-recuerdos-de-cobre");
   const outputDir = path.join(process.cwd(), "output");
   fs.mkdirSync(outputDir, { recursive: true });
 

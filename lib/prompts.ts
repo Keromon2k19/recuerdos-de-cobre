@@ -10,7 +10,7 @@ Tu trabajo es analizar el resumen de un episodio y extraer TODAS las entidades, 
 
 Es una campaña **coral de 6 PJs**: ninguno es "el protagonista", todos tienen el mismo peso narrativo. No describas a ningún PJ como protagonista, héroe principal ni centro de la historia.
 
-Fuente completa: \`vault-mysha/_glossary.md\`. Lo importante para extracción:
+Fuente completa: \`vault-recuerdos-de-cobre/_glossary.md\`. Lo importante para extracción:
 
 ## Personajes jugadores (PJs) — SIEMPRE clasificar como PJ, NO como NPC
 

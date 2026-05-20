@@ -23,7 +23,7 @@ La app es donde el usuario **navega ese lore acumulado** — episodios, personaj
 Características del usuario:
 - Habla **español rioplatense**
 - Es **jugador** de la campaña — usa la app para refrescar memoria entre sesiones, no para "vender" lore a terceros
-- Quiere **leer y editar Markdown** rápido — la app vive sobre un vault `vault-mysha/` que también abre desde Obsidian
+- Quiere **leer y editar Markdown** rápido — la app vive sobre un vault `vault-recuerdos-de-cobre/` que también abre desde Obsidian
 - Trabaja en **PC con GPU** (Whisper local) — sesiones largas, una pantalla principal grande
 - Le importa la estética: pidió rediseño cuando la versión inicial le pareció "todo apretado a la izquierda"
 

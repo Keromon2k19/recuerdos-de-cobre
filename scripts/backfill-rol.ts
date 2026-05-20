@@ -32,7 +32,7 @@ function loadEnv(): Record<string, string> {
 }
 
 const env = { ...process.env, ...loadEnv() };
-const vaultPath = path.resolve(env.VAULT_PATH || "vault-mysha");
+const vaultPath = path.resolve(env.VAULT_PATH || "vault-recuerdos-de-cobre");
 const dir = path.join(vaultPath, "personajes");
 
 let changed = 0;

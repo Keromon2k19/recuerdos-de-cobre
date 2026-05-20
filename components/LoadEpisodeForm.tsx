@@ -5,8 +5,8 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { extractLoreAction } from "@/app/actions/extract";
 
-const LOCALSTORAGE_KEY = "mysha-draft-resumen";
-const PREFILL_KEY = "mysha-prefill-from-job";
+const LOCALSTORAGE_KEY = "recuerdos-de-cobre-draft-resumen";
+const PREFILL_KEY = "recuerdos-de-cobre-prefill-from-job";
 
 export type PlaylistOption = {
   numero: number;
@@ -112,7 +112,7 @@ export default function LoadEpisodeForm({ playlistOptions = [] }: Props) {
       if (result.success) {
         // Guardar resultado en sessionStorage para /review
         sessionStorage.setItem(
-          "mysha-extraction",
+          "recuerdos-de-cobre-extraction",
           JSON.stringify({
             numero: Number(numero),
             titulo: titulo.trim(),

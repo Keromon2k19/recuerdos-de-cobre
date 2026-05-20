@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 /**
- * Mysha — Seeder de entidades canónicas desde el glosario del DM.
+ * Recuerdos de Cobre — Seeder de entidades canónicas desde el glosario del DM.
  *
- * Lee la información canónica hardcodeada acá (derivada de vault-mysha/_glossary.md)
- * y crea/actualiza los archivos en vault-mysha/personajes/, lugares/, etc.
+ * Lee la información canónica hardcodeada acá (derivada de vault-recuerdos-de-cobre/_glossary.md)
+ * y crea/actualiza los archivos en vault-recuerdos-de-cobre/personajes/, lugares/, etc.
  *
  * Idempotente:
  *  - Si la entidad NO existe → crea (origen: "glosario")
@@ -180,7 +180,7 @@ const TAXONOMY: Record<string, Taxonomy> = {
   "Artefacto disipador":         { categoria: "artefacto" },
 };
 
-// ─── Datos canónicos (extraídos de vault-mysha/_glossary.md) ───────────────
+// ─── Datos canónicos (extraídos de vault-recuerdos-de-cobre/_glossary.md) ───────────────
 
 const SEED: SeedEntity[] = [
   // ─── Personajes jugadores (PJs) ──────────────────────────────────────────
@@ -971,7 +971,7 @@ async function main() {
     process.exit(1);
   }
 
-  console.log(`\n🌱 Mysha — Seeder de glosario`);
+  console.log(`\n🌱 Recuerdos de Cobre — Seeder de glosario`);
   console.log(`   Vault: ${vaultPath}`);
   console.log(`   Entidades a sembrar: ${SEED.length}`);
   console.log(`   ${dryRun ? "DRY-RUN (no se escribe nada)" : "Modo: escritura real"}\n`);

@@ -30,6 +30,7 @@ Thumbs.db
 .superpowers/
 
 # Vault local (si lo ponen dentro del repo accidentalmente)
+vault-recuerdos-de-cobre/
 vault-mysha/
 
 # Obsidian local config (cache, layout, plugins instalados localmente)
@@ -37,6 +38,8 @@ vault-mysha/
 
 # Pipeline output y media local (pesados, no van a git)
 output/
+__pycache__/
+scripts/__pycache__/
 *.webm
 *.mp4
 *.mp3

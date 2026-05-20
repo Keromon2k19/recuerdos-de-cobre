@@ -1,9 +1,9 @@
 """
-Mysha — Pipeline GUI
+Recuerdos de Cobre — Pipeline GUI
 URL de YouTube → descarga → transcripción (Whisper GPU) → resumen (Gemini) → clipboard
 
 Uso:
-    python scripts/mysha_gui.py
+    python scripts/recuerdos_gui.py
 
 Requiere:
     pip install faster-whisper google-generativeai
@@ -175,7 +175,7 @@ def run_pipeline(url, numero, titulo, log, on_done, on_error):
         else:
             base = time.strftime("transcript_%Y%m%d_%H%M%S")
 
-        tmpdir = tempfile.mkdtemp(prefix="mysha_audio_")
+        tmpdir = tempfile.mkdtemp(prefix="recuerdos_audio_")
         audio_path = os.path.join(tmpdir, "audio.mp3")
         txt_path = os.path.join(output_dir, f"{base}.transcript.txt")
         summary_path = os.path.join(output_dir, f"{base}.resumen.txt")
@@ -240,7 +240,7 @@ def run_pipeline(url, numero, titulo, log, on_done, on_error):
             if titulo:
                 ep_header += f' — "{titulo}"'
 
-            prompt = f"""Sos el archivista de la campaña TTRPG Mysha. Creá un resumen detallado del transcript del {ep_header}.
+            prompt = f"""Sos el archivista de la campaña TTRPG Recuerdos de Cobre. Creá un resumen detallado del transcript del {ep_header}.
 
 Capturá TODO lo relevante para una base de datos de lore:
 - Eventos narrativos en orden cronológico
@@ -283,10 +283,10 @@ TRANSCRIPT:
 # GUI
 # ---------------------------------------------------------------------------
 
-class MyshaApp(tk.Tk):
+class RecuerdosApp(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.title("Mysha — Pipeline de Transcripción")
+        self.title("Recuerdos de Cobre — Pipeline de Transcripción")
         self.geometry("800x700")
         self.resizable(True, True)
         self.configure(bg="#1a1a2e")
@@ -307,7 +307,7 @@ class MyshaApp(tk.Tk):
         pad = {"padx": 12, "pady": 4}
 
         # Título
-        tk.Label(self, text="⚗  Mysha — Transcripción y Resumen",
+        tk.Label(self, text="⚗  Recuerdos de Cobre — Transcripción y Resumen",
                  bg="#1a1a2e", fg="#d4af37",
                  font=("Segoe UI", 14, "bold")).pack(pady=(16, 8))
 
@@ -424,7 +424,7 @@ class MyshaApp(tk.Tk):
 
 if __name__ == "__main__":
     try:
-        app = MyshaApp()
+        app = RecuerdosApp()
         app.mainloop()
     except Exception:
         import traceback

@@ -8,7 +8,7 @@
 
 Antología de la campaña TTRPG **Recuerdos de Cobre** (67 episodios de YouTube, dirigida por *Mates y Mazmorras*). App Next.js local-first. Pipeline **sin API de pago**: descarga + transcripción (Whisper) automáticas; el **resumen y la extracción de lore los hacen Claude/Codex a mano** siguiendo `PROMPT_RESUMEN.md` (resumen) y `lib/schema.ts`/`lib/prompts.ts` (extracción → JSON); se persiste como Markdown editable desde Obsidian.
 
-> El nombre de la **carpeta del proyecto** (`Mysha/`) y el del **vault** (`vault-mysha/`) son legacy y se mantienen para no romper paths; la app, branding y dominio se llaman **Antología · Recuerdos de Cobre · Grimorio de Lore**. **Es una campaña coral de 6 PJs: Mysha NO es la protagonista**, es una más del grupo (su nombre quedó en los paths legacy).
+> El proyecto vive en `recuerdos-de-cobre/` y el vault local por defecto es `vault-recuerdos-de-cobre/`; la app, branding y dominio se llaman **Antología · Recuerdos de Cobre · Grimorio de Lore**. **Es una campaña coral de 6 PJs: Mysha NO es la protagonista**, es una más del grupo.
 
 ## Stack
 
@@ -53,7 +53,7 @@ tests/
 
 ## Personajes y facciones clave (cheat-sheet)
 
-> Fuente de verdad completa: `vault-mysha/_glossary.md`
+> Fuente de verdad completa: `vault-recuerdos-de-cobre/_glossary.md`
 
 - **Mysha** (Kero) — PJ, **una más del grupo, NO la protagonista**. Bruja de sangre. Empieza en el Coven Rojo, después Coven Rosa. **Tiene 3 personalidades**: Mysha (principal), Selenne, Veltra — la misma persona.
 - **Borok** (Mati), **Layra** (Layla), **Narcissa** (Mica), **David Ilcard** (Lucho), **Io Campbell** (Mile/Kuzu/Sis/Nico) — los otros 5 PJs.
@@ -67,7 +67,7 @@ tests/
 - ✅ 55 tests pasando, TypeScript compila sin errores
 - ✅ Gemini y Ollama retirados del todo (deps desinstaladas)
 - ⏳ Los 67 episodios se procesan de a poco
-- El vault se genera en `vault-mysha/` (configurable via VAULT_PATH en .env.local)
+- El vault se genera en `vault-recuerdos-de-cobre/` (configurable via VAULT_PATH en .env.local)
 
 ## Instrucciones para Claude
 
@@ -75,6 +75,6 @@ tests/
 - El usuario trabaja desde Claude Code CLI y Antigravity (IDE de Google)
 - **Resúmenes**: seguir `PROMPT_RESUMEN.md` al pie de la letra (leer transcript → escribir `output/epNN.resumen.md` → inyectar en el job).
 - **Extracción**: a mano, sin API. Generar `output/epNN.extraccion.json` conforme a `lib/schema.ts` (`ExtractionResult`) y las reglas de `lib/prompts.ts`. Se commitea con `/review` (lee ese archivo) o `npx tsx scripts/commit-manual.ts NN "<título>" [fechaISO]`. Gemini/Ollama/OpenAi-extracción fueron retirados.
-- **Regla de no-colisión con Codex** ⚠️: Codex trabaja en paralelo y es **dueño exclusivo** de resumen + extracción — `output/epNN.resumen.md`, `output/epNN.extraccion.json` y `vault-mysha/_jobs/0NN.json`. Claude **no toca** esos archivos salvo pedido explícito. Claude es dueño de `app/`, `lib/`, `components/`, `scripts/`, `docs/` y los commits. Los paths de Codex están gitignored. Ver `AGENTS.md`.
+- **Regla de no-colisión con Codex** ⚠️: Codex trabaja en paralelo y es **dueño exclusivo** de resumen + extracción — `output/epNN.resumen.md`, `output/epNN.extraccion.json` y `vault-recuerdos-de-cobre/_jobs/0NN.json`. Claude **no toca** esos archivos salvo pedido explícito. Claude es dueño de `app/`, `lib/`, `components/`, `scripts/`, `docs/` y los commits. Los paths de Codex están gitignored. Ver `AGENTS.md`.
 - Si se edita el prompt de resumen (`PROMPT_RESUMEN.md`) o el de extracción (`lib/prompts.ts`), **alinear ambos** — son la misma campaña.
 - La persistencia es Markdown plano — compatible con Obsidian sin sync bidireccional.

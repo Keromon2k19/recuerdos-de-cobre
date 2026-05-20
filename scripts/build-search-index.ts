@@ -3,7 +3,7 @@
  * Construye el índice de búsqueda semántica del vault.
  *
  * Recorre todas las entidades (.md) + episodios, embebe cada una con
- * OpenAI (text-embedding-3-small) y guarda vault-mysha/_search-index.json.
+ * OpenAI (text-embedding-3-small) y guarda vault-recuerdos-de-cobre/_search-index.json.
  *
  * Uso:
  *   npx tsx scripts/build-search-index.ts
@@ -82,7 +82,7 @@ async function main() {
     console.error("Error: OPENAI_API_KEY no está en .env.local");
     process.exit(1);
   }
-  const vaultPath = path.resolve(env.VAULT_PATH || "vault-mysha");
+  const vaultPath = path.resolve(env.VAULT_PATH || "vault-recuerdos-de-cobre");
   if (!fs.existsSync(vaultPath)) {
     console.error(`Error: VAULT_PATH no existe: ${vaultPath}`);
     process.exit(1);

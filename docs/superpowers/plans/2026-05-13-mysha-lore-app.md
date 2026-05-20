@@ -64,7 +64,7 @@ Archivos que este plan crea (en orden de tareas):
 
 ```json
 {
-  "name": "mysha",
+  "name": "recuerdos-de-cobre",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -231,8 +231,8 @@ export default defineConfig({
 ANTHROPIC_API_KEY=
 
 # Ruta absoluta al vault Markdown. Puede apuntar a un vault Obsidian existente.
-# Ejemplo Windows: C:/Users/joaqu/Obsidian/MyshaVault
-# Ejemplo macOS/Linux: /Users/joaqu/Documents/MyshaVault
+# Ejemplo Windows: C:/Users/joaqu/Obsidian/RecuerdosDeCobreVault
+# Ejemplo macOS/Linux: /Users/joaqu/Documents/RecuerdosDeCobreVault
 VAULT_PATH=
 ```
 
@@ -348,7 +348,7 @@ describe("loadConfig", () => {
   });
 
   it("acepta valores válidos y resuelve a ruta absoluta", () => {
-    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "mysha-cfg-"));
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "recuerdos-cfg-"));
     const cfg = loadConfig({ ANTHROPIC_API_KEY: "sk-x", VAULT_PATH: dir });
     expect(cfg.anthropicApiKey).toBe("sk-x");
     expect(path.isAbsolute(cfg.vaultPath)).toBe(true);
@@ -1340,7 +1340,7 @@ import { createVault } from "@/lib/vault";
 import type { Episodio } from "@/lib/types";
 
 function tmp(): string {
-  return fs.mkdtempSync(path.join(os.tmpdir(), "mysha-vault-"));
+  return fs.mkdtempSync(path.join(os.tmpdir(), "recuerdos-vault-"));
 }
 
 const ep: Episodio = {
@@ -2318,7 +2318,7 @@ import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { extractEpisodioAction, type ExtractInput } from "@/app/actions/extract";
 
-const DRAFT_KEY = "mysha:draft";
+const DRAFT_KEY = "recuerdos-de-cobre:draft";
 
 export function LoadEpisodeForm() {
   const router = useRouter();
@@ -2363,7 +2363,7 @@ export function LoadEpisodeForm() {
         return;
       }
       // Guardar el resultado para la página de review
-      sessionStorage.setItem("mysha:review", JSON.stringify(res.data));
+      sessionStorage.setItem("recuerdos-de-cobre:review", JSON.stringify(res.data));
       router.push("/review");
     });
   }
@@ -2582,7 +2582,7 @@ export default function ReviewPage() {
   const [decisiones, setDecisiones] = useState<ReviewCardItem[]>([]);
 
   useEffect(() => {
-    const raw = sessionStorage.getItem("mysha:review");
+    const raw = sessionStorage.getItem("recuerdos-de-cobre:review");
     if (!raw) {
       router.replace("/");
       return;
@@ -2652,8 +2652,8 @@ export default function ReviewPage() {
         setError(res.error);
         return;
       }
-      sessionStorage.removeItem("mysha:review");
-      localStorage.removeItem("mysha:draft");
+      sessionStorage.removeItem("recuerdos-de-cobre:review");
+      localStorage.removeItem("recuerdos-de-cobre:draft");
       router.push(`/episodios/${bundle.input.numero}`);
     });
   }
@@ -3055,14 +3055,14 @@ Pedir al usuario que ejecute manualmente:
 # Windows PowerShell
 @"
 ANTHROPIC_API_KEY=sk-ant-tu-clave-aqui
-VAULT_PATH=C:/Users/joaqu/OneDrive/Documentos/claudeprojects/Mysha/vault-mysha
+VAULT_PATH=C:/Users/joaqu/OneDrive/Documentos/claudeprojects/recuerdos-de-cobre/vault-recuerdos-de-cobre
 "@ | Out-File -FilePath .env.local -Encoding utf8
 ```
 
 - [ ] **Step 2: Crear la carpeta del vault (si no existe)**
 
 ```bash
-mkdir -p vault-mysha
+mkdir -p vault-recuerdos-de-cobre
 ```
 
 (La app crea las subcarpetas con `bootstrap()` al primer acceso.)
@@ -3086,15 +3086,15 @@ En el browser:
 - [ ] **Step 5: Verificar archivos en disco**
 
 ```bash
-ls vault-mysha/episodios/
-ls vault-mysha/personajes/
+ls vault-recuerdos-de-cobre/episodios/
+ls vault-recuerdos-de-cobre/personajes/
 ```
 
 Expected: el `.md` del episodio existe + al menos algunos `.md` de personajes mencionados.
 
 - [ ] **Step 6: Abrir Obsidian apuntando al vault**
 
-En Obsidian → Open another vault → `vault-mysha/`.
+En Obsidian → Open another vault → `vault-recuerdos-de-cobre/`.
 Verificar que ve las carpetas, los archivos `.md`, y que los wikilinks `[[Mysha]]` resuelven.
 
 - [ ] **Step 7: Correr toda la suite de tests**

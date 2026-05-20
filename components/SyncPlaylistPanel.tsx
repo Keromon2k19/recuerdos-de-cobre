@@ -71,8 +71,8 @@ const ESTADO_CLASS: Record<JobEstado, string> = {
   cancelled: "badge-pending",
 };
 
-const PREFILL_KEY = "mysha-prefill-from-job";
-const MODE_LS_KEY = "mysha-queue-mode";
+const PREFILL_KEY = "recuerdos-de-cobre-prefill-from-job";
+const MODE_LS_KEY = "recuerdos-de-cobre-queue-mode";
 
 export default function SyncPlaylistPanel({
   initialCache,

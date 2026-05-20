@@ -18,7 +18,7 @@ describe("loadConfig", () => {
   });
 
   it("acepta valores válidos y resuelve a ruta absoluta", () => {
-    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "mysha-cfg-"));
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "recuerdos-cfg-"));
     const cfg = loadConfig({ ANTHROPIC_API_KEY: "sk-x", VAULT_PATH: dir });
     expect(cfg.anthropicApiKey).toBe("sk-x");
     expect(path.isAbsolute(cfg.vaultPath)).toBe(true);

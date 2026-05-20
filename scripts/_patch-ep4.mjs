@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 
-const jobPath = path.resolve("vault-mysha/_jobs/004.json");
+const jobPath = path.resolve("vault-recuerdos-de-cobre/_jobs/004.json");
 const resumenPath = path.resolve("output/ep04.resumen.md");
 
 const job = JSON.parse(fs.readFileSync(jobPath, "utf-8"));
