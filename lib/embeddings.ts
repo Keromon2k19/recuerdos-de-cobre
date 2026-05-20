@@ -1,27 +1,36 @@
-// lib/embeddings.ts — Embeddings con Gemini text-embedding-004 (free tier).
-// Usado para búsqueda semántica sobre el vault. Costo: $0.
+// lib/embeddings.ts — Embeddings con OpenAI para búsqueda semántica del vault.
+//
+// Config por env:
+//   OPENAI_API_KEY     (requerida; la pasa el caller)
+//   OPENAI_EMBED_MODEL default "text-embedding-3-small" (1536 dims, barato)
+//
+// El modelo queda registrado en el índice (_search-index.json → `model`);
+// si cambia, build-search-index.ts re-embebe todo (las dims no son
+// compatibles entre modelos).
 
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import OpenAI from "openai";
 
-const EMBED_MODEL = "gemini-embedding-001"; // estable, free tier
+export const EMBED_MODEL =
+  process.env.OPENAI_EMBED_MODEL?.trim() || "text-embedding-3-small";
 
 /**
- * Embebe un texto y devuelve el vector (768 floats).
- * taskType ajusta el embedding según uso: documento vs query.
+ * Embebe un texto y devuelve el vector (1536 floats con el modelo default).
+ * OpenAI usa el mismo modelo para query y documento (no hay taskType).
  */
 export async function embedText(
   apiKey: string,
-  text: string,
-  taskType: "RETRIEVAL_DOCUMENT" | "RETRIEVAL_QUERY" = "RETRIEVAL_DOCUMENT"
+  text: string
 ): Promise<number[]> {
-  const genAI = new GoogleGenerativeAI(apiKey);
-  const model = genAI.getGenerativeModel({ model: EMBED_MODEL });
-  // El SDK acepta taskType en embedContent vía el request object.
-  const result = await model.embedContent({
-    content: { role: "user", parts: [{ text: text.slice(0, 8000) }] },
-    taskType: taskType as never,
+  const client = new OpenAI({ apiKey, timeout: 30_000, maxRetries: 3 });
+  const res = await client.embeddings.create({
+    model: EMBED_MODEL,
+    input: text.slice(0, 8000),
   });
-  return result.embedding.values;
+  const vec = res.data[0]?.embedding;
+  if (!vec || vec.length === 0) {
+    throw new Error("OpenAI no devolvió embedding");
+  }
+  return vec;
 }
 
 /** Similitud coseno entre dos vectores de igual dimensión. */

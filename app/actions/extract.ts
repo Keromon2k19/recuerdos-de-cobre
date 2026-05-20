@@ -1,26 +1,18 @@
 "use server";
 
-// app/actions/extract.ts — Server action: resumen curado → lore extraído.
+// app/actions/extract.ts — Server action: lore extraído de un episodio.
 //
-// Proveedor configurable por env EXTRACTION_PROVIDER:
-//   "auto"   (default) → Ollama local si está disponible; si no, Gemini.
-//   "ollama"            → fuerza Ollama (sin fallback, surface del error).
-//   "gemini"            → fuerza Gemini (comportamiento histórico).
+// SIN modelos ni API. La extracción la hace Codex/Claude a mano: genera
+// `output/epNN.extraccion.json` conforme a lib/schema.ts (ExtractionResult).
+// Esta action lo lee, lo valida con Zod y lo devuelve para revisar en
+// /review y commitear. Alternativa CLI: scripts/commit-manual.ts.
 //
-// GOAL.md: Ollama es el proveedor local preferido; Gemini queda como
-// fallback. El resumen lo hace Codex/Claude a mano (no pasa por acá).
-// Claude API sigue disponible en lib/claude.ts si hay créditos.
+// Config (.env.local):
+//   MOCK_EXTRACTION=true  → datos simulados sin leer archivo.
 
-import { loadConfig } from "@/lib/config";
-import {
-  extractLoreWithGemini,
-  retryExtractLoreWithGemini,
-} from "@/lib/gemini";
-import {
-  extractLoreWithOllama,
-  retryExtractLoreWithOllama,
-  ollamaReachable,
-} from "@/lib/ollama";
+import fs from "node:fs";
+import path from "node:path";
+import { ExtractionResultSchema, normalizeExtraction } from "@/lib/schema";
 import type { ExtractionResult } from "@/lib/types";
 
 export type ExtractResult =
@@ -28,7 +20,7 @@ export type ExtractResult =
   | { success: false; error: string; rawJson?: string };
 
 /**
- * Datos mock para testing sin API/modelo. Basados en el episodio 1 real.
+ * Datos mock para testing/preview sin archivo. Basados en el episodio 1 real.
  */
 function getMockExtraction(episodio: number): ExtractionResult {
   return {
@@ -88,91 +80,60 @@ function getMockExtraction(episodio: number): ExtractionResult {
   };
 }
 
-/** Ejecuta Gemini con su reintento por validación (comportamiento histórico). */
-async function runGemini(
-  resumen: string,
-  numero: number,
-  titulo?: string
-): Promise<ExtractionResult> {
-  const apiKey = process.env.GEMINI_API_KEY?.trim();
-  if (!apiKey) {
-    throw new Error("GEMINI_API_KEY no está definida en .env.local");
+/** Resuelve output/ep{n}.extraccion.json o output/ep{pad2}.extraccion.json. */
+function findExtraccionFile(numero: number): string | null {
+  const pad2 = String(numero).padStart(2, "0");
+  for (const f of [`ep${numero}.extraccion.json`, `ep${pad2}.extraccion.json`]) {
+    const p = path.join(process.cwd(), "output", f);
+    if (fs.existsSync(p)) return p;
   }
-  // loadConfig valida que el vault exista; no necesitamos anthropicApiKey acá.
-  loadConfig();
-
-  try {
-    return await extractLoreWithGemini(apiKey, resumen, numero, titulo);
-  } catch (err) {
-    const msg = err instanceof Error ? err.message : String(err);
-    if (msg.includes("no pasó validación")) {
-      return await retryExtractLoreWithGemini(apiKey, resumen, numero, msg, titulo);
-    }
-    throw err;
-  }
-}
-
-/** Ejecuta Ollama local con su reintento por validación. */
-async function runOllama(
-  resumen: string,
-  numero: number,
-  titulo?: string
-): Promise<ExtractionResult> {
-  try {
-    return await extractLoreWithOllama(resumen, numero, titulo);
-  } catch (err) {
-    const msg = err instanceof Error ? err.message : String(err);
-    if (msg.includes("no pasó validación")) {
-      return await retryExtractLoreWithOllama(resumen, numero, msg, titulo);
-    }
-    throw err;
-  }
+  return null;
 }
 
 /**
- * Server action: recibe el resumen curado + metadatos → lore estructurado.
- * El resultado NO se persiste hasta que el usuario confirme en /review.
+ * Server action: lee la extracción que dejó Codex/Claude para el episodio,
+ * la valida y la devuelve para revisar en /review. El resultado NO se
+ * persiste hasta que el usuario confirme. (`_resumen` no se usa: la
+ * extracción ya viene hecha en el archivo; el form lo conserva aparte
+ * para el commit.)
  *
- * MOCK_EXTRACTION=true devuelve datos simulados sin llamar a ningún modelo.
+ * MOCK_EXTRACTION=true devuelve datos simulados sin leer archivo.
  */
 export async function extractLoreAction(
-  resumen: string,
+  _resumen: string,
   numeroEpisodio: number,
-  titulo?: string
+  _titulo?: string
 ): Promise<ExtractResult> {
   if (process.env.MOCK_EXTRACTION === "true") {
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    await new Promise((resolve) => setTimeout(resolve, 800));
     return { success: true, data: getMockExtraction(numeroEpisodio) };
   }
 
-  const provider = (process.env.EXTRACTION_PROVIDER?.trim() || "auto").toLowerCase();
-
-  try {
-    if (provider === "gemini") {
-      return { success: true, data: await runGemini(resumen, numeroEpisodio, titulo) };
-    }
-
-    if (provider === "ollama") {
-      return { success: true, data: await runOllama(resumen, numeroEpisodio, titulo) };
-    }
-
-    // auto: preferir Ollama local; si no está o falla, caer a Gemini.
-    if (await ollamaReachable()) {
-      try {
-        return {
-          success: true,
-          data: await runOllama(resumen, numeroEpisodio, titulo),
-        };
-      } catch (ollamaErr) {
-        console.warn(
-          "[extract] Ollama falló, fallback a Gemini:",
-          ollamaErr instanceof Error ? ollamaErr.message : ollamaErr
-        );
-      }
-    }
-    return { success: true, data: await runGemini(resumen, numeroEpisodio, titulo) };
-  } catch (err) {
-    const errorMsg = err instanceof Error ? err.message : String(err);
-    return { success: false, error: errorMsg };
+  const pad2 = String(numeroEpisodio).padStart(2, "0");
+  const file = findExtraccionFile(numeroEpisodio);
+  if (!file) {
+    return {
+      success: false,
+      error: `Falta output/ep${pad2}.extraccion.json. Generá la extracción con Codex (siguiendo lib/schema.ts) antes de revisar.`,
+    };
   }
+
+  let raw: unknown;
+  try {
+    raw = JSON.parse(fs.readFileSync(file, "utf-8"));
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    return { success: false, error: `output/ep${pad2}.extraccion.json no es JSON válido: ${msg}` };
+  }
+
+  const parsed = ExtractionResultSchema.safeParse(raw);
+  if (!parsed.success) {
+    return {
+      success: false,
+      error: `La extracción no pasó validación Zod: ${parsed.error.message}`,
+      rawJson: JSON.stringify(raw).slice(0, 2000),
+    };
+  }
+
+  return { success: true, data: normalizeExtraction(parsed.data, numeroEpisodio) };
 }

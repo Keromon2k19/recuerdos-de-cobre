@@ -269,7 +269,7 @@ Whisper local
   -> transcripcion cruda
   -> Codex o Claude resumen manual siguiendo PROMPT_RESUMEN.md
   -> resumen limpio
-  -> Ollama extrae lore estructurado
+  -> Codex/Claude extrae lore estructurado a mano (sin API)
   -> revision manual
   -> commit al vault
   -> sitio publico read-only
@@ -288,10 +288,10 @@ El resumen no debe depender de Gemini/Ollama por defecto.
 
 ### Extraccion estructurada
 
-- Provider primario deseado: Ollama local.
+- Provider: Codex/Claude a mano (sin API), validado con Zod (`lib/schema.ts`).
 - Entrada: resumen ya curado.
 - Salida: JSON validado con Zod.
-- Fallback opcional: Gemini si Ollama falla.
+- Ollama y Gemini fueron retirados del pipeline.
 - El vault Markdown sigue siendo la fuente de verdad editable.
 
 ## Publicacion
@@ -319,6 +319,6 @@ Una implementacion del reinicio se considera alineada si:
 - El sitio funciona en desktop y mobile.
 - La parte publica es read-only.
 - El panel local puede seguir operando gratis.
-- Ollama queda preparado como proveedor local preferido para extraccion.
+- La extraccion la hacen Codex/Claude a mano, sin API (Ollama y Gemini retirados).
 - El diseno ya no reproduce "Sala de Cobre" como resultado final.
 

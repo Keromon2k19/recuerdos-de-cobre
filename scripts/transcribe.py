@@ -51,8 +51,8 @@ from faster_whisper import WhisperModel, BatchedInferencePipeline
 #
 # Por eso este prompt es minimalista: solo las desambiguaciones criticas que
 # Whisper se equivoca sistematicamente. El glosario completo se aplica en las
-# capas siguientes (Gemini summary, Claude extraction), donde no hay limite de
-# tokens y se puede normalizar mejor.
+# capas siguientes (resumen/extraccion manual), donde no hay limite de tokens
+# y se puede normalizar mejor.
 #
 # Fuente de verdad completa: vault-mysha/_glossary.md
 INITIAL_PROMPT = (
@@ -74,23 +74,49 @@ def main():
         print(f"Error: no se encontró '{audio_path}'")
         sys.exit(1)
 
-    output_path = os.path.splitext(audio_path)[0] + ".txt"
+    model_name = os.environ.get("WHISPER_MODEL", "large-v3")
+    # beam 5 es el default: en ep14 dio calidad ~identica a beam 10
+    # (diferencias cosmeticas, mismos PJs) en ~1/2-1/3 del tiempo en GPU.
+    # Subir a 10 solo si se necesita exprimir el ultimo punto de precision.
+    beam_size = int(os.environ.get("WHISPER_BEAM_SIZE", "5"))
+    batch_size = int(os.environ.get("WHISPER_BATCH_SIZE", "16"))
+    output_path = (
+        sys.argv[3]
+        if len(sys.argv) > 3
+        else os.environ.get("WHISPER_OUTPUT")
+        or os.path.splitext(audio_path)[0] + ".txt"
+    )
 
-    print(f"\n🎙️  Mysha — Transcriptor (faster-whisper large-v3, GPU)")
+    print(f"\n🎙️  Mysha — Transcriptor (faster-whisper {model_name}, GPU)")
     print(f"   Audio:   {audio_path}")
     print(f"   Idioma:  {language}")
+    print(f"   Beam:    {beam_size}")
+    print(f"   Batch:   {batch_size}")
     print(f"   Output:  {output_path}")
     print(f"\n   Cargando modelo...", flush=True)
 
+    # Por defecto FALLAMOS si no hay GPU en vez de degradar callado a CPU:
+    # en CPU un episodio de ~90 min tarda 90+ min (vs minutos en GPU batched),
+    # y el fallback silencioso hacia que esa lentitud pareciera "normal".
+    # Escape hatch explicito para maquinas sin GPU: WHISPER_ALLOW_CPU=1.
     batched = False
     try:
-        model = WhisperModel("large-v3", device="cuda", compute_type="float16")
+        model = WhisperModel(model_name, device="cuda", compute_type="float16")
         batched_model = BatchedInferencePipeline(model=model)
         batched = True
         print(f"   Usando GPU (CUDA) — modo batched (paraleliza segmentos en VRAM)", flush=True)
-    except Exception:
-        print(f"   CUDA no disponible, usando CPU (más lento)...", flush=True)
-        model = WhisperModel("large-v3", device="cpu", compute_type="int8")
+    except Exception as e:
+        if os.environ.get("WHISPER_ALLOW_CPU") == "1":
+            print(f"   CUDA no disponible ({type(e).__name__}: {e}).", flush=True)
+            print(f"   WHISPER_ALLOW_CPU=1 → usando CPU (mucho más lento)...", flush=True)
+            model = WhisperModel(model_name, device="cpu", compute_type="int8")
+        else:
+            print(f"\n❌ No se pudo inicializar Whisper en GPU (CUDA).", flush=True)
+            print(f"   Causa: {type(e).__name__}: {e}", flush=True)
+            print(f"\n   Esto suele ser drivers/CUDA/cuDNN o VRAM ocupada.", flush=True)
+            print(f"   En CPU un episodio tarda 90+ min, por eso abortamos.", flush=True)
+            print(f"   Si REALMENTE querés correr en CPU: WHISPER_ALLOW_CPU=1", flush=True)
+            sys.exit(2)
 
     print(f"   Transcribiendo...\n", flush=True)
     start = time.time()
@@ -100,7 +126,7 @@ def main():
     # explicito solo en el fallback CPU.
     transcribe_kwargs = dict(
         language=language,
-        beam_size=10,                         # mas alto = mas preciso
+        beam_size=beam_size,                  # mas alto = mas preciso
         initial_prompt=INITIAL_PROMPT,        # contexto de nombres propios
         vad_filter=True,                      # filtra silencios (REQUERIDO en batched)
         vad_parameters=dict(min_silence_duration_ms=500),
@@ -113,7 +139,7 @@ def main():
     if batched:
         # batch_size=16 paraleliza 16 chunks de habla en la GPU a la vez.
         # Con 12GB VRAM uso ~9-10GB. Speedup esperado: 3-5x.
-        segments, info = batched_model.transcribe(audio_path, batch_size=16, **transcribe_kwargs)
+        segments, info = batched_model.transcribe(audio_path, batch_size=batch_size, **transcribe_kwargs)
     else:
         segments, info = model.transcribe(
             audio_path,
@@ -146,7 +172,7 @@ def main():
     seconds = int(elapsed % 60)
 
     print(f"\n✅ Listo en {minutes}m {seconds}s → {output_path}")
-    print(f"   Ahora ejecutá: npm run summarize {output_path}")
+    print(f"   Ahora generá el resumen con PROMPT_RESUMEN.md: {output_path}")
 
 if __name__ == "__main__":
     main()

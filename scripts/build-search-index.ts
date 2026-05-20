@@ -3,20 +3,20 @@
  * Construye el índice de búsqueda semántica del vault.
  *
  * Recorre todas las entidades (.md) + episodios, embebe cada una con
- * Gemini text-embedding-004 (free tier) y guarda vault-mysha/_search-index.json.
+ * OpenAI (text-embedding-3-small) y guarda vault-mysha/_search-index.json.
  *
  * Uso:
  *   npx tsx scripts/build-search-index.ts
  *   npx tsx scripts/build-search-index.ts --only personaje   (un solo tipo)
  *
- * Idempotente: re-embebe todo. ~150 entidades = ~150 requests (free tier
- * aguanta 1500/día). Toma ~1-2 min.
+ * Idempotente: reusa embeddings cuyo snippet no cambió (si el modelo es
+ * el mismo). ~150 entidades = ~150 requests. Toma ~1 min.
  */
 
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
-import { embedText, type SearchIndex, type SearchIndexEntry } from "../lib/embeddings";
+import { embedText, EMBED_MODEL, type SearchIndex, type SearchIndexEntry } from "../lib/embeddings";
 import { ENTITY_FOLDERS, type EntityType } from "../lib/types";
 
 function loadEnv(): Record<string, string> {
@@ -46,8 +46,8 @@ function plainText(md: string, maxLen = 1200): string {
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
-// Free tier embeddings: 100 req/min. 700ms entre requests = ~85/min (margen).
-const RATE_LIMIT_MS = 700;
+// OpenAI embeddings: rate limits altos; igual dejamos un pequeño respiro.
+const RATE_LIMIT_MS = 200;
 
 /** Embebe con retry-backoff si pega contra el quota (429). */
 async function embedWithRetry(
@@ -57,7 +57,7 @@ async function embedWithRetry(
   let attempt = 0;
   while (true) {
     try {
-      return await embedText(apiKey, text, "RETRIEVAL_DOCUMENT");
+      return await embedText(apiKey, text);
     } catch (err) {
       const msg = err instanceof Error ? err.message : String(err);
       const isQuota = msg.includes("Quota exceeded") || msg.includes("429");
@@ -77,9 +77,9 @@ async function main() {
     onlyArg >= 0 ? (process.argv[onlyArg + 1] as EntityType) : null;
 
   const env = { ...process.env, ...loadEnv() };
-  const apiKey = env.GEMINI_API_KEY?.trim();
+  const apiKey = env.OPENAI_API_KEY?.trim();
   if (!apiKey) {
-    console.error("Error: GEMINI_API_KEY no está en .env.local");
+    console.error("Error: OPENAI_API_KEY no está en .env.local");
     process.exit(1);
   }
   const vaultPath = path.resolve(env.VAULT_PATH || "vault-mysha");
@@ -97,6 +97,8 @@ async function main() {
   } catch {
     prev = null;
   }
+  // Si el modelo de embeddings cambió, las dims no son compatibles: re-embeber todo.
+  if (prev && prev.model !== EMBED_MODEL) prev = null;
   const prevByKey = new Map<string, SearchIndexEntry>();
   if (prev) {
     for (const e of prev.entries) prevByKey.set(`${e.tipo}/${e.slug}`, e);
@@ -151,7 +153,7 @@ async function main() {
   }
 
   const index: SearchIndex = {
-    model: "gemini-embedding-001",
+    model: EMBED_MODEL,
     built_at: new Date().toISOString(),
     entries,
   };

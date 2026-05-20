@@ -1,7 +1,7 @@
 "use server";
 
 // app/actions/search.ts — Búsqueda semántica sobre el vault.
-// Embebe la query con Gemini y rankea por similitud coseno contra el índice.
+// Embebe la query con OpenAI y rankea por similitud coseno contra el índice.
 // Fallback: si no hay índice o falla el embed, hace match por substring.
 
 import fs from "node:fs/promises";
@@ -70,13 +70,13 @@ export async function searchAction(query: string): Promise<SearchResult> {
     };
   }
 
-  const apiKey = process.env.GEMINI_API_KEY?.trim();
+  const apiKey = process.env.OPENAI_API_KEY?.trim();
   if (!apiKey) {
     return { success: true, hits: substringSearch(index, q), mode: "substring" };
   }
 
   try {
-    const qVec = await embedText(apiKey, q, "RETRIEVAL_QUERY");
+    const qVec = await embedText(apiKey, q);
     const hits: SearchHit[] = index.entries
       .map((e) => ({
         tipo: e.tipo,
@@ -89,7 +89,7 @@ export async function searchAction(query: string): Promise<SearchResult> {
       .slice(0, 10);
     return { success: true, hits, mode: "semantic" };
   } catch {
-    // Si Gemini falla (rate limit, etc.) caemos a substring sin romper
+    // Si OpenAI falla (rate limit, etc.) caemos a substring sin romper
     return { success: true, hits: substringSearch(index, q), mode: "substring" };
   }
 }

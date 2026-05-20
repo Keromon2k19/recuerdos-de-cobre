@@ -1,84 +1,191 @@
 # Antología · Recuerdos de Cobre — Contexto para Codex
 
-> Nota de reinicio: este documento refleja una iteracion anterior del MVP.
-> Para el objetivo actual del proyecto, leer primero `docs/GOAL.md`.
-> No reconstruir "Sala de Cobre" como diseno final.
+> Fuente de verdad vigente del proyecto: `docs/GOAL.md`.
+> Fuente de verdad del resumen: `PROMPT_RESUMEN.md`.
+> Si algo en este archivo contradice esos dos, ellos mandan.
+> Documentos legacy (`PRODUCT.md`, `DESIGN.md`, `CLAUDE.md`) describen una
+> iteración previa: contexto histórico, NO dirección final. No reconstruir
+> "Sala de Cobre" como diseño final.
+
+---
+
+## ⭐ Tarea de Codex: resumen + extracción de cada episodio (desatendido, sin API)
+
+En este proyecto, por episodio, hacés **dos artefactos a mano** (sin Gemini,
+sin Ollama, sin API de pago): el **resumen** narrativo y la **extracción** de
+lore estructurado. Trabajás en paralelo con Claude Code (app/diseño/código).
+Para no pisarse, respetá el dominio de archivos **al pie de la letra**.
+
+### Qué hacés y qué NO
+
+- ✅ Resumen narrativo siguiendo **`PROMPT_RESUMEN.md`** exactamente.
+- ✅ Extracción de lore: generás `output/epNN.extraccion.json` conforme al
+  schema de `lib/schema.ts` (`ExtractionResult`) y a las reglas de
+  `lib/prompts.ts` (`SYSTEM_PROMPT`). Lo hacés **vos a mano**, leyendo tu
+  propio resumen. NO llamás a ningún modelo/API para esto.
+- ✅ Ambos los escribís **vos** (modelo grande). Los modelos chicos no dan la
+  talla. **Nunca** delegues en Gemini/Ollama/API.
+- ❌ NO hacés `git`, `npm`, commits, ni tocás `app/`, `lib/`, `components/`,
+  `scripts/`, `docs/`, configs (`lib/` y `lib/prompts.ts`/`lib/schema.ts` son
+  **solo lectura**, como referencia del shape y las reglas).
+- ❌ NO commiteás al vault. El commit lo hace Joaquín: revisa en `/review` o
+  corre `scripts/commit-manual.ts`. Vos dejás los dos archivos en `output/`.
+
+### Dominio de archivos
+
+| Acción | Archivos |
+|---|---|
+| **Leer** | `output/epNN.transcript.txt`, `PROMPT_RESUMEN.md`, `docs/GOAL.md`, `vault-mysha/_glossary.md`, `lib/schema.ts`, `lib/prompts.ts`, `vault-mysha/_jobs/0NN.json` |
+| **Escribir** | `output/epNN.resumen.md` y `output/epNN.extraccion.json` |
+| **Editar** | `vault-mysha/_jobs/0NN.json` (solo los campos indicados abajo) |
+| **Prohibido tocar** | todo lo demás del repo |
+
+`output/` y `vault-mysha/` están en `.gitignore`: tu trabajo nunca entra en
+commits ni genera conflictos de git. Ese es el contrato con Claude Code.
+
+### Flujo por episodio
+
+1. Leer el transcript completo en `output/epNN.transcript.txt`.
+2. **Resumen**: aplicar **exactamente** `PROMPT_RESUMEN.md` (campaña coral de
+   6 PJs, Mysha NO protagonista; sin meta-juego/OOC; sin mecánicas; excluir el
+   recap inicial; normalizar nombres con el glosario; NPCs con rol/oficio/qué
+   aportan; negritas en primera aparición de lugares/facciones; exactamente las
+   4 secciones). Escribir `output/epNN.resumen.md`.
+3. Inyectar el resumen en `vault-mysha/_jobs/0NN.json` (3 dígitos): setear
+   `"resumen"` = contenido del `.md`, `"estado": "done"`,
+   `"etapa_actual": "Resumen listo — cargá al formulario"`,
+   `"actualizado_en"` = ISO actual; **eliminar** `"committed_entities"`,
+   `"pid"`, `"progress"`, `"progress_detail"` si existen; mantener el resto
+   (`numero`, `videoId`, `url`, `titulo`, `publicado_en`, `iniciado_en`,
+   `auto_commit`, `audio_path`, `transcript_path`). No edites el JSON a mano:
+   usá un script Node temporal en `output/` (gitignored) y borralo (patrón
+   abajo).
+4. **Extracción**: a partir de tu propio resumen, generar
+   `output/epNN.extraccion.json` con este shape exacto (todas las claves
+   presentes, listas vacías si no hay nada):
+
+   ```json
+   {
+     "personajes":   [{ "nombre": "", "descripcion": "", "alias": [] }],
+     "lugares":      [{ "nombre": "", "descripcion": "" }],
+     "eventos":      [{ "nombre": "", "descripcion": "" }],
+     "objetos":      [{ "nombre": "", "descripcion": "" }],
+     "facciones":    [{ "nombre": "", "descripcion": "" }],
+     "worldbuilding":[{ "tema": "",   "descripcion": "" }],
+     "relaciones":   [{ "de": "", "a": "", "tipo": "", "episodio": NN }],
+     "misterios":    [""],
+     "quotes":       [{ "texto": "", "autor": "" }],
+     "decisiones":   [{ "descripcion": "", "protagonistas": [""] }]
+   }
+   ```
+
+   Reglas (ver `lib/prompts.ts` para el detalle): los 6 PJs siempre como
+   personajes (Mysha con `alias:["Selenne","Veltra"]`); dioses como
+   worldbuilding, no personajes; el DM nunca como personaje; descripciones
+   diferenciales del episodio (no reafirmar identidad); `episodio` de TODAS
+   las relaciones = NN del episodio analizado; exhaustivo en relaciones;
+   respondé en español. Debe ser JSON válido que pase el Zod de
+   `lib/schema.ts`.
+
+5. El commit al vault lo hace Joaquín (revisa en `/review` o corre
+   `npx tsx scripts/commit-manual.ts NN "<título>" [fechaISO]`). Vos no.
+
+Patrón del script de inyección del job (paso 3):
+
+```js
+// output/_inject_epNN.cjs  (borrar tras correr)
+const fs = require('fs');
+const base = 'C:/Users/joaqu/OneDrive/Documentos/claudeprojects/Mysha';
+const job = JSON.parse(fs.readFileSync(base+'/vault-mysha/_jobs/0NN.json','utf8'));
+job.resumen = fs.readFileSync(base+'/output/epNN.resumen.md','utf8');
+job.estado = 'done';
+job.etapa_actual = 'Resumen listo — cargá al formulario';
+job.actualizado_en = new Date().toISOString();
+delete job.committed_entities;
+delete job.pid; delete job.progress; delete job.progress_detail;
+fs.writeFileSync(base+'/vault-mysha/_jobs/0NN.json', JSON.stringify(job,null,2)+'\n','utf8');
+```
+
+Node preserva UTF-8 con acentos literales e indentación de 2 espacios.
+Reemplazá `NN`/`0NN` por el episodio.
+
+### Orden de trabajo y estado actual
+
+- **ep06, ep07** → resumen ya hecho por Claude (no lo rehagas). Falta solo la
+  **extracción**: generá `output/ep06.extraccion.json` y
+  `output/ep07.extraccion.json` a partir de los resúmenes existentes.
+- **ep08 → ep12** → resumen viejo de la tanda Gemini: rehacé resumen +
+  extracción, en orden (08, 09, 10, 11, 12).
+- **ep13+** → el worker sigue transcribiendo. Tomá cada episodio en cuanto
+  exista `output/epNN.transcript.txt`.
+
+Un episodio está **listo** cuando existen `output/epNN.resumen.md`,
+`output/epNN.extraccion.json` y el job está en
+`"etapa_actual": "Resumen listo — cargá al formulario"`. Tras cada episodio
+escribí `epNN OK` y seguí sin pedir confirmación. Si falta un transcript,
+saltealo; no inventes contenido.
+
+### Lanzamiento (lo corre Joaquín)
+
+Segunda terminal, en la carpeta del proyecto, Codex en modo autónomo con
+escritura al workspace (confirmá el flag con `codex --help`; según versión es
+`codex --full-auto` o `codex --ask-for-approval never --sandbox workspace-write`):
+
+```
+codex --full-auto "Leé AGENTS.md, PROMPT_RESUMEN.md, lib/schema.ts y lib/prompts.ts. Por cada episodio pendiente: hacé el resumen (PROMPT_RESUMEN.md) en output/epNN.resumen.md, inyectalo al job, y la extracción en output/epNN.extraccion.json (shape de AGENTS.md / schema de lib/schema.ts). Empezá por la extracción de ep06 y ep07 (su resumen ya está), después ep08..ep12 resumen+extracción, después ep13+. No toques nada fuera de output/ y vault-mysha/_jobs/. Sin git, npm, commits ni API. Escribí 'epNN OK' tras cada uno."
+```
+
+Recomendado: revisar a mano el primero para calibrar antes de soltar el resto.
+
+---
 
 ## Qué es este proyecto
 
-Antología de la campaña TTRPG **Recuerdos de Cobre** (67 episodios de YouTube, dirigida por *Mates y Mazmorras*). App Next.js local-first. Pipeline: descarga + transcripción (Whisper) automáticas; el **resumen lo hace Codex a mano** siguiendo `PROMPT_RESUMEN.md` (Gemini bloquea el contenido oscuro de la campaña); la extracción de lore estructurado en 10 categorías la hace **Gemini** (sin créditos de API); se persiste como Markdown editable desde Obsidian.
-
-> El nombre de la **carpeta del proyecto** (`Mysha/`) y el del **vault** (`vault-mysha/`) son legacy y se mantienen para no romper paths; la app, branding y dominio se llaman **Antología · Recuerdos de Cobre · Grimorio de Lore**. **Es una campaña coral de 6 PJs: Mysha NO es la protagonista**, es una más del grupo (su nombre quedó en los paths legacy).
-
-## Stack
-
-- **Next.js 15** (App Router) + **React 19** + **TypeScript**
-- **Design system propio**: Cinzel + EB Garamond + IBM Plex Mono, modo claro (papiro envejecido / tinta vino) + oscuro (cuero / oro viejo) con anti-FOUC. CSS en `app/globals.css`.
-- **@anthropic-ai/sdk** — Codex API con tool use + prompt caching
-- **gray-matter** — parse/serialize Markdown con frontmatter
-- **zod** + **zod-to-json-schema** — validación del output del LLM
-- **vitest** — unit tests
-- **Cola de procesamiento**: jobs en `_jobs/N.json`, worker auto-encadenado en `scripts/process-episode.ts` que hace download → transcribe (Whisper batched) → **STOP** en estado `esperando_resumen`. El resumen lo hace Codex a mano (ver `PROMPT_RESUMEN.md`) e inyecta en el job; después el formulario corre extracción (Gemini) → revisión manual en `/review` → commit al vault. La cola sigue descargando+transcribiendo otros episodios en paralelo.
-
-## Estructura del proyecto
+Antología de la campaña TTRPG **Recuerdos de Cobre** (67 episodios de YouTube,
+dirigida por *Mates y Mazmorras*). App Next.js local-first. Pipeline:
 
 ```
-app/
-  page.tsx                    # Home = formulario de carga
-  layout.tsx                  # Layout con sidebar
-  review/page.tsx             # Revisión post-extracción (editable)
-  episodios/page.tsx          # Lista de episodios
-  episodios/[num]/page.tsx    # Ficha de episodio
-  entidades/[tipo]/page.tsx   # Lista por tipo
-  entidades/[tipo]/[slug]/page.tsx  # Ficha de entidad
-  actions/
-    extract.ts                # Server action: extracción con Gemini
-    commit.ts                 # Server action: escribe vault
-    process.ts                # Server actions: cola (enqueue/resume/cancel)
-
-components/
-  Sidebar.tsx                 # Navegación lateral
-  LoadEpisodeForm.tsx         # Formulario de carga
-  ReviewCard.tsx              # Card editable de revisión
-
-lib/
-  types.ts                    # EntityType, Mention, Entity, Relacion, Episodio
-  schema.ts                   # Zod schemas + JSON Schema para tool use
-  slugify.ts                  # Slugificación Unicode-safe
-  markdown.ts                 # Parse/serialize .md ↔ objetos
-  vault.ts                    # CRUD filesystem (read/write/list)
-  Codex.ts                   # Cliente Anthropic con tool use
-  prompts.ts                  # Prompt versionado
-  config.ts                   # Validación de env vars
-
-tests/
-  config.test.ts, schema.test.ts, markdown.test.ts, vault.test.ts
+Whisper local → transcript crudo (output/epNN.transcript.txt)
+  → resumen narrativo (Codex/Claude a mano, PROMPT_RESUMEN.md)
+  → output/epNN.resumen.md + inyección al job
+  → extracción de lore (Codex/Claude a mano, sin API)
+  → output/epNN.extraccion.json (valida con lib/schema.ts)
+  → Joaquín revisa en /review o corre scripts/commit-manual.ts
+  → commit al vault (Markdown editable desde Obsidian)
+  → sitio público read-only
 ```
 
-## Personajes y facciones clave (cheat-sheet)
+Sin Gemini, sin Ollama, sin API de pago: resumen y extracción los hace un
+modelo grande a mano (Claude/Codex). El criterio narrativo del transcript es
+demasiado alto para modelos chicos y la API quedó descartada por costo.
 
-> Fuente de verdad completa: `vault-mysha/_glossary.md`
+> El nombre de la carpeta (`Mysha/`) y del vault (`vault-mysha/`) son legacy y
+> se mantienen para no romper paths. La app/branding se llama **Antología ·
+> Recuerdos de Cobre**. **Campaña coral de 6 PJs: Mysha NO es la
+> protagonista**, es una más del grupo (su nombre quedó en los paths legacy).
 
-- **Mysha** (Kero) — PJ, **una más del grupo, NO la protagonista**. Bruja de sangre. Empieza en el Coven Rojo, después Coven Rosa. **Tiene 3 personalidades**: Mysha (principal), Selenne, Veltra — la misma persona.
-- **Borok** (Mati), **Layra** (Layla), **Narcissa** (Mica), **David Ilcard** (Lucho), **Io Campbell** (Mile/Kuzu/Sis/Nico) — los otros 5 PJs.
+## Personajes y facciones clave (cheat-sheet para normalizar nombres)
+
+> Fuente completa: `vault-mysha/_glossary.md`. El glosario de normalización
+> canónico vive dentro de `PROMPT_RESUMEN.md` — usalo siempre.
+
+- **Mysha** (jugadora Kero) — PJ, una más del grupo, NO la protagonista. Bruja
+  de sangre. Empieza en el Coven Rojo, después Coven Rosa. **3 personalidades**:
+  Mysha (principal), Selenne, Veltra — la misma persona. *Whisper la transcribe
+  como Milla/Misha/Mila → Mysha.*
+- **Borok** (Mati), **Layra** (Layla), **Narcissa** (Mica),
+  **David Ilcard** (Lucho), **Io Campbell** (Mile/Kuzu/Sis/Nico) — los otros
+  5 PJs. "Io" es nombre propio, no el pronombre "yo".
 - **Champi** — búho familiar de Mysha.
+- **El DM** — narrador, lo llaman **Ra**, **Rammis**, **Haru** o **DM**. NO es
+  personaje del mundo; nunca lo registres como NPC.
 - **Coven Rojo / Rosa / Negro / Blanco / Verde** — 5 covens.
-- **Hermandad de Cobre** — gremio en Metrópolis de Cobre.
+- **Hermandad de Cobre** — gremio en la Metrópolis de Cobre.
 
-## Estado actual
+## Reglas generales
 
-- ✅ App completa y funcional (MVP)
-- ✅ 19 tests pasando, TypeScript compila sin errores
-- ✅ Flujo: download+transcribe (auto) → resumen (Codex a mano) → extraer con Gemini → revisar/editar → guardar al vault
-- ✅ Navegación: episodios (cronológica) + entidades (por tipo)
-- ⏳ Los 67 episodios se procesan de a poco (resúmenes manuales)
-- El vault se genera en `vault-mysha/` (configurable via VAULT_PATH en .env.local)
-
-## Instrucciones para Codex
-
-- Responder siempre en **español**
-- El usuario trabaja desde Codex CLI y Antigravity (IDE de Google)
-- **Resúmenes los hace Codex**: cuando el usuario pida resumir un episodio, seguir `PROMPT_RESUMEN.md` al pie de la letra (leer transcript → escribir resumen → inyectar en el job). NO usar Gemini para resumir.
-- Extracción y formulario corren con **Gemini** (no hay créditos de Anthropic API; el plan Pro de Codex.ai NO da acceso a la API)
-- Si se edita el prompt de resumen o el de extracción (`lib/prompts.ts`), **alinear ambos** — son la misma campaña
-- La persistencia es Markdown plano — compatible con Obsidian sin sync bidireccional
+- Responder y escribir siempre en **español**.
+- `PROMPT_RESUMEN.md` (resumen) y `lib/prompts.ts` (extracción) son la misma
+  campaña: si se edita uno, alinear el otro.
+- La persistencia es Markdown plano, compatible con Obsidian. El vault
+  (`vault-mysha/`) es la fuente de verdad editable.

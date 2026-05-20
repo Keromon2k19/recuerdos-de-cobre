@@ -1,12 +1,12 @@
 # Prompt canónico de resumen — Recuerdos de Cobre
 
-**Fuente única de verdad.** Los resúmenes los hace Claude Code a mano: el transcript es enorme y de máximo criterio narrativo — los modelos chicos (local/cloud) no dan la talla en esta tarea (probado; ver `docs/GOAL.md`). La *extracción* (resumen → JSON) sí la hace Ollama local. Cuando el usuario pida resumir un episodio:
+**Fuente única de verdad.** Los resúmenes los hace Claude Code a mano: el transcript es enorme y de máximo criterio narrativo — los modelos chicos (local/cloud) no dan la talla en esta tarea (probado; ver `docs/GOAL.md`). La *extracción* (resumen → JSON) también la hace Codex/Claude a mano (sin API), validada con `lib/schema.ts`. Cuando el usuario pida resumir un episodio:
 
 1. Leer el transcript en `output/epNN.transcript.txt` (lo deja el pipeline; el job queda en estado `esperando_resumen`).
 2. Aplicar **exactamente** el prompt de abajo.
 3. Escribir el resultado en `output/epNN.resumen.md`.
 4. Inyectarlo en el job: editar `vault-mysha/_jobs/0NN.json` → setear `"resumen"` con el texto y `"estado": "done"`, `"etapa_actual": "Resumen listo — cargá al formulario"`. (No tocar `committed_entities`: su ausencia hace que la UI muestre el botón "📤 Cargar".)
-5. El usuario carga el resumen al formulario → **Ollama** extrae (qwen2.5:7b; fallback Gemini) → revisa en `/review` → commit al vault.
+5. Codex/Claude también genera `output/epNN.extraccion.json` (schema `lib/schema.ts`). Joaquín revisa en `/review` o corre `scripts/commit-manual.ts` → commit al vault.
 
 ---
 
@@ -26,7 +26,7 @@
 > Whisper transcribe mal los nombres. Corregí según esta lista; ante un nombre fonéticamente parecido, asumí error y usá el canónico.
 >
 > **PJs (solo 6, NUNCA NPCs; grupo de iguales, ninguno es "el protagonista"):**
-> - **Mysha** — humana, bruja de sangre (Coven Rojo/Rosa). 3 personalidades: Mysha, Selenne, Veltra; si actúan Selenne/Veltra referirse a ella como **Mysha** aclarando la personalidad. *Corregir: Milla, Misha, Milla Selen Beltra → Mysha.*
+> - **Mysha** — humana, bruja de sangre (Coven Rojo/Rosa). **EXACTAMENTE 3 personalidades: Mysha, Selenne, Veltra. "Milla" NO es una cuarta personalidad** — es solo el alias in-world que Mysha usa para presentarse ("Milla Selen Beltra", "Milla Selenne Veltra"). Fuera de citas literales de esa auto-presentación, **siempre normalizá Milla → Mysha**. Está prohibido el encabezado tipo "Mysha / Milla / Selenne / Veltra"; el header canónico es "Mysha / Selenne / Veltra" (o solo las personalidades que aparezcan). Si actúan Selenne/Veltra, referirse a ella como **Mysha** aclarando la personalidad. *Corregir: Milla, Misha → Mysha; solo conservar "Milla Selen Beltra" / "Milla Selenne Veltra" cuando se cita su auto-presentación.* Magia de sangre (Bloodsense, Blood Armor, Vampiric Blade, etc.) es **siempre de Mysha** (o de Selenne/Veltra como ella) — **nunca atribuir a Narcissa**, que es boticaria/druida.
 > - **Borok** — semi-orco.
 > - **Layra** — dracónica. *Corregir: Laira, Layyra → Layra.*
 > - **Narcissa** — boticaria.
@@ -46,7 +46,8 @@
 >
 > ```
 > ## Cast del episodio
-> (Viñetas con TODOS los nombres propios que aparecen activamente: PJs, NPCs, monstruos. Omitir al DM. Formato: **[Nombre]**: [rol/oficio en este episodio; si tiene tienda o negocio, qué ofrece; si ayuda o estorba al grupo].)
+> (Viñetas con TODOS los nombres propios que aparecen activamente: PJs, NPCs, monstruos. Omitir al DM. Formato: **[Nombre]**: [qué hizo o aportó en ESTE episodio].
+> Estilo: NO etiquetar "PJ"/"NPC" ni abrir con raza, clase, linaje u oficio salvo que aporte a la escena; el lector ya conoce la campaña. Empezar directo por la acción, el rol narrativo o el aporte concreto del episodio; la sección debe leerse como prosa natural, NO como fichas de personaje. Conservar datos útiles (oficio, si tiene tienda/negocio y qué ofrece, si ayuda o estorba, qué información/misión/recompensa entrega — sobre todo de NPCs, nunca omitirlos) pero integrados con naturalidad dentro de la frase, no como etiqueta inicial. Capitalizar la primera palabra de cada viñeta. No inventar ni cambiar hechos.)
 >
 > ## Resumen cronológico
 > (Prosa fluida en párrafos temáticos. Omitir el recap inicial y las mecánicas, agrupar acciones de los PJs narrativamente, orden cronológico estricto. Cada vez que aparece un NPC, dejar explícito qué hace, qué ofrece y cómo se relaciona con el grupo. Negritas en la primera aparición de lugares y facciones.)

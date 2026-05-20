@@ -133,6 +133,35 @@ function findFfmpeg(): string | null {
   ]);
 }
 
+function findWhisperPython(): string {
+  const fromEnv = process.env.WHISPER_PYTHON;
+  if (fromEnv && fs.existsSync(fromEnv)) return fromEnv;
+
+  const localVenv = path.join(process.cwd(), ".venv-whisper", "Scripts", "python.exe");
+  if (fs.existsSync(localVenv)) return localVenv;
+
+  return "python";
+}
+
+function whisperPythonEnv(): NodeJS.ProcessEnv {
+  const userSite = path.join(
+    os.homedir(),
+    "AppData",
+    "Roaming",
+    "Python",
+    "Python314",
+    "site-packages"
+  );
+  const existingPythonPath = process.env.PYTHONPATH;
+  return {
+    ...process.env,
+    PYTHONIOENCODING: "utf-8",
+    PYTHONPATH: existingPythonPath
+      ? `${userSite}${path.delimiter}${existingPythonPath}`
+      : userSite,
+  };
+}
+
 function walkForFile(root: string, name: string, maxDepth: number): string | null {
   if (maxDepth < 0) return null;
   let entries: fs.Dirent[];
@@ -215,6 +244,15 @@ async function downloadAudio(
   });
 
   const audioPath = path.join(outputDir, `ep${String(job.numero).padStart(2, "0")}.mp3`);
+  if (fs.existsSync(audioPath) && fs.statSync(audioPath).size > 0) {
+    updateJob(vaultPath, job.numero, {
+      estado: "downloading",
+      etapa_actual: "Audio ya descargado — reutilizando MP3 local...",
+      audio_path: audioPath,
+    });
+    return audioPath;
+  }
+
   const args = [
     "-x",
     "--audio-format",
@@ -291,8 +329,8 @@ async function transcribeAudio(
   // transcribe.py genera <audio>.txt en la misma carpeta del audio.
   // PYTHONIOENCODING=utf-8 fuerza stdout/stderr en UTF-8 (sin esto Python
   // crashea en Windows al imprimir emojis con codepage cp1252).
-  const result = await spawnAndWait("python", [transcribeScript, audioPath, "es"], {
-    env: { ...process.env, PYTHONIOENCODING: "utf-8" },
+  const result = await spawnAndWait(findWhisperPython(), [transcribeScript, audioPath, "es"], {
+    env: whisperPythonEnv(),
     onStdoutLine,
   });
   if (result.code !== 0) {

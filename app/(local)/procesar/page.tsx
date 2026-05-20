@@ -27,7 +27,7 @@ export default async function Home() {
       <div className="page-header">
         <div className="page-eyebrow">Principal</div>
         <h1>Cargar Episodio</h1>
-        <p>Pegá el resumen de Gemini y dejá que la IA extraiga el lore.</p>
+        <p>Pegá el resumen del episodio y cargá la extracción revisada.</p>
       </div>
       <LoadEpisodeForm playlistOptions={playlistOptions} />
     </>

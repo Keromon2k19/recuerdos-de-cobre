@@ -5,7 +5,7 @@ import { readEpisode, getVaultStats } from "@/lib/vault";
 import { cachedListEpisodes, cachedListByType } from "@/lib/public-cache";
 import { parseMarkdown } from "@/lib/markdown";
 import { splitEpisodeSections } from "@/lib/episode-sections";
-import { resolveImage } from "@/lib/images";
+import { resolveImage, type ResolvedImage } from "@/lib/images";
 import { PUBLIC_ENTITIES } from "@/lib/entity-public";
 import AtlasImage from "@/components/public/AtlasImage";
 
@@ -92,11 +92,11 @@ export default async function HomePage() {
     },
   ];
 
-  const heroImg = resolveImage(
-    {},
-    "episodios",
-    "Atmósfera de la Metrópolis de Cobre al anochecer"
-  );
+  const heroImg: ResolvedImage = {
+    kind: "img",
+    src: "/images/hero/portada.svg",
+    alt: "Atmósfera de la Metrópolis de Cobre al anochecer",
+  };
 
   return (
     <>
