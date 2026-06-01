@@ -5,6 +5,7 @@
 
 import { loadConfig } from "@/lib/config";
 import { commitEpisode } from "@/lib/commit";
+import { readJob, writeJob } from "@/lib/vault";
 import type { ExtractionResult } from "@/lib/types";
 
 export type CommitResult =
@@ -28,6 +29,10 @@ export async function commitEpisodeAction(
       extraido,
       fechaGrabacion,
     });
+    const job = await readJob(config.vaultPath, numero);
+    if (job) {
+      await writeJob(config.vaultPath, { ...job, estado: "done", etapa_actual: "Commiteado al vault" });
+    }
     return { success: true, filesWritten: result.filesWritten };
   } catch (err) {
     return {

@@ -1,0 +1,14 @@
+---
+tipo: quote
+nombre: 'Veltra — "Mi falta de miedo no es un don, es una m..."'
+alias: []
+apariciones:
+  - 70
+ultima_actualizacion: '2026-05-22T11:25:14.429Z'
+---
+
+## Menciones por episodio
+
+### [[070-recuerdos-de-cobre-57-el-familiar-de-la-raven-queen|Ep. 70 — Recuerdos De Cobre 57: El Familiar de la Raven Queen]]
+- Mi falta de miedo no es un don, es una maldición.
+

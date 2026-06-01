@@ -1,0 +1,14 @@
+---
+tipo: misterio
+nombre: Que importancia tendra la entrada al Underdark cerca de las ...
+alias: []
+apariciones:
+  - 31
+ultima_actualizacion: '2026-05-19T14:45:33.805Z'
+---
+
+## Menciones por episodio
+
+### [[031-recuerdos-de-cobre-24-la-gata-rompehogares|Ep. 31 — Recuerdos de Cobre 24: La gata rompehogares]]
+- Que importancia tendra la entrada al Underdark cerca de las Montanas de la Libertad.
+

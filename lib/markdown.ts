@@ -1,7 +1,27 @@
 // lib/markdown.ts — Parse/serialize entre objetos TS y archivos .md con frontmatter
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import matter from "gray-matter";
 import type { Episodio, Entity, ExtractionResult, Relacion } from "./types";
 import { episodeFilename } from "./slugify";
+
+/**
+ * Raíz del proyecto, derivada de la ubicación de este archivo
+ * (no de process.cwd(), que varía según quién invoque el código).
+ */
+const PROJECT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+
+/**
+ * Si existe public/images/episodios/epNN.jpg (poblado por
+ * scripts/extract-thumbnails.ts), devuelve la ruta web; si no, null.
+ * Se chequea en commit-time, no en render, así que el coste es despreciable.
+ */
+function thumbnailPathFor(numero: number): string | null {
+  const padded = String(numero).padStart(2, "0");
+  const abs = path.join(PROJECT_ROOT, "public", "images", "episodios", `ep${padded}.jpg`);
+  return fs.existsSync(abs) ? `/images/episodios/ep${padded}.jpg` : null;
+}
 
 // ─── Parsing genérico ───
 
@@ -48,6 +68,15 @@ export function buildEpisodeMarkdown(ep: Episodio): string {
 
   if (ep.fecha_grabacion) {
     fm.fecha_grabacion = ep.fecha_grabacion;
+  }
+
+  // Auto-inyecta `image:` desde public/images/episodios/ por convención
+  // (epNN.jpg). Mantiene los frontmatters sincronizados sin tocar la lógica
+  // de extracción ni el flujo de Codex. Si no hay miniatura, el resolver
+  // cae a placeholder. Re-correr scripts/extract-thumbnails.ts repuebla.
+  const thumb = thumbnailPathFor(ep.numero);
+  if (thumb) {
+    fm.image = thumb;
   }
 
   let body = "";
@@ -289,12 +318,13 @@ export function updateEntityMarkdown(
     fm.relaciones = existingRel;
   }
 
-  // Reemplazar o agregar sección del episodio en el body
+  // Reemplazar o agregar sección del episodio en el body.
+  // Sin flag `g`: solo hay una sección por episodio en cada entidad, y el flag
+  // hace que .test() avance lastIndex y rompa el .replace() siguiente.
   let body = parsed.body;
   const epSlug = episodeFilename(episodio, titulo).replace(".md", "");
   const sectionRegex = new RegExp(
     `### \\[\\[${escapeRegExp(epSlug)}\\|[^\\]]*\\]\\]\n(?:- [^\n]*\n?)*`,
-    "g"
   );
 
   if (sectionRegex.test(body)) {

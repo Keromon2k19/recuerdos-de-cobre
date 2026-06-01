@@ -1,0 +1,14 @@
+---
+tipo: evento
+nombre: Llegada al túnel seguro
+alias: []
+apariciones:
+  - 19
+ultima_actualizacion: '2026-05-19T12:41:39.307Z'
+---
+
+## Menciones por episodio
+
+### [[019-recuerdos-de-cobre-12-el-descenso|Ep. 19 — Recuerdos de cobre 12: El Descenso]]
+- Al alcanzar piedra limpia, las criaturas dejan de perseguir al grupo.
+

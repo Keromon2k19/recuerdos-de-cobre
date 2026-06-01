@@ -16,6 +16,9 @@ export const ExtractionResultSchema = z.object({
       nombre: z.string().min(1),
       descripcion: z.string().min(1),
       alias: z.array(z.string()).optional().default([]),
+      // Rol opcional — si el LLM lo provee (prompt evoluciona a pedirlo),
+      // se preserva; si no, lib/commit.ts:rolDePersonaje lo infiere por nombre.
+      rol: z.enum(["PJ", "NPC", "familiar", "antagonista"]).optional(),
     })
   ),
   lugares: z.array(

@@ -1,0 +1,97 @@
+<svg viewBox="0 0 800 480" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <!-- Cielo con horizonte cálido -->
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#3a1a0a"/>
+      <stop offset="35%" stop-color="#5a2812"/>
+      <stop offset="65%" stop-color="#2a160a"/>
+      <stop offset="100%" stop-color="#0e0805"/>
+    </linearGradient>
+    <linearGradient id="far" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#4a3220"/>
+      <stop offset="100%" stop-color="#1a1108"/>
+    </linearGradient>
+    <linearGradient id="mid" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#3a2818"/>
+      <stop offset="100%" stop-color="#100a06"/>
+    </linearGradient>
+    <linearGradient id="near" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#2a1d10"/>
+      <stop offset="100%" stop-color="#070504"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="72%" cy="36%" r="22%">
+      <stop offset="0%"  stop-color="#fde0a8" stop-opacity="0.85"/>
+      <stop offset="40%" stop-color="#f5b56a" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#b87333" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="fog" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#5a3a20" stop-opacity="0"/>
+      <stop offset="60%" stop-color="#3a2a18" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#1a1108" stop-opacity="0.85"/>
+    </linearGradient>
+    <radialGradient id="window">
+      <stop offset="0%"  stop-color="#f5cc78" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#b87333" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="vignette" cx="50%" cy="50%" r="75%">
+      <stop offset="50%" stop-color="#000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.55"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="800" height="480" fill="url(#sky)"/>
+  <circle cx="576" cy="168" r="62" fill="url(#sun)"/>
+  <circle cx="576" cy="168" r="42" fill="#fde0a8" opacity="0.42"/>
+  <circle cx="576" cy="168" r="22" fill="#fdf0c0" opacity="0.75"/>
+
+  <!-- Capa lejana -->
+  <path d="M0 280 L40 270 L80 280 L120 250 L160 265 L200 240 L230 250 L260 235 L290 245 L330 220 L360 235 L380 215 L400 230 L440 200 L480 220 L520 195 L560 215 L600 200 L640 220 L680 205 L720 225 L760 215 L800 230 L800 480 L0 480 Z" fill="url(#far)" opacity="0.92"/>
+  <rect x="240" y="195" width="6" height="50" fill="#3a2818" opacity="0.85"/>
+  <rect x="320" y="180" width="7" height="60" fill="#3a2818" opacity="0.85"/>
+  <rect x="410" y="170" width="8" height="65" fill="#3a2818" opacity="0.85"/>
+  <rect x="540" y="160" width="6" height="58" fill="#2a1810" opacity="0.85"/>
+
+  <!-- Capa media con cúpula -->
+  <path d="M0 340 L60 325 L100 335 L130 300 L160 312 L190 285 L220 295 L250 268 L280 280 L310 252 L340 270 L370 245 L400 262 L420 232 L450 252 L470 222 L500 245 L530 220 L560 248 L590 230 L620 255 L660 240 L700 265 L740 250 L780 275 L800 268 L800 480 L0 480 Z" fill="url(#mid)"/>
+  <ellipse cx="395" cy="240" rx="22" ry="14" fill="#3a2818"/>
+  <rect x="380" y="240" width="30" height="40" fill="#3a2818"/>
+  <rect x="378" y="278" width="34" height="6" fill="#5a3a20" opacity="0.6"/>
+  <path d="M395 220 L391 240 L399 240 Z" fill="#5a3a20"/>
+
+  <!-- Ventanas con luz cálida -->
+  <circle cx="135" cy="318" r="4" fill="url(#window)"/>
+  <circle cx="208" cy="298" r="3" fill="url(#window)"/>
+  <circle cx="275" cy="285" r="4" fill="url(#window)"/>
+  <circle cx="358" cy="270" r="3" fill="url(#window)"/>
+  <circle cx="442" cy="260" r="4" fill="url(#window)"/>
+  <circle cx="488" cy="240" r="3" fill="url(#window)"/>
+  <circle cx="630" cy="258" r="4" fill="url(#window)"/>
+  <circle cx="715" cy="268" r="3" fill="url(#window)"/>
+
+  <!-- Capa cercana -->
+  <path d="M0 395 L50 378 L90 388 L130 372 L170 382 L210 365 L250 380 L290 360 L330 378 L370 358 L410 372 L450 355 L490 370 L530 350 L570 365 L610 348 L650 362 L690 350 L730 365 L770 352 L800 365 L800 480 L0 480 Z" fill="url(#near)"/>
+
+  <!-- Dirigible -->
+  <g transform="translate(140,135)" opacity="0.92">
+    <ellipse cx="0" cy="0" rx="72" ry="17" fill="#4a3220"/>
+    <ellipse cx="0" cy="-3" rx="68" ry="13" fill="#5a3e2a"/>
+    <ellipse cx="-58" cy="0" rx="14" ry="6" fill="#3a2818"/>
+    <rect x="-10" y="14" width="20" height="8" fill="#2a1810" rx="2"/>
+    <line x1="-10" y1="14" x2="-30" y2="2" stroke="#5a3a20" stroke-width="0.6" opacity="0.6"/>
+    <line x1="10"  y1="14" x2="30"  y2="2" stroke="#5a3a20" stroke-width="0.6" opacity="0.6"/>
+  </g>
+
+  <!-- Pájaros distantes -->
+  <g fill="none" stroke="#1a0e06" stroke-width="1.1" opacity="0.7">
+    <path d="M310 110 q4 -4 8 0 q4 -4 8 0"/>
+    <path d="M360 95 q3 -3 6 0 q3 -3 6 0"/>
+    <path d="M420 120 q3 -3 6 0 q3 -3 6 0"/>
+  </g>
+
+  <rect x="0" y="280" width="800" height="200" fill="url(#fog)"/>
+  <rect width="800" height="480" fill="url(#vignette)"/>
+
+  <!-- Marco etching doble -->
+  <rect x="4" y="4" width="792" height="472" fill="none" stroke="#b87333" stroke-width="1" opacity="0.45"/>
+  <rect x="10" y="10" width="780" height="460" fill="none" stroke="#b87333" stroke-width="0.4" opacity="0.32"/>
+</svg>

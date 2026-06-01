@@ -5,14 +5,18 @@
 // link se renderiza como texto resaltado (sin links muertos).
 import { cachedListByType } from "./public-cache";
 import { slugify } from "./slugify";
-import { PUBLIC_ENTITIES } from "./entity-public";
+import { BY_SEGMENT, PUBLIC_ENTITIES } from "./entity-public";
 import type { WikiResolver } from "./markdown-render";
+
+const RESOLVER_TTL_MS = Number(process.env.PUBLIC_CACHE_TTL_MS ?? 300_000);
+const resolverCache = new Map<string, { at: number; resolve: WikiResolver }>();
 
 export async function buildWikiResolver(
   vaultPath: string
 ): Promise<WikiResolver> {
   const bySlug = new Map<string, string>(); // slug -> href
   const byName = new Map<string, string>(); // nombre.toLowerCase() -> href
+  const byPath = new Map<string, string>(); // carpeta/slug -> href
 
   await Promise.all(
     PUBLIC_ENTITIES.map(async (cfg) => {
@@ -20,6 +24,7 @@ export async function buildWikiResolver(
       for (const it of items) {
         const href = `/${cfg.segment}/${it.slug}`;
         if (!bySlug.has(it.slug)) bySlug.set(it.slug, href);
+        byPath.set(`${cfg.segment}/${it.slug}`.toLowerCase(), href);
         const key = it.nombre.toLowerCase();
         if (!byName.has(key)) byName.set(key, href);
       }
@@ -28,6 +33,25 @@ export async function buildWikiResolver(
 
   return (target: string): string | null => {
     const raw = target.replace(/^([^|]+)\|.+$/, "$1").trim();
+    const rawPath = raw
+      .replace(/\\/g, "/")
+      .replace(/\.md$/i, "")
+      .replace(/^\/+|\/+$/g, "");
+
+    const directPath = byPath.get(rawPath.toLowerCase());
+    if (directPath) return directPath;
+
+    const parts = rawPath.split("/");
+    if (parts.length > 1) {
+      const folder = parts[0].toLowerCase();
+      const cfg = BY_SEGMENT[folder];
+      if (cfg) {
+        const href = byPath.get(
+          `${cfg.segment}/${slugify(parts.slice(1).join("/"))}`.toLowerCase()
+        );
+        if (href) return href;
+      }
+    }
 
     // Wikilink a episodio: "007-...-slug" o número suelto
     const epSlug = raw.match(/^(\d{1,3})\b/);
@@ -43,4 +67,15 @@ export async function buildWikiResolver(
       null
     );
   };
+}
+
+export async function cachedBuildWikiResolver(
+  vaultPath: string
+): Promise<WikiResolver> {
+  const hit = resolverCache.get(vaultPath);
+  if (hit && Date.now() - hit.at < RESOLVER_TTL_MS) return hit.resolve;
+
+  const resolve = await buildWikiResolver(vaultPath);
+  resolverCache.set(vaultPath, { at: Date.now(), resolve });
+  return resolve;
 }

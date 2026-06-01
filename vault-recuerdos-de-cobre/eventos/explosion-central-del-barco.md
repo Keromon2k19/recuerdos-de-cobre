@@ -1,0 +1,14 @@
+---
+tipo: evento
+nombre: Explosion central del barco
+alias: []
+apariciones:
+  - 72
+ultima_actualizacion: '2026-05-22T11:33:14.290Z'
+---
+
+## Menciones por episodio
+
+### [[072-recuerdos-de-cobre-60-la-caida-del-emperador|Ep. 72 — Recuerdos De Cobre 60: La Caída del Emperador]]
+- El Emperador dispara contra explosivos y parte el barco casi a la mitad, dejando fuego, huecos y peligro de hundimiento.
+

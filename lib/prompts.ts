@@ -18,7 +18,7 @@ Hay **exactamente 6 PJs**: Mysha, Borok, Layra, Narcissa, David Ilcard, Io Campb
 
 - **Mysha** — PJ, **bruja de sangre** (una más del grupo, NO la protagonista). Empieza siendo miembro del **Coven Rojo** (más adelante en la trama pasa al **Coven Rosa**). Tiene **3 personalidades** que conviven en la misma persona: **Mysha** (principal), **Selenne** y **Veltra**. Si el resumen dice "Selenne hizo X" o "ahora habla Veltra", **es la misma persona** actuando bajo otra personalidad — registrala SIEMPRE como un único personaje "Mysha" con \`alias: ["Selenne", "Veltra"]\` y mencioná la personalidad activa en la descripción de la mención. ⚠️ Si ves "Milla", "Misha" o "Milla Selen Beltra", es Mysha transcripta mal — mismo trato.
 - **Borok** — PJ semi-orco. Campeón de Vecna (sellado al final del Acto IV).
-- **Layra** — PJ dracónica. ⚠️ Grafías incorrectas vistas: Laira, Layyra. La canónica es **Layra**. (Nota: "Layla" es la jugadora, no el personaje.)
+- **Layra** — PJ dracónida. ⚠️ Grafías incorrectas vistas: Laira, Layyra. La canónica es **Layra**. (Nota: "Layla" es la jugadora, no el personaje.)
 - **Narcissa** — **PJ boticaria** (no confundir con NPC aunque el resumen la presente como miembro de la Hermandad de Cobre).
 - **David Ilcard** — PJ asimar defensor de Tyr.
 - **Io Campbell** — PJ. Nombre propio (NO el pronombre "yo"). Es una criatura férrica (revelado en Acto III).

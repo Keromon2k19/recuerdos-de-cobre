@@ -7,9 +7,11 @@ import type { ResolvedImage } from "@/lib/images";
 export default function AtlasImage({
   img,
   priority = false,
+  sizes,
 }: {
   img: ResolvedImage;
   priority?: boolean;
+  sizes?: string;
 }) {
   if (img.kind === "img") {
     return (
@@ -18,6 +20,8 @@ export default function AtlasImage({
         alt={img.alt}
         loading={priority ? "eager" : "lazy"}
         decoding="async"
+        fetchPriority={priority ? "high" : "auto"}
+        sizes={sizes}
       />
     );
   }

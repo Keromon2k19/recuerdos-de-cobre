@@ -1,0 +1,151 @@
+// app/(v2)/v2/capitulos/page.tsx
+import CapitulosClient from "./CapitulosClient";
+import { cachedListByType, cachedListEpisodes } from "@/lib/public-cache";
+import { parseEpisodioRef } from "@/lib/episode-number";
+import type { V2Chapter } from "@/data/atlas-v2/chapters";
+
+export const dynamic = "force-dynamic";
+
+export const metadata = {
+  title: "Capítulos · Grimorio de Lore",
+};
+
+function stripWikilink(s: string): string {
+  return s.replace(/^\[\[(?:[^|\]]+\|)?([^\]]+)\]\]$/, "$1").trim();
+}
+
+function cleanTitulo(titulo: string): string {
+  const colonIdx = titulo.indexOf(": ");
+  if (colonIdx > 0) return titulo.slice(colonIdx + 2);
+  return titulo;
+}
+
+type VaultEpisode = Awaited<ReturnType<typeof cachedListEpisodes>>[number];
+type CharacterItem = Awaited<ReturnType<typeof cachedListByType>>[number];
+
+const MAX_PERSONAJES = 8;
+const PLAYER_ORDER = [
+  "mysha",
+  "narcissa",
+  "eryon",
+  "io campbell",
+  "layra",
+  "selenne",
+  "veltra",
+];
+
+function formatEpisodeNumber(titulo: string, fallbackNumero: number): string {
+  const ref = parseEpisodioRef(titulo);
+  if (!ref) return String(fallbackNumero).padStart(2, "0");
+  return Number.isInteger(ref.ep) ? String(ref.ep).padStart(2, "0") : String(ref.ep);
+}
+
+function episodeEyebrow(titulo: string, fallbackNumero: number): string {
+  const ref = parseEpisodioRef(titulo);
+  if (!ref) return `REGISTRO ${String(fallbackNumero).padStart(3, "0")}`;
+  const ep = `EPISODIO ${Number.isInteger(ref.ep) ? ref.ep : String(ref.ep)}`;
+  return ref.parte ? `${ep} - PARTE ${ref.parte}` : ep;
+}
+
+function thumbnailForRegistro(numero: number): string {
+  return `/images/episodios/ep${String(numero).padStart(2, "0")}.jpg`;
+}
+
+function normalizeName(s: string): string {
+  return stripWikilink(s)
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+}
+
+function buildRoleIndex(characters: CharacterItem[]): Map<string, string> {
+  const index = new Map<string, string>();
+  for (const character of characters) {
+    if (!character.rol) continue;
+    index.set(normalizeName(character.nombre), character.rol);
+    index.set(normalizeName(character.slug), character.rol);
+  }
+  return index;
+}
+
+function sortPersonajes(menciones: string[] | undefined, roles: Map<string, string>): string[] {
+  const seen = new Set<string>();
+  const original = (menciones ?? [])
+    .map((raw, index) => ({ name: stripWikilink(raw), key: normalizeName(raw), index }))
+    .filter((item) => {
+      if (!item.key || seen.has(item.key)) return false;
+      seen.add(item.key);
+      return true;
+    });
+
+  return original
+    .sort((a, b) => {
+      const aIsPlayer = roles.get(a.key)?.toLowerCase() === "pj";
+      const bIsPlayer = roles.get(b.key)?.toLowerCase() === "pj";
+      if (aIsPlayer !== bIsPlayer) return aIsPlayer ? -1 : 1;
+      if (aIsPlayer && bIsPlayer) {
+        const aOrder = PLAYER_ORDER.indexOf(a.key);
+        const bOrder = PLAYER_ORDER.indexOf(b.key);
+        const aRank = aOrder === -1 ? Number.MAX_SAFE_INTEGER : aOrder;
+        const bRank = bOrder === -1 ? Number.MAX_SAFE_INTEGER : bOrder;
+        if (aRank !== bRank) return aRank - bRank;
+      }
+      return a.index - b.index;
+    })
+    .slice(0, MAX_PERSONAJES)
+    .map((item) => item.name);
+}
+
+function toV2Chapter(ep: VaultEpisode, roles: Map<string, string>): V2Chapter {
+  const personajes = sortPersonajes(ep.menciones?.personajes, roles);
+  const lugar = ep.menciones?.lugares?.[0]
+    ? stripWikilink(ep.menciones.lugares[0])
+    : "";
+
+  return {
+    id: String(ep.numero),
+    numero: ep.numero,
+    numeroDisplay: formatEpisodeNumber(ep.titulo, ep.numero),
+    eyebrow: episodeEyebrow(ep.titulo, ep.numero),
+    titulo: cleanTitulo(ep.titulo),
+    fecha: "",
+    lugar,
+    personajes,
+    estado: "Completado",
+    descripcion: ep.descripcion ?? "",
+    imageSrc: ep.image ?? thumbnailForRegistro(ep.numero),
+  };
+}
+
+export default async function CapitulosPage() {
+  const vp = process.env.VAULT_PATH?.trim() || "";
+  const [episodes, personajes] = vp
+    ? await Promise.all([
+        cachedListEpisodes(vp),
+        cachedListByType(vp, "personaje"),
+      ])
+    : [[], []];
+  const roles = buildRoleIndex(personajes);
+  const chapters = episodes.map((ep) => toV2Chapter(ep, roles)).reverse();
+
+  return (
+    <section className="av2-p-wrap">
+      <div className="av2-p-bg" aria-hidden="true">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/assets/atlas-v2/backgrounds/hero.png"
+          alt=""
+          className="av2-p-bg-img"
+        />
+      </div>
+
+      <header className="av2-page-head">
+        <h1 className="av2-page-title">Capítulos</h1>
+      </header>
+
+      <CapitulosClient chapters={chapters} />
+    </section>
+  );
+}

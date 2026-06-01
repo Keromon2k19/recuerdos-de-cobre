@@ -10,6 +10,7 @@ export type EpisodeBookPage = {
   icon: "summary" | "cast" | "chronology" | "relic" | "mystery" | "archive" | "page";
   tone: "copper" | "petrol" | "moss" | "gold" | "wine" | "ink";
   html: string;
+  mode?: "paged" | "wide";
 };
 
 type Props = {
@@ -19,6 +20,7 @@ type Props = {
 };
 
 const CHARS_PER_FOLIO = 2600;
+const WIDE_CHARS_PER_FOLIO = 6200;
 const LIST_ITEM_SOFT_LIMIT = 8;
 
 function splitList(tag: "ul" | "ol", inner: string): string[] {
@@ -57,18 +59,18 @@ function contentTokens(html: string): string[] {
   return tokens.filter((token) => token.trim().length > 0);
 }
 
-function paginateHtml(html: string): string[] {
+function paginateHtml(html: string, charsPerFolio = CHARS_PER_FOLIO): string[] {
   const tokens = contentTokens(html);
   const folios: string[] = [];
   let current = "";
 
   for (const token of tokens) {
-    if (current && current.length + token.length > CHARS_PER_FOLIO) {
+    if (current && current.length + token.length > charsPerFolio) {
       folios.push(current);
       current = "";
     }
 
-    if (token.length > CHARS_PER_FOLIO) {
+    if (token.length > charsPerFolio) {
       if (current) {
         folios.push(current);
         current = "";
@@ -186,7 +188,11 @@ export default function EpisodeBook({ summaryTitle, summaryHtml, pages }: Props)
   const [activeIndex, setActiveIndex] = useState(0);
   const [folioIndex, setFolioIndex] = useState(0);
   const active = allPages[activeIndex] ?? allPages[0];
-  const folios = useMemo(() => paginateHtml(active.html), [active.html]);
+  const isWide = active.mode === "wide";
+  const folios = useMemo(
+    () => paginateHtml(active.html, isWide ? WIDE_CHARS_PER_FOLIO : CHARS_PER_FOLIO),
+    [active.html, isWide],
+  );
   const currentFolio = folios[Math.min(folioIndex, folios.length - 1)] ?? folios[0];
   const hasPreviousSection = activeIndex > 0;
   const hasNextSection = activeIndex < allPages.length - 1;

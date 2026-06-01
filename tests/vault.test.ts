@@ -10,6 +10,7 @@ import {
   writeEntity,
   listByType,
   listEpisodes,
+  extractEpisodeExcerpt,
   getVaultStats,
 } from "@/lib/vault";
 import { buildEpisodeMarkdown, updateEntityMarkdown } from "@/lib/markdown";
@@ -142,5 +143,25 @@ describe("getVaultStats", () => {
     const stats = await getVaultStats(tmpDir);
     expect(stats.episodios).toBe(1);
     expect(stats.personaje).toBe(1);
+  });
+});
+
+describe("extractEpisodeExcerpt", () => {
+  it("usa el primer parrafo del resumen y limpia markdown", () => {
+    const body = [
+      "## Resumen",
+      "",
+      "El grupo llega a [[Underdark]] con **urgencia**. La amenaza crece.",
+      "",
+      "Segundo parrafo que no debe entrar.",
+      "",
+      "## Lore extraido",
+      "",
+      "- Dato",
+    ].join("\n");
+
+    expect(extractEpisodeExcerpt(body, 140)).toBe(
+      "El grupo llega a Underdark con urgencia. La amenaza crece."
+    );
   });
 });

@@ -1,6 +1,7 @@
 // lib/commit.ts — Lógica pura de escritura de un episodio extraído al vault.
 // Usada por el server action `commitEpisodeAction` y por el script de cola.
 
+import { createHash } from "node:crypto";
 import { initVault, writeEpisode, readEntity, writeEntity } from "./vault";
 import { buildEpisodeMarkdown, updateEntityMarkdown } from "./markdown";
 import type {
@@ -9,6 +10,17 @@ import type {
   ExtractionResult,
   Relacion,
 } from "./types";
+
+/**
+ * Para nombres largos (típicamente misterios), trunca a `maxLen` y añade un
+ * hash corto del nombre completo para garantizar unicidad — dos misterios con
+ * prefijo similar truncado al mismo punto no colisionan en slug.
+ */
+function truncateWithHash(name: string, maxLen = 60): string {
+  if (name.length <= maxLen) return name;
+  const hash = createHash("sha1").update(name).digest("hex").slice(0, 6);
+  return `${name.substring(0, maxLen)}-${hash}`;
+}
 
 export type CommitInput = {
   vaultPath: string;
@@ -23,6 +35,28 @@ export type CommitOutput = {
   filesWritten: number;
 };
 
+function validateResumenOriginal(resumen: string): void {
+  const trimmed = resumen.trim();
+  if (!trimmed) {
+    throw new Error("El resumen esta vacio.");
+  }
+
+  const firstLine = trimmed.split(/\r?\n/, 1)[0]?.trim() ?? "";
+  if (/^#{1,6}\s+/.test(firstLine) || /^[-*]\s+/.test(firstLine)) {
+    throw new Error(
+      "El resumen debe empezar con un resumen narrativo en prosa, no con un titulo o lista."
+    );
+  }
+
+  const firstH2 = trimmed.search(/^##\s+/m);
+  const intro = (firstH2 >= 0 ? trimmed.slice(0, firstH2) : trimmed).trim();
+  if (intro.length < 250) {
+    throw new Error(
+      "El resumen inicial es demasiado corto o falta. Agrega prosa antes de '## Cast del episodio'."
+    );
+  }
+}
+
 /**
  * Persiste un episodio + sus entidades extraídas al vault.
  * Idempotente: re-procesar el mismo episodio actualiza las menciones existentes.
@@ -31,6 +65,7 @@ export async function commitEpisode(input: CommitInput): Promise<CommitOutput> {
   const { vaultPath, numero, titulo, resumen, extraido, fechaGrabacion } =
     input;
 
+  validateResumenOriginal(resumen);
   await initVault(vaultPath);
 
   const episodio: Episodio = {
@@ -144,7 +179,7 @@ export async function commitEpisode(input: CommitInput): Promise<CommitOutput> {
 
   // 8. Misterios
   for (const m of extraido.misterios) {
-    const nombre = m.length > 60 ? m.substring(0, 60) + "..." : m;
+    const nombre = truncateWithHash(m, 60);
     await upsertEntity(
       vaultPath,
       "misterio",

@@ -56,6 +56,7 @@ async function main(): Promise<void> {
 
   const vaultPath = path.resolve(process.env.VAULT_PATH || "vault-recuerdos-de-cobre");
   const { commitEpisode } = await import("../lib/commit");
+  const { readJob, writeJob } = await import("../lib/vault");
   const r = await commitEpisode({
     vaultPath,
     numero,
@@ -64,6 +65,11 @@ async function main(): Promise<void> {
     extraido,
     fechaGrabacion: fecha,
   });
+
+  const job = await readJob(vaultPath, numero);
+  if (job) {
+    await writeJob(vaultPath, { ...job, estado: "done", etapa_actual: "Commiteado al vault" });
+  }
 
   console.log(`✅ ep${numero} "${titulo}" → ${r.filesWritten} archivos en ${vaultPath}`);
   console.log(

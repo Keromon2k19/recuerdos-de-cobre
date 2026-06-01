@@ -18,6 +18,7 @@ import path from "node:path";
 import matter from "gray-matter";
 import { embedText, EMBED_MODEL, type SearchIndex, type SearchIndexEntry } from "../lib/embeddings";
 import { ENTITY_FOLDERS, type EntityType } from "../lib/types";
+import { buildLiteIndex } from "./build-lite-index";
 
 function loadEnv(): Record<string, string> {
   const envPath = path.join(process.cwd(), ".env.local");
@@ -165,6 +166,15 @@ async function main() {
     `\n\n✅ Índice construido: ${entries.length} entradas (${embedded} nuevas, ${reused} reusadas)`
   );
   console.log(`   → ${indexPath}`);
+
+  // Derivar el indice lite (sin embeddings) para el SearchPalette: substring
+  // en el cliente, cero roundtrip. Encadenado aca para que full + lite
+  // queden siempre sincronizados con un solo comando.
+  const lite = buildLiteIndex(vaultPath);
+  console.log(
+    `✅ Índice lite: ${lite.entries} entradas — ${lite.liteKB} KB (full: ${lite.fullKB} KB)`
+  );
+  console.log(`   → ${lite.outPath}`);
 }
 
 main().catch((err) => {

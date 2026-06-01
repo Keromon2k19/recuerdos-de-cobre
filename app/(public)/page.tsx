@@ -42,7 +42,15 @@ export default async function HomePage() {
   const latest = episodes[episodes.length - 1];
 
   let latestData:
-    | { numero: number; titulo: string; excerpt: string; procesado?: string; castN: number }
+    | {
+        numero: number;
+        titulo: string;
+        excerpt: string;
+        procesado?: string;
+        castN: number;
+        image?: string;
+        imageAlt?: string;
+      }
     | null = null;
   if (latest) {
     const content = await readEpisode(vp, latest.numero);
@@ -60,6 +68,8 @@ export default async function HomePage() {
         excerpt: plainExcerpt(crono?.body ?? ""),
         procesado: latest.procesado,
         castN: cast ? (cast.body.match(/^- /gm)?.length ?? 0) : 0,
+        image: latest.image,
+        imageAlt: latest.imageAlt,
       };
     }
   }
@@ -94,8 +104,8 @@ export default async function HomePage() {
 
   const heroImg: ResolvedImage = {
     kind: "img",
-    src: "/images/hero/portada.svg",
-    alt: "Atmósfera de la Metrópolis de Cobre al anochecer",
+    src: "/images/hero/steampunk_atmosphere_v3.png",
+    alt: "Atmósfera del taller catedralicio steampunk",
   };
 
   return (
@@ -103,6 +113,9 @@ export default async function HomePage() {
       <section className="hero">
         <div className="hero-media">
           <AtlasImage img={heroImg} priority />
+        </div>
+        <div className="hero-steam-overlay">
+          <img src="/images/hero/low_lying_steam_v2.png" alt="Efecto de vapor de cobre rastrero" />
         </div>
         <div className="hero-inner">
           <div className="hero-rule rise" style={{ "--i": 0 } as React.CSSProperties} />
@@ -147,7 +160,12 @@ export default async function HomePage() {
                 aria-label={`Abrir crónica ${latestData.numero}`}
               >
                 <AtlasImage
-                  img={resolveImage({}, "episodios", latestData.titulo)}
+                  img={resolveImage(
+                    { image: latestData.image, imageAlt: latestData.imageAlt },
+                    "episodios",
+                    latestData.titulo
+                  )}
+                  priority
                 />
               </Link>
               <div>

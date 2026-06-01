@@ -7,7 +7,7 @@
 import { listByType, listEpisodes, type EntityListItem } from "./vault";
 import type { EntityType } from "./types";
 
-const TTL_MS = 15_000;
+const TTL_MS = Number(process.env.PUBLIC_CACHE_TTL_MS ?? 300_000);
 
 type Entry = { at: number; data: unknown };
 const store = new Map<string, Entry>();
@@ -24,9 +24,9 @@ export function cachedListByType(
   vaultPath: string,
   tipo: EntityType
 ): Promise<EntityListItem[]> {
-  return memo(`lbt:${tipo}`, () => listByType(vaultPath, tipo));
+  return memo(`lbt:${vaultPath}:${tipo}`, () => listByType(vaultPath, tipo));
 }
 
 export function cachedListEpisodes(vaultPath: string) {
-  return memo("episodes", () => listEpisodes(vaultPath));
+  return memo(`episodes:${vaultPath}`, () => listEpisodes(vaultPath));
 }

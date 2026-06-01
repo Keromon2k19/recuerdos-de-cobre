@@ -1,0 +1,14 @@
+---
+tipo: evento
+nombre: Veltra pide una promesa imposible
+alias: []
+apariciones:
+  - 37
+ultima_actualizacion: '2026-05-19T23:17:13.806Z'
+---
+
+## Menciones por episodio
+
+### [[037-recuerdos-de-cobre-30-vinculos|Ep. 37 — Recuerdos de cobre 30: Vínculos]]
+- Después de los recuerdos de la masacre, Veltra pide al grupo que no la deje sola y que no mueran.
+

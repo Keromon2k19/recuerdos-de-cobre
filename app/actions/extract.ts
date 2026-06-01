@@ -28,7 +28,7 @@ function getMockExtraction(episodio: number): ExtractionResult {
       { nombre: "Mysha", descripcion: "Una de las protagonistas, llega a la Metrópolis de Cobre tras cruzar el desierto", alias: [] },
       { nombre: "Borok", descripcion: "Un semiorco, compañero de viaje de Mysha. Llegan juntos a la Metrópolis de Cobre", alias: [] },
       { nombre: "Annora", descripcion: "Líder de la Hermandad de Cobre. Propone el voto de confianza y el contrato de sangre al grupo", alias: [] },
-      { nombre: "Layyra", descripcion: "Una enigmática dracónica que el grupo conoce en el casino Plumas Doradas", alias: [] },
+      { nombre: "Layra", descripcion: "Una enigmática dracónida que el grupo conoce en el casino Plumas Doradas", alias: [] },
       { nombre: "Lords", descripcion: "Presentador del casino Plumas Doradas, interactúa con el grupo a su llegada", alias: [] },
       { nombre: "Doctora Margarita", descripcion: "Supervisa el contrato de sangre entre el grupo y la Hermandad de Cobre", alias: ["Margarita"] },
       { nombre: "David Ilcard", descripcion: "Un centinela de la Hermandad de Cobre con quien el grupo debe coordinar", alias: [] },
@@ -68,7 +68,7 @@ function getMockExtraction(episodio: number): ExtractionResult {
     misterios: [
       "¿Qué información delicada debe recibir el señor Johnson?",
       "¿Por qué la Hermandad de Cobre necesita reclutar forasteros como iniciados?",
-      "¿Qué relación tiene Layyra con el casino o la Hermandad?",
+      "¿Qué relación tiene Layra con el casino o la Hermandad?",
     ],
     quotes: [
       { texto: "Un voto de confianza mutuo", autor: "Annora" },

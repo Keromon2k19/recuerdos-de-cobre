@@ -44,8 +44,22 @@ export type StartQueueResult =
  *
  * Si ya hay un job para ese número (estado terminal), lo limpia primero.
  */
+/** Acepta URLs de YouTube canónicas — youtube.com/watch?v= y youtu.be/. */
+const YOUTUBE_URL_RE = /^https:\/\/(www\.|m\.)?(youtube\.com\/watch\?v=[\w-]{11}|youtu\.be\/[\w-]{11})/;
+const YOUTUBE_VIDEO_ID_RE = /^[\w-]{11}$/;
+
 export async function enqueueAction(args: EnqueueArgs): Promise<StartResult> {
   try {
+    if (!Number.isInteger(args.numero) || args.numero < 1 || args.numero > 9999) {
+      return { success: false, error: "Número de episodio inválido." };
+    }
+    if (!YOUTUBE_VIDEO_ID_RE.test(args.videoId)) {
+      return { success: false, error: "videoId de YouTube inválido (esperado 11 chars [\\w-])." };
+    }
+    if (!YOUTUBE_URL_RE.test(args.url)) {
+      return { success: false, error: "URL de YouTube inválida." };
+    }
+
     const config = loadConfig();
 
     const existing = await readJob(config.vaultPath, args.numero);
@@ -91,47 +105,87 @@ export async function enqueueAction(args: EnqueueArgs): Promise<StartResult> {
 }
 
 /**
+ * Acquiere un lock de filesystem (O_EXCL) para serializar el spawn del worker.
+ * Retorna el fd del lock o null si otro proceso lo tiene activo (<30s).
+ * Locks de más de 30s se consideran stale (un spawn que crasheó) y se rompen.
+ */
+function acquireSpawnLock(vaultPath: string): number | null {
+  const lockDir = path.join(vaultPath, "_jobs");
+  fs.mkdirSync(lockDir, { recursive: true });
+  const lockPath = path.join(lockDir, ".spawn.lock");
+  const flags = fs.constants.O_WRONLY | fs.constants.O_CREAT | fs.constants.O_EXCL;
+  try {
+    return fs.openSync(lockPath, flags);
+  } catch (err) {
+    if ((err as NodeJS.ErrnoException).code !== "EEXIST") throw err;
+    const stats = fs.statSync(lockPath);
+    if (Date.now() - stats.mtimeMs < 30_000) return null;
+    fs.unlinkSync(lockPath);
+    return fs.openSync(lockPath, flags);
+  }
+}
+
+function releaseSpawnLock(vaultPath: string, fd: number): void {
+  try { fs.closeSync(fd); } catch { /* ignore */ }
+  try { fs.unlinkSync(path.join(vaultPath, "_jobs", ".spawn.lock")); } catch { /* ignore */ }
+}
+
+/**
  * Arranca el worker si no hay uno activo. Toma el job "queued" más antiguo
  * (FIFO por iniciado_en) y spawnea process-episode.ts detached.
  *
  * Si ya hay un worker activo, es un no-op (devuelve started:null).
+ *
+ * Lock-protected para evitar double-spawn cuando dos requests llegan en
+ * paralelo (e.g. doble-click del usuario en "Procesar cola").
  */
 export async function startQueueAction(): Promise<StartQueueResult> {
   try {
     const config = loadConfig();
 
-    const jobs = await listJobs(config.vaultPath);
-    const queued = jobs
-      .filter((j) => j.estado === "queued")
-      .sort((a, b) => a.iniciado_en.localeCompare(b.iniciado_en));
+    const lockFd = acquireSpawnLock(config.vaultPath);
+    if (lockFd === null) {
+      // Otro request ya está spawneando — esperamos a que aparezca el estado.
+      const jobs = await listJobs(config.vaultPath);
+      const queued = jobs.filter((j) => j.estado === "queued").length;
+      return { success: true, started: null, pendingCount: queued };
+    }
 
-    // Si ya hay un job activo (cualquier estado no-terminal y no-queued),
-    // el worker ya está corriendo. No-op.
-    if (await hasActiveJob(config.vaultPath)) {
-      const stillActive = jobs.some((j) =>
-        ["downloading", "transcribing", "summarizing", "extracting", "committing"].includes(
-          j.estado
-        )
-      );
-      if (stillActive) {
-        return { success: true, started: null, pendingCount: queued.length };
+    try {
+      // Re-leer jobs DENTRO del lock — la lista podría haber cambiado.
+      const jobs = await listJobs(config.vaultPath);
+      const queued = jobs
+        .filter((j) => j.estado === "queued")
+        .sort((a, b) => a.iniciado_en.localeCompare(b.iniciado_en));
+
+      if (await hasActiveJob(config.vaultPath)) {
+        const stillActive = jobs.some((j) =>
+          ["downloading", "transcribing", "summarizing", "extracting", "committing"].includes(
+            j.estado
+          )
+        );
+        if (stillActive) {
+          return { success: true, started: null, pendingCount: queued.length };
+        }
       }
-    }
 
-    if (queued.length === 0) {
+      if (queued.length === 0) {
+        return {
+          success: false,
+          error: "No hay episodios en cola para procesar.",
+        };
+      }
+
+      const first = queued[0];
+      spawnWorker(config.vaultPath, first.numero);
       return {
-        success: false,
-        error: "No hay episodios en cola para procesar.",
+        success: true,
+        started: first.numero,
+        pendingCount: queued.length - 1,
       };
+    } finally {
+      releaseSpawnLock(config.vaultPath, lockFd);
     }
-
-    const first = queued[0];
-    spawnWorker(config.vaultPath, first.numero);
-    return {
-      success: true,
-      started: first.numero,
-      pendingCount: queued.length - 1,
-    };
   } catch (err) {
     return {
       success: false,
@@ -174,6 +228,10 @@ function spawnWorker(vaultPath: string, numero: number): void {
     env: { ...process.env, PYTHONIOENCODING: "utf-8" },
   });
   child.unref();
+  // Cerrar el fd del padre — el hijo detached ya tiene su propia copia heredada,
+  // así que nuestro descriptor no hace falta y dejarlo abierto causa fd-leak
+  // acumulativo (1 por job; en ciclos largos agota el límite del proceso).
+  try { fs.closeSync(logFd); } catch { /* ignore */ }
 }
 
 /**

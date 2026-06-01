@@ -152,7 +152,11 @@ def main():
     print(f"@@PROGRESS@@ 0 {total_dur:.0f}", flush=True)
 
     last_emit = 0.0
-    with open(output_path, "w", encoding="utf-8") as f:
+    # buffering=1 → line-buffered: cada f.write("...\n") se flushea al SO al toque.
+    # Sin esto el archivo queda en 0 bytes durante toda la transcripcion (Python
+    # bufferea en bloques de ~8KB) y desde afuera parece colgado, aunque la UI
+    # del job muestre el % avanzando bien.
+    with open(output_path, "w", encoding="utf-8", buffering=1) as f:
         for segment in segments:
             line = segment.text.strip()
             if line:

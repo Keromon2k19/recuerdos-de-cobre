@@ -1,0 +1,14 @@
+---
+tipo: worldbuilding
+nombre: Puente de Myrkul y juicio de Tyr
+alias: []
+apariciones:
+  - 39
+ultima_actualizacion: '2026-05-21T23:12:10.283Z'
+---
+
+## Menciones por episodio
+
+### [[039-recuerdos-de-cobre-32-la-historia-la-cuentan-los-que-ganan|Ep. 39 — Recuerdos de cobre 32: La historia la cuentan los que ganan]]
+- Las almas recorren el Puente de Myrkul tras la muerte y Tyr las juzga antes de su destino final.
+

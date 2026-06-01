@@ -2,19 +2,15 @@ import path from "node:path";
 import fs from "node:fs";
 
 export type AppConfig = {
-  anthropicApiKey: string;
+  anthropicApiKey?: string;
   vaultPath: string; // absoluto
   youtubeApiKey?: string;
   youtubePlaylistId?: string;
 };
 
 export function loadConfig(env: Record<string, string | undefined> = process.env): AppConfig {
-  const key = env.ANTHROPIC_API_KEY?.trim();
   const vaultRaw = env.VAULT_PATH?.trim();
 
-  if (!key) {
-    throw new Error("ANTHROPIC_API_KEY no está definida en .env.local");
-  }
   if (!vaultRaw) {
     throw new Error("VAULT_PATH no está definida en .env.local");
   }
@@ -24,10 +20,22 @@ export function loadConfig(env: Record<string, string | undefined> = process.env
     throw new Error(`VAULT_PATH no existe en disco: ${vaultPath}`);
   }
 
+  const anthropicApiKey = env.ANTHROPIC_API_KEY?.trim() || undefined;
   const youtubeApiKey = env.YOUTUBE_API_KEY?.trim() || undefined;
   const youtubePlaylistId = env.YOUTUBE_PLAYLIST_ID?.trim() || undefined;
 
-  return { anthropicApiKey: key, vaultPath, youtubeApiKey, youtubePlaylistId };
+  return { anthropicApiKey, vaultPath, youtubeApiKey, youtubePlaylistId };
+}
+
+/**
+ * Variante estricta: exige ANTHROPIC_API_KEY (legacy, solo para lib/claude.ts).
+ */
+export function loadAnthropicKey(env: Record<string, string | undefined> = process.env): string {
+  const key = env.ANTHROPIC_API_KEY?.trim();
+  if (!key) {
+    throw new Error("ANTHROPIC_API_KEY no está definida en .env.local");
+  }
+  return key;
 }
 
 /**

@@ -1,0 +1,133 @@
+<svg viewBox="0 0 1000 600" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a120a"/>
+      <stop offset="100%" stop-color="#0c0805"/>
+    </linearGradient>
+    <linearGradient id="land" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#5a3e22"/>
+      <stop offset="100%" stop-color="#2a1d10"/>
+    </linearGradient>
+    <linearGradient id="mountain" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#7a5230"/>
+      <stop offset="100%" stop-color="#3a2818"/>
+    </linearGradient>
+    <linearGradient id="forest" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3a3015"/>
+      <stop offset="100%" stop-color="#1a160a"/>
+    </linearGradient>
+    <radialGradient id="parchment" cx="50%" cy="50%" r="65%">
+      <stop offset="0%" stop-color="#d9a564" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#d9a564" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grain" x="0" y="0" width="3" height="3" patternUnits="userSpaceOnUse">
+      <rect width="3" height="3" fill="#000" opacity="0.05"/>
+      <rect width="1" height="1" fill="#d9a564" opacity="0.04"/>
+    </pattern>
+  </defs>
+  <rect width="1000" height="600" fill="url(#sea)"/>
+  <rect width="1000" height="600" fill="url(#parchment)"/>
+
+  <!-- Mar de Vapor (oeste, ondas) -->
+  <g opacity="0.45">
+    <path d="M0 200 Q60 195 120 205 T240 200" fill="none" stroke="#7a5230" stroke-width="0.8"/>
+    <path d="M0 240 Q60 235 120 245 T240 240" fill="none" stroke="#7a5230" stroke-width="0.8"/>
+    <path d="M0 280 Q60 275 120 285 T240 280" fill="none" stroke="#7a5230" stroke-width="0.8"/>
+    <path d="M0 320 Q60 315 120 325 T240 320" fill="none" stroke="#7a5230" stroke-width="0.8"/>
+    <path d="M0 360 Q60 355 120 365 T240 360" fill="none" stroke="#7a5230" stroke-width="0.8"/>
+  </g>
+
+  <!-- Continente central -->
+  <path d="
+    M 220 180
+    Q 280 140 360 150
+    Q 440 130 520 170
+    Q 600 150 680 180
+    Q 760 170 820 220
+    Q 880 260 870 340
+    Q 880 420 820 470
+    Q 760 510 680 490
+    Q 600 510 520 470
+    Q 440 510 360 480
+    Q 280 490 230 440
+    Q 200 380 220 320
+    Q 210 250 220 180
+    Z
+  " fill="url(#land)" stroke="#8a5a30" stroke-width="1.2" opacity="0.95"/>
+
+  <!-- Bosque Oxidado (noreste) -->
+  <ellipse cx="720" cy="220" rx="80" ry="50" fill="url(#forest)" opacity="0.75"/>
+  <g opacity="0.6">
+    <path d="M680 220 L685 200 L690 220 Z" fill="#5a4020"/>
+    <path d="M700 215 L705 195 L710 215 Z" fill="#5a4020"/>
+    <path d="M720 220 L725 200 L730 220 Z" fill="#5a4020"/>
+    <path d="M740 215 L745 195 L750 215 Z" fill="#5a4020"/>
+    <path d="M760 225 L765 205 L770 225 Z" fill="#5a4020"/>
+    <path d="M690 240 L695 220 L700 240 Z" fill="#5a4020"/>
+    <path d="M710 235 L715 215 L720 235 Z" fill="#5a4020"/>
+    <path d="M730 240 L735 220 L740 240 Z" fill="#5a4020"/>
+    <path d="M750 235 L755 215 L760 235 Z" fill="#5a4020"/>
+  </g>
+
+  <!-- Llanuras de Hierro (norte) -->
+  <ellipse cx="480" cy="200" rx="110" ry="40" fill="#4a3220" opacity="0.5"/>
+  <g opacity="0.5" stroke="#7a5230" stroke-width="0.5" fill="none">
+    <line x1="400" y1="200" x2="560" y2="200"/>
+    <line x1="410" y1="210" x2="550" y2="210"/>
+    <line x1="420" y1="190" x2="540" y2="190"/>
+  </g>
+
+  <!-- Montañas del Eco (este) -->
+  <g opacity="0.85">
+    <path d="M860 280 L880 250 L895 285 L885 290 Z" fill="url(#mountain)"/>
+    <path d="M840 310 L870 270 L890 320 L850 320 Z" fill="url(#mountain)"/>
+    <path d="M870 340 L900 290 L920 350 L880 360 Z" fill="url(#mountain)"/>
+    <path d="M850 350 L880 310 L900 365 L860 370 Z" fill="url(#mountain)"/>
+  </g>
+
+  <!-- Ciudad de Bronce (centro) — estructura compleja -->
+  <g>
+    <ellipse cx="500" cy="340" rx="48" ry="22" fill="#2a1810" opacity="0.85"/>
+    <ellipse cx="500" cy="338" rx="42" ry="18" fill="#3a2818"/>
+    <!-- torres -->
+    <rect x="486" y="318" width="4" height="22" fill="#5a3a20"/>
+    <rect x="498" y="312" width="5" height="28" fill="#7a5230"/>
+    <rect x="510" y="316" width="4" height="24" fill="#5a3a20"/>
+    <!-- cúpula central -->
+    <circle cx="500" cy="335" r="6" fill="#a06030" opacity="0.7"/>
+  </g>
+
+  <!-- Ruinas Antiguas (sur) -->
+  <g opacity="0.65">
+    <rect x="540" y="465" width="3" height="14" fill="#7a5230"/>
+    <rect x="548" y="468" width="3" height="11" fill="#7a5230"/>
+    <rect x="556" y="463" width="3" height="16" fill="#7a5230"/>
+    <rect x="564" y="470" width="3" height="9" fill="#7a5230"/>
+    <rect x="572" y="466" width="3" height="13" fill="#7a5230"/>
+    <line x1="540" y1="479" x2="575" y2="479" stroke="#7a5230" stroke-width="1.5"/>
+  </g>
+
+  <!-- Caminos / rutas -->
+  <g opacity="0.4" stroke="#8a5a30" stroke-width="1" fill="none" stroke-dasharray="3 3">
+    <path d="M500 340 Q580 280 720 220"/>
+    <path d="M500 340 Q400 280 350 200"/>
+    <path d="M500 340 Q540 400 560 470"/>
+    <path d="M500 340 Q620 350 760 320"/>
+    <path d="M500 340 Q360 320 260 290"/>
+  </g>
+
+  <!-- Brújula / rosa de los vientos (esquina inf izq) -->
+  <g transform="translate(80,510)" opacity="0.5">
+    <circle r="22" fill="none" stroke="#b87333" stroke-width="0.7"/>
+    <circle r="14" fill="none" stroke="#b87333" stroke-width="0.5"/>
+    <path d="M0 -20 L3 0 L0 20 L-3 0 Z" fill="#b87333"/>
+    <path d="M-20 0 L0 3 L20 0 L0 -3 Z" fill="#b87333" opacity="0.6"/>
+    <text y="-26" text-anchor="middle" font-family="serif" font-size="10" fill="#d9a564">N</text>
+  </g>
+
+  <!-- Grano de papiro -->
+  <rect width="1000" height="600" fill="url(#grain)"/>
+
+  <!-- Frame -->
+  <rect x="6" y="6" width="988" height="588" fill="none" stroke="#b87333" stroke-width="0.8" opacity="0.35"/>
+</svg>

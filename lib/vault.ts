@@ -4,6 +4,7 @@ import path from "node:path";
 import { ENTITY_FOLDERS, type EntityType, type PlaylistCache, type Job, type JobEstado } from "./types";
 import { slugify, episodeFilename } from "./slugify";
 import { parseMarkdown } from "./markdown";
+import { parseEpisodioRef } from "./episode-number";
 
 const PLAYLIST_FILE = "_playlist.json";
 const JOBS_DIR = "_jobs";
@@ -26,11 +27,27 @@ export async function initVault(vaultPath: string): Promise<void> {
 
 /**
  * Escribe un archivo de forma pseudo-atómica: escribe a .tmp y renombra.
+ * En Windows, fs.rename puede tirar EPERM/EXDEV cuando el destino existe o
+ * cuando se cruzan volúmenes; en ese caso caemos a copy + unlink.
  */
 async function atomicWrite(filePath: string, content: string): Promise<void> {
-  const tmpPath = filePath + ".tmp";
+  const tmpPath = `${filePath}.${process.pid}.${Date.now()}.tmp`;
   await fs.writeFile(tmpPath, content, "utf-8");
-  await fs.rename(tmpPath, filePath);
+  try {
+    await fs.rename(tmpPath, filePath);
+  } catch (err) {
+    const code = (err as NodeJS.ErrnoException).code;
+    if (code === "EPERM" || code === "EXDEV" || code === "EBUSY") {
+      try {
+        await fs.copyFile(tmpPath, filePath);
+      } finally {
+        await fs.unlink(tmpPath).catch(() => undefined);
+      }
+      return;
+    }
+    await fs.unlink(tmpPath).catch(() => undefined);
+    throw err;
+  }
 }
 
 // ─── Episodios ───
@@ -148,13 +165,15 @@ export type EntityListItem = {
   region?: string;
   categoria?: string;
   acto?: number;
-  /** Primer fragmento de la sección Canon, o fallback a la primera mención. */
+  image?: string;
+  imageAlt?: string;
+  /** Primer fragmento de la sección Perfil, o fallback a la primera mención. */
   descripcion?: string;
 };
 
 /**
  * Extrae un fragmento descriptivo del body de una entidad.
- * Prioridad: Canon (del DM) → primera mención por episodio → undefined.
+ * Prioridad: sección Perfil → primera mención por episodio → undefined.
  */
 function extractDescription(body: string): string | undefined {
   const cleanAndTruncate = (raw: string, maxLen = 180): string => {
@@ -172,11 +191,13 @@ function extractDescription(body: string): string | undefined {
     return (lastSpace > 100 ? truncated.slice(0, lastSpace) : truncated) + "…";
   };
 
-  const canonMatch = body.match(
-    /^## Canon \(del DM\)\s*\n+([\s\S]+?)(?=\n## |\n*$)/m
+  // Sección de perfil (antes "Canon"); se acepta el rótulo viejo por si
+  // queda algún archivo sin migrar o lo reañade un re-import.
+  const perfilMatch = body.match(
+    /^## (?:Perfil|Canon[^\n]*)\s*\n+([\s\S]+?)(?=\n## |\n*$)/m
   );
-  if (canonMatch) {
-    const cleaned = cleanAndTruncate(canonMatch[1]);
+  if (perfilMatch) {
+    const cleaned = cleanAndTruncate(perfilMatch[1]);
     if (cleaned) return cleaned;
   }
 
@@ -184,6 +205,37 @@ function extractDescription(body: string): string | undefined {
   if (mentionMatch) return cleanAndTruncate(mentionMatch[1]);
 
   return undefined;
+}
+
+/**
+ * Imagen de tarjeta de una entidad. Prioriza el campo `image` (string);
+ * si no, cae a la primera entrada de `images` (galería: string o {src,alt}).
+ * Así una entidad con varias apariencias igual tiene retrato en el listado.
+ */
+function cardImage(fm: Record<string, unknown>): {
+  image?: string;
+  imageAlt?: string;
+} {
+  if (typeof fm.image === "string" && fm.image.trim()) {
+    return {
+      image: fm.image.trim(),
+      imageAlt: typeof fm.imageAlt === "string" ? fm.imageAlt : undefined,
+    };
+  }
+  const arr = Array.isArray(fm.images) ? fm.images : [];
+  for (const it of arr) {
+    if (typeof it === "string" && it.trim()) return { image: it.trim() };
+    if (it && typeof it === "object") {
+      const o = it as Record<string, unknown>;
+      if (typeof o.src === "string" && o.src.trim()) {
+        return {
+          image: o.src.trim(),
+          imageAlt: typeof o.alt === "string" ? o.alt : undefined,
+        };
+      }
+    }
+  }
+  return {};
 }
 
 /**
@@ -208,6 +260,9 @@ export async function listByType(
           "utf-8"
         );
         const { frontmatter, body } = parseMarkdown(content);
+        const { image, imageAlt } = cardImage(
+          frontmatter as Record<string, unknown>
+        );
         const item: EntityListItem = {
           nombre: (frontmatter.nombre as string) ?? filename.replace(".md", ""),
           slug: filename.replace(".md", ""),
@@ -219,6 +274,8 @@ export async function listByType(
           region: frontmatter.region as string | undefined,
           categoria: frontmatter.categoria as string | undefined,
           acto: frontmatter.acto as number | undefined,
+          image,
+          imageAlt,
           descripcion: extractDescription(body),
         };
         return item;
@@ -229,6 +286,48 @@ export async function listByType(
   } catch {
     return [];
   }
+}
+
+export type EpisodeMenciones = {
+  personajes?: string[];
+  lugares?: string[];
+  facciones?: string[];
+};
+
+function cleanMarkdownText(raw: string): string {
+  return raw
+    .replace(/\*\*([^*]+)\*\*/g, "$1")
+    .replace(/\*([^*]+)\*/g, "$1")
+    .replace(/\[\[([^|\]]+)\|([^\]]+)\]\]/g, "$2")
+    .replace(/\[\[([^\]]+)\]\]/g, "$1")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function truncateText(raw: string, maxLen: number): string {
+  if (raw.length <= maxLen) return raw;
+  const truncated = raw.slice(0, maxLen);
+  const lastSentence = Math.max(
+    truncated.lastIndexOf(". "),
+    truncated.lastIndexOf("? "),
+    truncated.lastIndexOf("! "),
+  );
+  if (lastSentence > 60) return truncated.slice(0, lastSentence + 1);
+  const lastSpace = truncated.lastIndexOf(" ");
+  return `${lastSpace > 90 ? truncated.slice(0, lastSpace) : truncated}...`;
+}
+
+export function extractEpisodeExcerpt(body: string, maxLen = 190): string {
+  const resumenMatch = body.match(
+    /^##\s+Resumen\s*\n+([\s\S]+?)(?=\n##\s+|\n###\s+|\n*$)/im
+  );
+  const source = resumenMatch?.[1] ?? body;
+  const paragraph =
+    source
+      .split(/\n{2,}/)
+      .map(cleanMarkdownText)
+      .find(Boolean) ?? "";
+  return truncateText(paragraph, maxLen);
 }
 
 /**
@@ -242,6 +341,10 @@ export async function listEpisodes(
     titulo: string;
     filename: string;
     procesado: string;
+    image?: string;
+    imageAlt?: string;
+    menciones?: EpisodeMenciones;
+    descripcion?: string;
   }>
 > {
   const dir = path.join(vaultPath, "episodios");
@@ -256,17 +359,38 @@ export async function listEpisodes(
           path.join(dir, filename),
           "utf-8"
         );
-        const { frontmatter } = parseMarkdown(content);
+        const { frontmatter, body } = parseMarkdown(content);
         return {
           numero: (frontmatter.numero as number) ?? 0,
           titulo: (frontmatter.titulo as string) ?? "",
           filename,
           procesado: (frontmatter.procesado as string) ?? "",
+          image:
+            typeof frontmatter.image === "string"
+              ? frontmatter.image
+              : undefined,
+          imageAlt:
+            typeof frontmatter.imageAlt === "string"
+              ? frontmatter.imageAlt
+              : undefined,
+          menciones: frontmatter.menciones as EpisodeMenciones | undefined,
+          descripcion: extractEpisodeExcerpt(body),
         };
       })
     );
 
-    return results.sort((a, b) => a.numero - b.numero);
+    // Ordena por número de episodio de campaña (extraído del título),
+    // luego por parte, con el índice de playlist como último desempate.
+    // Necesario porque YouTube a veces sube videos fuera del orden narrativo.
+    return results.sort((a, b) => {
+      const ra = parseEpisodioRef(a.titulo);
+      const rb = parseEpisodioRef(b.titulo);
+      if (ra && rb) {
+        if (ra.ep !== rb.ep) return ra.ep - rb.ep;
+        return (ra.parte ?? 0) - (rb.parte ?? 0);
+      }
+      return a.numero - b.numero;
+    });
   } catch {
     return [];
   }

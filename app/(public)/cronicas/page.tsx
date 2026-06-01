@@ -2,8 +2,10 @@
 // Ledger editorial (no grilla SaaS): cada episodio es un asiento del
 // archivo, escaneable de un vistazo aunque sean decenas.
 import Link from "next/link";
-import { listEpisodes } from "@/lib/vault";
+import { cachedListEpisodes } from "@/lib/public-cache";
 import { episodioLedger } from "@/lib/episode-number";
+import { resolveImage } from "@/lib/images";
+import AtlasImage from "@/components/public/AtlasImage";
 
 export const dynamic = "force-dynamic";
 
@@ -23,9 +25,13 @@ function fmtDate(iso?: string): string {
   });
 }
 
+function capLabel(numero: number): string {
+  return `Cap. ${String(numero).padStart(3, "0")}`;
+}
+
 export default async function CronicasPage() {
   const vp = process.env.VAULT_PATH?.trim() || "";
-  const episodes = vp ? await listEpisodes(vp) : [];
+  const episodes = vp ? await cachedListEpisodes(vp) : [];
 
   return (
     <section className="section">
@@ -55,6 +61,11 @@ export default async function CronicasPage() {
           <div className="ledger" role="list">
             {episodes.map((ep, i) => {
               const reg = episodioLedger(ep.titulo, ep.numero);
+              const cover = resolveImage(
+                { image: ep.image, imageAlt: ep.imageAlt },
+                "episodios",
+                `Miniatura del registro ${ep.numero}: ${ep.titulo || ""}`.trim()
+              );
               return (
               <Link
                 key={ep.numero}
@@ -63,11 +74,17 @@ export default async function CronicasPage() {
                 role="listitem"
                 style={{ "--i": Math.min(i, 12) } as React.CSSProperties}
               >
+                <span className="thumb">
+                  <AtlasImage img={cover} sizes="92px" />
+                </span>
                 <span className="reg">
                   {reg.main}
                   <small>{reg.sub}</small>
                 </span>
-                <h3>{ep.titulo || `Registro ${ep.numero}`}</h3>
+                <h3>
+                  <span className="cap-no">{capLabel(ep.numero)}</span>
+                  {ep.titulo || `Registro ${ep.numero}`}
+                </h3>
                 <span className="date">{fmtDate(ep.procesado)}</span>
               </Link>
               );

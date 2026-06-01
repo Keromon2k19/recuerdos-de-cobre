@@ -11,6 +11,7 @@
 html, body { margin: 0; padding: 0; }
 html, body { overflow-x: hidden; }
 body { background: oklch(0.135 0.010 58); }
+html[data-atlas-mode="light"] body { background: oklch(0.920 0.018 75); }
 
 .atlas {
   /* — Lienzo: tinta cálida muy oscura — */
@@ -109,11 +110,22 @@ body { background: oklch(0.135 0.010 58); }
 .rel-list .rel a:hover { color: var(--copper-bright); }
 
 /* ── Shell ─────────────────────────────────────────────────────────── */
-.atlas-shell { display: flex; flex-direction: column; min-height: 100dvh; }
+.atlas-shell {
+  --site-header-h: 76px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  padding-top: var(--site-header-h);
+}
 
 .site-header {
-  position: sticky; top: 0; z-index: 50;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
   display: flex; align-items: center; gap: 2rem;
+  min-height: var(--site-header-h);
   padding: 1rem clamp(1.25rem, 4vw, 3rem);
   border-bottom: 1px solid var(--rule-soft);
   background: oklch(0.16 0.011 58 / 0.78);
@@ -188,8 +200,24 @@ body { background: oklch(0.135 0.010 58); }
     linear-gradient(180deg, oklch(0.16 0.012 58 / 0.45) 0%, oklch(0.16 0.012 58 / 0.20) 32%, oklch(0.16 0.011 58 / 0.80) 78%, var(--bg) 100%),
     linear-gradient(95deg, oklch(0.15 0.02 58 / 0.7) 0%, transparent 60%);
 }
+.hero-steam-overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: clamp(140px, 22vh, 240px);
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.65;
+}
+.hero-steam-overlay img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: bottom center;
+}
 .hero-inner {
-  position: relative; z-index: 1; width: 100%;
+  position: relative; z-index: 2; width: 100%;
   max-width: var(--maxw); margin: 0 auto;
   padding: clamp(2.5rem, 7vw, 6rem) clamp(1.25rem, 4vw, 3rem);
 }
@@ -301,7 +329,7 @@ body { background: oklch(0.135 0.010 58); }
 .ledger { border-top: 1px solid var(--rule); }
 .ledger-row {
   display: grid;
-  grid-template-columns: 92px minmax(0, 1fr) auto;
+  grid-template-columns: 92px 92px minmax(0, 1fr) auto;
   gap: clamp(1rem, 3vw, 2.5rem); align-items: center;
   padding: 1.5rem 0.5rem;
   border-bottom: 1px solid var(--rule-soft);
@@ -317,16 +345,30 @@ body { background: oklch(0.135 0.010 58); }
   font-size: clamp(1.15rem, 2.3vw, 1.7rem); font-weight: 600;
   color: var(--ink); transition: color var(--dur) var(--ease);
 }
+.ledger-row .cap-no {
+  display: block;
+  margin-bottom: 0.28rem;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
 .ledger-row:hover h3 { color: var(--copper-bright); }
 .ledger-row .date {
   font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.06em;
   color: var(--ink-faint); white-space: nowrap; text-transform: uppercase;
 }
 .ledger-row .thumb {
-  display: none; width: 116px; aspect-ratio: 16/10; border-radius: var(--r-sm);
+  display: block; width: 92px; aspect-ratio: 16/9; border-radius: var(--r-sm);
   overflow: hidden; border: 1px solid var(--rule);
 }
-.ledger-row .thumb img, .ledger-row .thumb .ph { width: 100%; height: 100%; object-fit: cover; }
+.ledger-row .thumb img, .ledger-row .thumb .ph {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform var(--dur) var(--ease);
+}
+.ledger-row:hover .thumb img { transform: scale(1.05); }
 
 /* ── Herramientas de listado (filtro) ─────────────────────────────── */
 .list-tools {
@@ -348,6 +390,97 @@ body { background: oklch(0.135 0.010 58); }
 .list-count {
   font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em;
   color: var(--ink-faint); text-transform: uppercase;
+}
+
+/* ── Facetas de listado (dropdowns de filtro) ─────────────────────────
+   Reutilizan .meta-drop / .meta-pop del expediente. Cuando hay facetas,
+   van pegadas al buscador (gap menor que el margin propio de .list-tools). */
+.list-tools:has(+ .list-facets) { margin-bottom: 0.7rem; }
+.list-facets {
+  display: flex; flex-wrap: wrap; align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.8rem;
+}
+.facet-pop {
+  display: flex; flex-direction: column;
+  gap: 0.12rem;
+  min-width: 232px;
+  padding: 0.55rem;
+}
+.facet-opt {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.42rem 0.55rem;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  transition: background var(--dur) var(--ease);
+}
+.facet-opt:hover { background: color-mix(in oklab, var(--copper) 9%, transparent); }
+.facet-opt[data-checked="true"] {
+  background: color-mix(in oklab, var(--copper) 13%, transparent);
+}
+.facet-opt input {
+  appearance: none;
+  flex: 0 0 auto;
+  width: 15px; height: 15px;
+  margin: 0;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  background: var(--bg);
+  cursor: pointer;
+  display: grid; place-items: center;
+  transition: border-color var(--dur) var(--ease),
+              background var(--dur) var(--ease);
+}
+.facet-opt input:checked {
+  border-color: var(--copper);
+  background: var(--copper);
+}
+.facet-opt input:checked::after {
+  content: "";
+  width: 8px; height: 8px;
+  /* Tilde: marca cuadrada interior, no glyph — coherente con el sistema */
+  background: var(--bg-raised);
+  clip-path: polygon(14% 44%, 0 60%, 40% 100%, 100% 22%, 86% 8%, 38% 70%);
+}
+.facet-opt input:focus-visible {
+  outline: 2px solid var(--copper);
+  outline-offset: 2px;
+}
+.facet-opt-label {
+  flex: 1;
+  font-family: var(--body);
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+}
+.facet-opt[data-checked="true"] .facet-opt-label { color: var(--ink); }
+.facet-opt-count {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  color: var(--ink-faint);
+}
+.facet-clear {
+  appearance: none;
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink-faint);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--r-sm);
+  padding: 0.42rem 0.6rem;
+  cursor: pointer;
+  transition: color var(--dur) var(--ease),
+              border-color var(--dur) var(--ease);
+}
+.facet-clear:hover { color: var(--copper-bright); }
+.facet-clear:focus-visible {
+  outline: 2px solid var(--copper);
+  outline-offset: 2px;
+}
+.facet-clear span {
+  font-size: 10px;
+  color: var(--copper);
 }
 
 /* ── Grilla de fichas (personajes/entidades) ──────────────────────── */
@@ -373,7 +506,11 @@ body { background: oklch(0.135 0.010 58); }
 .entity-card .portrait {
   aspect-ratio: 3 / 4; overflow: hidden; border-bottom: 1px solid var(--rule-soft);
 }
-.entity-card .portrait img, .entity-card .portrait .ph { width: 100%; height: 100%; object-fit: cover; }
+/* object-position: top — las ilustraciones de personaje son verticales largas;
+   anclar arriba mantiene cara y cabeza siempre visibles en la grilla pareja. */
+.entity-card .portrait img, .entity-card .portrait .ph {
+  width: 100%; height: 100%; object-fit: cover; object-position: top center;
+}
 .entity-card .body { padding: 1.05rem 1.1rem 1.2rem; display: flex; flex-direction: column; gap: 0.4rem; }
 .entity-card .kicker {
   font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em;
@@ -518,8 +655,10 @@ body { background: oklch(0.135 0.010 58); }
 @media (max-width: 860px) {
   /* Header compacto: marca arriba, nav en fila scrolleable (sin wrap ni
      solapamientos en pantallas chicas) */
+  .atlas-shell { --site-header-h: 122px; }
   .site-header {
     flex-direction: column; align-items: stretch;
+    min-height: var(--site-header-h);
     gap: 0.6rem; padding: 0.8rem 1rem;
   }
   .site-brand .word { font-size: 1.08rem; }
@@ -536,7 +675,14 @@ body { background: oklch(0.135 0.010 58); }
   .atlas { font-size: 17px; }
   .section { padding-left: 1rem; padding-right: 1rem; }
   .dossier-cover { border-radius: var(--r); margin-bottom: 1.6rem; }
-  .ledger-row { grid-template-columns: 60px minmax(0,1fr); column-gap: 1rem; }
+  /* Mobile: thumb + (reg, titulo, fecha apilados en la 2da columna). */
+  .ledger-row {
+    grid-template-columns: 72px minmax(0,1fr);
+    column-gap: 1rem; row-gap: 0.3rem;
+  }
+  .ledger-row .thumb { grid-row: 1 / span 3; align-self: start; width: 72px; }
+  .ledger-row .reg { grid-column: 2; }
+  .ledger-row h3 { grid-column: 2; }
   .ledger-row .date { grid-column: 2; }
   .hero h1 { max-width: 100%; }
   .doc-head h1 .reg-no { display: block; font-size: 0.7em; margin-bottom: 0.3rem; }
@@ -549,6 +695,9 @@ body { background: oklch(0.135 0.010 58); }
   }
   .rise { opacity: 1 !important; transform: none !important; }
   .atlas { background-attachment: scroll, scroll, scroll; }
+  /* Sin animacion el delay de 320ms dejaria el panel vacio visible un
+     instante: lo ocultamos en el acto. */
+  .map-panel { transition-delay: 0s !important; }
 }
 
 /* ── Expediente de crónica: documento central ancho + barra de datos
@@ -909,6 +1058,56 @@ body { background: oklch(0.135 0.010 58); }
 .book-page-actions span {
   color: var(--paper-ink-soft);
 }
+.technical-archive {
+  width: 100%;
+  max-width: min(960px, 100%);
+  margin: 1rem auto 0;
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--r);
+  background: oklch(0.17 0.012 58 / 0.48);
+  overflow: hidden;
+}
+.technical-archive summary {
+  list-style: none;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 1rem;
+  cursor: pointer;
+  transition:
+    background var(--dur) var(--ease),
+    color var(--dur) var(--ease);
+}
+.technical-archive summary::-webkit-details-marker { display: none; }
+.technical-archive summary:hover {
+  background: color-mix(in oklab, var(--copper) 8%, transparent);
+}
+.technical-archive summary:focus-visible {
+  outline: 2px solid var(--copper);
+  outline-offset: -2px;
+}
+.technical-archive summary span {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.technical-archive summary b {
+  font-family: var(--display);
+  font-size: 1.08rem;
+  color: var(--ink);
+}
+.technical-archive-body {
+  border-top: 1px solid var(--rule-soft);
+  border-radius: 0;
+  box-shadow: none;
+}
+.technical-archive-body .prose {
+  max-width: 68ch;
+  margin: 0 auto;
+}
 @keyframes folio-content-in {
   from { opacity: 0; transform: translate3d(0, 6px, 0); }
   to { opacity: 1; transform: translateY(0); }
@@ -1029,6 +1228,7 @@ body { background: oklch(0.135 0.010 58); }
   .dossier-cover,
   .exp-meta,
   .book-shell,
+  .technical-archive,
   .episode-book .read-panel {
     width: calc(100dvw - 2rem) !important;
     max-width: calc(100dvw - 2rem) !important;
@@ -1076,11 +1276,29 @@ body { background: oklch(0.135 0.010 58); }
   margin-bottom: 1.8rem;
 }
 .char-portrait {
-  aspect-ratio: 3 / 4; border-radius: var(--r);
+  aspect-ratio: 3 / 4; border-radius: var(--r); margin: 0;
   overflow: hidden; border: 1px solid var(--rule);
   box-shadow: var(--shadow-soft);
 }
-.char-portrait img, .char-portrait .ph { width: 100%; height: 100%; object-fit: cover; }
+.char-portrait img, .char-portrait .ph {
+  width: 100%; height: 100%; object-fit: cover; object-position: top center;
+}
+.char-portrait .hero-zoom { display: block; width: 100%; height: 100%; }
+
+/* Galería de retratos: retrato principal + tira de miniaturas (personajes
+   con más de una apariencia, ej. Io: forma de Trent + forma humana). */
+.char-gallery { display: flex; flex-direction: column; gap: 0.55rem; }
+.char-shots { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.char-shot {
+  flex: 0 0 auto; width: 60px; aspect-ratio: 3 / 4;
+  border-radius: var(--r-sm); overflow: hidden;
+  border: 1px solid var(--rule);
+  transition: border-color var(--dur) var(--ease);
+}
+.char-shot:hover { border-color: var(--copper); }
+.char-shot img {
+  width: 100%; height: 100%; object-fit: cover; object-position: top center;
+}
 .char-meta {
   display: flex; flex-direction: column; gap: 1.5rem; align-self: start;
   min-width: 0;
@@ -1121,13 +1339,71 @@ body { background: oklch(0.135 0.010 58); }
 }
 .rasgo-v { color: var(--ink); font-size: 0.98rem; line-height: 1.4; }
 .rasgo-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.rasgo-body { color: var(--ink-soft); font-size: 0.93rem; line-height: 1.55; }
+.rasgo-body .rasgo-k { display: block; margin-bottom: 0.2rem; }
+.rasgo-section { display: flex; flex-direction: column; gap: 0.3rem; }
 .char-empty { color: var(--ink-faint); font-style: italic; }
 
-.appear-band {
-  display: flex; flex-wrap: wrap; align-items: center; gap: 0.7rem 1.2rem;
-  margin-bottom: 1.8rem;
+/* ── Menciones por episodio: lista compacta colapsable ───────────────── */
+.mencion-list {
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--r);
+  overflow: hidden;
 }
-.appear-band .rail-chips { gap: 0.4rem; }
+.mencion { border-bottom: 1px solid var(--rule-soft); }
+.mencion:last-child { border-bottom: 0; }
+.mencion > summary {
+  display: flex; align-items: baseline; gap: 0.9rem;
+  padding: 0.78rem 1.1rem;
+  cursor: pointer; list-style: none;
+  background: var(--bg-raised);
+  transition: background var(--dur) var(--ease);
+}
+.mencion > summary::-webkit-details-marker { display: none; }
+.mencion > summary:hover { background: oklch(0.27 0.04 56 / 0.5); }
+.mencion[open] > summary { background: oklch(0.27 0.04 56 / 0.6); }
+.mencion-ep {
+  flex: 0 0 auto; min-width: 3.4rem;
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--copper);
+}
+.mencion-title {
+  flex: 1 1 auto; min-width: 0;
+  font-family: var(--display); font-size: 1.04rem; color: var(--ink);
+}
+.mencion[open] > summary .mencion-title { color: var(--copper-bright); }
+.mencion-chev {
+  flex: 0 0 auto; width: 7px; height: 7px; margin-bottom: 3px;
+  border-right: 1.5px solid var(--ink-faint);
+  border-bottom: 1.5px solid var(--ink-faint);
+  transform: rotate(45deg);
+  transition: transform var(--dur) var(--ease);
+}
+.mencion[open] > summary .mencion-chev { transform: rotate(-135deg); }
+.mencion-body {
+  padding: 0.5rem 1.1rem 1.15rem;
+  background: var(--bg);
+}
+.mencion-body .prose { font-size: 0.98rem; line-height: 1.62; color: var(--ink-soft); }
+.mencion-body .prose p { margin: 0 0 0.5rem; }
+.mencion-body .prose ul { margin: 0; padding-left: 1.1rem; }
+.mencion-body .prose li { margin: 0.2rem 0; }
+.mencion-body .prose strong { color: var(--ink); }
+.mencion-body .prose a.wikilink {
+  color: var(--copper); border-bottom: 1px solid var(--copper-deep);
+}
+.mencion-body .prose a.wikilink:hover { color: var(--copper-bright); }
+.mencion-body .prose .wikilink-plain { color: var(--ink); font-weight: 600; }
+.mencion-link {
+  display: inline-block; margin-top: 0.5rem;
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em;
+  color: var(--copper); border-bottom: 1px solid var(--copper-deep);
+  transition: color var(--dur) var(--ease);
+}
+.mencion-link:hover { color: var(--copper-bright); }
+@media (prefers-reduced-motion: reduce) {
+  .mencion-chev { transition: none; }
+}
 
 .rel-grouped { margin-top: 2.6rem; }
 .rel-head {
@@ -1140,19 +1416,21 @@ body { background: oklch(0.135 0.010 58); }
   font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em;
   color: var(--ink-faint); text-transform: uppercase;
 }
+/* Cada grupo es una banda a todo el ancho y sus entradas fluyen en columnas
+   dentro del grupo. Antes era una grilla de tarjetas-columna: un grupo grande
+   (NPCs, 18) estiraba toda su fila y dejaba columnas larguísimas y vacías. */
 .rel-cols {
-  display: grid; gap: 1px;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  display: flex; flex-direction: column; gap: 1px;
   background: var(--rule-soft);
   border: 1px solid var(--rule-soft);
   border-radius: var(--r); overflow: hidden;
 }
-.rel-group { background: var(--bg-raised); padding: 1.3rem 1.4rem 1.5rem; }
+.rel-group { background: var(--bg-raised); padding: 1.25rem 1.4rem 1.35rem; }
 .rel-group h3 {
   font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em;
   text-transform: uppercase; color: var(--copper);
   display: flex; align-items: baseline; gap: 0.5rem;
-  padding-bottom: 0.8rem; margin-bottom: 0.4rem;
+  padding-bottom: 0.8rem; margin-bottom: 0.5rem;
   border-bottom: 1px solid var(--rule-soft);
 }
 .rel-group h3 b { color: var(--ink-faint); font-weight: 500; font-size: 10px; }
@@ -1162,13 +1440,14 @@ body { background: oklch(0.135 0.010 58); }
 }
 .rel-group ul {
   list-style: none; margin: 0; padding: 0;
-  display: flex; flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(228px, 1fr));
+  gap: 0 1.8rem;
 }
 .rel-entry {
   display: flex; flex-direction: column; gap: 0.16rem;
   padding: 0.62rem 0; border-bottom: 1px solid var(--rule-soft);
 }
-.rel-entry:last-child { border-bottom: 0; padding-bottom: 0; }
 .rel-name {
   color: var(--ink); font-size: 1rem; font-weight: 600;
   width: -moz-max-content; width: max-content; max-width: 100%;
@@ -1182,9 +1461,77 @@ a.rel-name:hover { color: var(--copper-bright); }
   color: var(--ink-faint);
 }
 
+/* ── Identidad del hero (lugar/facción): hero + galería + meta apilados ─ */
+.ficha-identity {
+  display: flex; flex-direction: column; gap: 1.4rem; margin-bottom: 1.8rem;
+}
+
+/* ── Lector por secciones de la ficha ────────────────────────────────── */
+.ficha-reader {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 232px;
+  gap: clamp(1.5rem, 3vw, 2.6rem);
+  align-items: start;
+}
+.ficha-body { grid-column: 1; grid-row: 1; min-width: 0; }
+.ficha-index { grid-column: 2; grid-row: 1; position: sticky; top: 92px; }
+.ficha-index > .block-label { display: block; margin-bottom: 0.7rem; }
+.ficha-index ul {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-direction: column; gap: 2px;
+}
+.ficha-index-item {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 0.7rem; width: 100%; text-align: left;
+  padding: 0.62rem 0.8rem;
+  background: transparent; border: 0; border-radius: var(--r-sm);
+  cursor: pointer; color: var(--ink-soft);
+  font-family: var(--display); font-size: 1.05rem; line-height: 1.25;
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.ficha-index-item:hover { background: var(--bg-raised); color: var(--ink); }
+.ficha-index-item[data-active="true"] {
+  background: var(--bg-raised); color: var(--copper-bright);
+}
+.ficha-index-meta {
+  flex: none;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em;
+  color: var(--ink-faint);
+}
+.ficha-index-item[data-active="true"] .ficha-index-meta { color: var(--copper); }
+
+.ficha-body { animation: ficha-fade 220ms var(--ease) both; }
+@keyframes ficha-fade { from { opacity: 0; } to { opacity: 1; } }
+.ficha-body .read-panel { width: 100%; }
+/* margin-inline: auto — centra la columna de 68ch dentro del panel ancho;
+   sin esto la prosa queda pegada a la izquierda con un hueco a la derecha. */
+.ficha-body .read-panel .prose { max-width: 68ch; margin-inline: auto; }
+.ficha-body .rel-grouped { margin-top: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ficha-body { animation: none; }
+}
+
+@media (max-width: 900px) {
+  /* Índice pasa arriba como tira horizontal scrolleable. */
+  .ficha-reader { grid-template-columns: 1fr; }
+  .ficha-body { grid-column: 1; grid-row: 2; }
+  .ficha-index {
+    grid-column: 1; grid-row: 1; position: static; margin-bottom: 1.4rem;
+  }
+  .ficha-index ul {
+    flex-direction: row; flex-wrap: nowrap; overflow-x: auto;
+    gap: 0.4rem; padding-bottom: 0.3rem;
+  }
+  .ficha-index-item {
+    width: auto; flex: 0 0 auto;
+    border: 1px solid var(--rule-soft);
+  }
+}
+
 @media (max-width: 720px) {
   .char-card { grid-template-columns: 1fr; }
-  .char-portrait { max-width: 220px; }
+  .char-gallery { max-width: 240px; }
 }
 
 /* Índice del archivo: grilla balanceada (8 ítems → 4×2 / 2×4 / 1×8).
@@ -1363,6 +1710,9 @@ a.rel-name:hover { color: var(--copper-bright); }
 .map-stage {
   min-width: 0;
   overflow: hidden;
+  /* Containing block del drawer: el panel vive dentro y `overflow: hidden`
+     lo recorta a la caja del mapa al deslizar. */
+  position: relative;
 }
 /* Drawer flotante sobre el mapa. Slide-in desde la derecha.
    Border-radius solo a la derecha: la izquierda queda flush contra el mapa. */
@@ -1373,14 +1723,24 @@ a.rel-name:hover { color: var(--copper-bright); }
   bottom: 0;
   width: clamp(320px, 34vw, 420px);
   transform: translateX(calc(100% + 24px));
-  transition: transform 320ms var(--ease);
+  /* visibility:hidden al cerrar evita que el panel vacio asome en el canal
+     de padding entre .atlas-map y el borde del viewport (el translate solo
+     lo saca de .atlas-map, no del viewport). Se difiere 320ms para que la
+     animacion de salida termine antes de ocultarlo; y mata el hit-testing
+     del sliver. Al abrir se hace visible al instante (sin delay). */
+  visibility: hidden;
+  transition: transform 320ms var(--ease), visibility 0s 320ms;
   z-index: 5;
   overflow-y: auto;
   border-radius: 0 var(--r-lg) var(--r-lg) 0;
   border-left: 1px solid var(--rule-soft);
   box-shadow: -22px 0 60px -28px oklch(0.04 0.02 60 / 0.85);
 }
-.map-panel[data-open="true"] { transform: translateX(0); }
+.map-panel[data-open="true"] {
+  transform: translateX(0);
+  visibility: visible;
+  transition: transform 320ms var(--ease);
+}
 .map-panel-head {
   position: sticky;
   top: 0;
@@ -1952,4 +2312,398 @@ a.rel-name:hover { color: var(--copper-bright); }
   .map-toolbar-row {
     align-items: stretch;
   }
+}
+
+/* ======================================================================
+   MODO CLARO — html[data-atlas-mode="light"] .atlas
+   Marfil envejecido bajo luz natural cálida, tinta vino tenue, cobre
+   oxidado como única chispa metálica. Sobreescribe los tokens del .atlas
+   default; el resto del CSS hereda automáticamente al re-resolver var().
+   Contrato DOM: data-atlas-mode en <html>, separado del data-mode del rdc.
+   ====================================================================== */
+html[data-atlas-mode="light"] .atlas {
+  /* — Lienzo: marfil envejecido (hue cálido 75, no blanco puro) — */
+  --bg:            oklch(0.952 0.014 75);
+  --bg-raised:     oklch(0.975 0.010 75);
+  --bg-deep:       oklch(0.920 0.018 75);
+
+  /* — Tinta vino (hue 48, no negro): coherencia familiar con el cobre — */
+  --ink:           oklch(0.245 0.022 48);
+  --ink-soft:      oklch(0.420 0.022 48);
+  --ink-faint:     oklch(0.535 0.018 48); /* AA cuerpo: 4.52:1 sobre --bg */
+
+  /* — Reglas: línea de carbón del archivista — */
+  --rule:          oklch(0.760 0.012 70);
+  --rule-soft:     oklch(0.840 0.010 70);
+
+  /* — Paneles de lectura: marfil más oscuro que --bg, invierte la relación
+       luminosa del oscuro pero conserva la función. El panel sigue siendo
+       el lugar concreto donde la luz se concentra para leer. — */
+  --paper:         oklch(0.890 0.021 80);
+  --paper-edge:    oklch(0.820 0.026 78);
+  --paper-ink:     oklch(0.255 0.022 48);
+  --paper-ink-soft:oklch(0.430 0.022 48);
+
+  /* — Cobre oxidado oscuro: única chispa metálica. --copper-bright en
+       claro es MÁS oscuro y saturado, no más brillante (en luz natural,
+       "más" es más profundo). — */
+  --copper:        oklch(0.520 0.130 52);
+  --copper-bright: oklch(0.460 0.135 50);
+  --copper-deep:   oklch(0.380 0.090 52);
+  --wine:          oklch(0.460 0.150 24);
+  --gold:          oklch(0.610 0.110 78);
+  --petrol:        oklch(0.440 0.075 220);
+  --moss:          oklch(0.450 0.070 146);
+
+  /* — Sombras: tinta hue 48 diluida, nunca negro/gris neutro — */
+  --shadow-soft: 0 1px 0 oklch(1 0 0 / 0.6) inset,
+                 0 12px 28px -22px oklch(0.20 0.03 48 / 0.18);
+  --shadow-deep: 0 1px 0 oklch(1 0 0 / 0.7) inset,
+                 0 32px 70px -38px oklch(0.20 0.03 48 / 0.25);
+
+  /* — Atmósfera horneada en claro: la viñeta SUPERIOR pierde el haz de
+       luz del oscuro (en luz natural la página no tiene halo) y se vuelve
+       una sombra cálida tenue desde los bordes (página apoyada sobre la
+       mesa). El grano se MANTIENE pero con alpha reducida 0.035 → 0.020,
+       porque sobre claro el grano se ve más. — */
+  background-image:
+    radial-gradient(120% 80% at 50% -10%, oklch(0.84 0.020 80 / 0.50), transparent 60%),
+    radial-gradient(130% 90% at 50% 112%, oklch(0.86 0.025 60 / 0.55), transparent 55%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.020'/%3E%3C/svg%3E");
+}
+
+/* ── Overrides puntuales de hardcoded oklch en modo claro ─────────────
+   El .atlas tiene literales OKLCH oscuros incrustados en hover states,
+   chrome del header y overlays del hero. Hay que reescribirlos en claro
+   para que no aparezcan parches oscuros sobre marfil. */
+
+html[data-atlas-mode="light"] .atlas .site-header {
+  background: oklch(0.975 0.012 75 / 0.86);
+}
+html[data-atlas-mode="light"] .atlas .site-nav a:hover {
+  background: oklch(0.890 0.022 75 / 0.6);
+}
+html[data-atlas-mode="light"] .atlas .hero-media::after {
+  /* El hero degrada hacia --bg, igual que en oscuro, pero ahora ese --bg
+     es marfil. Las capas intermedias son tintas de vino diluidas, no
+     azul-oscuro. */
+  background:
+    radial-gradient(125% 95% at 50% 32%, transparent 0%, oklch(0.92 0.020 75 / 0.45) 62%, var(--bg) 100%),
+    linear-gradient(180deg, oklch(0.92 0.020 75 / 0.45) 0%, oklch(0.92 0.020 75 / 0.20) 32%, oklch(0.92 0.020 75 / 0.80) 78%, var(--bg) 100%),
+    linear-gradient(95deg, oklch(0.86 0.025 60 / 0.6) 0%, transparent 60%);
+}
+html[data-atlas-mode="light"] .atlas .btn-primary {
+  /* Foreground del botón cobre: sobre cobre claro, marfil muy claro */
+  color: oklch(0.975 0.010 75);
+}
+html[data-atlas-mode="light"] .atlas .index-cell[data-live="true"]:hover {
+  background: oklch(0.905 0.020 75);
+}
+html[data-atlas-mode="light"] .atlas .ledger-row:hover {
+  background: oklch(0.905 0.020 75 / 0.6);
+}
+
+/* ── Expediente / EpisodeBook (página /cronicas/[num]) en claro ─────────
+   La página de detalle tenía literales OKLCH oscuros incrustados en el
+   contenedor del libro, la barra REGISTRO y los iconos de las pestañas.
+   En claro se reescriben a marfil tintado para que no aparezcan parches
+   oscuros sobre el lienzo. */
+
+/* Barra "REGISTRO Ep. N · ... · archivado ..." — panel apenas hundido */
+html[data-atlas-mode="light"] .atlas .exp-meta {
+  background: oklch(0.930 0.016 75 / 0.7);
+}
+/* Dropdown abierto (REPARTO/LUGARES/...) — tinte cobre tenue, no azul oscuro */
+html[data-atlas-mode="light"] .atlas .meta-drop[open] > summary {
+  background: color-mix(in oklab, var(--copper) 12%, var(--bg-raised));
+}
+
+/* Contenedor del libro (pestañas + controles Anterior/Siguiente):
+   en oscuro era un degradado casi negro; en claro es un marfil hundido
+   cálido con un filo de luz superior, para que lea como bandeja física. */
+html[data-atlas-mode="light"] .atlas .book-nav {
+  background:
+    linear-gradient(180deg,
+      oklch(0.935 0.016 78 / 0.92),
+      oklch(0.910 0.020 75 / 0.96));
+}
+/* Icono de pestaña inactiva — fondo claro hundido, no tinta negra */
+html[data-atlas-mode="light"] .atlas .book-tab-icon {
+  background: oklch(0.900 0.020 75 / 0.55);
+}
+/* Icono de pestaña activa — el color-mix usaba tinta negra como base */
+html[data-atlas-mode="light"] .atlas .book-tab[data-active="true"] .book-tab-icon {
+  background: color-mix(in oklab, var(--tab-color) 20%, oklch(0.945 0.014 75));
+}
+
+/* ── Portada del expediente con profundidad en claro ───────────────────
+   En claro el borde --rule es pálido y la sombra tintada queda muy sutil:
+   la imagen "flota" sin anclaje. Le damos un borde más contrastado y una
+   sombra de tinta más definida para que se sienta apoyada sobre el papel. */
+html[data-atlas-mode="light"] .atlas .dossier-cover,
+html[data-atlas-mode="light"] .atlas .feature-media {
+  border-color: oklch(0.660 0.022 68);
+  box-shadow:
+    0 1px 0 oklch(1 0 0 / 0.6) inset,
+    0 2px 6px -2px oklch(0.20 0.03 48 / 0.20),
+    0 22px 48px -26px oklch(0.20 0.03 48 / 0.38);
+}
+
+/* ── Placeholders de imagen (.ph) en claro ─────────────────────────────
+   El placeholder "sin imagen" era una textura oscura con hatching diagonal:
+   sobre marfil aparecía como un rectángulo negro. En claro se reescribe a
+   marfil tramado cálido, conservando el motivo de hatching diagonal y el
+   glyph apenas tintado de cobre. Afecta retratos de personajes/lugares/
+   facciones y cualquier episodio sin miniatura. */
+html[data-atlas-mode="light"] .atlas .ph {
+  background:
+    repeating-linear-gradient(45deg, oklch(0.835 0.020 75) 0 2px, transparent 2px 18px),
+    linear-gradient(160deg, oklch(0.905 0.022 78), oklch(0.845 0.026 72));
+}
+html[data-atlas-mode="light"] .atlas .ph::after {
+  color: oklch(0.520 0.060 52 / 0.42);
+}
+
+/* ── Transición de modo (cross-fade de luminancia) ─────────────────────
+   Decisión: declarar la transición SOLO en surfaces base del shell
+   (.atlas root, .site-header, .site-footer, body) y NO en .atlas * global.
+   Razón: clases con transiciones propias (.ledger-row, .index-cell, .btn,
+   .site-nav a) ya tienen transition: background/color/border-color, y
+   re-resuelven var(--*) al cambiar el atributo, por lo que su cambio de
+   color es fluido sin que tengamos que tocar sus declaraciones.
+   Declarar .atlas * globalmente sobreescribiría esas transiciones y
+   perdería propiedades específicas como padding-left en .ledger-row.
+   Brief sección 5: solo background-color / color / border-color / box-shadow,
+   nunca transform o dimensiones (cero CLS). */
+body,
+.atlas,
+.atlas .site-header,
+.atlas .site-footer {
+  transition: background-color var(--dur) var(--ease),
+              background-image var(--dur) var(--ease),
+              color var(--dur) var(--ease),
+              border-color var(--dur) var(--ease),
+              box-shadow var(--dur) var(--ease);
+}
+
+/* ── Toggle del atlas (público) ────────────────────────────────────────
+   Botón con borde permanente (var(--rule)) — visible al toque, no etéreo.
+   Los dos glyphs (☾ luna / ☀ sol) viven en ::before y ::after y hacen un
+   swap con rotación + crossfade al alternar aria-checked. Solo CSS, sin
+   re-render React: el cambio de atributo dispara la transición.
+
+   Hit area 40×40 (criterio 7 del brief). El glyph se centra en 16×16 ópticos
+   con una corrección vertical de 0.5px (los caracteres lunares caen alto). */
+.atlas .site-header-rule {
+  display: inline-block;
+  width: 1px;
+  height: 22px;
+  margin: 0 0.25rem 0 0.4rem;
+  background: var(--rule-soft);
+  flex-shrink: 0;
+}
+.atlas .atlas-theme-toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  background: transparent;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-sm);
+  color: var(--ink-soft);
+  cursor: pointer;
+  flex-shrink: 0;
+  overflow: hidden;
+  transition: color var(--dur) var(--ease),
+              border-color var(--dur) var(--ease),
+              background var(--dur) var(--ease),
+              box-shadow var(--dur) var(--ease);
+}
+.atlas .atlas-theme-toggle:hover {
+  color: var(--copper-bright);
+  border-color: var(--copper);
+  background: color-mix(in oklab, var(--copper) 8%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--copper) 24%, transparent) inset;
+}
+.atlas .atlas-theme-toggle:focus-visible {
+  outline: 2px solid var(--copper);
+  outline-offset: 2px;
+}
+.atlas .atlas-theme-toggle:active {
+  transform: scale(0.96);
+  transition-duration: 80ms;
+}
+
+/* Glyphs como pseudo-elements: ::before es luna, ::after es sol. Solo uno
+   se ve a la vez; el cambio aria-checked dispara una rotación + crossfade
+   de 380ms. La rotación opuesta entre entrada y salida da la sensación de
+   "uno gira hacia adentro mientras el otro gira hacia afuera". */
+.atlas .atlas-theme-toggle::before,
+.atlas .atlas-theme-toggle::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--display);
+  font-size: 1.25rem;
+  line-height: 1;
+  pointer-events: none;
+  transition: opacity 280ms var(--ease),
+              transform 380ms var(--ease);
+  /* Centrado óptico: estos glyphs caen alto en la mayoría de fuentes serif */
+  transform: translateY(0.5px);
+}
+.atlas .atlas-theme-toggle::before { content: "☾"; }
+.atlas .atlas-theme-toggle::after  {
+  content: "☀";
+  opacity: 0;
+  transform: translateY(0.5px) rotate(-90deg) scale(0.6);
+}
+.atlas .atlas-theme-toggle[aria-checked="true"]::before {
+  opacity: 0;
+  transform: translateY(0.5px) rotate(90deg) scale(0.6);
+}
+.atlas .atlas-theme-toggle[aria-checked="true"]::after {
+  opacity: 1;
+  transform: translateY(0.5px);
+}
+
+/* sr-only para el span de estado dentro del botón (lectura screen-reader
+   complementaria al aria-label). */
+.atlas .atlas-theme-toggle .sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0);
+  white-space: nowrap; border: 0;
+}
+
+/* ── prefers-reduced-motion: corte seco ────────────────────────────────
+   Cuando el sistema pide reducir movimiento, deshabilitamos la transición
+   de modo (criterio del brief sección 5). Las micro-interacciones de
+   hover ya tienen reglas reduced-motion propias en sus selectors. */
+@media (prefers-reduced-motion: reduce) {
+  body,
+  .atlas,
+  .atlas .site-header,
+  .atlas .site-footer,
+  .atlas .atlas-theme-toggle,
+  .atlas .atlas-theme-toggle::before,
+  .atlas .atlas-theme-toggle::after {
+    transition: none;
+  }
+  /* El swap de glyphs sigue siendo instantáneo pero sin rotación: el glyph
+     oculto se esconde sin animar para no dejar un estado intermedio raro. */
+  .atlas .atlas-theme-toggle::after,
+  .atlas .atlas-theme-toggle[aria-checked="true"]::before {
+    transform: translateY(0.5px) scale(0.6);
+  }
+}
+
+/* ── Overrides de /mapa y loading state en modo claro ─────────────────
+   Hardcoded oklch oscuros restantes: loading-card, mapa (viewport, panel
+   drawer, toolbar buttons, inputs, chips, tooltips de marker).
+   El lightbox conserva su fondo oscuro de forma intencional (darkroom). */
+
+html[data-atlas-mode="light"] .atlas .atlas-loading-card {
+  background:
+    linear-gradient(180deg,
+      oklch(0.968 0.012 75 / 0.88),
+      oklch(0.952 0.014 75 / 0.94));
+}
+
+/* Lienzo del mapa + drawer lateral */
+html[data-atlas-mode="light"] .atlas .map-stage,
+html[data-atlas-mode="light"] .atlas .map-panel {
+  background:
+    linear-gradient(180deg,
+      oklch(0.968 0.012 75 / 0.88),
+      oklch(0.952 0.014 75 / 0.94));
+}
+html[data-atlas-mode="light"] .atlas .map-panel-head {
+  background: linear-gradient(180deg, oklch(0.968 0.012 75 / 0.96), transparent);
+}
+html[data-atlas-mode="light"] .atlas .map-panel-close {
+  background: oklch(0.945 0.014 75 / 0.7);
+}
+/* Fondo del viewport (visible alrededor/detrás de la imagen del mapa) */
+html[data-atlas-mode="light"] .atlas .map-viewport {
+  background: oklch(0.895 0.018 75);
+}
+
+/* Inputs y controles de toolbar */
+html[data-atlas-mode="light"] .atlas .map-search input,
+html[data-atlas-mode="light"] .atlas .map-calibrator input,
+html[data-atlas-mode="light"] .atlas .map-calibrator textarea,
+html[data-atlas-mode="light"] .atlas .map-calibrator select {
+  background: oklch(0.938 0.016 75 / 0.84);
+}
+html[data-atlas-mode="light"] .atlas .map-episode {
+  background: oklch(0.945 0.014 75 / 0.6);
+}
+
+/* Botones de filtro/zoom/lista/calibrador */
+html[data-atlas-mode="light"] .atlas .map-filters button,
+html[data-atlas-mode="light"] .atlas .map-zoom button,
+html[data-atlas-mode="light"] .atlas .map-panel-link,
+html[data-atlas-mode="light"] .atlas .map-list button,
+html[data-atlas-mode="light"] .atlas .map-calibrator-actions button {
+  background: oklch(0.945 0.014 75 / 0.72);
+}
+html[data-atlas-mode="light"] .atlas .map-filters button:hover,
+html[data-atlas-mode="light"] .atlas .map-filters button[data-active="true"],
+html[data-atlas-mode="light"] .atlas .map-zoom button:hover:not(:disabled),
+html[data-atlas-mode="light"] .atlas .map-zoom button[data-active="true"],
+html[data-atlas-mode="light"] .atlas .map-panel-link:hover,
+html[data-atlas-mode="light"] .atlas .map-list button:hover,
+html[data-atlas-mode="light"] .atlas .map-list button[data-active="true"],
+html[data-atlas-mode="light"] .atlas .map-calibrator-actions button:hover:not(:disabled) {
+  background: color-mix(in oklab, var(--copper) 12%, oklch(0.945 0.014 75));
+}
+html[data-atlas-mode="light"] .atlas .map-calibrator-actions button[data-copied="true"] {
+  background: color-mix(in oklab, var(--moss) 18%, oklch(0.945 0.014 75));
+}
+
+/* Chips del panel de lugar */
+html[data-atlas-mode="light"] .atlas .map-panel-chip {
+  background: oklch(0.945 0.014 75 / 0.6);
+}
+html[data-atlas-mode="light"] .atlas .map-panel-chip[data-tone="habitante"] {
+  background: color-mix(in oklab, var(--copper) 14%, oklch(0.945 0.014 75));
+}
+html[data-atlas-mode="light"] .atlas .map-panel-chip[data-tone="habitante"]:hover {
+  background: color-mix(in oklab, var(--copper) 22%, oklch(0.945 0.014 75));
+}
+html[data-atlas-mode="light"] .atlas .map-panel-link[data-toggle="on"] {
+  background: color-mix(in oklab, var(--moss) 14%, oklch(0.945 0.014 75));
+}
+
+/* Tooltips de marker y pick */
+html[data-atlas-mode="light"] .atlas .map-marker b {
+  background: oklch(0.968 0.012 75 / 0.94);
+  border-color: oklch(0.760 0.012 70 / 0.42);
+}
+html[data-atlas-mode="light"] .atlas .map-pick b {
+  background: oklch(0.968 0.012 75 / 0.94);
+}
+
+/* Markers no visitados: sobre el mapa oscuro se siguen viendo, pero su
+   dot usa un gris cálido en vez del casi-negro del modo oscuro. */
+html[data-atlas-mode="light"] .atlas .map-marker[data-visited="false"] span {
+  background: oklch(0.660 0.014 70);
+  border-color: oklch(0.840 0.010 70 / 0.55);
+  box-shadow: 0 0 0 3px oklch(0.660 0.014 70 / 0.30);
+}
+html[data-atlas-mode="light"] .atlas .map-marker[data-visited="false"] b em {
+  color: var(--ink-faint);
+}
+
+/* Bloque de código pre (calibrador) */
+html[data-atlas-mode="light"] .atlas .map-calibrator pre {
+  background: oklch(0.920 0.018 75 / 0.76);
 }

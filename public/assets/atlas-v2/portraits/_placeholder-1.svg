@@ -1,0 +1,43 @@
+<svg viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#25170c"/>
+      <stop offset="52%" stop-color="#15100b"/>
+      <stop offset="100%" stop-color="#070504"/>
+    </linearGradient>
+    <linearGradient id="coat" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#7b562a"/>
+      <stop offset="100%" stop-color="#25160b"/>
+    </linearGradient>
+    <radialGradient id="halo" cx="50%" cy="22%" r="58%">
+      <stop offset="0%" stop-color="#d59a55" stop-opacity="0.34"/>
+      <stop offset="60%" stop-color="#70421f" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer>
+        <feFuncA type="table" tableValues="0 0.08"/>
+      </feComponentTransfer>
+    </filter>
+  </defs>
+  <rect width="300" height="400" fill="url(#bg)"/>
+  <rect width="300" height="400" fill="url(#halo)"/>
+  <circle cx="150" cy="126" r="82" fill="none" stroke="#8f5e2b" stroke-width="2" opacity="0.34"/>
+  <circle cx="150" cy="126" r="66" fill="none" stroke="#c98a3a" stroke-width="0.8" opacity="0.28"/>
+  <path d="M92 118 C96 75 126 54 152 54 C185 54 211 82 214 120 C202 102 177 94 151 94 C125 94 105 102 92 118Z" fill="#2b1b0f"/>
+  <ellipse cx="150" cy="142" rx="52" ry="62" fill="url(#coat)"/>
+  <path d="M90 220 C112 193 130 183 150 183 C170 183 191 194 212 220 C238 249 252 313 256 400 L44 400 C48 312 62 251 90 220Z" fill="url(#coat)"/>
+  <path d="M112 250 L150 218 L188 250 L168 400 L132 400Z" fill="#160d07" opacity="0.72"/>
+  <path d="M86 286 C116 268 184 268 214 286" fill="none" stroke="#c98a3a" stroke-width="1" opacity="0.26"/>
+  <path d="M126 174 C139 183 161 183 174 174" fill="none" stroke="#120905" stroke-width="6" opacity="0.38"/>
+  <g opacity="0.38" stroke="#c98a3a" stroke-width="1" fill="none">
+    <path d="M36 36 H82 M36 36 V82"/>
+    <path d="M264 36 H218 M264 36 V82"/>
+    <path d="M36 364 H82 M36 364 V318"/>
+    <path d="M264 364 H218 M264 364 V318"/>
+  </g>
+  <rect width="300" height="400" filter="url(#grain)" opacity="0.55"/>
+  <rect x="8" y="8" width="284" height="384" fill="none" stroke="#b87333" stroke-width="0.8" opacity="0.34"/>
+</svg>

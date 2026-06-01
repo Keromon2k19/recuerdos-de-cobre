@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import {
+  useCallback,
   useEffect,
   useMemo,
   useRef,
@@ -141,6 +142,10 @@ export default function CampaignMap({ markers: baseMarkers }: CampaignMapProps) 
   const panelRef = useRef<HTMLElement | null>(null);
   const viewportRef = useRef<HTMLDivElement | null>(null);
   const wasDraggedRef = useRef(false);
+  // zoomIndex en ref: el listener nativo de wheel necesita el valor actual
+  // sin re-suscribirse. focusRaf: id del rAF que sigue el foco del zoom.
+  const zoomIndexRef = useRef(0);
+  const focusRafRef = useRef<number | null>(null);
   const [isPanning, setIsPanning] = useState(false);
 
   useEffect(() => {
@@ -164,24 +169,78 @@ export default function CampaignMap({ markers: baseMarkers }: CampaignMapProps) 
     window.localStorage.setItem(VISITED_KEY, JSON.stringify([...manualVisited]));
   }, [manualVisited]);
 
-  // Wheel = zoom (no scroll). Listener nativo con passive:false para poder
-  // preventDefault y evitar que el browser scrollee la pagina. Direccion:
-  // rueda arriba (deltaY < 0) acerca, rueda abajo aleja.
+  // Mantiene fijo bajo el cursor el punto del mapa mientras el ancho del
+  // canvas transiciona (transition: width 420ms). Sin esto el zoom siempre
+  // crece desde la esquina superior izquierda. Reajusta scroll en cada
+  // frame durante ~480ms, leyendo el rect real del canvas en transicion.
+  const trackZoomFocus = useCallback((clientX: number, clientY: number) => {
+    const vp = viewportRef.current;
+    const canvas = vp?.querySelector<HTMLElement>(".map-canvas");
+    if (!vp || !canvas) return;
+    if (focusRafRef.current !== null) cancelAnimationFrame(focusRafRef.current);
+
+    const cr = canvas.getBoundingClientRect();
+    // Fraccion 0..1 del punto del mapa que esta bajo el cursor.
+    const fx = Math.min(1, Math.max(0, (clientX - cr.left) / cr.width));
+    const fy = Math.min(1, Math.max(0, (clientY - cr.top) / cr.height));
+    const start = performance.now();
+
+    const step = () => {
+      const c = canvas.getBoundingClientRect();
+      // Reposiciona el scroll para que (fx, fy) vuelva a quedar en el cursor.
+      vp.scrollLeft += c.left + fx * c.width - clientX;
+      vp.scrollTop += c.top + fy * c.height - clientY;
+      if (performance.now() - start < 480) {
+        focusRafRef.current = requestAnimationFrame(step);
+      } else {
+        focusRafRef.current = null;
+      }
+    };
+    focusRafRef.current = requestAnimationFrame(step);
+  }, []);
+
+  // Cambia el zoom un paso anclando el punto (focusX, focusY) de pantalla.
+  const nudgeZoom = useCallback(
+    (dir: 1 | -1, focusX: number, focusY: number) => {
+      const cur = zoomIndexRef.current;
+      const next = Math.min(ZOOMS.length - 1, Math.max(0, cur + dir));
+      if (next === cur) return;
+      zoomIndexRef.current = next;
+      setZoomIndex(next);
+      trackZoomFocus(focusX, focusY);
+    },
+    [trackZoomFocus],
+  );
+
+  // Wheel = zoom centrado en el cursor (no scroll). Listener nativo con
+  // passive:false para poder preventDefault y que el browser no scrollee.
   useEffect(() => {
     const vp = viewportRef.current;
     if (!vp) return;
     function onWheel(event: WheelEvent) {
-      if (event.ctrlKey) return; // dejar que el browser haga zoom de pagina si Ctrl+wheel
+      if (event.ctrlKey) return; // Ctrl+wheel => zoom de pagina del browser
       event.preventDefault();
-      if (event.deltaY < 0) {
-        setZoomIndex((index) => Math.min(ZOOMS.length - 1, index + 1));
-      } else if (event.deltaY > 0) {
-        setZoomIndex((index) => Math.max(0, index - 1));
-      }
+      const dir = event.deltaY < 0 ? 1 : event.deltaY > 0 ? -1 : 0;
+      if (dir !== 0) nudgeZoom(dir, event.clientX, event.clientY);
     }
     vp.addEventListener("wheel", onWheel, { passive: false });
     return () => vp.removeEventListener("wheel", onWheel);
+  }, [nudgeZoom]);
+
+  // Cancela el rAF de seguimiento de foco al desmontar.
+  useEffect(() => {
+    return () => {
+      if (focusRafRef.current !== null) cancelAnimationFrame(focusRafRef.current);
+    };
   }, []);
+
+  // Zoom desde los botones +/-: ancla al centro del viewport del mapa.
+  function zoomFromCenter(dir: 1 | -1) {
+    const vp = viewportRef.current;
+    if (!vp) return;
+    const r = vp.getBoundingClientRect();
+    nudgeZoom(dir, r.left + r.width / 2, r.top + r.height / 2);
+  }
 
   // Cierra el drawer al clickear/tocar fuera. Uso pointerdown (no mousedown)
   // porque el preventDefault del startPan suprime los mouse events
@@ -389,7 +448,7 @@ export default function CampaignMap({ markers: baseMarkers }: CampaignMapProps) 
             <div className="map-zoom" aria-label="Zoom del mapa">
               <button
                 type="button"
-                onClick={() => setZoomIndex((index) => Math.max(0, index - 1))}
+                onClick={() => zoomFromCenter(-1)}
                 disabled={zoomIndex === 0}
                 aria-label="Reducir zoom"
               >
@@ -398,7 +457,7 @@ export default function CampaignMap({ markers: baseMarkers }: CampaignMapProps) 
               <span>{Math.round(zoom * 100)}%</span>
               <button
                 type="button"
-                onClick={() => setZoomIndex((index) => Math.min(ZOOMS.length - 1, index + 1))}
+                onClick={() => zoomFromCenter(1)}
                 disabled={zoomIndex === ZOOMS.length - 1}
                 aria-label="Aumentar zoom"
               >
@@ -506,7 +565,6 @@ export default function CampaignMap({ markers: baseMarkers }: CampaignMapProps) 
             )}
           </div>
         </div>
-      </div>
 
       <aside
         ref={panelRef}
@@ -703,6 +761,7 @@ export default function CampaignMap({ markers: baseMarkers }: CampaignMapProps) 
           </div>
         ) : null}
       </aside>
+      </div>
     </div>
   );
 }

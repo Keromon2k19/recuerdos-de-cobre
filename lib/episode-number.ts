@@ -21,10 +21,12 @@ export function parseEpisodioRef(titulo: string | undefined | null): EpisodioRef
   if (!titulo) return null;
   // Número principal: el que sigue a "Recuerdos de Cobre"; si no, el primer
   // entero suelto del título.
+  const numberPattern = String.raw`(\d+(?:[\.,]\d+)?)`;
   const mMain =
-    titulo.match(/recuerdos\s+de\s+cobre\s+(\d+)/i) || titulo.match(/\b(\d+)\b/);
+    titulo.match(new RegExp(String.raw`recuerdos\s+de\s+cobre\s+(?:numero\s+)?${numberPattern}`, "i")) ||
+    titulo.match(new RegExp(String.raw`\b${numberPattern}\b`));
   if (!mMain) return null;
-  const ep = parseInt(mMain[1], 10);
+  const ep = Number.parseFloat(mMain[1].replace(",", "."));
   if (!Number.isFinite(ep)) return null;
 
   const mPart =

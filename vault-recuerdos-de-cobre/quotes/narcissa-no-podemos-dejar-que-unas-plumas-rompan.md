@@ -1,0 +1,14 @@
+---
+tipo: quote
+nombre: Narcissa — "No podemos dejar que unas plumas rompan ..."
+alias: []
+apariciones:
+  - 71
+ultima_actualizacion: '2026-05-22T11:30:11.093Z'
+---
+
+## Menciones por episodio
+
+### [[071-recuerdos-de-cobre-58-consecuencias|Ep. 71 — Recuerdos De Cobre 58: Consecuencias]]
+- No podemos dejar que unas plumas rompan lo que nosotros tenemos.
+

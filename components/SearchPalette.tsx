@@ -5,7 +5,35 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { searchAction, type SearchHit } from "@/app/actions/search";
+import type { SearchHit } from "@/app/actions/search";
+import {
+  substringSearchClient,
+  type LiteIndex,
+} from "@/lib/client-search";
+
+// Cache modulo-level del indice lite: la primera vez que se abre el palette
+// hacemos fetch, despues queda en memoria mientras viva la pestana.
+let cachedLiteIndex: LiteIndex | null = null;
+let inflightLiteIndex: Promise<LiteIndex | null> | null = null;
+
+async function getLiteIndex(): Promise<LiteIndex | null> {
+  if (cachedLiteIndex) return cachedLiteIndex;
+  if (inflightLiteIndex) return inflightLiteIndex;
+  inflightLiteIndex = (async () => {
+    try {
+      const res = await fetch("/search-index.json");
+      if (!res.ok) return null;
+      const idx = (await res.json()) as LiteIndex;
+      cachedLiteIndex = idx;
+      return idx;
+    } catch {
+      return null;
+    } finally {
+      inflightLiteIndex = null;
+    }
+  })();
+  return inflightLiteIndex;
+}
 
 // Marcador breve (mono) por tipo. Sin emoji: tono de archivo, no de chat.
 const TIPO_MARK: Record<string, string> = {
@@ -35,12 +63,16 @@ export default function SearchPalette() {
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const reqIdRef = useRef(0);
 
-  // Abrir/cerrar con Cmd/Ctrl+K, cerrar con Esc
+  // Abrir/cerrar con Cmd/Ctrl+K, cerrar con Esc. En la primera apertura
+  // prefetcheamos el indice lite — si ya esta cacheado es no-op.
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
         e.preventDefault();
-        setOpen((o) => !o);
+        setOpen((o) => {
+          if (!o) void getLiteIndex();
+          return !o;
+        });
       } else if (e.key === "Escape") {
         setOpen(false);
       }
@@ -112,30 +144,47 @@ export default function SearchPalette() {
     return () => document.removeEventListener("keydown", onTrap, true);
   }, [open]);
 
-  // Búsqueda con debounce
+  // Busqueda en cliente: substring sobre el indice lite (~50KB cacheado).
+  // Sin debounce porque el match es <1ms; con debounce el palette se siente
+  // perezoso. El roundtrip al server desaparecio: cero latencia de red.
   useEffect(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current);
-    if (query.trim().length < 2) {
+    const q = query.trim();
+    if (q.length < 2) {
       setHits([]);
+      setLoading(false);
+      setError(null);
+      return;
+    }
+    const myReq = ++reqIdRef.current;
+    const idx = cachedLiteIndex;
+    if (idx) {
+      const hits = substringSearchClient(idx, q);
+      setHits(hits);
+      setMode("substring");
+      setError(null);
+      setActive(0);
       setLoading(false);
       return;
     }
+    // Primer keystroke antes de que termine el fetch del indice: esperamos
+    // a que llegue y reaplicamos.
     setLoading(true);
-    debounceRef.current = setTimeout(async () => {
-      const myReq = ++reqIdRef.current;
-      const res = await searchAction(query);
-      if (myReq !== reqIdRef.current) return; // respuesta vieja, descartar
+    void getLiteIndex().then((idx) => {
+      if (myReq !== reqIdRef.current) return;
       setLoading(false);
-      if (res.success) {
-        setHits(res.hits);
-        setMode(res.mode);
-        setError(null);
-        setActive(0);
-      } else {
+      if (!idx) {
         setHits([]);
-        setError(res.error);
+        setError(
+          "No hay indice de busqueda. Corre: npx tsx scripts/build-lite-index.ts"
+        );
+        return;
       }
-    }, 250);
+      setHits(substringSearchClient(idx, q));
+      setMode("substring");
+      setError(null);
+      setActive(0);
+    });
   }, [query]);
 
   const go = useCallback(

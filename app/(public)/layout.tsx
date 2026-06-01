@@ -1,9 +1,12 @@
 // app/(public)/layout.tsx — Shell de la antología pública (read-only).
 // Sin sidebar dominante: header slim + contenido protagonista + colofón.
 // Paleta propia fija (no depende de data-mode del panel local).
+// shells: public.css es la identidad visual, palette.css el command-K en clave atlas.
 import "./public.css";
+import "./palette.css";
 import SiteHeader from "@/components/public/SiteHeader";
 import SiteFooter from "@/components/public/SiteFooter";
+import SearchPalette from "@/components/SearchPalette";
 
 export default function PublicLayout({
   children,
@@ -28,6 +31,7 @@ export default function PublicLayout({
           <main className="site-main">{children}</main>
           <SiteFooter />
         </div>
+        <SearchPalette />
       </div>
     </>
   );

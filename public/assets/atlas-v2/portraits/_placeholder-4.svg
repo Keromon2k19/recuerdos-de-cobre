@@ -1,0 +1,44 @@
+<svg viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg" x1="1" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#26190d"/>
+      <stop offset="50%" stop-color="#15100b"/>
+      <stop offset="100%" stop-color="#070504"/>
+    </linearGradient>
+    <linearGradient id="robe" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#7a5427"/>
+      <stop offset="100%" stop-color="#24150a"/>
+    </linearGradient>
+    <radialGradient id="halo" cx="50%" cy="26%" r="50%">
+      <stop offset="0%" stop-color="#b87333" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.82" numOctaves="2"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer>
+        <feFuncA type="table" tableValues="0 0.08"/>
+      </feComponentTransfer>
+    </filter>
+  </defs>
+  <rect width="300" height="400" fill="url(#bg)"/>
+  <rect width="300" height="400" fill="url(#halo)"/>
+  <g opacity="0.22" stroke="#b87333" fill="none">
+    <circle cx="150" cy="142" r="92"/>
+    <circle cx="150" cy="142" r="70"/>
+    <path d="M150 48 V236 M56 142 H244"/>
+  </g>
+  <ellipse cx="150" cy="148" rx="57" ry="63" fill="url(#robe)"/>
+  <path d="M92 100 C122 58 178 58 208 100 C196 91 176 86 150 86 C124 86 104 91 92 100Z" fill="#1b1008"/>
+  <path d="M34 400 C40 272 78 222 150 205 C222 222 260 272 266 400Z" fill="url(#robe)"/>
+  <path d="M104 236 L150 216 L196 236 L178 400 H122Z" fill="#120904" opacity="0.68"/>
+  <path d="M110 180 C132 198 168 198 190 180" stroke="#120904" stroke-width="7" opacity="0.36" fill="none"/>
+  <g opacity="0.40" stroke="#c98a3a" stroke-width="1" fill="none">
+    <path d="M30 30 H88 M30 30 V88"/>
+    <path d="M270 30 H212 M270 30 V88"/>
+    <path d="M30 370 H88 M30 370 V312"/>
+    <path d="M270 370 H212 M270 370 V312"/>
+  </g>
+  <rect width="300" height="400" filter="url(#grain)" opacity="0.55"/>
+  <rect x="8" y="8" width="284" height="384" fill="none" stroke="#b87333" stroke-width="0.8" opacity="0.34"/>
+</svg>

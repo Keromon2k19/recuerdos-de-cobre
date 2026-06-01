@@ -6,12 +6,15 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import AtlasThemeToggle from "@/components/public/AtlasThemeToggle";
 
 const LIVE = [
   { href: "/cronicas", label: "Crónicas" },
   { href: "/personajes", label: "Personajes" },
   { href: "/lugares", label: "Lugares" },
   { href: "/facciones", label: "Facciones" },
+  { href: "/objetos", label: "Objetos" },
+  { href: "/worldbuilding", label: "Mundo" },
   { href: "/misterios", label: "Misterios" },
   { href: "/mapa", label: "Mapa" },
   { href: "/buscar", label: "Buscar" },
@@ -36,6 +39,8 @@ export default function SiteHeader() {
           </Link>
         ))}
       </nav>
+      <span className="site-header-rule" aria-hidden="true" />
+      <AtlasThemeToggle />
     </header>
   );
 }

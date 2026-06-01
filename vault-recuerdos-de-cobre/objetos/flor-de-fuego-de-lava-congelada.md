@@ -1,0 +1,14 @@
+---
+tipo: objeto
+nombre: Flor de fuego de lava congelada
+alias: []
+apariciones:
+  - 52
+ultima_actualizacion: '2026-05-21T23:15:57.651Z'
+---
+
+## Menciones por episodio
+
+### [[052-recuerdos-de-cobre-44-de-chill-parte-2|Ep. 52 — Recuerdos De Cobre 44 : De Chill (Parte 2)]]
+- Escultura de Layra en recuerdo de Teodora, hecha con lava congelada que mantiene fuego azul eterno.
+

@@ -80,7 +80,25 @@ function readJob(vaultPath: string, numero: number): Job {
 function writeJob(vaultPath: string, job: Job): void {
   const filePath = jobFile(vaultPath, job.numero);
   const updated: Job = { ...job, actualizado_en: new Date().toISOString() };
-  fs.writeFileSync(filePath, JSON.stringify(updated, null, 2), "utf-8");
+  // Atómico: write-then-rename. Si un kill/crash interrumpe el writeFileSync
+  // directo, el JSON original queda intacto en lugar de truncado a basura.
+  const tmpPath = `${filePath}.${process.pid}.${Date.now()}.tmp`;
+  fs.writeFileSync(tmpPath, JSON.stringify(updated, null, 2), "utf-8");
+  try {
+    fs.renameSync(tmpPath, filePath);
+  } catch (err) {
+    const code = (err as NodeJS.ErrnoException).code;
+    if (code === "EPERM" || code === "EXDEV" || code === "EBUSY") {
+      try {
+        fs.copyFileSync(tmpPath, filePath);
+      } finally {
+        try { fs.unlinkSync(tmpPath); } catch { /* ignore */ }
+      }
+      return;
+    }
+    try { fs.unlinkSync(tmpPath); } catch { /* ignore */ }
+    throw err;
+  }
 }
 
 function updateJob(
@@ -228,6 +246,55 @@ function spawnAndWait(
 
 // ─── Etapas del pipeline ──────────────────────────────────────────────────
 
+/**
+ * Devuelve una ruta a cookies en el formato Netscape que yt-dlp espera.
+ * Las extensiones tipo "Get cookies.txt" a veces exportan JSON; si el
+ * archivo es JSON lo convierte a un sibling `*.netscape.txt`. Si ya es
+ * Netscape (o texto plano) lo usa tal cual.
+ */
+function resolveCookieFile(rawPath: string): string {
+  let content: string;
+  try {
+    content = fs.readFileSync(rawPath, "utf-8");
+  } catch {
+    return rawPath;
+  }
+  const head = content.trimStart();
+  if (!head.startsWith("{") && !head.startsWith("[")) {
+    return rawPath; // ya es Netscape
+  }
+  try {
+    const data = JSON.parse(content);
+    const cookies: Array<Record<string, unknown>> = Array.isArray(data)
+      ? data
+      : Array.isArray((data as { cookies?: unknown }).cookies)
+        ? ((data as { cookies: Array<Record<string, unknown>> }).cookies)
+        : [];
+    let out = "# Netscape HTTP Cookie File\n";
+    for (const c of cookies) {
+      if (!c || typeof c.domain !== "string" || typeof c.name !== "string") {
+        continue;
+      }
+      const domain = (c.httpOnly ? "#HttpOnly_" : "") + c.domain;
+      const includeSub = c.hostOnly ? "FALSE" : "TRUE";
+      const cpath = typeof c.path === "string" ? c.path : "/";
+      const secure = c.secure ? "TRUE" : "FALSE";
+      const exp =
+        c.session || typeof c.expirationDate !== "number"
+          ? 0
+          : Math.floor(c.expirationDate);
+      out += [domain, includeSub, cpath, secure, exp, c.name, c.value].join(
+        "\t"
+      ) + "\n";
+    }
+    const netscapePath = rawPath.replace(/\.txt$/i, "") + ".netscape.txt";
+    fs.writeFileSync(netscapePath, out, "utf-8");
+    return netscapePath;
+  } catch {
+    return rawPath;
+  }
+}
+
 async function downloadAudio(
   job: Job,
   outputDir: string,
@@ -253,12 +320,44 @@ async function downloadAudio(
     return audioPath;
   }
 
+  // Cookies de YouTube. Sin esto, al descargar episodios en lote desde la
+  // misma IP YouTube marca la cola como bot ("Sign in to confirm you're not
+  // a bot") y falla. Resolución por prioridad:
+  //   1. YTDLP_COOKIES_FILE = ruta a un cookies.txt exportado.
+  //   2. cookies.txt en la raíz del proyecto (convención sin configurar).
+  //   3. YTDLP_COOKIES_BROWSER = navegador (chrome/edge/firefox).
+  // Se prefiere el archivo porque `--cookies-from-browser` falla si el
+  // navegador está abierto (bloquea la BD de cookies, yt-dlp issue #7271).
+  const cookieArgs: string[] = (() => {
+    const envFile = (process.env.YTDLP_COOKIES_FILE ?? "").trim();
+    if (envFile && fs.existsSync(envFile)) {
+      return ["--cookies", resolveCookieFile(envFile)];
+    }
+    const localFile = path.join(process.cwd(), "cookies.txt");
+    if (fs.existsSync(localFile)) {
+      return ["--cookies", resolveCookieFile(localFile)];
+    }
+    const browser = (process.env.YTDLP_COOKIES_BROWSER ?? "").trim();
+    if (browser && browser.toLowerCase() !== "none") {
+      return ["--cookies-from-browser", browser];
+    }
+    return [];
+  })();
+
+  // yt-dlp ≥2026 requiere un runtime de JavaScript para extraer los formatos
+  // de YouTube; sin uno falla con "Requested format is not available". Solo
+  // deno viene activado por defecto. Usamos el propio Node que corre este
+  // worker (ruta explícita, sin depender del PATH) como runtime adicional.
+  const jsRuntimeArgs = ["--js-runtimes", `node:${process.execPath}`];
+
   const args = [
     "-x",
     "--audio-format",
     "mp3",
     "--ffmpeg-location",
     path.dirname(ffmpeg),
+    ...cookieArgs,
+    ...jsRuntimeArgs,
     "-o",
     audioPath,
     job.url,
@@ -343,6 +442,16 @@ async function transcribeAudio(
   if (!fs.existsSync(transcriptPath)) {
     throw new Error(`No se generó el transcript: ${transcriptPath}`);
   }
+  // Whisper puede generar un .txt vacío si VAD filtra todo o si rechaza todos
+  // los segmentos por log_prob_threshold. Detectarlo acá evita commitear un
+  // episodio con resumen alucinado.
+  const transcriptBytes = fs.statSync(transcriptPath).size;
+  if (transcriptBytes < 200) {
+    throw new Error(
+      `Transcript demasiado corto (${transcriptBytes} bytes): ${transcriptPath}. ` +
+      `Probable falla silenciosa de Whisper.`
+    );
+  }
 
   // Mover el transcript al outputDir con nombre limpio
   const finalTranscript = path.join(outputDir, `ep${String(job.numero).padStart(2, "0")}.transcript.txt`);
@@ -360,6 +469,17 @@ async function transcribeAudio(
  *
  * IMPORTANTE: el spawn es detached para que este proceso pueda salir limpio.
  */
+/** Verifica si un PID está vivo. process.kill con signal 0 no envía señal,
+ *  solo chequea existencia + permisos. Si tira EPERM también es proceso vivo. */
+function isPidAlive(pid: number): boolean {
+  try {
+    process.kill(pid, 0);
+    return true;
+  } catch (err) {
+    return (err as NodeJS.ErrnoException).code === "EPERM";
+  }
+}
+
 function chainNextQueued(vaultPath: string, currentNumero: number): void {
   const jobsDir = path.join(vaultPath, "_jobs");
   let files: string[];
@@ -374,7 +494,12 @@ function chainNextQueued(vaultPath: string, currentNumero: number): void {
     try {
       const content = fs.readFileSync(path.join(jobsDir, f), "utf-8");
       const j = JSON.parse(content) as Job;
-      if (j.estado === "queued" && j.numero !== currentNumero) {
+      // Saltear jobs con pid vivo: otro worker ya los tomó (race con server action).
+      if (
+        j.estado === "queued" &&
+        j.numero !== currentNumero &&
+        (!j.pid || !isPidAlive(j.pid))
+      ) {
         queued.push(j);
       }
     } catch {
@@ -412,6 +537,8 @@ function chainNextQueued(vaultPath: string, currentNumero: number): void {
     env: { ...process.env, PYTHONIOENCODING: "utf-8" },
   });
   child.unref();
+  // Cerrar fd del padre — el hijo detached hereda su propia copia.
+  try { fs.closeSync(logFd); } catch { /* ignore */ }
 }
 
 // ─── Main ─────────────────────────────────────────────────────────────────

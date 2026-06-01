@@ -13,6 +13,9 @@ build/
 .env
 .env.local
 .env*.local
+# Cookies de YouTube para yt-dlp (sesión personal, nunca commitear)
+cookies.txt
+cookies.netscape.txt
 
 # Logs
 npm-debug.log*
@@ -29,9 +32,15 @@ Thumbs.db
 # Superpowers (brainstorm artifacts, sesiones efímeras)
 .superpowers/
 
-# Vault local (si lo ponen dentro del repo accidentalmente)
-vault-recuerdos-de-cobre/
+# Vault canonico respaldado en GitHub privado:
+# vault-recuerdos-de-cobre/ entra al repo. vault-mysha queda ignorado porque
+# actualmente es el destino real del junction y duplicaria el mismo contenido.
 vault-mysha/
+vault-recuerdos-de-cobre.bak*/
+vault-mysha.bak*/
+vault-recuerdos-de-cobre/.obsidian/
+vault-recuerdos-de-cobre/_jobs/
+vault-recuerdos-de-cobre/_search-index.json
 
 # Obsidian local config (cache, layout, plugins instalados localmente)
 .obsidian/
@@ -57,3 +66,18 @@ resumen-ep01-*.txt
 .design-bundle2/
 .design-bundle3/
 .playwright-mcp/
+artifacts/
+inbox-lore/
+imagenes para la pagina/
+
+# Assets crudos/no usados en la app publica
+public/assets/atlas-v2/references/
+public/assets/atlas-v2/Nueva carpeta/
+public/assets/atlas-v2/para ordenar/
+public/assets/atlas-v2/medallions/
+public/assets/atlas-v2/ornaments/
+
+# Serena (memorias semánticas del proyecto, por máquina)
+.serena/
+# Graphify (grafo generado)
+graphify-out/

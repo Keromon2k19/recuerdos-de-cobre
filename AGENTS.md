@@ -3,9 +3,58 @@
 > Fuente de verdad vigente del proyecto: `docs/GOAL.md`.
 > Fuente de verdad del resumen: `PROMPT_RESUMEN.md`.
 > Si algo en este archivo contradice esos dos, ellos mandan.
-> Documentos legacy (`PRODUCT.md`, `DESIGN.md`, `CLAUDE.md`) describen una
-> iteración previa: contexto histórico, NO dirección final. No reconstruir
-> "Sala de Cobre" como diseño final.
+> Documentos legacy (`PRODUCT.md`, `DESIGN.md`) describen una iteración previa:
+> contexto histórico, NO dirección final. No reconstruir "Sala de Cobre" como
+> diseño final.
+
+## Modo de trabajo por tarea
+
+Este archivo cubre dos modos distintos. Elegí el modo según el pedido del
+usuario:
+
+- **Resumen/extracción de episodios**: seguir la sección "Tarea de Codex" de
+  este archivo. En ese modo, Codex solo escribe `output/epNN.resumen.md`,
+  `output/epNN.extraccion.json` y actualiza
+  `vault-recuerdos-de-cobre/_jobs/0NN.json`.
+- **UI V2 pública / frontend / diseño**: seguir
+  `docs/rdc-ui-v2-brief.md`,
+  `docs/rdc-ui-v2-implementation-plan.md`,
+  `docs/rdc-ui-v2-reference-index.md`,
+  `docs/rdc-ui-v2-qa-checklist.md` y
+  `docs/rdc-ui-v2-agent-prompts.md`. En ese modo está permitido trabajar en
+  `app/(v2)/v2/`, `components/atlas-v2/`, `data/atlas-v2/`,
+  `public/assets/atlas-v2/`, `app/(v2)/v2/atlas-v2.css` y docs relacionados.
+
+Si una regla de la sección de episodios contradice una tarea explícita de UI V2,
+la tarea de UI V2 y los documentos `docs/rdc-ui-v2-*` mandan para ese trabajo.
+
+### Regla dura para UI V2 visual
+
+Para cualquier cambio visual, layout, polish, responsive, motion o QA de UI V2:
+
+1. Antes de editar, abrir la referencia correcta en
+   `public/assets/atlas-v2/references/`:
+   - Home: `home-reference.png`
+   - Personajes: `personajes-reference.png`
+   - Capitulos: `capitulos-reference.png`
+   - Mapa: `mapa-reference.png`
+   - Dioses: `dioses-reference.png`
+   - Archivos: `archivos-reference.png`
+2. Abrir o generar screenshot actual de la ruta con `scripts/v2-screenshot.mjs`
+   en desktop y mobile. Usar Edge/Chrome con `V2_BROWSER_CHANNEL` si hace falta.
+3. Comparar referencia vs screenshot actual y escribir gaps concretos P0/P1/P2
+   antes de tocar CSS o componentes.
+4. Despues de editar, volver a correr screenshot y comparar contra la misma
+   referencia. No decir "listo" solo por compilar.
+5. No usar `.design-bundle*`, `PRODUCT.md`, `DESIGN.md`, screenshots viejos del
+   repo padre ni UI legacy como direccion visual para UI V2, salvo pedido
+   explicito del usuario. Son contexto historico, no fuente de verdad visual.
+6. Si una skill o subagente sugiere algo distinto, la referencia local y los
+   docs `rdc-ui-v2-*` mandan.
+
+Nota de estructura actual: algunos docs antiguos mencionan `app/(public)/v2/`
+o `app/(public)/public.css`. Para UI V2 activa, la implementacion vigente esta
+en `app/(v2)/v2/` y el CSS principal es `app/(v2)/v2/atlas-v2.css`.
 
 ---
 

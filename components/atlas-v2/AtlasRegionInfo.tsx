@@ -1,0 +1,52 @@
+"use client";
+
+// components/atlas-v2/AtlasRegionInfo.tsx
+// Panel inferior con informacion del lugar seleccionado.
+
+import type { V2Region } from "@/data/atlas-v2/locations";
+
+type Props = {
+  region: V2Region;
+};
+
+const META_LABELS: Array<[keyof V2Region["meta"], string]> = [
+  ["gobierno", "Gobierno"],
+  ["poblacion", "Poblacion"],
+  ["industria", "Industria principal"],
+  ["influencia", "Nivel de influencia"],
+];
+
+export default function AtlasRegionInfo({ region }: Props) {
+  return (
+    <aside className="av2-region-info" aria-label={`Informacion de ${region.nombre}`}>
+      <div className="av2-region-info-thumb" aria-hidden="true">
+        {region.imageSrc ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={region.imageSrc}
+            alt=""
+            className="av2-region-info-image"
+          />
+        ) : (
+          <span className="av2-region-info-glyph">{region.glyph}</span>
+        )}
+      </div>
+
+      <div className="av2-region-info-body">
+        <p className="av2-region-info-kicker">{region.category}</p>
+        <h2 className="av2-region-info-name">{region.nombre}</h2>
+        <p className="av2-region-info-tagline">{region.tagline}</p>
+        <p className="av2-region-info-desc">{region.descripcion}</p>
+      </div>
+
+      <dl className="av2-region-info-meta">
+        {META_LABELS.map(([key, label]) => (
+          <div key={key} className="av2-region-info-meta-row">
+            <dt>{label}</dt>
+            <dd>{region.meta[key]}</dd>
+          </div>
+        ))}
+      </dl>
+    </aside>
+  );
+}

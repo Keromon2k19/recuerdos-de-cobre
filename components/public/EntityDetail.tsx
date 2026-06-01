@@ -1,9 +1,8 @@
-// components/public/EntityDetail.tsx — Ficha pública de entidad como
-// tarjeta de personaje: retrato + identidad + rasgos narrativos arriba,
-// narrativa episódica ancha al centro (mismo lenguaje que el expediente),
-// y relaciones agrupadas por el tipo de entidad a la que apuntan
-// (Jugadores / NPCs / Facciones / Lugares / …) y deduplicadas por entidad,
-// para que no sea una lista interminable.
+// components/public/EntityDetail.tsx — Ficha pública de entidad.
+// Identidad arriba (galería de imágenes + datos), y abajo un lector por
+// secciones con índice lateral: la narrativa, las menciones por episodio y
+// las relaciones dejan de estar apiladas en un scroll interminable y pasan
+// a verse de a una, navegables desde el índice.
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import fs from "node:fs/promises";
@@ -11,13 +10,15 @@ import path from "node:path";
 import type { ReactNode } from "react";
 import { parseMarkdown } from "@/lib/markdown";
 import { renderMarkdown } from "@/lib/markdown-render";
+import { splitEpisodeSections } from "@/lib/episode-sections";
 import { buildWikiResolver } from "@/lib/wiki-resolver";
-import { resolveImage, resolveImages, type ResolvedImage } from "@/lib/images";
+import { resolveImages, type ResolvedImage } from "@/lib/images";
 import { slugify } from "@/lib/slugify";
 import { cachedListByType } from "@/lib/public-cache";
 import { PUBLIC_ENTITIES, BY_TIPO } from "@/lib/entity-public";
 import { ENTITY_FOLDERS, type EntityType } from "@/lib/types";
 import AtlasImage from "@/components/public/AtlasImage";
+import EntityReader, { type ReaderSection } from "@/components/public/EntityReader";
 
 type Relacion = { con?: string; a?: string; tipo: string; episodio?: number };
 
@@ -69,6 +70,42 @@ function episodiosLabel(eps: number[]): string {
   return `ep. ${eps[0]}–${eps[eps.length - 1]} · ${eps.length}×`;
 }
 
+/** Resumen compacto de apariciones: "46 episodios · ep. 1–62". */
+function aparicionesResumen(eps: number[]): string | null {
+  if (eps.length === 0) return null;
+  const n = `${eps.length} ${eps.length === 1 ? "episodio" : "episodios"}`;
+  if (eps.length === 1) return `${n} · ep. ${eps[0]}`;
+  return `${n} · ep. ${eps[0]}–${eps[eps.length - 1]}`;
+}
+
+type Mencion = { num: number | null; title: string; body: string };
+
+/**
+ * Parte la sección "Menciones por episodio" en entradas por episodio.
+ * Cada `### [[slug|Ep. N — Título]]` seguido de sus bullets es una entrada;
+ * así se renderiza como lista colapsable en vez de un muro de prosa.
+ */
+function parseMentions(md: string): Mencion[] {
+  return md
+    .split(/^###[ \t]+/m)
+    .map((s) => s.trim())
+    .filter(Boolean)
+    .map((part) => {
+      const nl = part.indexOf("\n");
+      const headingRaw = (nl >= 0 ? part.slice(0, nl) : part).trim();
+      const body = (nl >= 0 ? part.slice(nl + 1) : "").trim();
+      let label = headingRaw.replace(/^\[\[/, "").replace(/\]\]$/, "");
+      const pipe = label.indexOf("|");
+      if (pipe >= 0) label = label.slice(pipe + 1);
+      label = label.trim();
+      const numMatch = label.match(/ep\.?\s*(\d+)/i);
+      const num = numMatch ? parseInt(numMatch[1], 10) : null;
+      const dash = label.split(/\s[—–-]\s/);
+      const title = dash.length > 1 ? dash.slice(1).join(" — ") : label;
+      return { num, title, body };
+    });
+}
+
 export default async function EntityDetail({
   tipo,
   slug,
@@ -93,9 +130,8 @@ export default async function EntityDetail({
   const { frontmatter, body } = parseMarkdown(raw);
   const fm = frontmatter as Record<string, unknown>;
 
-  // Resolutor de wikilinks (para la narrativa) + índice nombre/slug →
-  // {tipo, href, isPJ} para clasificar relaciones por el tipo de entidad
-  // a la que apuntan. Ambos cacheados con TTL corto.
+  // Resolutor de wikilinks + índice nombre/slug → {tipo, href, isPJ} para
+  // clasificar relaciones por el tipo de entidad a la que apuntan.
   const [resolve, lists] = await Promise.all([
     buildWikiResolver(vp),
     Promise.all(
@@ -137,7 +173,7 @@ export default async function EntityDetail({
   const categoria = fm.categoria as string | undefined;
   const origen = fm.origen as string | undefined;
 
-  // Identidad: filas etiqueta → valor (la "descripción" del personaje).
+  // Identidad: filas etiqueta → valor.
   const identidad: Array<{ k: string; v: ReactNode }> = (
     [
       rol && { k: "Rol", v: rol },
@@ -157,12 +193,14 @@ export default async function EntityDetail({
       region && { k: "Región", v: region },
       categoria && { k: "Categoría", v: categoria },
       origen && { k: "Origen", v: origen },
+      aparicionesResumen(apariciones) && {
+        k: "Aparece en",
+        v: aparicionesResumen(apariciones),
+      },
     ] as Array<{ k: string; v: ReactNode } | false | "" | undefined>
   ).filter(Boolean) as Array<{ k: string; v: ReactNode }>;
 
-  // Rasgos narrativos opcionales — se completan a mano en el .md. Si no
-  // existen no se muestra nada. Pensados como descripción, no como hoja
-  // de stats táctica (nivel/vida/etc. son texto libre, no números).
+  // Rasgos narrativos opcionales — se completan a mano en el .md.
   const RASGO_KEYS: Array<[string, string]> = [
     ["raza", "Raza"],
     ["clase", "Clase"],
@@ -180,14 +218,26 @@ export default async function EntityDetail({
   const rasgosLibres = Array.isArray(fm.rasgos)
     ? (fm.rasgos as unknown[]).map(String).filter((s) => s.trim())
     : [];
+  const descFisica =
+    typeof fm.descripcion_fisica === "string" && fm.descripcion_fisica.trim()
+      ? fm.descripcion_fisica.trim()
+      : null;
+  const rasgosIdiomas = Array.isArray(fm.idiomas)
+    ? (fm.idiomas as unknown[]).map(String).filter((s) => s.trim())
+    : typeof fm.idiomas === "string" && fm.idiomas.trim()
+    ? [fm.idiomas.trim()]
+    : [];
+  const rasgosHabilidades = Array.isArray(fm.habilidades)
+    ? (fm.habilidades as unknown[]).map(String).filter((s) => s.trim())
+    : typeof fm.habilidades === "string" && fm.habilidades.trim()
+    ? [fm.habilidades.trim()]
+    : [];
 
-  // Presentación de imagen según el tipo: personaje = retrato 3:4 en
-  // tarjeta; lugar/facción/etc. = hero ancho + galería con lightbox.
+  // Imágenes: galería para todos los tipos. Personaje = retratos verticales;
+  // lugar/facción = hero ancho. Ambos abren lightbox al click.
   const isHero = cfg.media === "hero";
   const fallbackAlt = `${cfg.singular}: ${nombre}`;
-  const portrait = !isHero ? resolveImage(fm, cfg.img, fallbackAlt) : null;
-  const gallery = isHero ? resolveImages(fm, cfg.img, fallbackAlt) : [];
-  const hero = gallery[0];
+  const gallery = resolveImages(fm, cfg.img, fallbackAlt);
   const shots = gallery.filter(
     (g): g is Extract<ResolvedImage, { kind: "img" }> => g.kind === "img"
   );
@@ -222,12 +272,17 @@ export default async function EntityDetail({
     bucket.set(name, agg);
   }
   const relCount = relaciones.length;
+  const relEntities = [...groups.values()].reduce((n, b) => n + b.size, 0);
 
   const hasMeta =
-    identidad.length > 0 || rasgos.length > 0 || rasgosLibres.length > 0;
+    identidad.length > 0 ||
+    rasgos.length > 0 ||
+    rasgosLibres.length > 0 ||
+    descFisica !== null ||
+    rasgosIdiomas.length > 0 ||
+    rasgosHabilidades.length > 0;
 
-  // Identidad + rasgos: mismo contenido para la tarjeta de personaje y
-  // para el panel de metadata del hero (lugares/facciones).
+  // Identidad + rasgos: mismo contenido para personaje y hero.
   const metaBlock = (
     <>
       {identidad.length > 0 && (
@@ -240,7 +295,11 @@ export default async function EntityDetail({
           ))}
         </div>
       )}
-      {(rasgos.length > 0 || rasgosLibres.length > 0) && (
+      {(rasgos.length > 0 ||
+        rasgosLibres.length > 0 ||
+        descFisica !== null ||
+        rasgosIdiomas.length > 0 ||
+        rasgosHabilidades.length > 0) && (
         <div className="char-rasgos">
           <p className="block-label">Rasgos</p>
           {rasgos.length > 0 && (
@@ -251,6 +310,36 @@ export default async function EntityDetail({
                   <span className="rasgo-v">{r.value}</span>
                 </div>
               ))}
+            </div>
+          )}
+          {descFisica && (
+            <div className="rasgo-body">
+              <span className="rasgo-k">Descripción física</span>
+              {descFisica}
+            </div>
+          )}
+          {rasgosIdiomas.length > 0 && (
+            <div className="rasgo-section">
+              <span className="rasgo-k">Idiomas</span>
+              <div className="rasgo-chips">
+                {rasgosIdiomas.map((r, i) => (
+                  <span className="tag" key={i}>
+                    {r}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+          {rasgosHabilidades.length > 0 && (
+            <div className="rasgo-section">
+              <span className="rasgo-k">Habilidades</span>
+              <div className="rasgo-chips">
+                {rasgosHabilidades.map((r, i) => (
+                  <span className="tag" key={i}>
+                    {r}
+                  </span>
+                ))}
+              </div>
             </div>
           )}
           {rasgosLibres.length > 0 && (
@@ -272,6 +361,157 @@ export default async function EntityDetail({
     </>
   );
 
+  // ── Secciones del lector ──────────────────────────────────────────────
+  const readerSections: ReaderSection[] = [];
+  for (const s of splitEpisodeSections(body)) {
+    if (!s.body.trim()) continue;
+    const esMenciones = /menci/i.test(s.title);
+    // La sección de perfil (encabezado "Perfil"; o el viejo "Canon …") se
+    // muestra como "Sobre {nombre}": es la intro + rasgos del personaje que
+    // los jugadores van ampliando, no un canon cerrado del DM.
+    const esPerfil = /^(perfil|canon)/i.test(s.title);
+    const id = esPerfil ? "perfil" : slugify(s.title || "narrativa") || "narrativa";
+    const label = esPerfil ? `Sobre ${nombre}` : s.title || "Narrativa";
+
+    if (esMenciones) {
+      // Lista compacta colapsable: 49 episodios dejan de ser un muro de prosa.
+      const menciones = parseMentions(s.body).filter((m) => m.body || m.title);
+      readerSections.push({
+        id,
+        label,
+        meta: String(menciones.length || apariciones.length),
+        content: (
+          <div className="mencion-list">
+            {menciones.map((m, i) => (
+              <details className="mencion" key={i}>
+                <summary>
+                  <span className="mencion-ep">
+                    {m.num != null ? `Ep ${m.num}` : "—"}
+                  </span>
+                  <span className="mencion-title">{m.title}</span>
+                  <span className="mencion-chev" aria-hidden="true" />
+                </summary>
+                <div className="mencion-body">
+                  <div
+                    className="prose"
+                    dangerouslySetInnerHTML={{
+                      __html: renderMarkdown(m.body, resolve),
+                    }}
+                  />
+                  {m.num != null && (
+                    <Link
+                      className="mencion-link"
+                      href={`/cronicas/${m.num}`}
+                    >
+                      Ver expediente del episodio →
+                    </Link>
+                  )}
+                </div>
+              </details>
+            ))}
+          </div>
+        ),
+      });
+      continue;
+    }
+
+    readerSections.push({
+      id,
+      label,
+      content: (
+        <article className="read-panel">
+          <div
+            className="prose"
+            dangerouslySetInnerHTML={{ __html: renderMarkdown(s.body, resolve) }}
+          />
+        </article>
+      ),
+    });
+  }
+  if (readerSections.length === 0) {
+    readerSections.push({
+      id: "ficha",
+      label: "Ficha",
+      content: (
+        <article className="read-panel">
+          <div className="prose">
+            <p>
+              Esta ficha todavía no tiene narrativa más allá de su metadata.
+            </p>
+          </div>
+        </article>
+      ),
+    });
+  }
+
+  if (relCount > 0) {
+    readerSections.push({
+      id: "relaciones",
+      label: "Relaciones",
+      meta: String(relEntities),
+      content: (
+        <div className="rel-grouped">
+          <div className="rel-head">
+            <p className="block-label">Relaciones</p>
+            <span className="rel-total">
+              {relCount} vínculos · {relEntities} entidades
+            </span>
+          </div>
+          <div className="rel-cols">
+            {REL_GROUPS.map((g) => {
+              const { key, label } = g;
+              const note = "note" in g ? g.note : undefined;
+              const bucket = groups.get(key);
+              if (!bucket || bucket.size === 0) return null;
+              const entries = [...bucket.values()].sort(
+                (a, b) => b.eps.size - a.eps.size
+              );
+              return (
+                <section className="rel-group" key={key}>
+                  <h3>
+                    {label} <b>{entries.length}</b>
+                  </h3>
+                  {note && <p className="rel-note">{note}</p>}
+                  <ul>
+                    {entries.map((e, i) => {
+                      const eps = [...e.eps].sort((a, b) => a - b);
+                      return (
+                        <li className="rel-entry" key={i}>
+                          {e.href ? (
+                            <Link className="rel-name" href={e.href}>
+                              {e.nombre}
+                            </Link>
+                          ) : (
+                            <span className="rel-name no-link">
+                              {e.nombre}
+                            </span>
+                          )}
+                          {e.kinds.length > 0 && (
+                            <span className="rel-kinds">
+                              {e.kinds.slice(0, 3).join(" · ")}
+                              {e.kinds.length > 3
+                                ? ` · +${e.kinds.length - 3}`
+                                : ""}
+                            </span>
+                          )}
+                          {eps.length > 0 && (
+                            <span className="rel-eps">
+                              {episodiosLabel(eps)}
+                            </span>
+                          )}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </section>
+              );
+            })}
+          </div>
+        </div>
+      ),
+    });
+  }
+
   return (
     <section className="section">
       <div className="wrap">
@@ -290,25 +530,25 @@ export default async function EntityDetail({
           )}
         </div>
 
+        <span id="cerrar" className="lb-anchor" aria-hidden="true" />
+
         {isHero ? (
-          <>
-            <span id="cerrar" className="lb-anchor" aria-hidden="true" />
-            <figure className="place-hero rise">
-              {hero?.kind === "img" ? (
+          <div className="ficha-identity rise">
+            <figure className="place-hero">
+              {shots.length > 0 ? (
                 <a
                   className="hero-zoom"
                   href="#shot-0"
-                  aria-label={`Ampliar imagen: ${hero.alt}`}
+                  aria-label={`Ampliar imagen: ${shots[0].alt}`}
                 >
-                  <AtlasImage img={hero} priority />
+                  <AtlasImage img={shots[0]} priority />
                 </a>
               ) : (
-                <AtlasImage img={hero} priority />
+                <AtlasImage img={gallery[0]} priority />
               )}
             </figure>
-
             {shots.length > 1 && (
-              <div className="gallery-strip rise" aria-label="Más imágenes">
+              <div className="gallery-strip" aria-label="Más imágenes">
                 {shots.map((im, i) => (
                   <a
                     key={i}
@@ -321,119 +561,49 @@ export default async function EntityDetail({
                 ))}
               </div>
             )}
-
-            {hasMeta && <div className="place-meta rise">{metaBlock}</div>}
-          </>
-        ) : (
-          portrait && (
-            <div className="char-card rise">
-              <div className="char-portrait">
-                <AtlasImage img={portrait} priority />
-              </div>
-              <div className="char-meta">{metaBlock}</div>
-            </div>
-          )
-        )}
-
-        {apariciones.length > 0 && (
-          <div className="appear-band">
-            <span className="block-label">
-              Aparece en · {apariciones.length}
-            </span>
-            <div className="rail-chips">
-              {apariciones.map((n) => (
-                <Link key={n} href={`/cronicas/${n}`}>
-                  № {String(n).padStart(3, "0")}
-                </Link>
-              ))}
-            </div>
+            {hasMeta && <div className="place-meta">{metaBlock}</div>}
           </div>
-        )}
-
-        {/* Narrativa episódica: el grande del medio */}
-        <div className="expediente">
-          <article className="read-panel rise">
-            <div className="prose">
-              {body.trim() ? (
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: renderMarkdown(body, resolve),
-                  }}
-                />
-              ) : (
-                <p>
-                  Esta ficha todavía no tiene narrativa más allá de su
-                  metadata.
-                </p>
+        ) : (
+          <div className="char-card rise">
+            <div className="char-gallery">
+              <figure className="char-portrait">
+                {shots.length > 0 ? (
+                  <a
+                    className="hero-zoom"
+                    href="#shot-0"
+                    aria-label={`Ampliar imagen: ${shots[0].alt}`}
+                  >
+                    <AtlasImage img={shots[0]} priority />
+                  </a>
+                ) : (
+                  <AtlasImage img={gallery[0]} priority />
+                )}
+              </figure>
+              {shots.length > 1 && (
+                <div className="char-shots" aria-label="Más imágenes">
+                  {shots.map((im, i) => (
+                    <a
+                      key={i}
+                      className="char-shot"
+                      href={`#shot-${i}`}
+                      aria-label={`Ampliar imagen ${i + 1} de ${shots.length}: ${im.alt}`}
+                    >
+                      <img
+                        src={im.src}
+                        alt=""
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </a>
+                  ))}
+                </div>
               )}
             </div>
-          </article>
-        </div>
-
-        {relCount > 0 && (
-          <div className="rel-grouped">
-            <div className="rel-head">
-              <p className="block-label">Relaciones</p>
-              <span className="rel-total">
-                {relCount} vínculos · {[...groups.values()].reduce(
-                  (n, b) => n + b.size,
-                  0
-                )}{" "}
-                entidades
-              </span>
-            </div>
-            <div className="rel-cols">
-              {REL_GROUPS.map((g) => {
-                const { key, label } = g;
-                const note = "note" in g ? g.note : undefined;
-                const bucket = groups.get(key);
-                if (!bucket || bucket.size === 0) return null;
-                const entries = [...bucket.values()].sort(
-                  (a, b) => b.eps.size - a.eps.size
-                );
-                return (
-                  <section className="rel-group" key={key}>
-                    <h3>
-                      {label} <b>{entries.length}</b>
-                    </h3>
-                    {note && <p className="rel-note">{note}</p>}
-                    <ul>
-                      {entries.map((e, i) => {
-                        const eps = [...e.eps].sort((a, b) => a - b);
-                        return (
-                          <li className="rel-entry" key={i}>
-                            {e.href ? (
-                              <Link className="rel-name" href={e.href}>
-                                {e.nombre}
-                              </Link>
-                            ) : (
-                              <span className="rel-name no-link">
-                                {e.nombre}
-                              </span>
-                            )}
-                            {e.kinds.length > 0 && (
-                              <span className="rel-kinds">
-                                {e.kinds.slice(0, 3).join(" · ")}
-                                {e.kinds.length > 3
-                                  ? ` · +${e.kinds.length - 3}`
-                                  : ""}
-                              </span>
-                            )}
-                            {eps.length > 0 && (
-                              <span className="rel-eps">
-                                {episodiosLabel(eps)}
-                              </span>
-                            )}
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </section>
-                );
-              })}
-            </div>
+            <div className="char-meta">{metaBlock}</div>
           </div>
         )}
+
+        <EntityReader sections={readerSections} />
 
         <nav className="prevnext">
           <Link href={`/${cfg.segment}`}>← Todos · {cfg.plural}</Link>

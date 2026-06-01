@@ -1,0 +1,82 @@
+<svg viewBox="0 0 600 420" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a120a"/>
+      <stop offset="100%" stop-color="#0c0805"/>
+    </linearGradient>
+    <linearGradient id="page" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#cba474"/>
+      <stop offset="40%" stop-color="#b08855"/>
+      <stop offset="100%" stop-color="#7a5a30"/>
+    </linearGradient>
+    <linearGradient id="leather" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#5a3220"/>
+      <stop offset="100%" stop-color="#2a1810"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#d9a564" stop-opacity="0.30"/>
+      <stop offset="100%" stop-color="#d9a564" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="600" height="420" fill="url(#bg)"/>
+  <rect width="600" height="420" fill="url(#glow)"/>
+
+  <!-- libro abierto -->
+  <!-- sombra base -->
+  <ellipse cx="300" cy="380" rx="240" ry="14" fill="#000" opacity="0.55"/>
+
+  <!-- tapa izq -->
+  <path d="M40 100 L290 80 L295 340 L40 360 Z" fill="url(#leather)"/>
+  <path d="M40 100 L290 80 L295 340 L40 360 Z" fill="none" stroke="#8a5a30" stroke-width="1.2" opacity="0.5"/>
+  <!-- tapa der -->
+  <path d="M310 80 L560 100 L560 360 L305 340 Z" fill="url(#leather)"/>
+  <path d="M310 80 L560 100 L560 360 L305 340 Z" fill="none" stroke="#8a5a30" stroke-width="1.2" opacity="0.5"/>
+
+  <!-- páginas izq -->
+  <path d="M55 110 L285 92 L290 335 L55 350 Z" fill="url(#page)"/>
+  <!-- páginas der -->
+  <path d="M315 92 L545 110 L545 350 L310 335 Z" fill="url(#page)"/>
+
+  <!-- líneas de texto izq (escritura simulada) -->
+  <g opacity="0.55" fill="#3a2410">
+    <rect x="75" y="125" width="200" height="2.5"/>
+    <rect x="75" y="138" width="180" height="2"/>
+    <rect x="75" y="151" width="195" height="2"/>
+    <rect x="75" y="164" width="160" height="2"/>
+    <rect x="75" y="180" width="190" height="2"/>
+    <rect x="75" y="193" width="170" height="2"/>
+    <rect x="75" y="206" width="200" height="2"/>
+    <rect x="75" y="222" width="155" height="2"/>
+    <rect x="75" y="235" width="185" height="2"/>
+    <rect x="75" y="248" width="195" height="2"/>
+    <rect x="75" y="264" width="165" height="2"/>
+    <rect x="75" y="277" width="180" height="2"/>
+    <rect x="75" y="290" width="190" height="2"/>
+    <rect x="75" y="303" width="150" height="2"/>
+  </g>
+
+  <!-- ilustración derecha (estilizada) -->
+  <g opacity="0.50">
+    <!-- torre estilizada -->
+    <path d="M395 280 L395 165 L405 145 L415 165 L415 280 Z" fill="#3a2410"/>
+    <rect x="396" y="180" width="3" height="6" fill="#5a3a18"/>
+    <rect x="411" y="180" width="3" height="6" fill="#5a3a18"/>
+    <rect x="403" y="195" width="4" height="8" fill="#5a3a18"/>
+    <!-- silueta de ciudad detrás -->
+    <path d="M335 280 L335 235 L360 235 L360 220 L378 220 L378 240 L395 240 L395 280 Z" fill="#3a2410" opacity="0.7"/>
+    <path d="M425 280 L425 230 L445 230 L445 245 L475 245 L475 280 Z" fill="#3a2410" opacity="0.7"/>
+    <!-- luna -->
+    <circle cx="495" cy="155" r="11" fill="#d9a564" opacity="0.5"/>
+  </g>
+
+  <!-- letras capitulares ornamentales en cada página -->
+  <text x="80" y="148" font-family="serif" font-size="36" fill="#7a3e15" font-weight="bold">L</text>
+  <text x="335" y="145" font-family="serif" font-size="22" font-style="italic" fill="#5a3a18">— xii —</text>
+
+  <!-- vela / ornamento al pie -->
+  <circle cx="540" cy="370" r="3" fill="#d9a564"/>
+  <ellipse cx="540" cy="360" rx="2" ry="5" fill="#f4c876" opacity="0.85"/>
+
+  <!-- frame -->
+  <rect x="6" y="6" width="588" height="408" fill="none" stroke="#b87333" stroke-width="0.7" opacity="0.30"/>
+</svg>

@@ -9,7 +9,7 @@ import { cachedListEpisodes } from "@/lib/public-cache";
 import { parseMarkdown } from "@/lib/markdown";
 import { splitEpisodeSections } from "@/lib/episode-sections";
 import { renderMarkdown } from "@/lib/markdown-render";
-import { buildWikiResolver } from "@/lib/wiki-resolver";
+import { cachedBuildWikiResolver } from "@/lib/wiki-resolver";
 import { resolveImage } from "@/lib/images";
 import { buildEpisodeMetadata } from "@/lib/public-meta";
 import { episodioLabel, episodioLabelCorto } from "@/lib/episode-number";
@@ -31,6 +31,10 @@ function fmtDate(iso?: string): string {
   return isNaN(d.getTime())
     ? ""
     : d.toLocaleDateString("es-AR", { day: "2-digit", month: "long", year: "numeric" });
+}
+
+function capLabel(numero: number): string {
+  return `Cap. ${String(numero).padStart(3, "0")}`;
 }
 
 function clean(s: string): string {
@@ -101,13 +105,14 @@ export default async function ExpedientePage({ params }: Props) {
   const [content, episodes, resolve] = await Promise.all([
     readEpisode(vp, numero),
     cachedListEpisodes(vp),
-    buildWikiResolver(vp),
+    cachedBuildWikiResolver(vp),
   ]);
   if (!content) notFound();
 
   const { frontmatter, body } = parseMarkdown(content);
   const titulo = (frontmatter.titulo as string) || `Registro ${numero}`;
   const epLabel = episodioLabel(titulo, numero);
+  const cap = capLabel(numero);
   const procesado = frontmatter.procesado as string | undefined;
   const menciones =
     (frontmatter.menciones as Record<string, string[]> | undefined) ?? {};
@@ -115,6 +120,7 @@ export default async function ExpedientePage({ params }: Props) {
   const sections = splitEpisodeSections(body);
   const exactSummary = sections.find((s) => /^resumen$/i.test(s.title)) || null;
   const chronologicalSummary = sections.find((s) => /crono/i.test(s.title)) || null;
+  const technicalSection = sections.find((s) => /lore extra/i.test(s.title)) || null;
   const summarySource = exactSummary || chronologicalSummary;
   const summaryHtml = summarySource
     ? renderMarkdown(
@@ -122,8 +128,11 @@ export default async function ExpedientePage({ params }: Props) {
         resolve,
       )
     : "";
+  const technicalHtml = technicalSection
+    ? renderMarkdown(technicalSection.body, resolve)
+    : "";
   const bookPages: EpisodeBookPage[] = sections
-    .filter((s) => s !== exactSummary)
+    .filter((s) => s !== exactSummary && s !== technicalSection)
     .map((s, i) => ({
       id: sectionId(s.title || `parte-${i + 1}`, i),
       title: s.title || `Parte ${i + 1}`,
@@ -132,6 +141,7 @@ export default async function ExpedientePage({ params }: Props) {
       icon: sectionIcon(s.title),
       tone: sectionTone(s.title),
       html: renderMarkdown(s.body, resolve),
+      mode: /crono/i.test(s.title) ? "wide" : "paged",
     }));
 
   const idx = episodes.findIndex((e) => e.numero === numero);
@@ -152,6 +162,7 @@ export default async function ExpedientePage({ params }: Props) {
             <Link href="/cronicas">Crónicas</Link> / {epLabel}
           </p>
           <p className="eyebrow">
+            {cap} ·{" "}
             {epLabel}
             {procesado && (
               <>
@@ -161,19 +172,21 @@ export default async function ExpedientePage({ params }: Props) {
             )}
           </p>
           <h1>
+            <span className="reg-no">{cap} · </span>
             <span className="reg-no">{epLabel} — </span>
             {titulo}
           </h1>
         </div>
 
         <div className="dossier-cover rise">
-          <AtlasImage img={cover} priority />
+          <AtlasImage img={cover} priority sizes="min(1200px, 100vw)" />
         </div>
 
         <div className="expediente">
           <div className="exp-meta rise">
             <div className="exp-id">
               <span className="exp-id-key">Registro</span>
+              <span>{cap}</span>
               <span>{epLabel}</span>
               {castN > 0 && <span>· {castN} en escena</span>}
               {procesado && <span>· archivado {fmtDate(procesado)}</span>}
@@ -214,6 +227,20 @@ export default async function ExpedientePage({ params }: Props) {
             summaryHtml={summaryHtml}
             pages={bookPages}
           />
+          {technicalSection && (
+            <details className="technical-archive">
+              <summary>
+                <span>Datos técnicos del archivo</span>
+                <b>Entidades extraídas</b>
+              </summary>
+              <div className="technical-archive-body read-panel">
+                <div
+                  className="prose"
+                  dangerouslySetInnerHTML={{ __html: technicalHtml }}
+                />
+              </div>
+            </details>
+          )}
         </div>
 
         <nav className="prevnext" aria-label="Navegación entre registros">
