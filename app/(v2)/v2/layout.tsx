@@ -4,7 +4,6 @@
 import "./atlas-v2.css";
 import AtlasShell from "@/components/atlas-v2/AtlasShell";
 import AtlasTopNav from "@/components/atlas-v2/AtlasTopNav";
-import AtlasBottomDock from "@/components/atlas-v2/AtlasBottomDock";
 
 export const metadata = {
   title: "Grimorio de Lore · Recuerdos de Cobre",
@@ -24,7 +23,6 @@ export default function V2Layout({ children }: { children: React.ReactNode }) {
       <AtlasShell>
         <AtlasTopNav />
         <main>{children}</main>
-        <AtlasBottomDock />
       </AtlasShell>
     </>
   );

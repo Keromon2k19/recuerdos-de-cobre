@@ -1,11 +1,18 @@
 import MapaClient from "../mapa/MapaClient";
-import { MOCK_REGIONS } from "@/data/atlas-v2/locations";
+import { locationSlugsResolved } from "@/data/atlas-v2/location-images";
+import { getAllRegions, getAdditionSlugs } from "@/lib/map-overrides";
 
 export const metadata = {
   title: "Lugares - Grimorio de Lore",
 };
 
 export default function LugaresPage() {
+  const imageSlugs = locationSlugsResolved();
+  const addedSlugs = getAdditionSlugs();
+  const additionSlugList = Array.from(addedSlugs);
+  const visible = new Set([...imageSlugs, ...addedSlugs]);
+  const regions = getAllRegions().filter((r) => visible.has(r.slug));
+
   return (
     <section className="av2-p-wrap">
       <div className="av2-p-bg" aria-hidden="true">
@@ -22,7 +29,7 @@ export default function LugaresPage() {
         <h1 className="av2-page-title">Lugares</h1>
       </header>
 
-      <MapaClient regions={MOCK_REGIONS} />
+      <MapaClient regions={regions} additionSlugs={additionSlugList} />
     </section>
   );
 }

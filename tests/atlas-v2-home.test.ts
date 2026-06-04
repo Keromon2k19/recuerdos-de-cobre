@@ -111,7 +111,7 @@ describe("atlas-v2 home helpers", () => {
       numero: 6,
       episodioLabel: "Episodio 69",
       titulo: "Mente Colmena",
-      href: "/cronicas/6",
+      href: "/v2/capitulos/6",
       imageSrc: "/images/episodios/ep06.jpg",
       featured: {
         kind: "quote",
@@ -121,6 +121,7 @@ describe("atlas-v2 home helpers", () => {
     });
     expect(slides[0].cast[0]).toMatchObject({
       name: "Mysha",
+      href: "/v2/personajes/mysha",
       role: "PJ",
       imageSrc: "/assets/atlas-v2/portraits/mysha.png",
       quote: "No estoy aqui para negociar. Te exijo el cristal.",

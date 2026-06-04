@@ -236,7 +236,7 @@ export default function FaccionesClient({ factions }: Props) {
               {selected.figures.map((figure) => (
                 <li key={`${selected.slug}-${figure.nombre}`}>
                   {figure.slug ? (
-                    <Link href={`/personajes/${figure.slug}`}>{figure.nombre}</Link>
+                    <Link href={`/v2/personajes/${figure.slug}`}>{figure.nombre}</Link>
                   ) : (
                     <span>{figure.nombre}</span>
                   )}
@@ -261,7 +261,7 @@ export default function FaccionesClient({ factions }: Props) {
           </section>
         )}
 
-        <Link href={`/facciones/${selected.slug}`} className="av2-btn av2-btn--primary av2-faction-cta">
+        <Link href={`/v2/facciones/${selected.slug}`} className="av2-btn av2-btn--primary av2-faction-cta">
           Ver ficha completa
         </Link>
       </aside>

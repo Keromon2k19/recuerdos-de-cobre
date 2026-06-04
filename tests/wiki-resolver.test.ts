@@ -5,7 +5,7 @@ import os from "node:os";
 import { initVault, writeEntity } from "@/lib/vault";
 import { updateEntityMarkdown } from "@/lib/markdown";
 import { renderMarkdown } from "@/lib/markdown-render";
-import { buildWikiResolver } from "@/lib/wiki-resolver";
+import { buildAtlasV2WikiResolver, buildWikiResolver } from "@/lib/wiki-resolver";
 
 let tmpDir: string;
 
@@ -62,5 +62,40 @@ describe("buildWikiResolver", () => {
 
     expect(html).toContain('href="/facciones/hermandad-de-cobre"');
     expect(html).toContain(">Hermandad de Cobre</a>");
+  });
+
+  it("resuelve todos los destinos con rutas V2", async () => {
+    await initVault(tmpDir);
+
+    await writeEntity(
+      tmpDir,
+      "worldbuilding",
+      "Velo etereo",
+      updateEntityMarkdown(
+        null,
+        { tipo: "worldbuilding", nombre: "Velo etereo" },
+        12,
+        "Inicio",
+        "Regla del mundo."
+      )
+    );
+    await writeEntity(
+      tmpDir,
+      "lugar",
+      "Khelgrim",
+      updateEntityMarkdown(
+        null,
+        { tipo: "lugar", nombre: "Khelgrim" },
+        12,
+        "Inicio",
+        "Ciudad enana."
+      )
+    );
+
+    const resolve = await buildAtlasV2WikiResolver(tmpDir);
+
+    expect(resolve("worldbuilding/velo-etereo")).toBe("/v2/mundo/velo-etereo");
+    expect(resolve("lugares/khelgrim")).toBe("/v2/lugares/khelgrim");
+    expect(resolve("012-recuerdos-de-cobre")).toBe("/v2/capitulos/12");
   });
 });

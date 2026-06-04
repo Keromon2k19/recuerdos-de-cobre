@@ -1,129 +1,248 @@
-// lib/atlas-v2-search.ts — Helper de búsqueda cross-entity para /v2/buscar.
-// Normaliza todas las entidades V2 (personajes, capítulos, archivos, regiones)
-// a un shape común y filtra por query + tipo.
+import type { EntityListItem, EpisodeMenciones } from "./vault";
 
-import { MOCK_CHARACTERS, type V2Character } from "@/data/atlas-v2/characters";
-import { MOCK_CHAPTERS,   type V2Chapter   } from "@/data/atlas-v2/chapters";
-import { MOCK_DOCUMENTS,  type V2Document  } from "@/data/atlas-v2/archives";
-import { MOCK_REGIONS,    type V2Region    } from "@/data/atlas-v2/locations";
+export const SEARCH_KINDS = [
+  "personaje",
+  "capitulo",
+  "faccion",
+  "lugar",
+  "dios",
+  "objeto",
+  "misterio",
+  "mundo",
+] as const;
 
-export type EntityKind = "personaje" | "capitulo" | "archivo" | "region";
+export type EntityKind = (typeof SEARCH_KINDS)[number];
 
 export const KIND_LABELS: Record<EntityKind, string> = {
   personaje: "Personaje",
-  capitulo:  "Capítulo",
-  archivo:   "Archivo",
-  region:    "Región",
+  capitulo: "Capitulo",
+  faccion: "Faccion",
+  lugar: "Lugar",
+  dios: "Dios",
+  objeto: "Objeto",
+  misterio: "Misterio",
+  mundo: "Mundo",
 };
 
 export const KIND_GLYPHS: Record<EntityKind, string> = {
   personaje: "◈",
-  capitulo:  "◇",
-  archivo:   "❦",
-  region:    "◉",
+  capitulo: "◇",
+  faccion: "⬡",
+  lugar: "◉",
+  dios: "✦",
+  objeto: "◆",
+  misterio: "⌁",
+  mundo: "◎",
 };
 
 export type SearchResult = {
   id: string;
   kind: EntityKind;
-  /** Título principal del resultado */
   titulo: string;
-  /** Subtítulo / contexto (rol, colección, etc.) */
   subtitulo: string;
-  /** Snippet de descripción (~140 chars máx) */
   snippet: string;
-  /** Ruta al detalle (V2 cuando exista, V1 mientras tanto) */
   href: string;
-  /** Texto completo usado para matching (no se renderiza) */
   haystack: string;
 };
 
-function snippetOf(text: string, max = 140): string {
+type SearchEntityKind = Exclude<EntityKind, "capitulo" | "dios">;
+
+type SearchEpisode = {
+  numero: number;
+  titulo: string;
+  descripcion?: string;
+  menciones?: EpisodeMenciones;
+};
+
+type SearchGod = {
+  slug: string;
+  nombre: string;
+  titulo: string;
+  profile: string;
+  domains: string[];
+};
+
+type SearchRegion = {
+  slug: string;
+  nombre: string;
+  tagline: string;
+  descripcion: string;
+  category: string;
+};
+
+export type BuildAtlasV2SearchIndexInput = {
+  episodes?: SearchEpisode[];
+  entities?: Partial<Record<SearchEntityKind, EntityListItem[]>>;
+  gods?: SearchGod[];
+  regions?: SearchRegion[];
+};
+
+const ENTITY_ROUTES: Record<SearchEntityKind, string> = {
+  personaje: "/v2/personajes",
+  faccion: "/v2/facciones",
+  lugar: "/v2/lugares",
+  objeto: "/v2/objetos",
+  misterio: "/v2/misterios",
+  mundo: "/v2/mundo",
+};
+
+function snippetOf(text: string, max = 150): string {
   const plain = text.replace(/\s+/g, " ").trim();
   if (plain.length <= max) return plain;
   const cut = plain.slice(0, max);
-  const sp = cut.lastIndexOf(" ");
-  return (sp > 60 ? cut.slice(0, sp) : cut) + "…";
+  const lastSpace = cut.lastIndexOf(" ");
+  return `${lastSpace > 70 ? cut.slice(0, lastSpace) : cut}...`;
 }
 
-function fromCharacter(c: V2Character): SearchResult {
+function wikiLinkLabel(value: string): string {
+  return value
+    .trim()
+    .replace(/^\[\[([^|\]]+)\|([^\]]+)\]\]$/, "$2")
+    .replace(/^\[\[([^\]]+)\]\]$/, "$1")
+    .trim();
+}
+
+function entitySubtitle(kind: SearchEntityKind, item: EntityListItem): string {
+  const context =
+    item.rol ||
+    item.categoria ||
+    item.region ||
+    (item.facciones?.length ? item.facciones.join(" · ") : "") ||
+    KIND_LABELS[kind];
+  const appearances = item.apariciones?.length ?? 0;
+  return appearances > 0 ? `${context} · ${appearances} apariciones` : context;
+}
+
+function fromEntity(
+  kind: SearchEntityKind,
+  item: EntityListItem,
+): SearchResult {
+  const subtitle = entitySubtitle(kind, item);
+  const snippet = snippetOf(item.descripcion ?? subtitle);
   return {
-    id: `personaje-${c.id}`,
-    kind: "personaje",
-    titulo: c.nombre,
-    subtitulo: c.epiteto ? `${c.rol} · ${c.epiteto}` : c.rol,
-    snippet: snippetOf(c.descripcion),
-    href: `/v2/personajes`,
+    id: `${kind}-${item.slug}`,
+    kind,
+    titulo: item.nombre,
+    subtitulo: subtitle,
+    snippet,
+    href: `${ENTITY_ROUTES[kind]}/${item.slug}`,
     haystack: [
-      c.nombre, c.rol, c.epiteto, c.jugador, c.region,
-      ...c.facciones, c.descripcion,
-    ].filter(Boolean).join(" ").toLowerCase(),
+      item.nombre,
+      subtitle,
+      snippet,
+      item.origen,
+      item.rol,
+      item.jugador,
+      item.region,
+      item.categoria,
+      ...(item.facciones ?? []),
+    ]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase(),
   };
 }
 
-function fromChapter(c: V2Chapter): SearchResult {
+function cleanEpisodeTitle(title: string): string {
+  const separator = title.indexOf(": ");
+  return separator >= 0 ? title.slice(separator + 2) : title;
+}
+
+function fromEpisode(episode: SearchEpisode): SearchResult {
+  const places = (episode.menciones?.lugares ?? []).map(wikiLinkLabel);
+  const characters = (episode.menciones?.personajes ?? []).map(wikiLinkLabel);
+  const factions = (episode.menciones?.facciones ?? []).map(wikiLinkLabel);
+  const subtitle = [
+    `Registro ${String(episode.numero).padStart(3, "0")}`,
+    places[0],
+  ]
+    .filter(Boolean)
+    .join(" · ");
+  const snippet = snippetOf(episode.descripcion ?? "Cronica de la campana.");
+
   return {
-    id: `capitulo-${c.id}`,
+    id: `capitulo-${episode.numero}`,
     kind: "capitulo",
-    titulo: c.titulo,
-    subtitulo: `${c.eyebrow} · ${c.lugar}`,
-    snippet: snippetOf(c.descripcion),
-    href: `/v2/capitulos`,
+    titulo: cleanEpisodeTitle(episode.titulo),
+    subtitulo: subtitle,
+    snippet,
+    href: `/v2/capitulos/${episode.numero}`,
     haystack: [
-      c.titulo, c.eyebrow, c.lugar, c.estado, c.descripcion,
-      ...c.personajes,
-    ].join(" ").toLowerCase(),
+      episode.titulo,
+      subtitle,
+      snippet,
+      ...places,
+      ...characters,
+      ...factions,
+    ]
+      .join(" ")
+      .toLowerCase(),
   };
 }
 
-function fromDocument(d: V2Document): SearchResult {
+function fromGod(god: SearchGod): SearchResult {
+  const subtitle = [god.titulo, ...god.domains].filter(Boolean).join(" · ");
   return {
-    id: `archivo-${d.id}`,
-    kind: "archivo",
-    titulo: d.titulo,
-    subtitulo: `${d.eyebrow} · ${d.numero}`,
-    snippet: snippetOf(d.descripcion),
-    href: `/v2/archivos`,
-    haystack: [
-      d.titulo, d.eyebrow, d.numero, d.descripcion, d.fragmento,
-      ...d.tags,
-      d.meta.origen, d.meta.autor, d.meta.material,
-    ].join(" ").toLowerCase(),
+    id: `dios-${god.slug}`,
+    kind: "dios",
+    titulo: god.nombre,
+    subtitulo: subtitle,
+    snippet: snippetOf(god.profile),
+    href: `/v2/dioses?dios=${god.slug}`,
+    haystack: [god.nombre, subtitle, god.profile].join(" ").toLowerCase(),
   };
 }
 
-function fromRegion(r: V2Region): SearchResult {
+function fromRegion(region: SearchRegion): SearchResult {
   return {
-    id: `region-${r.slug}`,
-    kind: "region",
-    titulo: r.nombre,
-    subtitulo: r.tagline,
-    snippet: snippetOf(r.descripcion),
-    href: `/v2/mapa`,
+    id: `lugar-region-${region.slug}`,
+    kind: "lugar",
+    titulo: region.nombre,
+    subtitulo: [region.category, region.tagline].filter(Boolean).join(" · "),
+    snippet: snippetOf(region.descripcion),
+    href: `/v2/lugares/${region.slug}`,
     haystack: [
-      r.nombre, r.tagline, r.descripcion,
-      r.meta.gobierno, r.meta.industria, r.meta.poblacion,
-    ].join(" ").toLowerCase(),
+      region.nombre,
+      region.category,
+      region.tagline,
+      region.descripcion,
+    ]
+      .join(" ")
+      .toLowerCase(),
   };
 }
 
-export function getAllSearchable(): SearchResult[] {
-  return [
-    ...MOCK_CHARACTERS.map(fromCharacter),
-    ...MOCK_CHAPTERS.map(fromChapter),
-    ...MOCK_DOCUMENTS.map(fromDocument),
-    ...MOCK_REGIONS.map(fromRegion),
+export function buildAtlasV2SearchIndex({
+  episodes = [],
+  entities = {},
+  gods = [],
+  regions = [],
+}: BuildAtlasV2SearchIndexInput): SearchResult[] {
+  const results: SearchResult[] = [
+    ...episodes.map(fromEpisode),
+    ...Object.entries(entities).flatMap(([kind, items]) =>
+      (items ?? []).map((item) => fromEntity(kind as SearchEntityKind, item)),
+    ),
+    ...gods.map(fromGod),
+    ...regions.map(fromRegion),
   ];
+
+  const unique = new Map<string, SearchResult>();
+  for (const result of results) {
+    const key = `${result.kind}:${result.href}`;
+    if (!unique.has(key)) unique.set(key, result);
+  }
+  return [...unique.values()];
 }
 
 export function search(
   query: string,
   kindFilter: EntityKind | null,
-  items: SearchResult[] = getAllSearchable()
+  items: SearchResult[],
 ): SearchResult[] {
   let list = items;
-  if (kindFilter) list = list.filter((r) => r.kind === kindFilter);
-  const q = query.trim().toLowerCase();
-  if (!q) return list;
-  return list.filter((r) => r.haystack.includes(q));
+  if (kindFilter) list = list.filter((result) => result.kind === kindFilter);
+  const normalized = query.trim().toLowerCase();
+  if (!normalized) return list;
+  return list.filter((result) => result.haystack.includes(normalized));
 }

@@ -5,6 +5,10 @@
 // sitio refleja los cambios dentro de la ventana. Solo lo usa la parte
 // pública; el panel local sigue leyendo en vivo.
 import { listByType, listEpisodes, type EntityListItem } from "./vault";
+import {
+  readAtlasV2EntityDetail,
+  type AtlasV2EntityKind,
+} from "./atlas-v2-content";
 import type { EntityType } from "./types";
 
 const TTL_MS = Number(process.env.PUBLIC_CACHE_TTL_MS ?? 300_000);
@@ -29,4 +33,14 @@ export function cachedListByType(
 
 export function cachedListEpisodes(vaultPath: string) {
   return memo(`episodes:${vaultPath}`, () => listEpisodes(vaultPath));
+}
+
+export function cachedAtlasV2EntityDetail(
+  vaultPath: string,
+  kind: AtlasV2EntityKind,
+  slug: string,
+) {
+  return memo(`atlas-v2-detail:${vaultPath}:${kind}:${slug}`, () =>
+    readAtlasV2EntityDetail(vaultPath, kind, slug),
+  );
 }

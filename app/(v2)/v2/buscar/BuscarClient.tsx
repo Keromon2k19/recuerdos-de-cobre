@@ -1,26 +1,17 @@
 "use client";
 
-// app/(v2)/v2/buscar/BuscarClient.tsx
-// Búsqueda global cross-entity. Input grande + filter chips + lista de resultados.
-
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import {
-  getAllSearchable,
   search,
   KIND_LABELS,
   KIND_GLYPHS,
+  SEARCH_KINDS,
   type EntityKind,
   type SearchResult,
 } from "@/lib/atlas-v2-search";
 
-const KIND_FILTERS: Array<EntityKind | null> = [
-  null,
-  "personaje",
-  "capitulo",
-  "archivo",
-  "region",
-];
+const KIND_FILTERS: Array<EntityKind | null> = [null, ...SEARCH_KINDS];
 
 function IconSearch() {
   return (
@@ -31,18 +22,23 @@ function IconSearch() {
   );
 }
 
-export default function BuscarClient() {
+export default function BuscarClient({ items }: { items: SearchResult[] }) {
   const [query, setQuery] = useState("");
   const [kind, setKind] = useState<EntityKind | null>(null);
 
-  const all = useMemo(() => getAllSearchable(), []);
-  const results = useMemo(() => search(query, kind, all), [query, kind, all]);
-
-  const showEmpty = query.trim() === "" && kind === null;
+  const results = useMemo(() => search(query, kind, items), [query, kind, items]);
+  const suggestions = useMemo(
+    () =>
+      SEARCH_KINDS.flatMap((searchKind) => {
+        const match = items.find((item) => item.kind === searchKind);
+        return match ? [match] : [];
+      }),
+    [items],
+  );
+  const showDiscovery = query.trim() === "" && kind === null;
 
   return (
     <div className="av2-buscar-wrap">
-      {/* Buscador principal */}
       <div className="av2-buscar-input">
         <span className="av2-buscar-input-icon" aria-hidden="true">
           <IconSearch />
@@ -50,60 +46,72 @@ export default function BuscarClient() {
         <input
           type="search"
           autoFocus
-          placeholder="Buscar personajes, capítulos, lugares, archivos…"
+          placeholder="Buscar personajes, capitulos, lugares, objetos, misterios..."
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          aria-label="Buscar en el archivo"
+          onChange={(event) => setQuery(event.target.value)}
+          aria-label="Buscar en el atlas"
         />
         {query && (
           <button
             type="button"
             className="av2-buscar-clear"
             onClick={() => setQuery("")}
-            aria-label="Limpiar búsqueda"
+            aria-label="Limpiar busqueda"
           >
-            ✕
+            x
           </button>
         )}
       </div>
 
-      {/* Filtros por tipo */}
       <div className="av2-buscar-filters" role="group" aria-label="Filtrar por tipo">
-        {KIND_FILTERS.map((k) => (
+        {KIND_FILTERS.map((filterKind) => (
           <button
-            key={k ?? "all"}
+            key={filterKind ?? "all"}
             type="button"
             className="av2-buscar-filter"
-            data-active={kind === k ? "true" : undefined}
-            onClick={() => setKind(k)}
+            data-active={kind === filterKind ? "true" : undefined}
+            onClick={() => setKind(filterKind)}
           >
-            {k ? `${KIND_GLYPHS[k]} ${KIND_LABELS[k]}` : "Todos"}
+            {filterKind
+              ? `${KIND_GLYPHS[filterKind]} ${KIND_LABELS[filterKind]}`
+              : "Todos"}
           </button>
         ))}
       </div>
 
-      {/* Contador / estado */}
       <div className="av2-buscar-meta">
-        {showEmpty
-          ? `Buscá entre ${all.length} entradas del archivo.`
+        {showDiscovery
+          ? `Explora ${items.length} entradas del atlas.`
           : `${results.length} ${results.length === 1 ? "resultado" : "resultados"}`}
       </div>
 
-      {/* Lista de resultados */}
-      {!showEmpty && (
-        results.length === 0 ? (
+      {showDiscovery && suggestions.length > 0 && (
+        <section className="av2-buscar-discovery" aria-label="Rutas sugeridas">
+          <div className="av2-buscar-discovery-head">
+            <span>Rutas sugeridas</span>
+            <strong>{suggestions.length} puertas de entrada</strong>
+          </div>
+          <ul className="av2-buscar-results" role="list">
+            {suggestions.map((result) => (
+              <SearchResultRow key={result.id} result={result} />
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {!showDiscovery &&
+        (results.length === 0 ? (
           <div className="av2-empty">
-            <span className="av2-empty-glyph" aria-hidden="true">◈</span>
+            <span className="av2-empty-glyph" aria-hidden="true">◇</span>
             <p>Sin coincidencias para "{query}".</p>
           </div>
         ) : (
           <ul className="av2-buscar-results" role="list">
-            {results.map((r) => (
-              <SearchResultRow key={r.id} result={r} />
+            {results.map((result) => (
+              <SearchResultRow key={result.id} result={result} />
             ))}
           </ul>
-        )
-      )}
+        ))}
     </div>
   );
 }

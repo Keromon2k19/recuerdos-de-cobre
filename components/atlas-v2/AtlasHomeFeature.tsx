@@ -9,7 +9,7 @@ type Props = {
 };
 
 const CHAPTER_INTERVAL_MS = 9000;
-const CAST_INTERVAL_MS = 5200;
+const CAST_INTERVAL_MS = 11000;
 const FALLBACK_SCENE = "/assets/atlas-v2/scenes/metropolis.webp";
 const FALLBACK_PORTRAIT = "/assets/atlas-v2/portraits/_placeholder-1.svg";
 
@@ -113,15 +113,27 @@ export default function AtlasHomeFeature({ slides }: Props) {
             )}
           </div>
 
-          <div className="av2-latest-actions">
-            <Link href={chapter.href} className="av2-btn av2-btn--primary">
-              Explorar capítulo
-            </Link>
-            <Link href="/v2/capitulos" className="av2-btn av2-btn--ghost">
-              Todas las crónicas
-            </Link>
-          </div>
+        </div>
 
+        <div className="av2-latest-actions">
+          <Link href={chapter.href} className="av2-btn av2-btn--primary">
+            Explorar capítulo
+          </Link>
+        </div>
+
+        <figure className="av2-latest-scene" aria-hidden="true">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={sceneSrc}
+            alt=""
+            onError={() => setSceneSrc(FALLBACK_SCENE)}
+          />
+          <figcaption className="av2-latest-scene-cap">
+            {chapter.episodioLabel}
+          </figcaption>
+        </figure>
+
+        <div className="av2-latest-nav">
           <CarouselControls
             label="Cambiar cronica destacada"
             index={chapterIndex}
@@ -137,18 +149,6 @@ export default function AtlasHomeFeature({ slides }: Props) {
             onSelect={setChapterIndex}
           />
         </div>
-
-        <figure className="av2-latest-scene" aria-hidden="true">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={sceneSrc}
-            alt=""
-            onError={() => setSceneSrc(FALLBACK_SCENE)}
-          />
-          <figcaption className="av2-latest-scene-cap">
-            {chapter.episodioLabel}
-          </figcaption>
-        </figure>
       </article>
 
       <aside
@@ -167,19 +167,21 @@ export default function AtlasHomeFeature({ slides }: Props) {
         )}
 
         {cast.length > 0 && (
-          <CarouselControls
-            label="Cambiar personaje destacado"
-            index={castIndex}
-            total={cast.length}
-            compact
-            onPrev={() =>
-              setCastIndex((current) =>
-                current === 0 ? cast.length - 1 : current - 1,
-              )
-            }
-            onNext={() => setCastIndex((current) => (current + 1) % cast.length)}
-            onSelect={setCastIndex}
-          />
+          <div className="av2-cast-nav">
+            <CarouselControls
+              label="Cambiar personaje destacado"
+              index={castIndex}
+              total={cast.length}
+              compact
+              onPrev={() =>
+                setCastIndex((current) =>
+                  current === 0 ? cast.length - 1 : current - 1,
+                )
+              }
+              onNext={() => setCastIndex((current) => (current + 1) % cast.length)}
+              onSelect={setCastIndex}
+            />
+          </div>
         )}
       </aside>
     </div>

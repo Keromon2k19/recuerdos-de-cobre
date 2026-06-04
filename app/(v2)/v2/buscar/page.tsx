@@ -1,28 +1,60 @@
-// app/(v2)/v2/buscar/page.tsx — Server shell, cliente maneja estado de búsqueda.
-
 import BuscarClient from "./BuscarClient";
+import AtlasPageScene from "@/components/atlas-v2/AtlasPageScene";
+import { MOCK_GODS } from "@/data/atlas-v2/gods";
+import { buildAtlasV2SearchIndex } from "@/lib/atlas-v2-search";
+import { getAllRegions } from "@/lib/map-overrides";
+import { cachedListByType, cachedListEpisodes } from "@/lib/public-cache";
+
+export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Buscar · Grimorio de Lore",
+  title: "Buscar - Grimorio de Lore",
 };
 
-export default function BuscarPage() {
+export default async function BuscarPage() {
+  const vp = process.env.VAULT_PATH?.trim() || "";
+  const [
+    episodes,
+    personajes,
+    facciones,
+    lugares,
+    objetos,
+    misterios,
+    mundo,
+  ] = vp
+    ? await Promise.all([
+        cachedListEpisodes(vp),
+        cachedListByType(vp, "personaje"),
+        cachedListByType(vp, "faccion"),
+        cachedListByType(vp, "lugar"),
+        cachedListByType(vp, "objeto"),
+        cachedListByType(vp, "misterio"),
+        cachedListByType(vp, "worldbuilding"),
+      ])
+    : [[], [], [], [], [], [], []];
+
+  const items = buildAtlasV2SearchIndex({
+    episodes,
+    entities: {
+      personaje: personajes,
+      faccion: facciones,
+      lugar: lugares,
+      objeto: objetos,
+      misterio: misterios,
+      mundo,
+    },
+    gods: MOCK_GODS,
+    regions: getAllRegions(),
+  });
+
   return (
-    <section className="av2-p-wrap">
-      <div className="av2-p-bg" aria-hidden="true">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/assets/atlas-v2/backgrounds/hero.png"
-          alt=""
-          className="av2-p-bg-img"
-        />
-      </div>
-
-      <header className="av2-page-head">
-        <h1 className="av2-page-title">Buscar</h1>
-      </header>
-
-      <BuscarClient />
-    </section>
+    <AtlasPageScene
+      eyebrow="Índice transversal del atlas"
+      title="Buscar"
+      subtitle="Una puerta única hacia personajes, crónicas, lugares, objetos, misterios y reglas del mundo."
+      variant="search"
+    >
+      <BuscarClient items={items} />
+    </AtlasPageScene>
   );
 }

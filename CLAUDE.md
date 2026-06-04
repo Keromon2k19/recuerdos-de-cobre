@@ -96,10 +96,10 @@ tests/
 
 > Fuente de verdad completa: `vault-recuerdos-de-cobre/_glossary.md`
 
-- **Mysha** (Kero) — PJ, **una más del grupo, NO la protagonista**. Bruja de sangre. Empieza en el Coven Rojo, después Coven Rosa. **Tiene 3 personalidades**: Mysha (principal), Selenne, Veltra — la misma persona.
+- **Mysha** (Kero) — PJ, **una más del grupo, NO la protagonista**. Bruja de sangre. Crece en el Coven Rojo (nombre original: Coven Rosa); tras la masacre que lo destruye, vuelve a ese origen para refundarlo. **Tiene 3 personalidades**: Mysha (principal), Selenne, Veltra — la misma persona.
 - **Borok** (Mati), **Layra** (Layla), **Narcissa** (Mica), **David Ilcard** (Lucho), **Io Campbell** (Mile/Kuzu/Sis/Nico) — los otros 5 PJs.
 - **Champi** — búho familiar de Mysha.
-- **Coven Rojo / Rosa / Negro / Blanco / Verde** — 5 covens.
+- **Coven Rojo / Negro / Blanco / Verde** — 4 covens (Rosa = nombre original del Rojo; «de sangre»/«oscuro»/«radiante» = variantes).
 - **Hermandad de Cobre** — gremio en Metrópolis de Cobre.
 
 ## Estado actual

@@ -1,0 +1,52 @@
+{
+  "lorenza": {
+    "pin": {
+      "x": 90.71,
+      "y": 79.21
+    }
+  },
+  "mar-leviatan": {
+    "pin": {
+      "x": 62.73,
+      "y": 55.88
+    }
+  },
+  "la-metropolis-cobre": {
+    "pin": {
+      "x": 91,
+      "y": 90.29
+    }
+  },
+  "arkala": {
+    "pin": {
+      "x": 65.09,
+      "y": 87.59
+    },
+    "hideFromMap": false
+  },
+  "santuario-libres": {
+    "pin": {
+      "x": 50.4,
+      "y": 61.69
+    }
+  },
+  "bosque-memorias": {
+    "pin": {
+      "x": 28.61,
+      "y": 83.41
+    }
+  },
+  "lefayes-arrowhead": {
+    "pin": {
+      "x": 16.75,
+      "y": 78.18
+    }
+  },
+  "coven-rojo": {
+    "pin": {
+      "x": 50.75,
+      "y": 54.92
+    },
+    "hideFromMap": false
+  }
+}

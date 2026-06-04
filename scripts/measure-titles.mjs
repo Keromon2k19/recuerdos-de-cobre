@@ -10,7 +10,9 @@ const routes = [
   "/v2/lugares",
   "/v2/dioses",
   "/v2/capitulos",
-  "/v2/archivos",
+  "/v2/objetos",
+  "/v2/misterios",
+  "/v2/mundo",
   "/v2/buscar",
   "/v2/mapa",
 ];

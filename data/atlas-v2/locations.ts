@@ -19,6 +19,9 @@ export type V2Region = {
   };
   pin: { x: number; y: number };
   tone: V2RegionTone;
+  /** True para lugares sin marker físico en el mapa (subterráneos, planos externos, etc).
+      Aparecen en /v2/lugares (listado) pero NO como pin en /v2/mapa. */
+  hideFromMap?: boolean;
 };
 
 export const MOCK_REGIONS: V2Region[] = [
@@ -141,5 +144,146 @@ export const MOCK_REGIONS: V2Region[] = [
     },
     pin: { x: 17.01, y: 77.33 },
     tone: "petrol",
+  },
+  {
+    slug: "underdark",
+    nombre: "Underdark",
+    category: "Subterráneo",
+    tagline: "Red de cavernas bajo el plano material.",
+    glyph: "UD",
+    descripcion:
+      "El Underdark se extiende como un mundo subterráneo paralelo al plano material. Hogar de los drow, dwarves de las profundidades y criaturas que rara vez ven la luz del sol.",
+    meta: {
+      gobierno: "Casas drow y enclaves dwarf",
+      poblacion: "Variable",
+      industria: "Minería y tráfico de secretos",
+      influencia: "Oculta",
+    },
+    pin: { x: 56, y: 92 },
+    tone: "petrol",
+    hideFromMap: true,
+  },
+  {
+    slug: "coven-negro",
+    nombre: "Coven Negro",
+    category: "Coven",
+    tagline: "Coven de brujas en el Bosque Petrificado.",
+    glyph: "CN",
+    descripcion:
+      "El Coven Negro se establece en las ruinas del Bosque Petrificado, donde la magia oscura encuentra resonancia. Sus prácticas marcan la zona de influencia y la temen quienes cruzan sus caminos.",
+    meta: {
+      gobierno: "Coven",
+      poblacion: "Baja",
+      industria: "Brujería oscura",
+      influencia: "Regional",
+    },
+    pin: { x: 32, y: 50 },
+    tone: "wine",
+    hideFromMap: true,
+  },
+  {
+    slug: "coven-rojo",
+    nombre: "Coven Rojo",
+    category: "Coven",
+    tagline: "Coven de origen de Mysha.",
+    glyph: "CR",
+    descripcion:
+      "El Coven Rojo es la cuna de varias brujas de sangre. Su simbolismo y su historia atraviesan el arco de Mysha y dejan marca en lo que vendrá.",
+    meta: {
+      gobierno: "Coven",
+      poblacion: "Baja",
+      industria: "Brujería de sangre",
+      influencia: "Regional",
+    },
+    pin: { x: 38, y: 46 },
+    tone: "wine",
+    hideFromMap: true,
+  },
+  {
+    slug: "bosque-memorias",
+    nombre: "Bosque de las Memorias",
+    category: "Bosque arcano",
+    tagline: "Bosque vivo que guarda los recuerdos del mundo.",
+    glyph: "BM",
+    descripcion:
+      "El Bosque de las Memorias es uno de los lugares más antiguos del continente. Su biblioteca, sus ruinas y el árbol central marcan un punto de tensión entre custodia, olvido y revelación.",
+    meta: {
+      gobierno: "Druidas y custodios",
+      poblacion: "Dispersa",
+      industria: "Memoria y biblioteca",
+      influencia: "Antigua",
+    },
+    pin: { x: 26.53, y: 80.44 },
+    tone: "moss",
+  },
+  {
+    slug: "gleetjeris",
+    nombre: "Gleetjeris",
+    category: "Pueblo de hielo",
+    tagline: "Pueblo en las cuevas heladas del norte.",
+    glyph: "GL",
+    descripcion:
+      "Gleetjeris se aferra a la vida entre cuevas de hielo y montañas heladas. Su economía gira en torno a la caza y al paso de viajeros que necesitan refugio del clima extremo.",
+    meta: {
+      gobierno: "Autoridad local",
+      poblacion: "Baja",
+      industria: "Caza y refugio",
+      influencia: "Local",
+    },
+    pin: { x: 28, y: 14 },
+    tone: "petrol",
+    hideFromMap: true,
+  },
+  {
+    slug: "mar-leviatan",
+    nombre: "Mar del Leviatán",
+    category: "Mar",
+    tagline: "Mar profundo donde acecha el Leviatán.",
+    glyph: "ML",
+    descripcion:
+      "El Mar del Leviatán es ruta y tumba a la vez. Sus aguas conectan con el Plano de Agua y guardan barcos perdidos, ciudades sumergidas y la sombra de la criatura que le da nombre.",
+    meta: {
+      gobierno: "Ninguno",
+      poblacion: "Tripulaciones de paso",
+      industria: "Pesca peligrosa y portales",
+      influencia: "Profunda",
+    },
+    pin: { x: 63.75, y: 49.31 },
+    tone: "petrol",
+  },
+  {
+    slug: "lorenza",
+    nombre: "Lorenza",
+    category: "Minas dwarf",
+    tagline: "Aldea minera al pie de las montañas.",
+    glyph: "LZ",
+    descripcion:
+      "Lorenza vive de la mina y para la mina. Sus túneles conectan con cámaras antiguas y la entrada al Kelgrim, el último bastión de su pueblo cuando el resto se perdió.",
+    meta: {
+      gobierno: "Concejo minero",
+      poblacion: "Media",
+      industria: "Minería y forja",
+      influencia: "Sectorial",
+    },
+    pin: { x: 90.79, y: 78.42 },
+    tone: "copper",
+  },
+  {
+    slug: "plano-abisal",
+    nombre: "Plano Abisal",
+    category: "Plano externo",
+    tagline: "El plano infinito de la corrupción y el caos.",
+    glyph: "PA",
+    descripcion:
+      "El Plano Abisal se ramifica en capas sin fin, cada una más profunda que la anterior. Pazunia es solo la entrada. Cualquier intrusión en este plano marca a quien la realiza, dentro y fuera.",
+    meta: {
+      gobierno: "Señores demoníacos",
+      poblacion: "Innumerable",
+      industria: "Conquista y corrupción",
+      influencia: "Cósmica",
+    },
+    pin: { x: 95, y: 8 },
+    tone: "wine",
+    hideFromMap: true,
   },
 ];

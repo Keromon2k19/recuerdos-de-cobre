@@ -52,6 +52,9 @@ scripts/__pycache__/
 *.webm
 *.mp4
 *.mp3
+# La musica ambiente V2 se sirve desde public/ y debe viajar con el deploy.
+!public/assets/atlas-v2/music/
+!public/assets/atlas-v2/music/*.mp3
 ep01.txt
 test-transcript.txt
 resumen-ep01-*.txt

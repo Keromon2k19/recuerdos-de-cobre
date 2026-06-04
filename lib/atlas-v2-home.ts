@@ -227,7 +227,7 @@ export function buildHomeChapterSlides({
         episodioLabel: formatEpisodeLabel(episode.titulo, episode.numero),
         titulo: cleanEpisodeTitle(episode.titulo),
         excerpt: episode.descripcion || truncate(body, 220),
-        href: `/cronicas/${episode.numero}`,
+        href: `/v2/capitulos/${episode.numero}`,
         imageSrc: episode.image ?? thumbnailForRegistro(episode.numero),
         imageAlt: episode.imageAlt,
         featured: firstQuote
@@ -289,7 +289,7 @@ function toCastSlide(
     name: character?.nombre ?? item.name,
     aliases: item.aliases,
     slug: character?.slug,
-    href: character?.slug ? `/personajes/${character.slug}` : undefined,
+    href: character?.slug ? `/v2/personajes/${character.slug}` : undefined,
     role: character?.rol,
     imageSrc:
       character?.image ??

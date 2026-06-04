@@ -259,6 +259,17 @@ const MERGES: Merge[] = [
   { folder: "personajes", canonical: "anora", dups: ["nora"], note: "Nora = residuo de transcripción de Anora (mismo arco revolucionario)" },
   { folder: "lugares", canonical: "khelgrim", dups: ["ciudad-subterranea-de-hellgrim"], note: "misma ciudad duergar (Último Bastión); khelgrim ya tiene alias Hellgrim" },
   { folder: "personajes", canonical: "el-emperador", dups: ["emperador"], note: "mismo personaje; [[Emperador]] → [[El Emperador]]" },
+  // ── PASA 8 (dedup de covens, 2026-06-03) ──
+  // Confirmado por el usuario: cada coven estaba partido en varias grafías/etapas.
+  // Coven Rojo es la encarnación donde creció y vivió Mysha (destruida en la masacre);
+  // "Coven Rosa" es el nombre ORIGINAL del mismo linaje, al que Mysha vuelve para
+  // refundarlo. "de sangre"/"brujas de sangre"/"hermanas del coven rojo" = la misma
+  // tradición de sangre vista desde distintos episodios.
+  { folder: "facciones", canonical: "coven-rojo", dups: ["coven-rosa", "coven-de-sangre", "hermanas-del-coven-rojo", "brujas-de-sangre"], note: "mismo coven de sangre de Mysha; Rosa = nombre original del linaje" },
+  // Coven de sombras de Melissa/Eryon (Lágrimas de Selune); "Oscuro"/"de oscuridad" = grafías de transcripción.
+  { folder: "facciones", canonical: "coven-negro", dups: ["coven-oscuro", "coven-de-oscuridad"], note: "mismo coven de sombras; Oscuro/de Oscuridad = variantes de transcripción" },
+  // "Coven radiante" = Coven Blanco (luz).
+  { folder: "facciones", canonical: "coven-blanco", dups: ["coven-radiante"], note: "Coven radiante = Coven Blanco" },
 ];
 
 // ── RENAMES — cambiar nombre/slug de una entidad (no es merge) ──

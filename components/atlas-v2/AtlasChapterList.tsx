@@ -9,6 +9,7 @@
 // - Header "TODOS LOS CAPÍTULOS" + footer link "EXPLORAR ARCHIVOS"
 // - Scroll interno si pasa de N items
 
+import Link from "next/link";
 import type { V2Chapter } from "@/data/atlas-v2/chapters";
 
 type Props = {
@@ -44,9 +45,9 @@ export default function AtlasChapterList({ chapters, selectedId, onSelect }: Pro
         ))}
       </ul>
 
-      <button type="button" className="av2-chapter-list-foot">
-        Explorar archivos
-      </button>
+      <Link href="/v2/buscar" className="av2-chapter-list-foot">
+        Buscar en el atlas
+      </Link>
     </aside>
   );
 }

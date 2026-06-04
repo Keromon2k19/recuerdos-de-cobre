@@ -84,12 +84,12 @@ export const MOCK_GODS: V2God[] = [
       {
         label: "Familiar abandonado",
         detail: "El Wendigo aparece como resto duplicado o dejado atras tras su ascension.",
-        href: "/worldbuilding/familiar-de-la-raven-queen",
+        href: "/v2/mundo/familiar-de-la-raven-queen",
       },
       {
         label: "Borrado historico",
         detail: "Junto a Tyr, queda vinculada al ocultamiento de hechos antiguos.",
-        href: "/worldbuilding/borrado-historico",
+        href: "/v2/mundo/borrado-historico",
       },
     ],
     profile:
@@ -99,7 +99,7 @@ export const MOCK_GODS: V2God[] = [
     tension:
       "Su culto protege secretos que el grupo necesita entender, pero revelarlos puede romper pactos antiguos.",
     tone: "memory",
-    primaryHref: "/worldbuilding/familiar-de-la-raven-queen",
+    primaryHref: "/v2/mundo/familiar-de-la-raven-queen",
   },
   {
     slug: "mystra",
@@ -133,12 +133,12 @@ export const MOCK_GODS: V2God[] = [
       {
         label: "Runas de Mystra",
         detail: "Permitieron al Coven Rosa usar energia espiritual.",
-        href: "/worldbuilding/runas-de-mystra",
+        href: "/v2/mundo/runas-de-mystra",
       },
       {
         label: "Cordura divina",
         detail: "Lexia vincula el ritual antiguo con un dios que perdio la cordura.",
-        href: "/worldbuilding/mystra-y-cordura-divina",
+        href: "/v2/mundo/mystra-y-cordura-divina",
       },
     ],
     profile:
@@ -148,7 +148,7 @@ export const MOCK_GODS: V2God[] = [
     tension:
       "Su legado permite cruzar planos, pero tambien aparece ligado a subyugacion, desbalance y magia fuera de control.",
     tone: "arcane",
-    primaryHref: "/worldbuilding/runas-de-mystra",
+    primaryHref: "/v2/mundo/runas-de-mystra",
   },
   {
     slug: "tyr",
@@ -183,12 +183,12 @@ export const MOCK_GODS: V2God[] = [
       {
         label: "Puente y juicio",
         detail: "Las almas recorren el Puente de Myrkul y son juzgadas por Tyr.",
-        href: "/worldbuilding/puente-de-myrkul-y-juicio-de-tyr",
+        href: "/v2/mundo/puente-de-myrkul-y-juicio-de-tyr",
       },
       {
         label: "Cara oscura",
         detail: "Aria critica sus instituciones y templos desde una version incomoda.",
-        href: "/worldbuilding/tyr-segun-aria",
+        href: "/v2/mundo/tyr-segun-aria",
       },
     ],
     profile:
@@ -198,7 +198,7 @@ export const MOCK_GODS: V2God[] = [
     tension:
       "Su orden sostiene destino y juicio, pero varias fuentes cuestionan la dureza y la politica de sus templos.",
     tone: "justice",
-    primaryHref: "/worldbuilding/justicia-celestial-de-tyr",
+    primaryHref: "/v2/mundo/justicia-celestial-de-tyr",
   },
   {
     slug: "selune",
@@ -233,12 +233,12 @@ export const MOCK_GODS: V2God[] = [
       {
         label: "Lagrimas de Selune",
         detail: "Flores nacidas por seguidores caidos que vuelven sagrado el bosque.",
-        href: "/worldbuilding/lagrimas-de-selune",
+        href: "/v2/mundo/lagrimas-de-selune",
       },
       {
         label: "Fuego lunar",
         detail: "Barrera que sostiene al Coven Negro frente a malditos.",
-        href: "/worldbuilding/fuego-de-selune",
+        href: "/v2/mundo/fuego-de-selune",
       },
     ],
     profile:
@@ -248,7 +248,7 @@ export const MOCK_GODS: V2God[] = [
     tension:
       "Su proteccion puede volverse fragile cuando se profanan muertos, flores y memoria comunitaria.",
     tone: "moon",
-    primaryHref: "/worldbuilding/lagrimas-de-selune",
+    primaryHref: "/v2/mundo/lagrimas-de-selune",
   },
   {
     slug: "luzne",
@@ -283,12 +283,12 @@ export const MOCK_GODS: V2God[] = [
       {
         label: "Devocion de Luzne",
         detail: "Sermones que calman y dejan guia espiritual temporal.",
-        href: "/worldbuilding/devocion-de-luzne",
+        href: "/v2/mundo/devocion-de-luzne",
       },
       {
         label: "Purificacion",
         detail: "La Iglesia de Luzne puede destruir maldiciones infernales.",
-        href: "/worldbuilding/luzne-y-purificacion",
+        href: "/v2/mundo/luzne-y-purificacion",
       },
     ],
     profile:
@@ -298,7 +298,7 @@ export const MOCK_GODS: V2God[] = [
     tension:
       "Su promesa de renovacion choca con deudas antiguas que no se resuelven solo con buena fe.",
     tone: "flame",
-    primaryHref: "/worldbuilding/luzne-y-renovacion",
+    primaryHref: "/v2/mundo/luzne-y-renovacion",
   },
   {
     slug: "myrkul",
@@ -333,12 +333,12 @@ export const MOCK_GODS: V2God[] = [
       {
         label: "Myrkul en Millegroth",
         detail: "Su culto aparece como fuerza de ciclo y refugio, no solo muerte.",
-        href: "/worldbuilding/myrkul-en-millegroth",
+        href: "/v2/mundo/myrkul-en-millegroth",
       },
       {
         label: "Resurreccion",
         detail: "Los apostoles y la muerte plantean reglas morales propias.",
-        href: "/worldbuilding/resurreccion-y-apostoles-de-myrkul",
+        href: "/v2/mundo/resurreccion-y-apostoles-de-myrkul",
       },
     ],
     profile:
@@ -348,7 +348,7 @@ export const MOCK_GODS: V2God[] = [
     tension:
       "Su equilibrio puede parecer compasivo o terrible segun quien mire desde la superficie.",
     tone: "death",
-    primaryHref: "/worldbuilding/myrkul-en-millegroth",
+    primaryHref: "/v2/mundo/myrkul-en-millegroth",
   },
   {
     slug: "vecna",
@@ -383,12 +383,12 @@ export const MOCK_GODS: V2God[] = [
       {
         label: "Tratos de Vecna",
         detail: "Ofrece poder en momentos limite y deja marcas fisicas o espirituales.",
-        href: "/worldbuilding/tratos-de-vecna",
+        href: "/v2/mundo/tratos-de-vecna",
       },
       {
         label: "Vecna y secretos",
         detail: "Aria lo presenta como cargador de secretos; otros lo ven como amenaza.",
-        href: "/worldbuilding/vecna-y-los-secretos",
+        href: "/v2/mundo/vecna-y-los-secretos",
       },
     ],
     profile:
@@ -398,7 +398,7 @@ export const MOCK_GODS: V2God[] = [
     tension:
       "Puede revelar abusos ocultos, pero cada revelacion aumenta su campo de influencia.",
     tone: "secret",
-    primaryHref: "/worldbuilding/vecna",
+    primaryHref: "/v2/mundo/vecna",
   },
   {
     slug: "tiamat",
@@ -433,12 +433,12 @@ export const MOCK_GODS: V2God[] = [
       {
         label: "Version del Creador",
         detail: "Afirma que Bahamut ataco a Tiamat mientras ella retiraba la espada.",
-        href: "/worldbuilding/version-del-creador-sobre-tiamat-y-bahamut",
+        href: "/v2/mundo/version-del-creador-sobre-tiamat-y-bahamut",
       },
       {
         label: "Dracónidos cromáticos",
         detail: "La tradicion cromatica la sigue, aunque no todos conservan esa fe.",
-        href: "/worldbuilding/tiamat-y-draconicos-cromaticos",
+        href: "/v2/mundo/tiamat-y-draconicos-cromaticos",
       },
     ],
     profile:
@@ -448,7 +448,7 @@ export const MOCK_GODS: V2God[] = [
     tension:
       "Su memoria tensiona el relato de Bahamut, el pueblo de Layra y las alianzas de la guerra antigua.",
     tone: "dragon",
-    primaryHref: "/worldbuilding/tiamat-y-draconicos-cromaticos",
+    primaryHref: "/v2/mundo/tiamat-y-draconicos-cromaticos",
   },
   {
     slug: "bahamut",
@@ -482,12 +482,12 @@ export const MOCK_GODS: V2God[] = [
       {
         label: "Alianza divina",
         detail: "Bahamut aparece en una alianza distorsionada por la historia oficial.",
-        href: "/worldbuilding/alianza-divina-ocultada",
+        href: "/v2/mundo/alianza-divina-ocultada",
       },
       {
         label: "Tiamat y Bahamut",
         detail: "El Creador de Glaciares contradice la version limpia de la guerra.",
-        href: "/worldbuilding/version-del-creador-sobre-tiamat-y-bahamut",
+        href: "/v2/mundo/version-del-creador-sobre-tiamat-y-bahamut",
       },
     ],
     profile:
@@ -497,7 +497,7 @@ export const MOCK_GODS: V2God[] = [
     tension:
       "Su posicion heroica se vuelve menos simple cuando entran versiones de la guerra que contradicen la memoria oficial.",
     tone: "dragon",
-    primaryHref: "/worldbuilding/alianza-divina-ocultada",
+    primaryHref: "/v2/mundo/alianza-divina-ocultada",
   },
   {
     slug: "talos",
@@ -531,12 +531,12 @@ export const MOCK_GODS: V2God[] = [
       {
         label: "Barrera de Solaria",
         detail: "Impide que dioses e invasiones extraplanares crucen como antes.",
-        href: "/worldbuilding/barrera-de-solaria",
+        href: "/v2/mundo/barrera-de-solaria",
       },
       {
         label: "Plan de Vecna",
         detail: "Vecna parece usar carta de Navish y vestigio de Talos para repetir historia.",
-        href: "/worldbuilding/plan-de-vecna-y-borok",
+        href: "/v2/mundo/plan-de-vecna-y-borok",
       },
     ],
     profile:
@@ -546,7 +546,7 @@ export const MOCK_GODS: V2God[] = [
     tension:
       "Su corazon puede convertir una defensa cosmica en puerta abierta para poderes extraplanares.",
     tone: "storm",
-    primaryHref: "/worldbuilding/barrera-de-solaria",
+    primaryHref: "/v2/mundo/barrera-de-solaria",
   },
   {
     slug: "dios-de-dioses",
@@ -580,12 +580,12 @@ export const MOCK_GODS: V2God[] = [
       {
         label: "Dios de Dioses",
         detail: "Entidad olvidada cuyo hechizo origino la Turmalina.",
-        href: "/worldbuilding/dios-de-dioses",
+        href: "/v2/mundo/dios-de-dioses",
       },
       {
         label: "Ritual de Ascension",
         detail: "El ritual desterro mitad de la humanidad junto a esta entidad.",
-        href: "/worldbuilding/ritual-de-ascension",
+        href: "/v2/mundo/ritual-de-ascension",
       },
     ],
     profile:
@@ -595,6 +595,6 @@ export const MOCK_GODS: V2God[] = [
     tension:
       "Saber que existio reordena la guerra antigua, la Turmalina y el costo real del Ritual de Ascension.",
     tone: "origin",
-    primaryHref: "/worldbuilding/dios-de-dioses",
+    primaryHref: "/v2/mundo/dios-de-dioses",
   },
 ];

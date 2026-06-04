@@ -140,34 +140,6 @@ export const MOCK_FACTIONS: V2Faction[] = [
     tags: ["coven", "mysha", "sangre"],
   },
   {
-    slug: "coven-rosa",
-    nombre: "Coven Rosa",
-    sigil: "CO",
-    categoria: "Coven",
-    estado: "Historico",
-    alcance: "Runas de Mystra",
-    apariciones: 2,
-    descripcion:
-      "Nombre original asociado al linaje del Coven Rojo. Sus registros conectan runas de Mystra, contencion de caminantes etereos y la presentacion del ritual de ascension.",
-    foco: "Memoria anterior del coven y lectura historica de la ascension.",
-    tono: "coven",
-    figures: [
-      { nombre: "Mysha", slug: "mysha", rol: "Heredera" },
-      { nombre: "Mystra", rol: "Influencia divina" },
-    ],
-    relaciones: [
-      {
-        label: "Archivo",
-        detail: "Aparece como lectura clave del pasado del Coven Rojo.",
-      },
-      {
-        label: "Ritual",
-        detail: "Su matriarca presento el ritual de ascension con apoyo de Mystra.",
-      },
-    ],
-    tags: ["coven", "mystra", "ascension"],
-  },
-  {
     slug: "coven-negro",
     nombre: "Coven Negro",
     sigil: "CN",

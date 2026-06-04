@@ -90,7 +90,7 @@ export default function AtlasChapterPreview({ chapter }: Props) {
       )}
 
       <Link
-        href={`/cronicas/${chapter.numero}`}
+        href={`/v2/capitulos/${chapter.numero}`}
         className="av2-btn av2-btn--primary av2-chapter-cta"
       >
         Continuar lectura

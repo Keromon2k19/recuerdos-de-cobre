@@ -16,6 +16,7 @@
 // Uso:
 //   node scripts/v2-screenshot.mjs                 # todas las rutas, todos los viewports
 //   node scripts/v2-screenshot.mjs --priority      # solo prioridad: 1440, 2048, 390
+//   node scripts/v2-screenshot.mjs --desktop       # solo viewports de escritorio
 //   node scripts/v2-screenshot.mjs --routes /v2,/v2/personajes
 //   node scripts/v2-screenshot.mjs --full-page     # capturar página completa (no solo viewport)
 //
@@ -46,13 +47,19 @@ const ROUTES = [
   "/v2",
   "/v2/personajes",
   "/v2/capitulos",
+  "/v2/facciones",
+  "/v2/lugares",
   "/v2/mapa",
   "/v2/dioses",
-  "/v2/archivos",
+  "/v2/objetos",
+  "/v2/misterios",
+  "/v2/mundo",
+  "/v2/buscar",
 ];
 
 const args = new Set(process.argv.slice(2));
 const PRIORITY_ONLY = args.has("--priority");
+const DESKTOP_ONLY = args.has("--desktop");
 const FULL_PAGE = args.has("--full-page");
 
 const routesArg = process.argv.find((a) => a.startsWith("--routes="));
@@ -60,7 +67,11 @@ const ROUTES_FILTERED = routesArg
   ? routesArg.slice("--routes=".length).split(",")
   : ROUTES;
 
-const viewports = PRIORITY_ONLY ? VIEWPORTS.filter((v) => v.priority) : VIEWPORTS;
+const viewports = VIEWPORTS.filter(
+  (viewport) =>
+    (!PRIORITY_ONLY || viewport.priority) &&
+    (!DESKTOP_ONLY || viewport.width >= 1440),
+);
 
 function slugify(route) {
   return route.replace(/^\//, "").replace(/\//g, "_") || "home";

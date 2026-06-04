@@ -7,12 +7,24 @@ import { cachedListByType } from "./public-cache";
 import { slugify } from "./slugify";
 import { BY_SEGMENT, PUBLIC_ENTITIES } from "./entity-public";
 import type { WikiResolver } from "./markdown-render";
+import type { EntityType } from "./types";
 
 const RESOLVER_TTL_MS = Number(process.env.PUBLIC_CACHE_TTL_MS ?? 300_000);
 const resolverCache = new Map<string, { at: number; resolve: WikiResolver }>();
 
-export async function buildWikiResolver(
-  vaultPath: string
+const V2_SEGMENT_BY_TYPE: Partial<Record<EntityType, string>> = {
+  personaje: "personajes",
+  lugar: "lugares",
+  faccion: "facciones",
+  objeto: "objetos",
+  misterio: "misterios",
+  worldbuilding: "mundo",
+};
+
+async function buildWikiResolverForRoutes(
+  vaultPath: string,
+  routeSegment: (type: EntityType, legacySegment: string) => string,
+  episodeSegment: string,
 ): Promise<WikiResolver> {
   const bySlug = new Map<string, string>(); // slug -> href
   const byName = new Map<string, string>(); // nombre.toLowerCase() -> href
@@ -22,9 +34,11 @@ export async function buildWikiResolver(
     PUBLIC_ENTITIES.map(async (cfg) => {
       const items = await cachedListByType(vaultPath, cfg.tipo);
       for (const it of items) {
-        const href = `/${cfg.segment}/${it.slug}`;
+        const publicSegment = routeSegment(cfg.tipo, cfg.segment);
+        const href = `/${publicSegment}/${it.slug}`;
         if (!bySlug.has(it.slug)) bySlug.set(it.slug, href);
         byPath.set(`${cfg.segment}/${it.slug}`.toLowerCase(), href);
+        byPath.set(`${publicSegment}/${it.slug}`.toLowerCase(), href);
         const key = it.nombre.toLowerCase();
         if (!byName.has(key)) byName.set(key, href);
       }
@@ -56,7 +70,7 @@ export async function buildWikiResolver(
     // Wikilink a episodio: "007-...-slug" o número suelto
     const epSlug = raw.match(/^(\d{1,3})\b/);
     if (epSlug && /^\d{1,3}(-|$)/.test(raw)) {
-      return `/cronicas/${parseInt(epSlug[1], 10)}`;
+      return `/${episodeSegment}/${parseInt(epSlug[1], 10)}`;
     }
 
     const s = slugify(raw);
@@ -69,13 +83,44 @@ export async function buildWikiResolver(
   };
 }
 
+export function buildWikiResolver(vaultPath: string): Promise<WikiResolver> {
+  return buildWikiResolverForRoutes(
+    vaultPath,
+    (_type, legacySegment) => legacySegment,
+    "cronicas",
+  );
+}
+
+export function buildAtlasV2WikiResolver(
+  vaultPath: string,
+): Promise<WikiResolver> {
+  return buildWikiResolverForRoutes(
+    vaultPath,
+    (type, legacySegment) => `v2/${V2_SEGMENT_BY_TYPE[type] ?? legacySegment}`,
+    "v2/capitulos",
+  );
+}
+
 export async function cachedBuildWikiResolver(
   vaultPath: string
 ): Promise<WikiResolver> {
-  const hit = resolverCache.get(vaultPath);
+  const cacheKey = `legacy:${vaultPath}`;
+  const hit = resolverCache.get(cacheKey);
   if (hit && Date.now() - hit.at < RESOLVER_TTL_MS) return hit.resolve;
 
   const resolve = await buildWikiResolver(vaultPath);
-  resolverCache.set(vaultPath, { at: Date.now(), resolve });
+  resolverCache.set(cacheKey, { at: Date.now(), resolve });
+  return resolve;
+}
+
+export async function cachedBuildAtlasV2WikiResolver(
+  vaultPath: string,
+): Promise<WikiResolver> {
+  const cacheKey = `v2:${vaultPath}`;
+  const hit = resolverCache.get(cacheKey);
+  if (hit && Date.now() - hit.at < RESOLVER_TTL_MS) return hit.resolve;
+
+  const resolve = await buildAtlasV2WikiResolver(vaultPath);
+  resolverCache.set(cacheKey, { at: Date.now(), resolve });
   return resolve;
 }

@@ -35,10 +35,10 @@ export const MOCK_CHARACTERS: V2Character[] = [
     jugador: "Kero",
     rol: "Bruja de sangre",
     epiteto: "Tres en una",
-    facciones: ["Coven Rojo", "Coven Rosa"],
+    facciones: ["Coven Rojo"],
     region: "Eyra",
     descripcion:
-      "Bruja de sangre con tres personalidades — Mysha, Selenne y Veltra — que comparten un mismo cuerpo. Empieza vinculada al Coven Rojo y termina migrando al Rosa.",
+      "Bruja de sangre con tres personalidades — Mysha, Selenne y Veltra — que comparten un mismo cuerpo. Hereda el Coven Rojo y recupera su nombre original, Coven Rosa, al decidir refundarlo.",
     apariciones: 67,
     imageSrc: "/assets/atlas-v2/portraits/mysha.png",
   },
