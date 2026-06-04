@@ -44,7 +44,7 @@ relaciones:
   - con: '[[anora|Anora]]'
     tipo: la presenta a Mysha como contacto vinculado a los covens
     episodio: 21
-  - con: '[[coven-oscuro|Coven Oscuro]]'
+  - con: '[[Coven Negro|Coven Oscuro]]'
     tipo: revela su pertenencia mediante un manto oscuro de plumas
     episodio: 21
   - con: '[[mysha|Mysha]]'
@@ -53,7 +53,7 @@ relaciones:
   - con: '[[mysha|Mysha]]'
     tipo: 'recibe de ella informacion sobre covens, caminantes etereos y sombras'
     episodio: 22
-  - con: '[[coven-oscuro|Coven Oscuro]]'
+  - con: '[[Coven Negro|Coven Oscuro]]'
     tipo: revela que su manto y su conocimiento provienen de ese coven
     episodio: 22
   - con: '[[selune|Selune]]'
@@ -81,7 +81,7 @@ region: Metrópolis de Cobre
 
 ## Perfil
 
-Margarita, "la Doctora", es una NPC sanadora de la [[facciones/hermandad-de-cobre|Hermandad de Cobre]] en la Metrópolis de Cobre que sella el contrato del gremio extrayendo sangre y tatuando a los PJ el sello de la pluma dorada. Más tarde se revela como miembro del [[coven-oscuro|Coven Oscuro]], ligada a la luna a través de Selune, y guía a [[mysha|Mysha]] en el conocimiento de los covens, los caminantes etéreos y las sombras. En el arco final prepara la contención de [[el-emperador|El Emperador]], muere en la explosión y es devuelta por [[narcissa|Narcissa]], para luego considerar volver al [[facciones/cobre-negro|Cobre Negro]] y sumarse al proyecto de refugio de [[eryon|Eryon]].
+Margarita, "la Doctora", es una NPC sanadora de la [[facciones/hermandad-de-cobre|Hermandad de Cobre]] en la Metrópolis de Cobre que sella el contrato del gremio extrayendo sangre y tatuando a los PJ el sello de la pluma dorada. Más tarde se revela como miembro del [[Coven Negro|Coven Oscuro]], ligada a la luna a través de Selune, y guía a [[mysha|Mysha]] en el conocimiento de los covens, los caminantes etéreos y las sombras. En el arco final prepara la contención de [[el-emperador|El Emperador]], muere en la explosión y es devuelta por [[narcissa|Narcissa]], para luego considerar volver al [[facciones/cobre-negro|Cobre Negro]] y sumarse al proyecto de refugio de [[eryon|Eryon]].
 
 ## Menciones por episodio
 

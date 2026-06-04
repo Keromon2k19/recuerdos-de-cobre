@@ -15,7 +15,7 @@ rol: NPC
 tags:
   - npc
 relaciones:
-  - con: '[[coven-rosa|Coven Rosa]]'
+  - con: '[[Coven Rojo|Coven Rosa]]'
     tipo: >-
       Recibe de ella runas y magia caótica para atravesar el velo hacia el plano
       espiritual.

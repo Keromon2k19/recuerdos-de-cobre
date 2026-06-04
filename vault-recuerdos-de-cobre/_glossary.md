@@ -19,7 +19,7 @@ Este archivo es la **fuente de verdad única** para el pipeline:
 
 Formato: `Personaje (nombre completo) — Jugador`
 
-- **Mysha** — Kero. Protagonista, **bruja de sangre**. Empieza la campaña como miembro del **Coven Rojo**; más adelante en la trama se vuelve miembro del **Coven Rosa**. Tiene **3 personalidades** que conviven en la misma persona:
+- **Mysha** — Kero. Protagonista, **bruja de sangre**. Crece en el **Coven Rojo** (cuyo nombre original es el **Coven Rosa**); tras la masacre que destruye el coven, queda como su última matriarca y vuelve a ese origen para refundarlo desde cero. Tiene **3 personalidades** que conviven en la misma persona:
   - **Mysha** — personalidad base / principal.
   - **Selenne** — personalidad secundaria.
   - **Veltra** — personalidad secundaria.
@@ -101,12 +101,11 @@ Formato: `Personaje (nombre completo) — Jugador`
 
 ## Covens
 
-Hay **5 covens** en total: Rojo, Rosa, Negro, Blanco, Verde.
+Hay **4 covens** en total: Rojo, Negro, Blanco, Verde.
 
-- **Coven Rojo** — Mysha empieza la campaña como miembro de este coven. Escribió el libro con la teoría del cuerpo / alma / espíritu. Sus secretos están protegidos por un ángel de Tyr (matado en Acto IV).
-- **Coven Rosa** — Mysha se vuelve miembro más adelante. Aprendió a ver y usar el plano etéreo gracias a las runas de Mystra. Custodia de los caminantes etéreos en solsticios.
-- **Coven Negro** — uno de los 5 covens.
-- **Coven Blanco** — uno de los 5 covens.
+- **Coven Rojo** — coven de sangre donde Mysha creció y vivió, destruido en la masacre del Wendigo y el Coven Verde. Escribió el libro con la teoría del cuerpo / alma / espíritu; sus secretos están protegidos por un ángel de Tyr (matado en Acto IV). **«Coven Rosa» es su nombre original** (linaje fundado sobre las runas de Mystra y la contención de caminantes etéreos en solsticios); tras la caída, Mysha vuelve a ese origen para refundar el coven desde cero. También aparece nombrado como «Coven de sangre», «Brujas de Sangre» o «Hermanas del Coven Rojo».
+- **Coven Negro** — coven de sombras de la matriarca Melissa (formó a Eryon y Aisha), oculto en un bosque petrificado protegido por las Lágrimas de Selune; sitiado por el Wendigo tras la profanación de su cementerio. Aparece también como «Coven Oscuro» / «Coven de oscuridad».
+- **Coven Blanco** — uno de los covens; aparece también como «Coven radiante».
 - **Coven Verde** — se opuso al Ritual de Ascensión. Mystra subyugó a su matriarca para que aceptara.
 
 ---
@@ -200,8 +199,8 @@ Hay **5 covens** en total: Rojo, Rosa, Negro, Blanco, Verde.
 - Al morir: el cuerpo queda, el alma flota hacia los planos divinos para ser juzgada, el espíritu reside en el **Plano Etéreo / Plano Espiritual**.
 
 ### El Plano Etéreo / Espiritual
-- Inalcanzable para humanoides comunes. **Mystra** creó las runas para que el Coven Rosa pudiera atravesar el velo.
-- En los **solsticios** (2 veces al año) la barrera se adelgaza y caminantes etéreos pueden cruzar. El Coven Rosa los contiene.
+- Inalcanzable para humanoides comunes. **Mystra** creó las runas para que el Coven Rojo —entonces bajo su nombre original, Coven Rosa— pudiera atravesar el velo.
+- En los **solsticios** (2 veces al año) la barrera se adelgaza y caminantes etéreos pueden cruzar. El Coven Rojo los contiene.
 
 ### Magia
 - **Magia Mística / Magia Caótica** — creada por Mystra. Daño de fuerza.
@@ -211,7 +210,7 @@ Hay **5 covens** en total: Rojo, Rosa, Negro, Blanco, Verde.
 ### Ritual de Ascensión (evento histórico)
 - Documentado en el "Libro de Historia del Salón de Sangre".
 - Las matriarcas de los covens se reunieron en guerra contra Demogorgon y Vecna.
-- El **Coven Rosa** presentó el libro del Ritual: combinando la magia caótica de Mystra y el plano etéreo, podía convertir a alguien en semidiós (= alguien con poder suficiente para que otros lo crean dios).
+- El **Coven Rojo** (bajo su nombre original, Coven Rosa) presentó el libro del Ritual: combinando la magia caótica de Mystra y el plano etéreo, podía convertir a alguien en semidiós (= alguien con poder suficiente para que otros lo crean dios).
 - **Costo**: el espíritu de la mitad de la población.
 - La **Matriarca Verde** se opuso. Mystra la subyugó para que aceptara.
 - Antes del ritual, la Matriarca Verde maldijo: "que sus cuerpos sangren, que la naturaleza los odie", reduciendo el número de quienes usen esta magia.

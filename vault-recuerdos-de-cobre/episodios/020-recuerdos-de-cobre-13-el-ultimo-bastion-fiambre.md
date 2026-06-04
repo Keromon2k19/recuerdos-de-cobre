@@ -31,10 +31,10 @@ menciones:
     - '[[centro-del-ultimo-bastion|Centro del Último Bastión]]'
     - '[[biblioteca-de-la-familia-de-narcissa|Biblioteca de la familia de Narcissa]]'
   facciones:
-    - '[[coven-de-sangre|Coven de sangre]]'
+    - '[[Coven Rojo|Coven de sangre]]'
     - '[[facciones/coven-verde|Coven verde]]'
-    - '[[coven-de-oscuridad|Coven de oscuridad]]'
-    - '[[coven-radiante|Coven radiante]]'
+    - '[[Coven Negro|Coven de oscuridad]]'
+    - '[[Coven Blanco|Coven radiante]]'
     - '[[tribu-orca-de-borok|Tribu orca de Borok]]'
     - '[[tribu-draconica-de-layra|Tribu dracónica de Layra]]'
     - '[[asimares|Asimares]]'
@@ -248,10 +248,10 @@ El grupo prueba con cautela. La carne no reacciona a voces en Undercommon, ni al
 - **[[objetos/simbolo-de-vecna|Símbolo de Vecna]]** — Marca que aparece en la palma de la masa de carne y coincide con la marca de Borok.
 
 ### Facciones
-- **[[coven-de-sangre|Coven de sangre]]** — Uno de los covens cuyos símbolos aparecen entre los cadáveres del Último Bastión.
+- **[[Coven Rojo|Coven de sangre]]** — Uno de los covens cuyos símbolos aparecen entre los cadáveres del Último Bastión.
 - **[[facciones/coven-verde|Coven verde]]** — Coven de naturaleza identificado entre los restos del bastión.
-- **[[coven-de-oscuridad|Coven de oscuridad]]** — Coven identificado por Selenne entre los muertos del bastión.
-- **[[coven-radiante|Coven radiante]]** — Coven identificado entre las facciones presentes en el Último Bastión.
+- **[[Coven Negro|Coven de oscuridad]]** — Coven identificado por Selenne entre los muertos del bastión.
+- **[[Coven Blanco|Coven radiante]]** — Coven identificado entre las facciones presentes en el Último Bastión.
 - **[[tribu-orca-de-borok|Tribu orca de Borok]]** — Referencia cultural de Borok al reconocer armaduras parecidas a las de su pueblo.
 - **[[tribu-draconica-de-layra|Tribu dracónica de Layra]]** — Grupo al que parecen pertenecer algunos restos hallados por Layra.
 - **[[asimares|Asimares]]** — Linaje presente entre los muertos, reconocido por David mediante símbolos internos en armaduras.

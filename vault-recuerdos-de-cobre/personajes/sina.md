@@ -25,7 +25,7 @@ relaciones:
   - con: '[[cuervo-negro-decorativo|Cuervo negro decorativo]]'
     tipo: Lo marca con sangre para abrir la escotilla hacia el salón prohibido.
     episodio: 36
-  - con: '[[facciones/hermanas-del-coven-rojo|Hermanas del Coven Rojo]]'
+  - con: '[[facciones/coven-rojo|Hermanas del Coven Rojo]]'
     tipo: Usa sangre de las muertas para liberar a las niñas y ordenar la huida.
     episodio: 36
   - con: '[[personajes/wendigo|Wendigo]]'
@@ -37,7 +37,7 @@ relaciones:
       la historia perdida de su madre.
     episodio: 37
 facciones:
-  - Hermanas del Coven Rojo
+  - Coven Rojo
 ---
 
 ## Menciones por episodio

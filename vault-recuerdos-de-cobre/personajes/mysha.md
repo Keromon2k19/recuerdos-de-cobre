@@ -872,7 +872,6 @@ relaciones:
     episodio: 68
 facciones:
   - Coven Rojo
-  - Coven Rosa
 region: Bosque del Coven Rojo
 ---
 

@@ -165,13 +165,12 @@ relaciones:
     episodio: 81
 facciones:
   - Coven Rojo
-  - Coven Rosa
 region: Bosque del Coven Rojo
 ---
 
 ## Perfil
 
-Champi es el búho familiar de [[mysha|Mysha]], vinculado a ella desde el Coven Rojo y luego el Coven Rosa, y funciona como su extensión de vigilancia, exploración y reconocimiento aéreo a lo largo de toda la campaña. Su arco central es la profundización de ese vínculo: aprende a hablar con el grupo, llega a morir y ser revivido por [[narcissa|Narcissa]], y se interpone para recibir en su lugar el mordisco del lobo corrompido. También integra a otros familiares a la familia, como [[bishak|Bishak]], y acompaña a Mysha incluso en el plano etéreo junto a [[selenne|Selenne]].
+Champi es el búho familiar de [[mysha|Mysha]], vinculado al linaje del Coven Rojo desde su nombre original, Coven Rosa, y funciona como su extensión de vigilancia, exploración y reconocimiento aéreo a lo largo de toda la campaña. Su arco central es la profundización de ese vínculo: aprende a hablar con el grupo, llega a morir y ser revivido por [[narcissa|Narcissa]], y se interpone para recibir en su lugar el mordisco del lobo corrompido. También integra a otros familiares a la familia, como [[bishak|Bishak]], y acompaña a Mysha incluso en el plano etéreo junto a [[selenne|Selenne]].
 
 ## Menciones por episodio
 
@@ -321,4 +320,3 @@ Champi es el búho familiar de [[mysha|Mysha]], vinculado a ella desde el Coven 
 
 ### [[081-recuerdos-de-cobre-65-los-esclavos-de-siltris|Ep. 81 — Recuerdos de Cobre 65: Los esclavos de Siltris]]
 - Ayuda a Mysha a explorar Siltris, comunicarse con Aerindel y escapar de la vigilancia usando el planetario y la pecera.
-

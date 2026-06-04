@@ -38,8 +38,8 @@ menciones:
     - '[[lugares/feywild|Feywild]]'
   facciones:
     - '[[facciones/renegados|Renegados]]'
-    - '[[coven-de-sangre|Coven de sangre]]'
-    - '[[coven-oscuro|Coven Oscuro]]'
+    - '[[Coven Rojo|Coven de sangre]]'
+    - '[[Coven Negro|Coven Oscuro]]'
     - '[[gremio-de-anora|Gremio de Anora]]'
     - '[[culto-de-vecna|Culto de Vecna]]'
     - '[[concejales-de-metropolis|Concejales de Metropolis]]'
@@ -292,8 +292,8 @@ Celeste no permite que Mysha se quede con la piedra sin tratarla y la llama a un
 
 ### Facciones
 - **[[facciones/renegados|Renegados]]** — Grupo donde Borok sabe que varias personas llevan marcas de Vecna y sufren pesadillas.
-- **[[coven-de-sangre|Coven de sangre]]** — Coven asociado al manto rojinegro encontrado por Mysha y a su linaje.
-- **[[coven-oscuro|Coven Oscuro]]** — Coven al que pertenece Margarita, revelado por su manto oscuro de plumas de cuervo.
+- **[[Coven Rojo|Coven de sangre]]** — Coven asociado al manto rojinegro encontrado por Mysha y a su linaje.
+- **[[Coven Negro|Coven Oscuro]]** — Coven al que pertenece Margarita, revelado por su manto oscuro de plumas de cuervo.
 - **[[gremio-de-anora|Gremio de Anora]]** — Organizacion que recibe el informe, recompensa al grupo y coordina el analisis de artefactos.
 - **[[culto-de-vecna|Culto de Vecna]]** — Red conectada a simbolos, maldiciones, Hellgrim y posiblemente a un concejal de Metropolis.
 - **[[concejales-de-metropolis|Concejales de Metropolis]]** — Autoridades politicas del territorio, una de las cuales podria estar relacionada con el culto.
@@ -337,7 +337,7 @@ Celeste no permite que Mysha se quede con la piedra sin tratarla y la llama a un
 - [[celeste|Celeste]] ↔ [[el-que-todo-lo-contiene|El que todo lo contiene]] — explica que el libro almacena objetos mediante dibujos y palabras de mando
 - [[pablo|Pablo]] ↔ [[layra|Layra]] — le explica el tsunami anual y le sirve cafe en el bar
 - [[anora|Anora]] ↔ [[margarita|Margarita]] — la presenta a Mysha como contacto vinculado a los covens
-- [[margarita|Margarita]] ↔ [[coven-oscuro|Coven Oscuro]] — revela su pertenencia mediante un manto oscuro de plumas
+- [[margarita|Margarita]] ↔ [[Coven Negro|Coven Oscuro]] — revela su pertenencia mediante un manto oscuro de plumas
 - [[margarita|Margarita]] ↔ [[mysha|Mysha]] — acepta hablar con ella sobre el vinculo con los covens
 
 ### Misterios

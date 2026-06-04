@@ -15,7 +15,6 @@ tags:
   - pj
 facciones:
   - Coven Rojo
-  - Coven Rosa
 relaciones:
   - con: '[[champi|Champi]]'
     tipo: usa su visión para espiar el granero y descubre que ahora puede hablar
@@ -36,7 +35,7 @@ relaciones:
 
 ## Perfil
 
-> **Personalidad de [[mysha|Mysha]].** Selenne es uno de los tres aspectos de la misma persona (Mysha / Selenne / Veltra), bruja de sangre del [[coven-rojo|Coven Rojo]] (luego [[coven-rosa|Coven Rosa]]). Su historia completa está en la ficha principal de [[mysha|Mysha]]; abajo solo las apariciones en las que emerge específicamente Selenne.
+> **Personalidad de [[mysha|Mysha]].** Selenne es uno de los tres aspectos de la misma persona (Mysha / Selenne / Veltra), bruja de sangre del [[coven-rojo|Coven Rojo]] (luego [[Coven Rojo|Coven Rosa]]). Su historia completa está en la ficha principal de [[mysha|Mysha]]; abajo solo las apariciones en las que emerge específicamente Selenne.
 
 ## Menciones por episodio
 

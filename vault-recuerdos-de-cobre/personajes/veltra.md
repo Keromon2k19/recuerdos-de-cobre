@@ -15,7 +15,6 @@ tags:
   - pj
 facciones:
   - Coven Rojo
-  - Coven Rosa
 relaciones:
   - con: '[[mysha|Mysha]]'
     tipo: >-
@@ -43,7 +42,7 @@ relaciones:
 
 ## Perfil
 
-> **Personalidad de [[mysha|Mysha]].** Veltra es uno de los tres aspectos de la misma persona (Mysha / Selenne / Veltra), bruja de sangre del [[coven-rojo|Coven Rojo]] (luego [[coven-rosa|Coven Rosa]]); emerge cuando el trauma de la masacre se vuelve insoportable. Su historia completa está en la ficha principal de [[mysha|Mysha]]; abajo solo las apariciones en las que emerge específicamente Veltra.
+> **Personalidad de [[mysha|Mysha]].** Veltra es uno de los tres aspectos de la misma persona (Mysha / Selenne / Veltra), bruja de sangre del [[coven-rojo|Coven Rojo]] (luego [[Coven Rojo|Coven Rosa]]); emerge cuando el trauma de la masacre se vuelve insoportable. Su historia completa está en la ficha principal de [[mysha|Mysha]]; abajo solo las apariciones en las que emerge específicamente Veltra.
 
 ## Menciones por episodio
 

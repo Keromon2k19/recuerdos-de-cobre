@@ -44,7 +44,7 @@ menciones:
     - '[[cueva-de-huesos-amarillos|Cueva de huesos amarillos]]'
   facciones:
     - '[[coven-rojo|Coven Rojo]]'
-    - '[[coven-rosa|Coven Rosa]]'
+    - '[[Coven Rojo|Coven Rosa]]'
     - '[[facciones/coven-verde|Coven Verde]]'
     - '[[iglesia-de-tyr|Iglesia de Tyr]]'
     - '[[seguidores-de-vecna|Seguidores de Vecna]]'
@@ -445,7 +445,7 @@ El deva intenta quitárselo de encima, cae hacia atrás y Raylen queda aferrado 
 
 ### Facciones
 - **[[coven-rojo|Coven Rojo]]** — Nombre actual del antiguo Coven Rosa, hogar de Mysha y tradición de sangre vinculada al plano espiritual.
-- **[[coven-rosa|Coven Rosa]]** — Nombre original del Coven Rojo según el libro de la matriarca, fundado alrededor de runas de Mystra y contención de caminantes etéreos.
+- **[[Coven Rojo|Coven Rosa]]** — Nombre original del Coven Rojo según el libro de la matriarca, fundado alrededor de runas de Mystra y contención de caminantes etéreos.
 - **[[facciones/coven-verde|Coven Verde]]** — Coven de Lexia que atacó al Coven Rojo y buscó el ritual de ascensión durante la masacre.
 - **[[iglesia-de-tyr|Iglesia de Tyr]]** — Institución asociada al padre de Arya, bibliotecas privadas, ocultamiento de conocimiento y el santuario bajo la casa de Sina.
 - **[[seguidores-de-vecna|Seguidores de Vecna]]** — Corriente de secretos y revelación que influye en Arya y la empuja a buscar lo oculto bajo el Coven.
@@ -502,8 +502,8 @@ El deva intenta quitárselo de encima, cae hacia atrás y Raylen queda aferrado 
 - [[rylen|Rylen]] ↔ [[deva-del-santuario-de-tyr|Deva del santuario de Tyr]] — Lo dispara, se acerca con la daga negra y lo remata clavándose sobre su pecho.
 - [[rylen|Rylen]] ↔ [[daga-negra-de-raylen|Daga negra de Raylen]] — Siente sus ansias de hacer daño y decide obedecer el impulso para matar al deva.
 - [[daga-negra-de-raylen|Daga negra de Raylen]] ↔ [[deva-del-santuario-de-tyr|Deva del santuario de Tyr]] — Absorbe o recibe energía tras la muerte del ángel y transmite una frase de supremacía divina.
-- [[coven-rosa|Coven Rosa]] ↔ [[personajes/mystra|Mystra]] — Recibe de ella runas y magia caótica para atravesar el velo hacia el plano espiritual.
-- [[coven-rosa|Coven Rosa]] ↔ [[personajes/caminantes-etereos|Caminantes etéreos]] — Tenía la responsabilidad de evitar que cruzaran al plano material durante los solsticios.
+- [[Coven Rojo|Coven Rosa]] ↔ [[personajes/mystra|Mystra]] — Recibe de ella runas y magia caótica para atravesar el velo hacia el plano espiritual.
+- [[Coven Rojo|Coven Rosa]] ↔ [[personajes/caminantes-etereos|Caminantes etéreos]] — Tenía la responsabilidad de evitar que cruzaran al plano material durante los solsticios.
 - [[personajes/druidia|Druidia]] ↔ [[espiritus-gemelos|Espíritus gemelos]] — Diseña el vínculo entre espíritu humanoide y espíritu animal para sostener el equilibrio.
 - [[narcissa|Narcissa]] ↔ [[Bijak]] — Su hilo espiritual conecta con él desde el pecho, revelando un vínculo raro y profundo.
 - [[santuario-de-tyr|Santuario de Tyr]] ↔ [[deva-del-santuario-de-tyr|Deva del santuario de Tyr]] — Está protegido por el ángel como guardián juramentado contra intrusos.

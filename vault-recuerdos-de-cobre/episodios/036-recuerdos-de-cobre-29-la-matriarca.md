@@ -22,7 +22,7 @@ menciones:
     - '[[zorro-blanco|Zorro blanco]]'
     - '[[personajes/wendigo|Wendigo]]'
     - '[[profesora-del-coven-rojo|Profesora del Coven Rojo]]'
-    - '[[facciones/hermanas-del-coven-rojo|Hermanas del Coven Rojo]]'
+    - '[[facciones/coven-rojo|Hermanas del Coven Rojo]]'
     - '[[figura-de-piedra-del-coven-verde|Figura de piedra del Coven Verde]]'
     - '[[figura-de-hielo-del-coven-verde|Figura de hielo del Coven Verde]]'
     - '[[Navish]]'
@@ -49,7 +49,7 @@ menciones:
     - '[[personajes/druidia|Druidia]]'
     - '[[personajes/mystra|Mystra]]'
     - '[[grupo-de-mysha|Grupo de Mysha]]'
-    - '[[facciones/hermanas-del-coven-rojo|Hermanas del Coven Rojo]]'
+    - '[[facciones/coven-rojo|Hermanas del Coven Rojo]]'
     - '[[seguidores-de-vecna|Seguidores de Vecna]]'
   eventos:
     - '[[llegada-al-bosque-del-coven|Llegada al bosque del Coven]]'
@@ -350,7 +350,7 @@ Los demás ven a Mysha recorrer el Coven en trance: entra, corre hacia afuera y 
 - **[[zorro-blanco|Zorro blanco]]** — Presencia espiritual vista por Mysha en el plano etéreo, casi cubierta por esencia rosada y visiblemente triste.
 - **[[personajes/wendigo|Wendigo]]** — Criatura enorme que devora a Sina durante la huida del Coven Rojo y obliga a Tana y Phelan a arrastrar a Mysha.
 - **[[profesora-del-coven-rojo|Profesora del Coven Rojo]]** — Bruja que guía a las niñas en rituales de sangre antes de detectar el ataque y ordenarles refugiarse.
-- **[[facciones/hermanas-del-coven-rojo|Hermanas del Coven Rojo]]** — Niñas y brujas del Coven que son asesinadas por caminantes etéreos, fuego mágico y lanzas del Coven Verde durante la masacre.
+- **[[facciones/coven-rojo|Hermanas del Coven Rojo]]** — Niñas y brujas del Coven que son asesinadas por caminantes etéreos, fuego mágico y lanzas del Coven Verde durante la masacre.
 - **[[figura-de-piedra-del-coven-verde|Figura de piedra del Coven Verde]]** — Líder o hermana mayor del Coven Verde con piel gris pétrea que acompaña a Lexia al salón prohibido.
 - **[[figura-de-hielo-del-coven-verde|Figura de hielo del Coven Verde]]** — Líder o hermana mayor del Coven Verde, elfa rodeada de hielo, que acompaña a Lexia al salón prohibido.
 - **[[Navish]]** — Entidad mencionada en el resumen previo que interceptó al grupo antes de llegar al Coven y habló sobre el Kiness y el portador anterior de la carta.
@@ -441,7 +441,7 @@ Los demás ven a Mysha recorrer el Coven en trance: entra, corre hacia afuera y 
 - **[[personajes/druidia|Druidia]]** — Fuerza natural o entidad que recuerda la traición según Lexia y bendice a Io en el bosque.
 - **[[personajes/mystra|Mystra]]** — Dios o entidad mencionada por Lexia como influencia que perdió la cordura y bajo la cual el Coven Rojo habría realizado el ritual.
 - **[[grupo-de-mysha|Grupo de Mysha]]** — Nueva familia que acompaña a Mysha en el regreso al Coven y la sostiene durante el recuerdo traumático.
-- **[[facciones/hermanas-del-coven-rojo|Hermanas del Coven Rojo]]** — Niñas y brujas asesinadas, capturadas o usadas como rehenes en la caída del Coven.
+- **[[facciones/coven-rojo|Hermanas del Coven Rojo]]** — Niñas y brujas asesinadas, capturadas o usadas como rehenes en la caída del Coven.
 - **[[seguidores-de-vecna|Seguidores de Vecna]]** — Línea mágica de Arya y Borok, usada para empujar criaturas, sanar con daño y lanzar magia necrótica.
 
 ### Worldbuilding
@@ -485,7 +485,7 @@ Los demás ven a Mysha recorrer el Coven en trance: entra, corre hacia afuera y 
 - [[lexia|Lexia]] ↔ [[coven-rojo|Coven Rojo]] — Lo acusa de una traición milenaria, memoria borrada y desbalance espiritual.
 - [[lexia|Lexia]] ↔ [[libro-del-ritual-de-ascension|Libro del ritual de ascensión]] — Lo busca bajo la cabaña de Sina para recuperar o corregir el ritual.
 - [[sina|Sina]] ↔ [[cuervo-negro-decorativo|Cuervo negro decorativo]] — Lo marca con sangre para abrir la escotilla hacia el salón prohibido.
-- [[sina|Sina]] ↔ [[facciones/hermanas-del-coven-rojo|Hermanas del Coven Rojo]] — Usa sangre de las muertas para liberar a las niñas y ordenar la huida.
+- [[sina|Sina]] ↔ [[facciones/coven-rojo|Hermanas del Coven Rojo]] — Usa sangre de las muertas para liberar a las niñas y ordenar la huida.
 - [[personajes/wendigo|Wendigo]] ↔ [[sina|Sina]] — La devora durante la huida.
 - [[tana|Tana]] ↔ [[mysha|Mysha]] — Ayuda a arrastrarla durante la huida del Wendigo.
 - [[phelan|Phelan]] ↔ [[mysha|Mysha]] — Ayuda a arrastrarla junto a Tana durante la huida.
@@ -566,6 +566,6 @@ Los demás ven a Mysha recorrer el Coven en trance: entra, corre hacia afuera y 
 - Narcissa anima a Mysha a permitirse sentir y recordar acompañada. ([[narcissa|Narcissa]], [[mysha|Mysha]])
 - Mysha pide al grupo que la acompañe antes de continuar el recuerdo. ([[mysha|Mysha]], Grupo)
 - Sina abre el salón prohibido para evitar que el Coven Verde siga matando a sus hijas. ([[sina|Sina]], [[lexia|Lexia]])
-- Sina usa la sangre de las hermanas muertas para matar a las guardias del Coven Verde y liberar a las niñas. ([[sina|Sina]], [[facciones/hermanas-del-coven-rojo|Hermanas del Coven Rojo]], [[facciones/coven-verde|Coven Verde]])
+- Sina usa la sangre de las hermanas muertas para matar a las guardias del Coven Verde y liberar a las niñas. ([[sina|Sina]], [[facciones/coven-rojo|Hermanas del Coven Rojo]], [[facciones/coven-verde|Coven Verde]])
 - Sina se gira para enfrentar al Wendigo y permitir que Mysha huya. ([[sina|Sina]], [[mysha|Mysha]], [[personajes/wendigo|Wendigo]])
 - Tana y Phelan arrastran a Mysha durante la huida. ([[tana|Tana]], [[phelan|Phelan]], [[mysha|Mysha]])

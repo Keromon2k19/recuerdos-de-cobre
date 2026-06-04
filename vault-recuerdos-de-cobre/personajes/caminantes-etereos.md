@@ -14,7 +14,7 @@ rol: NPC
 tags:
   - npc
 relaciones:
-  - con: '[[coven-rosa|Coven Rosa]]'
+  - con: '[[Coven Rojo|Coven Rosa]]'
     tipo: >-
       Tenía la responsabilidad de evitar que cruzaran al plano material durante
       los solsticios.

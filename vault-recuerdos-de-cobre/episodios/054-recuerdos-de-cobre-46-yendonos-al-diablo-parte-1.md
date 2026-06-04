@@ -38,7 +38,7 @@ menciones:
     - '[[facciones/lefaye|Lefaye]]'
     - '[[facciones/ejercito-de-la-libertad|Ejército de la Libertad]]'
     - '[[facciones/hermandad-de-arcanis|Hermandad de Arcanis]]'
-    - '[[brujas-de-sangre|Brujas de Sangre]]'
+    - '[[Coven Rojo|Brujas de Sangre]]'
     - '[[demonios-del-plano-abisal|Demonios del Plano Abisal]]'
     - '[[kenku|Kenku]]'
     - '[[shadar-kai|Shadar-kai]]'
@@ -238,7 +238,7 @@ La urgencia de Pilar sigue igual, pero el viaje salió mal: en vez de llegar al 
 - **[[facciones/lefaye|Lefaye]]** — Monarquía cuyas tropas empiezan a moverse por el Feywild, provocando alarma de guerra en el Santuario de los Libres.
 - **[[facciones/ejercito-de-la-libertad|Ejército de la Libertad]]** — Fuerza del Santuario que maneja información sensible sobre el Corruptor y el Bosque de las Memorias.
 - **[[facciones/hermandad-de-arcanis|Hermandad de Arcanis]]** — Grupo de tres magos extremadamente poderosos, ligado a la época oscura y a Lefaye, sobre el que se desalienta investigar.
-- **[[brujas-de-sangre|Brujas de Sangre]]** — Grupo vinculado al ritual de ascensión de la Reina Cuervo y a una traición cerca de El Áxidor, en Lefaye.
+- **[[Coven Rojo|Brujas de Sangre]]** — Grupo vinculado al ritual de ascensión de la Reina Cuervo y a una traición cerca de El Áxidor, en Lefaye.
 - **[[demonios-del-plano-abisal|Demonios del Plano Abisal]]** — Criaturas del Abismo, distintas de los diablos de los Nueve Infiernos, envueltas en la Guerra de Sangre.
 - **[[kenku|Kenku]]** — Raza castigada por la Reina Cuervo tras una guerra contra Vecna, condenada a vivir sin voz propia.
 - **[[shadar-kai|Shadar-kai]]** — Devotos muertos de la Reina Cuervo enviados como centinelas, comparados con los aasimar de Tyr.

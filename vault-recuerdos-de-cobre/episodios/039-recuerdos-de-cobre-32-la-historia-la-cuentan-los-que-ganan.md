@@ -41,7 +41,7 @@ menciones:
   facciones:
     - '[[coven-rojo|Coven Rojo]]'
     - '[[facciones/coven-verde|Coven Verde]]'
-    - '[[coven-rosa|Coven Rosa]]'
+    - '[[Coven Rojo|Coven Rosa]]'
     - '[[sagrada-orden-de-tyr|Sagrada Orden de Tyr]]'
     - '[[iglesia-de-tyr-del-santuario-de-los-libres|Iglesia de Tyr del Santuario de los Libres]]'
     - '[[ejercito-de-eira|Ejército de Eira]]'
@@ -409,7 +409,7 @@ Cerca del mediodía, Narcissa calcula que el barco debería estar sobre el centr
 ### Facciones
 - **[[coven-rojo|Coven Rojo]]** — Coven de Mysha, ligado a rituales de sangre, boons, conexiones mágicas y la historia de las matriarcas.
 - **[[facciones/coven-verde|Coven Verde]]** — Coven cuya matriarca se opuso al ritual de ascensión y dejó una maldición contra quienes usaran esa magia espiritual.
-- **[[coven-rosa|Coven Rosa]]** — Coven cuya matriarca presentó el ritual de ascensión con apoyo de Mystra.
+- **[[Coven Rojo|Coven Rosa]]** — Coven cuya matriarca presentó el ritual de ascensión con apoyo de Mystra.
 - **[[sagrada-orden-de-tyr|Sagrada Orden de Tyr]]** — Guardia celestial de Mount Celestia, asociada a caballeros en pegasos y al juicio de aasimars.
 - **[[iglesia-de-tyr-del-santuario-de-los-libres|Iglesia de Tyr del Santuario de los Libres]]** — Institución local que predica justicia divina y reconoce que hay maldad oculta y traidores en posiciones superiores.
 - **[[ejercito-de-eira|Ejército de Eira]]** — Fuerza continental marcada por un sol de nueve estrellas, vista en el sueño de Borok y mencionada en el libro blanco.

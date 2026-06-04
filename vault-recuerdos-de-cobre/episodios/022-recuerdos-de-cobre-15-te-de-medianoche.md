@@ -39,7 +39,7 @@ menciones:
     - '[[lugares/sigil|Sigil]]'
   facciones:
     - '[[coven-rojo|Coven Rojo]]'
-    - '[[coven-oscuro|Coven Oscuro]]'
+    - '[[Coven Negro|Coven Oscuro]]'
     - '[[coven-blanco|Coven Blanco]]'
     - '[[facciones/hermandad-de-cobre|Hermandad de Cobre]]'
     - '[[te-de-medianoche|Te de Medianoche]]'
@@ -304,7 +304,7 @@ Tras unos cinco días de preparación, compras, entrenamientos, cartas y despedi
 
 ### Facciones
 - **[[coven-rojo|Coven Rojo]]** — Coven de Mysha, destruido por caminantes etereos salvo unos pocos sobrevivientes conocidos.
-- **[[coven-oscuro|Coven Oscuro]]** — Coven de Margarita, ligado a Selune, las sombras y una tradicion distinta a la de Mysha.
+- **[[Coven Negro|Coven Oscuro]]** — Coven de Margarita, ligado a Selune, las sombras y una tradicion distinta a la de Mysha.
 - **[[coven-blanco|Coven Blanco]]** — Coven al que Phelan y Tana habrian ido para pedir ayuda o advertir sobre los caminantes.
 - **[[facciones/hermandad-de-cobre|Hermandad de Cobre]]** — Red de Anora que se presenta como contraria a las cadenas y dispuesta a apoyar a Mysha.
 - **[[te-de-medianoche|Te de Medianoche]]** — Nombre adoptado por el grupo protagonista tras conversar sobre su identidad comun.
@@ -329,7 +329,7 @@ Tras unos cinco días de preparación, compras, entrenamientos, cartas y despedi
 
 ### Relaciones
 - [[mysha|Mysha]] ↔ [[margarita|Margarita]] — recibe de ella informacion sobre covens, caminantes etereos y sombras
-- [[margarita|Margarita]] ↔ [[coven-oscuro|Coven Oscuro]] — revela que su manto y su conocimiento provienen de ese coven
+- [[margarita|Margarita]] ↔ [[Coven Negro|Coven Oscuro]] — revela que su manto y su conocimiento provienen de ese coven
 - [[mysha|Mysha]] ↔ [[coven-rojo|Coven Rojo]] — relata su destruccion y asume el deber de advertir a otros covens
 - [[anora|Anora]] ↔ [[collar-de-veltra|Collar de Veltra]] — lo retira de Mysha usando guantes especiales
 - [[margarita|Margarita]] ↔ [[selune|Selune]] — explica que el Coven Oscuro obtiene poder por su conexion con la luna
