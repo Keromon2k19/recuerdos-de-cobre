@@ -8471,13 +8471,13 @@ body:has(.av2-immersive-bg),
 
 .av2-domain-explorer {
   display: grid;
-  grid-template-columns: minmax(15rem, 0.52fr) minmax(31rem, 1.5fr) minmax(17rem, 0.72fr);
+  grid-template-columns: minmax(15rem, 0.5fr) minmax(34rem, 1.7fr);
   gap: 1rem;
   height: clamp(35rem, calc(100vh - 16rem), 48rem);
   min-height: 0;
 }
 .av2-domain-explorer[data-variant="world"] {
-  grid-template-columns: minmax(15rem, 0.55fr) minmax(30rem, 1.28fr) minmax(17rem, 0.76fr);
+  grid-template-columns: minmax(15rem, 0.5fr) minmax(34rem, 1.7fr);
 }
 .av2-domain-index {
   display: grid;
