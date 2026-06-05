@@ -1,5 +1,6 @@
 // app/(v2)/v2/capitulos/page.tsx
 import CapitulosClient from "./CapitulosClient";
+import AtlasPageScene from "@/components/atlas-v2/AtlasPageScene";
 import { cachedListByType, cachedListEpisodes } from "@/lib/public-cache";
 import { parseEpisodioRef } from "@/lib/episode-number";
 import type { V2Chapter } from "@/data/atlas-v2/chapters";
@@ -131,21 +132,13 @@ export default async function CapitulosPage() {
   const chapters = episodes.map((ep) => toV2Chapter(ep, roles)).reverse();
 
   return (
-    <section className="av2-p-wrap">
-      <div className="av2-p-bg" aria-hidden="true">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/assets/atlas-v2/backgrounds/hero.png"
-          alt=""
-          className="av2-p-bg-img"
-        />
-      </div>
-
-      <header className="av2-page-head">
-        <h1 className="av2-page-title">Capítulos</h1>
-      </header>
-
+    <AtlasPageScene
+      eyebrow="La crónica, episodio por episodio"
+      title="Capítulos"
+      subtitle="Cada sesión como un registro: qué pasó, quién estuvo, qué quedó abierto."
+      variant="chapter"
+    >
       <CapitulosClient chapters={chapters} />
-    </section>
+    </AtlasPageScene>
   );
 }
