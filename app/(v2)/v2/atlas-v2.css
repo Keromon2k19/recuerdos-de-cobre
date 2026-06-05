@@ -7954,8 +7954,10 @@ body:has(.av2-immersive-bg),
 .av2-page-scene {
   position: relative;
   isolation: isolate;
-  min-height: 100dvh;
-  padding: clamp(7.5rem, 10vw, 9rem) clamp(1.5rem, 3vw, 3.5rem) 3rem;
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  padding: calc(var(--av2-nav-h) + 0.4rem) clamp(1.5rem, 3vw, 3.5rem) clamp(1rem, 2vh, 1.6rem);
   overflow: hidden;
 }
 
@@ -7994,6 +7996,13 @@ body:has(.av2-immersive-bg),
 
 .av2-page-scene-content {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--av2-rule-up) transparent;
   width: min(100%, 1520px);
   margin-inline: auto;
 }
@@ -8432,7 +8441,7 @@ body:has(.av2-immersive-bg),
   display: grid;
   grid-template-columns: minmax(15rem, 0.5fr) minmax(34rem, 1.7fr);
   gap: 1rem;
-  height: clamp(35rem, calc(100vh - 16rem), 48rem);
+  flex: 1;
   min-height: 0;
 }
 .av2-domain-explorer[data-variant="world"] {
@@ -9013,11 +9022,13 @@ body:has(.av2-immersive-bg),
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
-  padding: clamp(48px, 7vw, 96px) 24px clamp(24px, 3vw, 40px);
+  gap: 7px;
+  padding: clamp(10px, 1.8vh, 20px) 24px clamp(10px, 1.6vh, 18px);
   text-align: center;
+  flex-shrink: 0;
 }
 .av2-page-header[data-align="left"] { align-items: flex-start; text-align: left; }
+.av2-page-header .av2-ornament { margin: 0; }
 .av2-page-header-eyebrow {
   font-family: var(--av2-mono);
   font-size: 12px;
@@ -9027,16 +9038,16 @@ body:has(.av2-immersive-bg),
 }
 .av2-page-header-title {
   font-family: var(--av2-display);
-  font-size: clamp(2.6rem, 5.2vw, 4.4rem);
-  line-height: 1.04;
+  font-size: clamp(1.9rem, 3.4vw, 2.9rem);
+  line-height: 1.02;
   color: var(--av2-ink);
 }
 .av2-page-header-title .av2-title-copper { color: var(--av2-copper); }
 .av2-page-header-intro {
-  max-width: 60ch;
+  max-width: 72ch;
   font-family: var(--av2-body);
-  font-size: 1.08rem;
-  line-height: 1.7;
+  font-size: 0.95rem;
+  line-height: 1.5;
   color: var(--av2-ink-soft);
 }
 
