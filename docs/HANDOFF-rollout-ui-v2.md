@@ -310,13 +310,15 @@ Verificado: `typecheck`, 81 tests y `build` (24 rutas) en verde.
 **Lo que queda (no bloqueante):**
 - Polish fino opcional de dioses/buscar/facciones contra el home si se quiere
   subir la vara.
-- Limpieza de CSS muerto: ✅ ya removidos `av2-domain-stage*`, `av2-mystery-*`,
-  `av2-world-*`, `av2-relic-*`, `av2-domain-context*` (commit `8016fd1`, ~330
-  líneas). **Queda** solo el header viejo del page-scene
-  (`av2-page-scene-head/-eyebrow/-title/-subtitle`) — ojo: la primera regla lo
-  agrupa con `.av2-page-scene-content` que **SÍ está vivo**, así que hay que
-  separar el selector, no borrar el bloque entero. (NOTA: `av2-p-wrap`/`av2-p-bg`/
-  `av2-page-head` NO son muertos — los siguen usando `/v2/mapa` y `/v2/lugares`.)
+- Limpieza de CSS muerto: ✅ **completa** — removidos `av2-domain-stage*`,
+  `av2-mystery-*`, `av2-world-*`, `av2-relic-*`, `av2-domain-context*` (commit
+  `8016fd1`) y el header viejo del page-scene `av2-page-scene-head/-eyebrow/
+  -title/-subtitle` (se separó `.av2-page-scene-content`, que está vivo). Quedan
+  solo refs mobile residuales en media queries (`av2-page-scene-head` en
+  `@media`), inofensivas. (`av2-p-wrap`/`av2-p-bg`/`av2-page-head` NO son
+  muertos — los usan `/v2/mapa` y `/v2/lugares`.)
+- ✅ Header del visor de mapa (`av2-page-head`) ya despeja la nav (padding-top
+  con `--av2-nav-h`).
 - Los P2 de contenido (descripción con prefijo "Ep. NN", ficha densa).
 - Operativo: parar el `next dev` antes de `npm run build` (comparten `.next`; si
   no, el dev server tira HTTP 500 hasta reiniciarlo).
