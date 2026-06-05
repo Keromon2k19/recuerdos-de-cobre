@@ -9465,9 +9465,84 @@ body:has(.av2-immersive-bg),
   color: var(--av2-copper);
 }
 
-/* Fondo material para escenas sin foto (data-bg="material") */
+/* Fondo material para escenas sin foto (data-bg="material") — atmósfera cobre */
 .av2-page-scene[data-bg="material"] .av2-page-scene-bg {
   background:
+    radial-gradient(55% 42% at 72% 6%, oklch(0.49 0.075 53 / 0.34), transparent 70%),
+    radial-gradient(50% 38% at 22% 30%, oklch(0.42 0.06 58 / 0.22), transparent 72%),
     radial-gradient(120% 80% at 50% -10%, oklch(0.172 0.016 56 / 0.9), transparent 70%),
     linear-gradient(180deg, var(--av2-bg-raised), var(--av2-bg));
+}
+
+/* ── Expediente lateral (variante relic de Objetos) — mockup B ──────────── */
+.av2-domain-explorer[data-variant="relic"] {
+  grid-template-columns: minmax(15rem, 0.5fr) minmax(34rem, 1.7fr);
+}
+.av2-domain-expediente { min-height: 0; }
+.av2-domain-expediente .av2-narrative-frame-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.7rem;
+  min-height: 0;
+  overflow-y: auto;
+}
+.av2-expediente-focus {
+  border-bottom: 1px solid var(--av2-rule);
+  padding-bottom: 1.5rem;
+}
+.av2-expediente-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1.6rem;
+  align-items: end;
+}
+.av2-expediente-meta {
+  margin: 0;
+  border-top: 1px solid var(--av2-rule);
+}
+.av2-expediente-meta > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid oklch(0.268 0.021 55 / 0.5);
+  font-family: var(--av2-mono);
+  font-size: 0.78rem;
+}
+.av2-expediente-meta dt {
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--av2-ink-faint);
+}
+.av2-expediente-meta dd { margin: 0; color: var(--av2-copper-hi); }
+.av2-expediente-cta { align-self: end; white-space: nowrap; }
+
+/* AtlasSectionHero — layout inline (foco izquierda + caption derecha) */
+.av2-section-hero[data-layout="inline"] {
+  flex-direction: row;
+  align-items: center;
+  gap: 2rem;
+  padding: 0;
+  text-align: left;
+}
+.av2-section-hero[data-layout="inline"] .av2-section-hero-focus {
+  width: 13.5rem;
+  flex: none;
+}
+.av2-section-hero[data-layout="inline"] .av2-section-hero-caption {
+  flex: 1;
+  text-align: left;
+}
+.av2-section-hero[data-layout="inline"] .av2-section-hero-caption h2 {
+  font-size: 2.6rem;
+  margin: 0.1rem 0 0.2rem;
+}
+.av2-section-hero-desc {
+  margin-top: 0.55rem;
+  max-width: 52ch;
+  color: var(--av2-ink-soft);
+  font-size: 0.95rem;
+  line-height: 1.62;
 }

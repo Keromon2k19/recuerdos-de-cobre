@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import type { AtlasV2EntitySummary } from "@/lib/atlas-v2-content";
 import AtlasEntityIndex from "./AtlasEntityIndex";
 import AtlasNarrativeFrame from "./AtlasNarrativeFrame";
+import AtlasSectionHero from "./AtlasSectionHero";
 
 export type AtlasDomainVariant = "relic" | "mystery" | "world";
 
@@ -18,8 +19,13 @@ type Props = {
 function normalize(value: string): string {
   return value
     .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/\p{Mn}/gu, "")
     .toLowerCase();
+}
+
+function appearancesLabel(count: number): string {
+  if (count <= 0) return "Sin apariciones";
+  return `${count} ${count === 1 ? "aparición" : "apariciones"}`;
 }
 
 export default function AtlasDomainExplorer({
@@ -58,40 +64,93 @@ export default function AtlasDomainExplorer({
     );
   }
 
+  const indexPane = (
+    <div className="av2-domain-index">
+      <label className="av2-domain-search">
+        <span>Buscar</span>
+        <input
+          type="search"
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
+          placeholder={`Filtrar ${indexLabel.toLowerCase()}`}
+        />
+      </label>
+      <AtlasEntityIndex
+        label={
+          variant === "world"
+            ? "Conceptos destacados"
+            : `${indexLabel} · ${filtered.length}`
+        }
+        items={visible.map((item) => ({
+          slug: item.slug,
+          name: item.name,
+          eyebrow: item.eyebrow,
+          meta: item.meta,
+          glyph: item.glyph,
+        }))}
+        selectedSlug={selected.slug}
+        onSelect={setSelectedSlug}
+      />
+    </div>
+  );
+
+  // Variante relic (Objetos): expediente lateral aprobado (mockup B).
+  if (variant === "relic") {
+    return (
+      <div className="av2-domain-explorer" data-variant={variant}>
+        {indexPane}
+
+        <AtlasNarrativeFrame variant="primary" className="av2-domain-expediente">
+          <div className="av2-expediente-focus">
+            <AtlasSectionHero
+              variant={selected.imageSrc ? "image" : "material"}
+              imageSrc={selected.imageSrc}
+              glyph={selected.glyph}
+              alt={selected.name}
+              eyebrow={`${selected.eyebrow} · pieza catalogada`}
+              title={selected.name}
+              description={
+                selected.description ||
+                "Este registro todavia no tiene una descripcion narrativa."
+              }
+              meta={appearancesLabel(selected.appearances)}
+              layout="inline"
+            />
+          </div>
+
+          <div className="av2-expediente-body">
+            <dl className="av2-expediente-meta">
+              <div>
+                <dt>Apariciones</dt>
+                <dd>{selected.appearances}</dd>
+              </div>
+              <div>
+                <dt>Clasificacion</dt>
+                <dd>{selected.eyebrow}</dd>
+              </div>
+              <div>
+                <dt>Custodia</dt>
+                <dd>No registrada</dd>
+              </div>
+            </dl>
+
+            <Link
+              href={`${detailBaseHref}/${selected.slug}`}
+              className="av2-btn av2-btn--primary av2-expediente-cta"
+            >
+              Abrir registro completo
+            </Link>
+          </div>
+        </AtlasNarrativeFrame>
+      </div>
+    );
+  }
+
   return (
     <div className="av2-domain-explorer" data-variant={variant}>
-      <div className="av2-domain-index">
-        <label className="av2-domain-search">
-          <span>Buscar</span>
-          <input
-            type="search"
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            placeholder={`Filtrar ${indexLabel.toLowerCase()}`}
-          />
-        </label>
-        <AtlasEntityIndex
-          label={
-            variant === "world"
-              ? "Conceptos destacados"
-              : `${indexLabel} · ${filtered.length}`
-          }
-          items={visible.map((item) => ({
-            slug: item.slug,
-            name: item.name,
-            eyebrow: item.eyebrow,
-            meta: item.meta,
-            glyph: item.glyph,
-          }))}
-          selectedSlug={selected.slug}
-          onSelect={setSelectedSlug}
-        />
-      </div>
+      {indexPane}
 
-      <AtlasNarrativeFrame
-        variant="primary"
-        className="av2-domain-stage-frame"
-      >
+      <AtlasNarrativeFrame variant="primary" className="av2-domain-stage-frame">
         <DomainStage item={selected} variant={variant} />
       </AtlasNarrativeFrame>
 
@@ -103,7 +162,8 @@ export default function AtlasDomainExplorer({
       >
         <div className="av2-domain-context-body">
           <p className="av2-domain-context-description">
-            {selected.description || "Este registro todavia no tiene una descripcion narrativa."}
+            {selected.description ||
+              "Este registro todavia no tiene una descripcion narrativa."}
           </p>
           <dl className="av2-domain-context-meta">
             <div>
@@ -114,12 +174,6 @@ export default function AtlasDomainExplorer({
               <dt>Clasificacion</dt>
               <dd>{selected.eyebrow}</dd>
             </div>
-            {variant === "relic" && (
-              <div>
-                <dt>Custodia</dt>
-                <dd>No registrada</dd>
-              </div>
-            )}
           </dl>
           <Link
             href={`${detailBaseHref}/${selected.slug}`}
@@ -166,43 +220,22 @@ function DomainStage({
     );
   }
 
-  if (variant === "world") {
-    return (
-      <div className="av2-domain-stage av2-domain-stage--world">
-        <div className="av2-world-ledger">
-          <p className="av2-world-ledger-kicker">{item.eyebrow}</p>
-          <h2>{item.name}</h2>
-          <p>{item.description || "Registro de mundo pendiente de clasificar."}</p>
-          <dl>
-            <div>
-              <dt>Apariciones</dt>
-              <dd>{item.appearances}</dd>
-            </div>
-            <div>
-              <dt>Archivo</dt>
-              <dd>{item.meta || "Sin referencias"}</dd>
-            </div>
-          </dl>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="av2-domain-stage av2-domain-stage--relic">
-      <div className="av2-relic-rings" aria-hidden="true" />
-      <div className="av2-relic-artifact">
-        {item.imageSrc ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={item.imageSrc} alt={item.name} />
-        ) : (
-          <span aria-hidden="true">{item.glyph}</span>
-        )}
-      </div>
-      <div className="av2-relic-caption">
-        <p>{item.eyebrow}</p>
+    <div className="av2-domain-stage av2-domain-stage--world">
+      <div className="av2-world-ledger">
+        <p className="av2-world-ledger-kicker">{item.eyebrow}</p>
         <h2>{item.name}</h2>
-        <span>{item.meta}</span>
+        <p>{item.description || "Registro de mundo pendiente de clasificar."}</p>
+        <dl>
+          <div>
+            <dt>Apariciones</dt>
+            <dd>{item.appearances}</dd>
+          </div>
+          <div>
+            <dt>Archivo</dt>
+            <dd>{item.meta || "Sin referencias"}</dd>
+          </div>
+        </dl>
       </div>
     </div>
   );
