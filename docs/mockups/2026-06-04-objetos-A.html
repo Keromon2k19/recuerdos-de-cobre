@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Objetos · Mockup A — Vitrina central</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Spectral:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap');
+  :root{
+    --bg:oklch(0.092 0.010 58);--raised:oklch(0.138 0.013 57);--panel:oklch(0.172 0.016 56);--panel-up:oklch(0.210 0.019 56);
+    --copper:oklch(0.715 0.118 56);--copper-hi:oklch(0.808 0.126 62);--copper-dim:oklch(0.490 0.075 53);--gold:oklch(0.826 0.097 82);--amber:oklch(0.745 0.146 73);
+    --ink:oklch(0.908 0.014 78);--ink-soft:oklch(0.710 0.014 76);--ink-faint:oklch(0.472 0.011 70);
+    --rule:oklch(0.268 0.021 55);--rule-cu:oklch(0.490 0.072 54 / 0.55);
+    --display:'Cormorant Garamond',Georgia,serif;--body:'Spectral',Georgia,serif;--mono:'IBM Plex Mono',monospace;
+  }
+  *{box-sizing:border-box;margin:0}
+  body{background:var(--bg);color:var(--ink);font-family:var(--body);line-height:1.6;
+    /* atmósfera cálida material: cobre arriba, ámbar al centro del foco */
+    background-image:
+      radial-gradient(60% 40% at 50% 0%, oklch(0.49 0.075 53 / .35), transparent 70%),
+      radial-gradient(40% 45% at 50% 52%, oklch(0.715 0.118 56 / .18), transparent 65%);
+    background-attachment:fixed;min-height:100vh}
+  .nav{height:64px;display:flex;align-items:center;justify-content:center;gap:28px;border-bottom:1px solid var(--rule);font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+  .header{text-align:center;padding:64px 24px 28px}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--copper)}
+  .orn{margin:14px auto;width:8px;height:8px;transform:rotate(45deg);border:1px solid var(--copper-dim)}
+  h1{font-family:var(--display);font-size:4rem;line-height:1.04;font-weight:600}
+  .intro{max-width:58ch;margin:8px auto 0;color:var(--ink-soft)}
+  /* LAYOUT A: índice | vitrina central grande | ficha */
+  .stage{max-width:1280px;margin:0 auto;padding:0 24px 80px;display:grid;grid-template-columns:240px 1fr 300px;gap:22px;align-items:start}
+  .index{border:1px solid var(--rule);border-radius:8px;background:var(--panel);overflow:hidden}
+  .index .search{padding:12px;border-bottom:1px solid var(--rule)}
+  .index input{width:100%;background:var(--raised);border:1px solid var(--rule);border-radius:4px;color:var(--ink);padding:8px 10px;font-family:var(--mono);font-size:12px}
+  .index ul{list-style:none}
+  .index li{display:flex;gap:10px;align-items:center;padding:10px 12px;border-bottom:1px solid oklch(0.268 0.021 55 / .5);cursor:pointer}
+  .index li.on{background:var(--panel-up)}
+  .index .g{width:30px;height:30px;display:grid;place-items:center;border:1px solid var(--rule-cu);border-radius:4px;font-family:var(--display);color:var(--copper)}
+  .index small{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);display:block}
+  .index strong{font-family:var(--body);font-weight:500;font-size:14px}
+  .index li.on strong{color:var(--copper-hi)}
+  /* vitrina: foco dramático del artefacto */
+  .vitrine{position:relative;border:1px solid var(--rule-cu);border-radius:16px;background:
+      radial-gradient(circle at 50% 42%, oklch(0.715 0.118 56 / .22), transparent 60%),
+      linear-gradient(180deg,var(--panel),var(--raised));
+    box-shadow:0 8px 60px -12px oklch(0.04 0.01 58 / .95), inset 0 0 0 1px oklch(0.96 0.04 78 / .03);
+    padding:48px;text-align:center;min-height:460px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px}
+  .relic{width:230px;height:230px;display:grid;place-items:center;border:1px solid var(--rule-cu);border-radius:50%;
+    background:radial-gradient(circle,oklch(0.210 0.05 60 / .8),oklch(0.138 0.013 57));box-shadow:0 0 50px oklch(0.715 0.118 56 / .35), inset 0 0 40px oklch(0.04 0.01 58 / .8)}
+  .relic span{font-family:var(--display);font-size:6rem;color:var(--gold)}
+  .vitrine .cap small{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint)}
+  .vitrine .cap h2{font-family:var(--display);font-size:2.4rem;margin-top:6px}
+  .vitrine .cap em{font-family:var(--mono);font-style:normal;font-size:12px;color:var(--copper)}
+  /* ficha contextual */
+  .ficha{border:1px solid var(--rule);border-radius:8px;background:var(--panel);padding:20px}
+  .ficha .k{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint)}
+  .ficha h3{font-family:var(--display);font-size:1.6rem;margin:2px 0 12px}
+  .ficha p{font-size:14px;color:var(--ink-soft)}
+  .ficha dl{margin:16px 0;border-top:1px solid var(--rule)}
+  .ficha dl div{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid oklch(0.268 0.021 55 / .5);font-family:var(--mono);font-size:12px}
+  .ficha dt{color:var(--ink-faint)}.ficha dd{color:var(--copper)}
+  .btn{display:block;text-align:center;padding:12px;border-radius:6px;background:var(--copper);color:oklch(0.12 0.01 58);font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:500}
+</style>
+</head>
+<body>
+  <nav class="nav"><span>Inicio</span><span>Crónicas</span><span>Atlas</span><span>Conocimiento</span><span>⌕</span></nav>
+  <header class="header">
+    <p class="eyebrow">Inventario de piezas activas</p>
+    <div class="orn"></div>
+    <h1>Objetos</h1>
+    <p class="intro">Reliquias, cartas, diarios, libros y herramientas que alteraron la historia.</p>
+  </header>
+  <section class="stage">
+    <aside class="index">
+      <div class="search"><input value="Filtrar piezas catalogadas" /></div>
+      <ul>
+        <li class="on"><span class="g">C</span><span><small>Objeto · 14 apar.</small><strong>Carta de Nabish</strong></span></li>
+        <li><span class="g">P</span><span><small>Objeto · 6 apar.</small><strong>Pecera</strong></span></li>
+        <li><span class="g">L</span><span><small>Objeto · 5 apar.</small><strong>Llave de Narcissa</strong></span></li>
+        <li><span class="g">E</span><span><small>Objeto · 7 apar.</small><strong>El que todo lo contiene</strong></span></li>
+        <li><span class="g">D</span><span><small>Objeto · 3 apar.</small><strong>Daga de la Maestría</strong></span></li>
+      </ul>
+    </aside>
+    <div class="vitrine">
+      <div class="relic"><span>C</span></div>
+      <div class="cap"><small>Objeto · pieza catalogada</small><h2>Carta de Nabish</h2><br><em>14 apariciones</em></div>
+    </div>
+    <aside class="ficha">
+      <p class="k">Objeto</p>
+      <h3>Carta de Nabish</h3>
+      <p>Objeto que recupera su magia tras doce horas y permite viajar al espacio de Nabish y luego al Bosque de las Memorias.</p>
+      <dl>
+        <div><dt>Apariciones</dt><dd>14</dd></div>
+        <div><dt>Clasificación</dt><dd>Objeto</dd></div>
+        <div><dt>Custodia</dt><dd>No registrada</dd></div>
+      </dl>
+      <a class="btn">Abrir registro completo</a>
+    </aside>
+  </section>
+</body>
+</html>
