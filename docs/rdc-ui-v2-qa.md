@@ -79,3 +79,19 @@ estandar de referencia. Rama `feat/ui-v2-elevacion`.
   dominios).
 - Resto de dominios (Misterios, Mundo, fichas, y los que ya tenian referencia)
   en el plan siguiente, reusando el kit ya validado.
+
+## Rollout de elevacion — avance (2026-06-05)
+
+Casi todo el rollout completado (commits `967b941..34c4a42`):
+
+- Expediente generalizado a **Misterios** y **Mundo** (`AtlasDomainExplorer`
+  ahora sirve las 3 variantes con copy por dominio).
+- **Personajes**, **Capitulos** y **Facciones** migrados a `AtlasPageScene`
+  (header del sistema + fondo inmersivo); se elimino el patron `av2-p-wrap` con
+  header que chocaba contra la nav.
+- **Dioses** y **Buscar** ya estaban on-system (header + fondo + cuerpo propio).
+- **Mapa** y **Lugares** son el visor full-bleed (`MapaClient`); se dejan como
+  experiencia distinta a proposito (no se redisena el visor).
+
+Verificacion: `typecheck`, 81 tests y `build` (24 rutas) en verde. Handoff vivo
+en `docs/HANDOFF-rollout-ui-v2.md` (seccion 8 = estado actual).

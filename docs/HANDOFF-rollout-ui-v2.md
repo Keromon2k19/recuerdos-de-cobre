@@ -38,12 +38,12 @@ wiki. Solo **escritorio** (mobile fuera de alcance). Fuentes de verdad:
 |---|---|---|
 | `/v2/objetos` (índice) | sí | ✅ **completo** (expediente B, estándar de referencia) |
 | `/v2/objetos/[slug]` (ficha) | vía VaultEntityPage | ✅ completo |
-| `/v2/misterios` (índice) | sí | ⚠️ header + fondo OK; **cuerpo aún viejo** (DomainStage mystery) |
-| `/v2/mundo` (índice) | sí | ⚠️ header + fondo OK; **cuerpo aún viejo** (DomainStage world) |
+| `/v2/misterios` (índice) | sí | ✅ **completo** (expediente, commit posterior a `5ef29e6`) |
+| `/v2/mundo` (índice) | sí | ✅ **completo** (expediente) |
 | `/v2/{misterios,mundo}/[slug]` | vía VaultEntityPage | ✅ ya elevadas |
 | `/v2/dioses` (índice) | sí | ⚠️ header + fondo OK; cuerpo propio `DiosesClient` sin revisar |
 | `/v2/buscar` | sí | ⚠️ header + fondo OK; cuerpo a diseñar (estado inicial rico) |
-| `/v2/personajes` (índice) | **no** | ❌ layout propio (`PersonajesClient`, grid de cards) sin header/fondo del kit |
+| `/v2/personajes` (índice) | sí (ahora) | ✅ header del sistema + fondo inmersivo; grid/filtros/detalle propios conservados |
 | `/v2/capitulos` (índice) | **no** | ❌ layout propio (`CapitulosClient`) |
 | `/v2/capitulos/[num]` (detalle) | sí | ⚠️ header + fondo OK; composición a revisar |
 | `/v2/facciones` (índice) | **no** | ❌ layout propio (`FaccionesClient`) |
@@ -287,4 +287,31 @@ de `vault-recuerdos-de-cobre/{misterios,worldbuilding}/`.
   (`app/`, `lib/`, `components/`, `scripts/`, `docs/`). Para este rollout Codex
   toma el frontend; conviene que Claude **no** edite estos mismos archivos en
   paralelo para evitar pisarse.
+
+---
+
+## 8. Estado actualizado (rollout avanzado)
+
+Casi todo el rollout quedó hecho en esta sesión (commits `967b941..34c4a42`).
+Estado real por página:
+
+- ✅ **En `AtlasPageScene` + expediente/sistema**: objetos, misterios, mundo,
+  personajes, capítulos, facciones (índices) + todas las fichas de detalle.
+- ✅ **Ya on-system de antes**: dioses (dossier con medallón), buscar (categorías
+  + resultados), `capitulos/[num]`.
+- 🗺️ **Visor de mapa** (`/v2/lugares` y `/v2/mapa`, ambos `MapaClient`):
+  experiencia full-bleed distinta, **dejada como está** a propósito (la
+  indicación fue no rediseñar el visor). Las fotos de lugares viven en las fichas
+  `/v2/lugares/[slug]` (ya elevadas). Único pendiente opcional: pulir el header
+  `av2-page-head--mapa` para que no roce la nav.
+
+Verificado: `typecheck`, 81 tests y `build` (24 rutas) en verde.
+
+**Lo que queda (no bloqueante):**
+- Polish fino opcional de dioses/buscar/facciones contra el home si se quiere
+  subir la vara.
+- Limpieza del CSS muerto de la sección 6 (`av2-domain-stage*`, `av2-mystery-*`,
+  `av2-world-*`, `av2-domain-context*`, header viejo del page-scene, y ahora
+  también `av2-p-wrap`/`av2-p-bg`/`av2-page-head` salvo la variante `--mapa`).
+- Los P2 de contenido (descripción con prefijo "Ep. NN", ficha densa).
 ```
