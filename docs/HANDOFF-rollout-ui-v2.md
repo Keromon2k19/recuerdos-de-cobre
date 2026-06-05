@@ -319,7 +319,9 @@ Verificado: `typecheck`, 81 tests y `build` (24 rutas) en verde.
   muertos — los usan `/v2/mapa` y `/v2/lugares`.)
 - ✅ Header del visor de mapa (`av2-page-head`) ya despeja la nav (padding-top
   con `--av2-nav-h`).
-- Los P2 de contenido (descripción con prefijo "Ep. NN", ficha densa).
+- P2 contenido: ✅ descripción con prefijo "Ep. NN" arreglada (commit `95e1740`,
+  `firstProseBlock` en `lib/atlas-v2-content.ts` + test). **Queda** solo la ficha
+  de detalle densa (3 columnas, candidata a recomposición opcional).
 - Operativo: parar el `next dev` antes de `npm run build` (comparten `.next`; si
   no, el dev server tira HTTP 500 hasta reiniciarlo).
 ```
