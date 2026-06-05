@@ -4,6 +4,7 @@ import AtlasEntityReader, {
   type AtlasEntityReaderSection,
 } from "./AtlasEntityReader";
 import AtlasNarrativeFrame from "./AtlasNarrativeFrame";
+import AtlasSectionHero from "./AtlasSectionHero";
 
 export type AtlasEntityDetailVariant =
   | "character"
@@ -35,14 +36,19 @@ export default function AtlasEntityDetail({
           {backLabel}
         </Link>
 
-        <div className="av2-entity-detail-artifact">
-          {detail.imageSrc ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={detail.imageSrc} alt={detail.name} />
-          ) : (
-            <span aria-hidden="true">{detail.name.charAt(0)}</span>
-          )}
-        </div>
+        <AtlasSectionHero
+          variant={detail.imageSrc ? "image" : "material"}
+          imageSrc={detail.imageSrc}
+          glyph={detail.name.charAt(0)}
+          alt={detail.name}
+          title={detail.name}
+          eyebrow={detail.kind}
+          meta={
+            detail.appearances.length > 0
+              ? `${detail.appearances.length} apariciones`
+              : undefined
+          }
+        />
 
         <div className="av2-entity-detail-identity">
           <p className="av2-entity-detail-kind">{detail.kind}</p>
