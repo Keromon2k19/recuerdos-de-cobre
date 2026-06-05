@@ -1,5 +1,6 @@
 // app/(v2)/v2/facciones/page.tsx
 import FaccionesClient from "./FaccionesClient";
+import AtlasPageScene from "@/components/atlas-v2/AtlasPageScene";
 import { cachedListByType } from "@/lib/public-cache";
 import type { EntityListItem } from "@/lib/vault";
 import type { V2Faction, V2FactionCategory } from "@/data/atlas-v2/factions";
@@ -55,21 +56,13 @@ export default async function FaccionesPage() {
     .sort((a, b) => b.apariciones - a.apariciones);
 
   return (
-    <section className="av2-p-wrap">
-      <div className="av2-p-bg" aria-hidden="true">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/assets/atlas-v2/backgrounds/hero.png"
-          alt=""
-          className="av2-p-bg-img"
-        />
-      </div>
-
-      <header className="av2-page-head">
-        <h1 className="av2-page-title">Facciones</h1>
-      </header>
-
+    <AtlasPageScene
+      eyebrow="Covens, gremios y alianzas"
+      title="Facciones"
+      subtitle="Quién mueve los hilos: aquelarres, hermandades y fuerzas en pugna."
+      variant="faction"
+    >
       <FaccionesClient factions={factions} />
-    </section>
+    </AtlasPageScene>
   );
 }
