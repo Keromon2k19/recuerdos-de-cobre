@@ -8,6 +8,11 @@ Los documentos anteriores (`PRODUCT.md`, `DESIGN.md`, `AGENTS.md` y
 contexto historico y tecnico, pero no como direccion final de producto o
 diseno. No reconstruir "Sala de Cobre" como identidad final.
 
+> **Trabajo planificado (no parte de la visión base):** la **timeline de la
+> campaña** (`/v2/timeline`) está diseñada y lista para implementar. Ver el plan
+> en `docs/superpowers/plans/2026-06-05-timeline-de-la-campana.md` y la referencia
+> visual en `docs/ui-v2/timeline-reference.html`.
+
 ## Objetivo final
 
 Convertir el proyecto en una antologia publica read-only de la campana

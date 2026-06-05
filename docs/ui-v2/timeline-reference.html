@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Timeline · mockup v4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Spectral:ital,wght@0,300;0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0d0a08; --copper:#c8854f; --copper-bright:#e0a86e; --copper-deep:#8a5a33;
+    --ink:#ece0d2; --muted:#9c8b78; --faint:#6b5d4e;
+    --line:#3a2c20; --card:rgba(28,21,16,.72);
+    --gap:80px; --node:46px;
+    --num-nudge:0px;   /* lo ajusta el auto-center en runtime */
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:
+      radial-gradient(1200px 600px at 50% -10%, #221811 0%, transparent 60%),
+      radial-gradient(900px 500px at 50% 110%, #1a130d 0%, transparent 60%),
+      var(--bg);
+    color:var(--ink);font-family:'Spectral',Georgia,serif;line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1100px;margin:0 auto;padding:64px 32px 220px}
+
+  .head{text-align:center;margin-bottom:40px}
+  .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.32em;
+    text-transform:uppercase;color:var(--copper);opacity:.85}
+  .head h1{font-family:'Cormorant Garamond',serif;font-weight:500;
+    font-size:clamp(44px,7vw,76px);margin:.18em 0 .12em;
+    background:linear-gradient(180deg,#f4e7d6,#c8854f);-webkit-background-clip:text;
+    background-clip:text;color:transparent}
+  .head p{color:var(--muted);font-style:italic;font-size:18px;margin:0 auto;max-width:46ch}
+  .hint{text-align:center;color:var(--faint);font-family:'IBM Plex Mono',monospace;
+    font-size:11px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:56px}
+
+  .timeline{position:relative;padding:40px 0}
+  .timeline::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:2px;
+    transform:translateX(-50%);
+    background:linear-gradient(180deg,transparent,var(--copper-deep) 6%,var(--copper) 50%,var(--copper-deep) 94%,transparent);
+    box-shadow:0 0 18px rgba(200,133,79,.32)}
+
+  .row{position:relative;display:grid;grid-template-columns:1fr 1fr;
+    column-gap:var(--gap);margin:0 0 78px}
+  .row .card{grid-column:1}
+  .row.right .card{grid-column:2}
+
+  .node{position:absolute;left:50%;top:38px;transform:translate(-50%,-50%);
+    width:var(--node);height:var(--node);border-radius:50%;z-index:2;
+    display:flex;align-items:center;justify-content:center;
+    background:radial-gradient(circle at 50% 34%,#241a12,#0d0a08);
+    border:1.5px solid var(--copper);
+    box-shadow:0 0 0 5px var(--bg),0 0 20px rgba(200,133,79,.4),inset 0 0 10px rgba(200,133,79,.22);
+    will-change:opacity,transform}
+  .node .num{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:20px;
+    line-height:1;color:var(--copper-bright);display:block;
+    transform:translateY(var(--num-nudge))}
+
+  .card{position:relative;background:var(--card);border:1px solid var(--line);
+    border-radius:4px;padding:22px 24px 24px;backdrop-filter:blur(6px);
+    box-shadow:0 18px 40px -24px rgba(0,0,0,.9);will-change:opacity,transform}
+  .card::before{content:"";position:absolute;top:0;height:100%;width:2px;
+    background:linear-gradient(180deg,var(--copper),transparent 80%)}
+  .row:not(.right) .card::before{right:-1px}
+  .row.right .card::before{left:-1px}
+  .card::after{content:"";position:absolute;top:38px;height:1.5px;width:17px;}
+  .row:not(.right) .card::after{right:-17px;background:linear-gradient(90deg,transparent,var(--copper))}
+  .row.right .card::after{left:-17px;background:linear-gradient(90deg,var(--copper),transparent)}
+
+  .c-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--copper);margin-bottom:8px}
+  .c-title{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:30px;
+    line-height:1.1;margin:0 0 12px;color:var(--ink)}
+  .row.right .c-title,.row.right .c-eyebrow,.row.right .c-meta{text-align:right}
+  .row.right .c-chips{justify-content:flex-end}
+  .c-meta{display:flex;align-items:center;gap:7px;color:var(--copper-bright);
+    font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.08em;
+    text-transform:uppercase;margin-bottom:14px}
+  .c-meta svg{width:13px;height:13px;flex:none}
+  .c-desc{color:#cdbba6;font-size:15.5px;margin:0 0 18px;
+    display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  .c-chips{display:flex;flex-wrap:wrap;gap:7px;align-items:center}
+  .chip{display:inline-flex;align-items:center;gap:6px;padding:3px 10px 3px 3px;
+    border:1px solid var(--line);border-radius:20px;background:rgba(200,133,79,.06)}
+  .chip .av{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;
+    justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:10px;
+    font-weight:500;color:var(--bg);background:linear-gradient(135deg,var(--copper-bright),var(--copper-deep))}
+  .chip span{font-size:12.5px;color:var(--muted);font-family:'IBM Plex Mono',monospace}
+  .chip.more{color:var(--faint);padding:4px 11px;font-size:12px;font-family:'IBM Plex Mono',monospace}
+
+  .progress{position:fixed;right:26px;top:50%;transform:translateY(-50%);z-index:10;
+    display:flex;flex-direction:column;gap:11px;align-items:center}
+  .progress .dot{width:8px;height:8px;border-radius:50%;background:var(--line);
+    border:1px solid var(--faint);transition:.3s}
+  .progress .dot.on{background:var(--copper-bright);border-color:var(--copper-bright);
+    box-shadow:0 0 10px rgba(224,168,110,.7);transform:scale(1.35)}
+  .progress .lbl{writing-mode:vertical-rl;font-family:'IBM Plex Mono',monospace;
+    font-size:10px;letter-spacing:.2em;color:var(--faint);text-transform:uppercase;margin-bottom:6px}
+
+  @media(max-width:760px){
+    .timeline::before{left:26px}
+    .row,.row.right{grid-template-columns:1fr}
+    .row .card,.row.right .card{grid-column:1;margin-left:60px}
+    .node{left:26px}
+    .card::after,.row.right .card::after{left:-16px;right:auto;width:16px;background:linear-gradient(90deg,var(--copper),transparent)}
+    .card::before,.row.right .card::before{left:-1px;right:auto}
+    .row.right .c-title,.row.right .c-eyebrow,.row.right .c-meta{text-align:left}
+    .row.right .c-chips{justify-content:flex-start}
+    .progress{display:none}
+  }
+</style>
+</head>
+<body>
+<div class="progress" aria-hidden="true">
+  <div class="lbl">Episodios</div>
+  <div class="dot" data-i="0"></div><div class="dot" data-i="1"></div>
+  <div class="dot" data-i="2"></div><div class="dot" data-i="3"></div>
+</div>
+
+<div class="wrap">
+  <div class="head">
+    <div class="eyebrow">Recuerdos de Cobre</div>
+    <h1>Línea de Tiempo</h1>
+    <p>La crónica completa, episodio por episodio.</p>
+  </div>
+  <div class="hint">↓ scrolleá despacio — las cards entran y salen con el scroll ↓</div>
+
+  <div class="timeline">
+
+    <div class="row">
+      <div class="node"><span class="num">1</span></div>
+      <div class="card">
+        <div class="c-eyebrow">Episodio 1</div>
+        <h2 class="c-title">Un Voto de Confianza</h2>
+        <div class="c-meta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-5.3-7-11a7 7 0 0 1 14 0c0 5.7-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Metrópolis de Cobre</div>
+        <p class="c-desc">Seis desconocidos bajan del tren a una ciudad de vapor y bronce. Entre una ruleta de vidrio, una bebida azul y un contrato de sangre, el grupo nace en la taberna de la Hermandad de Cobre… y baja a las alcantarillas a enfrentar trogloditas.</p>
+        <div class="c-chips"><span class="chip"><span class="av">M</span><span>Mysha</span></span><span class="chip"><span class="av">B</span><span>Borok</span></span><span class="chip"><span class="av">L</span><span>Layra</span></span><span class="chip"><span class="av">N</span><span>Narcissa</span></span><span class="chip more">+3</span></div>
+      </div>
+    </div>
+
+    <div class="row right">
+      <div class="node"><span class="num">2</span></div>
+      <div class="card">
+        <div class="c-eyebrow">Episodio 2 · Parte 1</div>
+        <h2 class="c-title">Bajo la Sombra del Tsunami</h2>
+        <div class="c-meta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-5.3-7-11a7 7 0 0 1 14 0c0 5.7-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Alcantarillas Antiguas</div>
+        <p class="c-desc">Tras limpiar lo que dejaron los trogloditas, el grupo se topa con el Señor Johnson y huye de un tsunami inminente por las alcantarillas. La serpiente de Narcissa se revela y Veltra deja su primera huella.</p>
+        <div class="c-chips"><span class="chip"><span class="av">M</span><span>Mysha</span></span><span class="chip"><span class="av">N</span><span>Narcissa</span></span><span class="chip"><span class="av">D</span><span>David</span></span><span class="chip more">+4</span></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="node"><span class="num">2</span></div>
+      <div class="card">
+        <div class="c-eyebrow">Episodio 2 · Parte 2</div>
+        <h2 class="c-title">Bajo la Sombra del Tsunami</h2>
+        <div class="c-meta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-5.3-7-11a7 7 0 0 1 14 0c0 5.7-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Taberna de la Hermandad</div>
+        <p class="c-desc">De vuelta en el gremio, los tatuajes de pluma dorada sellan su ingreso. El grupo se forma de verdad, elige su primera misión y conoce el verdadero propósito de la Hermandad de Cobre.</p>
+        <div class="c-chips"><span class="chip"><span class="av">M</span><span>Mysha</span></span><span class="chip"><span class="av">B</span><span>Borok</span></span><span class="chip"><span class="av">I</span><span>Io</span></span><span class="chip more">+5</span></div>
+      </div>
+    </div>
+
+    <div class="row right">
+      <div class="node"><span class="num">3</span></div>
+      <div class="card">
+        <div class="c-eyebrow">Episodio 3 · Parte 1</div>
+        <h2 class="c-title">Cariño, vendí a nuestra hija a una secta</h2>
+        <div class="c-meta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-5.3-7-11a7 7 0 0 1 14 0c0 5.7-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Zona de las Capas</div>
+        <p class="c-desc">Darko se suma al grupo. Una pista los lleva a la zona de las capas: un vendedor turbio, una mujer Yadarkai y la casa de Alvarado 1811 esconden la verdad sobre la pequeña Tina.</p>
+        <div class="c-chips"><span class="chip"><span class="av">M</span><span>Mysha</span></span><span class="chip"><span class="av">L</span><span>Layra</span></span><span class="chip"><span class="av">D</span><span>Darko</span></span><span class="chip more">+5</span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  /* Auto-centrado óptico del número en el nodo:
+     mide métricas reales del glifo (ink box + font box) y calcula el
+     desplazamiento exacto para centrar el dígito dentro del círculo. */
+  function autoCenterNumber(){
+    try{
+      const fs=20; const lh=fs; // .num: font-size 20, line-height 1
+      const cv=document.createElement('canvas');
+      const ctx=cv.getContext('2d');
+      ctx.font='600 '+fs+'px "Cormorant Garamond", serif';
+      const m=ctx.measureText('012345678');
+      const fA=m.fontBoundingBoxAscent, fD=m.fontBoundingBoxDescent;
+      const aA=m.actualBoundingBoxAscent, aD=m.actualBoundingBoxDescent;
+      const halfLeading=(lh-(fA+fD))/2;
+      const baselineFromTop=halfLeading+fA;
+      const inkCenterFromTop=baselineFromTop+(aD-aA)/2;
+      const delta=inkCenterFromTop-(lh/2);     // >0 => dígito por debajo del centro
+      const nudge=Math.round(-delta*100)/100;  // px para recentrar
+      document.documentElement.style.setProperty('--num-nudge', nudge+'px');
+    }catch(e){ document.documentElement.style.setProperty('--num-nudge','1px'); }
+  }
+  if(document.fonts && document.fonts.ready){ document.fonts.ready.then(autoCenterNumber); }
+  else { window.addEventListener('load', autoCenterNumber); }
+
+  const rows=[...document.querySelectorAll('.row')];
+  const dots=[...document.querySelectorAll('.progress .dot')];
+  const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+  const smooth=t=>{t=clamp(t,0,1);return t*t*(3-2*t);};
+  const lerp=(a,b,t)=>a+(b-a)*t;
+  function update(){
+    const vh=window.innerHeight;
+    let best=0,bestD=1e9;
+    rows.forEach((row,i)=>{
+      const card=row.querySelector('.card');
+      const node=row.querySelector('.node');
+      const from=row.classList.contains('right')?52:-52;
+      const r=row.getBoundingClientRect();
+      const center=r.top+r.height/2;
+      const rel=center/vh;
+      let op,tx,ns;
+      if(rel>0.70){const t=smooth((1.0-rel)/0.30);op=t;tx=lerp(from,0,t);ns=lerp(.55,1,t);}
+      else if(rel<0.30){const t=smooth((0.30-rel)/0.30);op=1-t;tx=lerp(0,from,t);ns=lerp(1,.55,t);}
+      else{op=1;tx=0;ns=1;}
+      card.style.opacity=op;card.style.transform='translateX('+tx.toFixed(1)+'px)';
+      node.style.opacity=op;node.style.transform='translate(-50%,-50%) scale('+ns.toFixed(3)+')';
+      const d=Math.abs(center-vh/2);if(d<bestD){bestD=d;best=i;}
+    });
+    dots.forEach((d,i)=>d.classList.toggle('on',i===best));
+  }
+  let ticking=false;
+  function onScroll(){if(!ticking){ticking=true;requestAnimationFrame(()=>{update();ticking=false;});}}
+  addEventListener('scroll',onScroll,{passive:true});
+  addEventListener('resize',update);update();
+</script>
+</body>
+</html>
