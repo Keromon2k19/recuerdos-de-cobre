@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import AtlasPageHeader from "./AtlasPageHeader";
+import { DEFAULT_HERO_BACKGROUND } from "@/data/atlas-v2/hero-backgrounds";
 
 type Props = {
   eyebrow: string;
@@ -15,7 +16,7 @@ export default function AtlasPageScene({
   eyebrow,
   title,
   subtitle,
-  backgroundSrc,
+  backgroundSrc = DEFAULT_HERO_BACKGROUND.src,
   variant,
   className = "",
   children,
