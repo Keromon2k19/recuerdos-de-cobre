@@ -101,7 +101,7 @@ export default function AtlasDomainExplorer({
         {indexPane}
 
         <AtlasNarrativeFrame variant="primary" className="av2-domain-expediente">
-          <div className="av2-expediente-focus">
+          <div className="av2-expediente-focus" key={selected.slug}>
             <AtlasSectionHero
               variant={selected.imageSrc ? "image" : "material"}
               imageSrc={selected.imageSrc}

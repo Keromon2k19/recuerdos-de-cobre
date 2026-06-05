@@ -9546,3 +9546,36 @@ body:has(.av2-immersive-bg),
   font-size: 0.95rem;
   line-height: 1.62;
 }
+
+/* ── Polish (impeccable): relic iluminado + entrada del expediente ──────── */
+
+/* Foco material como artefacto iluminado (calidez del home sin foto) */
+.av2-section-hero[data-variant="material"] .av2-section-hero-focus {
+  background:
+    radial-gradient(circle at 50% 40%, oklch(0.52 0.085 56 / 0.42), transparent 60%),
+    radial-gradient(circle at 50% 128%, oklch(0.30 0.04 52 / 0.55), transparent 72%),
+    var(--av2-bg-raised);
+  box-shadow:
+    var(--av2-shadow-deep),
+    inset 0 0 64px oklch(0.04 0.01 58 / 0.55),
+    inset 0 1px 0 oklch(0.96 0.04 78 / 0.05);
+  transition:
+    border-color var(--av2-dur) var(--av2-ease),
+    box-shadow var(--av2-dur) var(--av2-ease);
+}
+.av2-section-hero[data-variant="material"] .av2-section-hero-focus span {
+  color: var(--av2-gold);
+  text-shadow: 0 0 28px oklch(0.715 0.118 56 / 0.5);
+}
+
+/* Entrada/transición del foco al cambiar de pieza (transform/opacity) */
+.av2-expediente-focus {
+  animation: av2-expediente-in 300ms var(--av2-ease) both;
+}
+@keyframes av2-expediente-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .av2-expediente-focus { animation: none; }
+}
