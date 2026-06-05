@@ -99,6 +99,25 @@ function plainText(markdown: string, maxLength = 280): string {
   return `${lastSpace > 120 ? cut.slice(0, lastSpace) : cut}...`;
 }
 
+/** Primer bloque de prosa (parrafo o item), saltando encabezados Markdown.
+ *  Evita que la descripcion arranque con un heading "### Ep. NN - ..." cuando
+ *  la entidad no tiene seccion Perfil y la primera seccion son Menciones. */
+function firstProseBlock(markdown: string): string {
+  const collected: string[] = [];
+  for (const raw of markdown.split("\n")) {
+    const line = raw.trim();
+    const isHeading = /^#{1,6}\s/.test(line);
+    if (collected.length === 0) {
+      if (line === "" || isHeading) continue;
+      collected.push(line);
+    } else {
+      if (line === "" || isHeading) break;
+      collected.push(line);
+    }
+  }
+  return collected.length > 0 ? collected.join(" ") : markdown;
+}
+
 function sectionKind(title: string): AtlasV2EntitySection["kind"] {
   if (/^(perfil|canon|sobre)\b/i.test(title)) return "profile";
   if (/menci/i.test(title)) return "mentions";
@@ -167,7 +186,9 @@ export function parseAtlasV2EntityDetail(
         ? frontmatter.nombre.trim()
         : slug,
     aliases: asStrings(frontmatter.alias),
-    description: plainText(profile?.markdown ?? firstSection?.markdown ?? body),
+    description: plainText(
+      firstProseBlock(profile?.markdown ?? firstSection?.markdown ?? body),
+    ),
     imageSrc: imageFrom(frontmatter),
     appearances,
     meta: buildMeta(frontmatter),

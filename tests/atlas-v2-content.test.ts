@@ -74,6 +74,29 @@ describe("atlas-v2-content", () => {
     ]);
   });
 
+  it("deriva la descripcion del primer bloque de prosa, sin el encabezado de episodio", () => {
+    const sinPerfil = `---
+tipo: objeto
+nombre: Carta sin perfil
+apariciones:
+  - 57
+---
+
+## Menciones por episodio
+
+### [[057-recuerdos-de-cobre-47-segunda-chance|Ep. 57 — Segunda Chance]]
+- Objeto que recupera su magia tras doce horas.
+`;
+    const detail = parseAtlasV2EntityDetail(
+      sinPerfil,
+      "objeto",
+      "carta-sin-perfil",
+    );
+
+    expect(detail.description).toContain("Objeto que recupera");
+    expect(detail.description).not.toContain("Ep.");
+  });
+
   it("lee una entidad por tipo y slug desde el vault", async () => {
     const vault = await mkdtemp(join(tmpdir(), "atlas-v2-content-"));
     cleanup.push(vault);
