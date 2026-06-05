@@ -59,11 +59,16 @@ export default async function AtlasVaultEntityPage({
     html: renderMarkdown(section.markdown, resolve),
   }));
 
+  const tagline =
+    detail.description.length > 150
+      ? `${detail.description.slice(0, 150).replace(/\s+\S*$/, "").trim()}…`
+      : detail.description;
+
   return (
     <AtlasPageScene
       eyebrow={eyebrow}
       title={detail.name}
-      subtitle={detail.description}
+      subtitle={tagline}
       variant={variant}
     >
       <AtlasEntityDetail

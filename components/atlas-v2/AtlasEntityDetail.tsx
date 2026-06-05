@@ -42,12 +42,7 @@ export default function AtlasEntityDetail({
           glyph={detail.name.charAt(0)}
           alt={detail.name}
           title={detail.name}
-          eyebrow={detail.kind}
-          meta={
-            detail.appearances.length > 0
-              ? `${detail.appearances.length} apariciones`
-              : undefined
-          }
+          showCaption={false}
         />
 
         <div className="av2-entity-detail-identity">

@@ -12,6 +12,7 @@ type Props = {
   title: string;
   description?: string;
   meta?: string;
+  showCaption?: boolean;
   layout?: "stack" | "inline";
 };
 
@@ -24,6 +25,7 @@ export default function AtlasSectionHero({
   title,
   description,
   meta,
+  showCaption = true,
   layout = "stack",
 }: Props) {
   const showImage = variant === "image" && Boolean(imageSrc);
@@ -42,12 +44,14 @@ export default function AtlasSectionHero({
           <span aria-hidden="true">{glyph}</span>
         )}
       </div>
-      <div className="av2-section-hero-caption">
-        {eyebrow && <p>{eyebrow}</p>}
-        <h2>{title}</h2>
-        {description && <p className="av2-section-hero-desc">{description}</p>}
-        {meta && <span>{meta}</span>}
-      </div>
+      {showCaption && (
+        <div className="av2-section-hero-caption">
+          {eyebrow && <p>{eyebrow}</p>}
+          <h2>{title}</h2>
+          {description && <p className="av2-section-hero-desc">{description}</p>}
+          {meta && <span>{meta}</span>}
+        </div>
+      )}
     </div>
   );
 }
