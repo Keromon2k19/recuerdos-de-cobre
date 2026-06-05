@@ -95,3 +95,27 @@ Casi todo el rollout completado (commits `967b941..34c4a42`):
 
 Verificacion: `typecheck`, 81 tests y `build` (24 rutas) en verde. Handoff vivo
 en `docs/HANDOFF-rollout-ui-v2.md` (seccion 8 = estado actual).
+
+## Auditoria de regresiones de layout (2026-06-05, impeccable)
+
+Reportadas por Joaquin; medidas con `scripts/measure-scroll.mjs` (overflowPx=0 en
+todas = pagina sin scroll pero listas clippeadas) y verificadas con un check de
+scrollHeight/clientHeight por contenedor.
+
+- **[P0] Listas inalcanzables** en paginas con layout propio bajo `AtlasPageScene`
+  (personajes, capitulos, facciones) y en el indice del expediente
+  (misterios/objetos/mundo). Causa: `AtlasPageScene` era `min-height:100dvh` sin
+  ser flex column, asi que el `flex:1` de los layouts internos no resolvia y la
+  lista se clippaba sin scroll. **Fix** (commit `1d2a07d`): `.av2-page-scene` =
+  flex column de `height:100dvh`; `.av2-page-scene-content` = `flex:1; min-height:0;
+  overflow-y:auto`; `.av2-domain-explorer` = `flex:1`. Verificado: cada lista
+  larga ahora scrollea internamente (p.ej. personajes grid 18685>587, misterios
+  indice 7937>536) con `pageScroll=0`.
+- **[P1] Header demasiado alto** (`av2-page-header` padding `clamp(48..96px)` +
+  padding-top `7.5rem` del page-scene = ~216px antes del titulo). **Fix**: header
+  compacto (padding `clamp(10..20px)`, titulo `clamp(1.9..2.9rem)`, intro mas
+  chica) y page-scene padding-top solo despeja la nav.
+- **[P1] `/v2/lugares` y `/v2/mapa` duplicados** (ambos `MapaClient`). PENDIENTE
+  de decision (galeria image-led vs. dedupe).
+
+Verificacion: typecheck + 82 tests + build verde se mantienen.
