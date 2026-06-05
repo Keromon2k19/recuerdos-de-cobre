@@ -1428,7 +1428,8 @@ a.av2-latest-pag-arrow:hover {
 /* ── Cabecera de página (compartida entre secciones) ───────────────── */
 .av2-page-head {
   position: relative;
-  padding: clamp(1.4rem, 3vw, 2.2rem) clamp(1.5rem, 4vw, 3rem);
+  /* Despeje de la nav fija (mapa/lugares usan este header full-bleed). */
+  padding: calc(var(--av2-nav-h) + 1.2rem) clamp(1.5rem, 4vw, 3rem) clamp(1.4rem, 3vw, 2.2rem);
   text-align: center;
   overflow: hidden;
   border-bottom: 1px solid var(--av2-rule);
@@ -7991,55 +7992,13 @@ body:has(.av2-immersive-bg),
     repeating-linear-gradient(0deg, transparent 0 119px, oklch(0.72 0.08 56 / 0.025) 120px);
 }
 
-.av2-page-scene-head,
 .av2-page-scene-content {
   position: relative;
   width: min(100%, 1520px);
   margin-inline: auto;
 }
-.av2-page-scene-head {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.58fr);
-  grid-template-areas:
-    "title eyebrow"
-    "title subtitle";
-  align-items: end;
-  gap: 0.7rem 2rem;
-  padding: 0 0 1.25rem;
-  margin-bottom: 1.1rem;
-  border-bottom: 1px solid var(--av2-rule-copper);
-}
-.av2-page-scene-eyebrow {
-  grid-area: eyebrow;
-  justify-self: end;
-  align-self: start;
-  margin: 0;
-  padding-top: 0.18rem;
-  font-family: var(--av2-mono);
-  font-size: 0.66rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--av2-copper);
-}
-.av2-page-scene-title {
-  grid-area: title;
-  max-width: min(100%, 13.5ch);
-  font-size: clamp(3.25rem, 6vw, 6.55rem);
-  line-height: 0.86;
-  letter-spacing: -0.04em;
-  color: var(--av2-ink);
-  text-shadow: 0 4px 24px oklch(0.03 0.01 55 / 0.78);
-  text-wrap: balance;
-}
-.av2-page-scene-subtitle {
-  grid-area: subtitle;
-  justify-self: end;
-  width: min(100%, 42ch);
-  padding-bottom: 0.2rem;
-  color: var(--av2-ink-soft);
-  font-style: italic;
-  text-wrap: pretty;
-}
+/* (av2-page-scene-head/-eyebrow/-title/-subtitle retirados — el header lo
+   maneja AtlasPageHeader / av2-page-header) */
 
 .av2-narrative-frame {
   position: relative;
