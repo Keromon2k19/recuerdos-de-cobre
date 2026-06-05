@@ -1,5 +1,6 @@
 // app/(v2)/v2/personajes/page.tsx
 import PersonajesClient from "./PersonajesClient";
+import AtlasPageScene from "@/components/atlas-v2/AtlasPageScene";
 import { cachedListByType } from "@/lib/public-cache";
 import type { EntityListItem } from "@/lib/vault";
 import type { V2Character } from "@/data/atlas-v2/characters";
@@ -43,21 +44,13 @@ export default async function PersonajesPage() {
   const characters = raw.map(toV2Character);
 
   return (
-    <section className="av2-p-wrap">
-      <div className="av2-p-bg" aria-hidden="true">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/assets/atlas-v2/backgrounds/hero.png"
-          alt=""
-          className="av2-p-bg-img"
-        />
-      </div>
-
-      <header className="av2-page-head">
-        <h1 className="av2-page-title">Personajes</h1>
-      </header>
-
+    <AtlasPageScene
+      eyebrow="El reparto de la campaña"
+      title="Personajes"
+      subtitle="Los seis del grupo y cada figura que cruzó su camino."
+      variant="character"
+    >
       <PersonajesClient characters={characters} />
-    </section>
+    </AtlasPageScene>
   );
 }
