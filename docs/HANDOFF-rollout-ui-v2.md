@@ -307,9 +307,18 @@ Estado real por página:
 
 Verificado: `typecheck`, 81 tests y `build` (24 rutas) en verde.
 
-**Lo que queda (no bloqueante):**
-- Polish fino opcional de dioses/buscar/facciones contra el home si se quiere
-  subir la vara.
+**Lo que queda:**
+- ⚠️ **Unificación de materialidad de las páginas bespoke** (Dioses, Facciones,
+  Personajes). Estas se construyeron ANTES del kit con clases propias
+  (`av2-god-*`, `av2-faction-*`, `av2-personajes-*`/`av2-card`). El rollout les
+  unificó **header + scroll**, pero NO sus superficies internas: el blur, los
+  marcos de cobre, los corner-brackets (color/estilo) y las superficies divergen
+  del home/kit. Joaquín lo notó (ej. Dioses: el índice no tenía blur; los
+  corner-brackets en otro color). Es un **pase de craft real por página**
+  (comparar cada panel contra el home y alinear blur=`blur(12px) saturate(1.1)`,
+  borde=`--av2-rule-copper`, corners, bg), idealmente con iteración en browser.
+  Parche aplicado: blur del índice/detalle de Dioses (commit pendiente). Falta el
+  resto de Dioses + Facciones + Personajes.
 - Limpieza de CSS muerto: ✅ **completa** — removidos `av2-domain-stage*`,
   `av2-mystery-*`, `av2-world-*`, `av2-relic-*`, `av2-domain-context*` (commit
   `8016fd1`) y el header viejo del page-scene `av2-page-scene-head/-eyebrow/
