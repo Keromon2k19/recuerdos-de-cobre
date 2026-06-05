@@ -1,8 +1,9 @@
 import type { ReactNode } from "react";
+import AtlasPageHeader from "./AtlasPageHeader";
 
 type Props = {
   eyebrow: string;
-  title: string;
+  title: ReactNode;
   subtitle?: string;
   backgroundSrc?: string;
   variant?: string;
@@ -14,7 +15,7 @@ export default function AtlasPageScene({
   eyebrow,
   title,
   subtitle,
-  backgroundSrc = "/assets/atlas-v2/backgrounds/hero.png",
+  backgroundSrc,
   variant,
   className = "",
   children,
@@ -23,17 +24,16 @@ export default function AtlasPageScene({
     <section
       className={`av2-page-scene ${className}`.trim()}
       data-variant={variant}
+      data-bg={backgroundSrc ? "image" : "material"}
     >
       <div className="av2-page-scene-bg" aria-hidden="true">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={backgroundSrc} alt="" />
+        {backgroundSrc ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={backgroundSrc} alt="" />
+        ) : null}
       </div>
 
-      <header className="av2-page-scene-head">
-        <p className="av2-page-scene-eyebrow">{eyebrow}</p>
-        <h1 className="av2-page-scene-title">{title}</h1>
-        {subtitle && <p className="av2-page-scene-subtitle">{subtitle}</p>}
-      </header>
+      <AtlasPageHeader eyebrow={eyebrow} title={title} intro={subtitle} />
 
       <div className="av2-page-scene-content">{children}</div>
     </section>
