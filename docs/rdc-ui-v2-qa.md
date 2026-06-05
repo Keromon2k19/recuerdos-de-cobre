@@ -38,3 +38,44 @@ Dos servidores `next dev` antiguos sobre el mismo repositorio competian por la
 carpeta `.next` y provocaron un fallo intermitente durante `next build`. Se
 detuvieron antes de la compilacion final; la build paso sin cambios adicionales
 ni limpieza manual de cache.
+
+## Piloto de elevacion visual — Objetos (2026-06-04)
+
+Primer entregable del plan
+`docs/superpowers/plans/2026-06-04-elevacion-visual-v2-fundacion-piloto.md`:
+sistema/kit compartido extraido del home + Objetos elevado de punta a punta como
+estandar de referencia. Rama `feat/ui-v2-elevacion`.
+
+### Kit de primitivas
+
+- `AtlasPageHeader`: encabezado display centrado con ornamento, gramatica del
+  hero del home.
+- `AtlasPageScene`: ahora compone el header y usa fondo material calido cuando no
+  hay foto (`data-bg="material"`).
+- `AtlasSectionHero`: variantes image/material, layout stack/inline, caption
+  opcional; foco/relic iluminado.
+- Catalogo de desarrollo en `/v2/kit` (no enlazado).
+
+### Objetos (piloto)
+
+- Mockup aprobado: variante B, expediente lateral
+  (`docs/mockups/2026-06-04-objetos-*.html`).
+- Indice: expediente con indice + foco del artefacto + ficha/meta + CTA.
+- Ficha: relic sin caption duplicada, subtitulo corto, dossier on-system.
+- Polish (impeccable): relic iluminado (glow + glifo oro), entrada del
+  expediente, `prefers-reduced-motion` respetado.
+
+### Verificacion
+
+- `npm run typecheck`, `npm test` (17 archivos / 81 pruebas) y `npm run build`
+  (23 rutas) en verde.
+- Capturas a 1440/2048/2560 en `artifacts/screenshots/ui-v2/` (baseline y despues).
+
+### Pendiente no bloqueante (P2)
+
+- La ficha de detalle es algo densa (3 columnas); candidata a recomposicion.
+- La descripcion derivada arrastra el prefijo "Ep. NN — ..." cuando no hay
+  seccion "Perfil"; mejorar en `lib/atlas-v2-content.ts` (afecta a todos los
+  dominios).
+- Resto de dominios (Misterios, Mundo, fichas, y los que ya tenian referencia)
+  en el plan siguiente, reusando el kit ya validado.
