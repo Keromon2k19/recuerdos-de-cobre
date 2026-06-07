@@ -14,7 +14,7 @@ const HOME_CHAPTER_SCENE = "/assets/atlas-v2/scenes/metropolis.webp";
 export const dynamic = "force-static";
 
 export default async function V2HomePage() {
-  const heroBackground = resolveHeroBackground();
+const heroBackground = resolveHeroBackground(undefined);
   const vp = publicVaultPath();
 
   const episodes = vp ? await cachedListEpisodes(vp) : [];
