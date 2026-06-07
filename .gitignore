@@ -2,6 +2,7 @@
 node_modules/
 .pnp
 .pnp.js
+.vercel/
 
 # Next.js
 .next/
@@ -84,3 +85,5 @@ public/assets/atlas-v2/ornaments/
 .serena/
 # Graphify (grafo generado)
 graphify-out/
+
+.vercel
