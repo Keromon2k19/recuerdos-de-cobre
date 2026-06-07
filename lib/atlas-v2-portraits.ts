@@ -4,6 +4,7 @@ export const ATLAS_V2_PORTRAIT_PLACEHOLDER =
 export const ATLAS_V2_KNOWN_PORTRAITS: Record<string, string> = {
   mysha: "/assets/atlas-v2/portraits/mysha.png",
   "io-campbell": "/assets/atlas-v2/portraits/io-campbell.png",
+  eryon: "/images/personajes/eryon.jpg",
   anora: "/images/personajes/annora.jpg",
   annora: "/images/personajes/annora.jpg",
   "aeron-sylvaris": "/images/personajes/aeron-sylvaris.webp",
