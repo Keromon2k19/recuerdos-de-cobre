@@ -14,7 +14,9 @@ export async function publicEntityStaticParams(kind: AtlasV2EntityKind) {
   return entities.map((entity) => ({ slug: entity.slug }));
 }
 
+
 export async function publicEpisodeStaticParams() {
   const episodes = await cachedListEpisodes(publicVaultPath());
   return episodes.map((episode) => ({ num: String(episode.numero) }));
 }
+

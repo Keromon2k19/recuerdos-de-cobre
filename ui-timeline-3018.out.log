@@ -96,3 +96,6 @@
  GET /v2/timeline 200 in 1807ms
  GET /v2 200 in 1959ms
  ✓ Compiled in 303ms (508 modules)
+ ✓ Compiled in 301ms (508 modules)
+ ✓ Compiled in 281ms (508 modules)
+ ✓ Compiled in 185ms (508 modules)
