@@ -163,6 +163,7 @@ export default async function LugarDetailPage({
           slides={slides}
           intervalMs={7500}
           stats={stats}
+          viewTransitionName={`av2-place-${slug}`}
           cta={
             <LugarInfoDrawer
               title={region.nombre}

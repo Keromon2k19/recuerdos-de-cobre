@@ -15,7 +15,7 @@
 // 8. CTA al pie: "VER FICHA COMPLETA"
 // 9. Cerrar (X) discreto arriba a la derecha
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import Link from "next/link";
 import type { V2Character } from "@/data/atlas-v2/characters";
 
@@ -42,6 +42,13 @@ type Props = {
 export default function AtlasDetailPanel({ entity, onClose }: Props) {
   const [src, setSrc] = useState(entity.imageSrc);
   const fallback = placeholderFor(entity.slug);
+  const imageStyle: CSSProperties | undefined =
+    entity.imageFit || entity.imagePosition
+      ? {
+          objectFit: entity.imageFit,
+          objectPosition: entity.imagePosition,
+        }
+      : undefined;
 
   // Resync cuando cambia la entidad seleccionada — si no, el panel sigue
   // mostrando el retrato anterior hasta que falle onError.
@@ -68,7 +75,7 @@ export default function AtlasDetailPanel({ entity, onClose }: Props) {
 
       <div className="av2-detail-portrait">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={src} alt="" onError={handleError} />
+        <img src={src} alt="" style={imageStyle} onError={handleError} />
       </div>
 
       <div className="av2-detail-head">

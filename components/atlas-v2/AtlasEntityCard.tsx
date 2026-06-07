@@ -10,7 +10,7 @@
 // - Sin nested boxes — la imagen ES la card, solo agrega overlay + border
 // - Tactile feedback en :active (taste-skill): translate-y(-1px)
 
-import { useState } from "react";
+import { useState, type CSSProperties } from "react";
 import type { V2Character } from "@/data/atlas-v2/characters";
 
 type Props = {
@@ -39,6 +39,13 @@ export default function AtlasEntityCard({ entity, active, onClick }: Props) {
   // Cadena de fallback: imagen real → placeholder por hash → (CSS gradient si todo falla)
   const [src, setSrc] = useState(entity.imageSrc);
   const fallback = placeholderFor(entity.slug);
+  const imageStyle: CSSProperties | undefined =
+    entity.imageFit || entity.imagePosition
+      ? {
+          objectFit: entity.imageFit,
+          objectPosition: entity.imagePosition,
+        }
+      : undefined;
 
   function handleError() {
     if (src !== fallback) setSrc(fallback);
@@ -59,6 +66,7 @@ export default function AtlasEntityCard({ entity, active, onClick }: Props) {
           src={src}
           alt=""
           className="av2-card-img"
+          style={imageStyle}
           onError={handleError}
           loading="lazy"
         />

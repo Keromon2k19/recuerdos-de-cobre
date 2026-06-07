@@ -4,6 +4,7 @@
 // Panel inferior con informacion del lugar seleccionado.
 
 import Link from "next/link";
+import type { CSSProperties } from "react";
 import type { V2Region } from "@/data/atlas-v2/locations";
 
 type Props = {
@@ -18,15 +19,21 @@ const META_LABELS: Array<[keyof V2Region["meta"], string]> = [
 ];
 
 export default function AtlasRegionInfo({ region }: Props) {
+  const imageStyle = {
+    viewTransitionName: `av2-place-${region.slug}`,
+  } as CSSProperties;
+
   return (
     <aside className="av2-region-info" aria-label={`Informacion de ${region.nombre}`}>
       <div className="av2-region-info-thumb" aria-hidden="true">
         {region.imageSrc ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
+            key={region.slug}
             src={region.imageSrc}
             alt=""
             className="av2-region-info-image"
+            style={imageStyle}
           />
         ) : (
           <span className="av2-region-info-glyph">{region.glyph}</span>

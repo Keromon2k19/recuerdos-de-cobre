@@ -1,4 +1,5 @@
 import { parseEpisodioRef } from "./episode-number";
+import { resolveAtlasV2Portrait } from "./atlas-v2-portraits";
 import type { EntityListItem, EpisodeMenciones } from "./vault";
 
 type HomeEpisode = {
@@ -59,14 +60,6 @@ export type BuildHomeChapterSlidesInput = {
 };
 
 const FALLBACK_SCENE = "/assets/atlas-v2/scenes/metropolis.webp";
-const PORTRAIT_PLACEHOLDER = "/assets/atlas-v2/portraits/_placeholder-1.svg";
-const KNOWN_PORTRAITS: Record<string, string> = {
-  mysha: "/assets/atlas-v2/portraits/mysha.png",
-  "io-campbell": "/assets/atlas-v2/portraits/io-campbell.png",
-  annora: "/assets/atlas-v2/portraits/annora.jpg",
-  layra: "/images/personajes/layra.webp",
-  narcissa: "/images/personajes/narcissa.webp",
-};
 
 function normalizeKey(raw: string): string {
   return stripWikilink(raw)
@@ -291,10 +284,10 @@ function toCastSlide(
     slug: character?.slug,
     href: character?.slug ? `/v2/personajes/${character.slug}` : undefined,
     role: character?.rol,
-    imageSrc:
-      character?.image ??
-      KNOWN_PORTRAITS[character?.slug ?? item.key] ??
-      PORTRAIT_PLACEHOLDER,
+    imageSrc: resolveAtlasV2Portrait(
+      character?.slug ?? item.key,
+      character?.image,
+    ),
     detail: item.detail,
     quote: quote?.text,
   };

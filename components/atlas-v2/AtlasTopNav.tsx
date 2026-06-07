@@ -27,6 +27,7 @@ const GROUPS: NavGroup[] = [
     label: "Crónicas",
     items: [
       { href: "/v2/capitulos", label: "Capítulos" },
+      { href: "/v2/timeline", label: "Linea de tiempo" },
       { href: "/v2/misterios", label: "Misterios" },
     ],
   },
@@ -54,6 +55,7 @@ const GROUPS: NavGroup[] = [
 export default function AtlasTopNav() {
   const pathname = usePathname();
   const [openId, setOpenId] = useState<string | null>(null);
+  const [musicOpen, setMusicOpen] = useState(false);
   const rootRef = useRef<HTMLElement | null>(null);
   const menuRef = useRef<HTMLElement | null>(null);
 
@@ -61,7 +63,14 @@ export default function AtlasTopNav() {
   useEffect(() => {
     function onPointerDown(e: PointerEvent) {
       if (!rootRef.current) return;
-      if (!rootRef.current.contains(e.target as Node)) setOpenId(null);
+      const target = e.target as Element | null;
+      if (
+        !rootRef.current.contains(e.target as Node) &&
+        !target?.closest("[data-av2-music]")
+      ) {
+        setOpenId(null);
+        setMusicOpen(false);
+      }
     }
     document.addEventListener("pointerdown", onPointerDown);
     return () => document.removeEventListener("pointerdown", onPointerDown);
@@ -70,14 +79,30 @@ export default function AtlasTopNav() {
   // Esc cierra
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
-      if (e.key === "Escape") setOpenId(null);
+      if (e.key === "Escape") {
+        setOpenId(null);
+        setMusicOpen(false);
+      }
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
   // Cerrar al cambiar de ruta
-  useEffect(() => { setOpenId(null); }, [pathname]);
+  useEffect(() => {
+    setOpenId(null);
+    setMusicOpen(false);
+  }, [pathname]);
+
+  const setNavOpen = useCallback((id: string | null) => {
+    setOpenId(id);
+    if (id) setMusicOpen(false);
+  }, []);
+
+  const setMusicOpenExclusive = useCallback((nextOpen: boolean) => {
+    setMusicOpen(nextOpen);
+    if (nextOpen) setOpenId(null);
+  }, []);
 
   const isLinkActive = (href: string) =>
     pathname === href || pathname.startsWith(href + "/");
@@ -183,7 +208,7 @@ export default function AtlasTopNav() {
                 onFocus={handleIndicatorEnter}
                 onClick={(event) => {
                   moveIndicatorTo(event.currentTarget);
-                  setOpenId(open ? null : g.id);
+                  setNavOpen(open ? null : g.id);
                 }}
               >
                 {g.label}
@@ -249,7 +274,10 @@ export default function AtlasTopNav() {
           </svg>
         </Link>
 
-        <AtlasMusicPlayer />
+        <AtlasMusicPlayer
+          open={musicOpen}
+          onOpenChange={setMusicOpenExclusive}
+        />
       </nav>
     </header>
   );

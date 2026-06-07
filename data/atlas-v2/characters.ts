@@ -10,6 +10,8 @@ export type V2Character = {
   id: string;
   slug: string;
   nombre: string;
+  /** Alias, apodos y grafias alternativas usadas para busqueda. */
+  aliases?: string[];
   /** Jugador real si es PJ. Undefined si es NPC. */
   jugador?: string;
   /** Rol corto — Bruja, Mercenario, Paladín, NPC, etc. */
@@ -25,6 +27,8 @@ export type V2Character = {
   apariciones: number;
   /** Path a un retrato. Apunta a placeholder SVG por ahora. */
   imageSrc: string;
+  imageFit?: "cover" | "contain";
+  imagePosition?: string;
 };
 
 export const MOCK_CHARACTERS: V2Character[] = [

@@ -1,5 +1,9 @@
 import MapaClient from "./MapaClient";
-import { locationSlugsResolved } from "@/data/atlas-v2/location-images";
+import {
+  locationSlugsResolved,
+  resolveLocation,
+} from "@/data/atlas-v2/location-images";
+import type { V2Region } from "@/data/atlas-v2/locations";
 import { getAllRegions, getAdditionSlugs } from "@/lib/map-overrides";
 
 export const metadata = {
@@ -13,7 +17,9 @@ export default function MapaPage() {
   const addedSlugs = getAdditionSlugs();
   const additionSlugList = Array.from(addedSlugs);
   const visible = new Set([...imageSlugs, ...addedSlugs]);
-  const regions = getAllRegions().filter((r) => visible.has(r.slug));
+  const regions = getAllRegions()
+    .filter((r) => visible.has(r.slug))
+    .map(withResolvedLocationImage);
 
   return (
     <section className="av2-p-wrap">
@@ -34,4 +40,11 @@ export default function MapaPage() {
       <MapaClient regions={regions} additionSlugs={additionSlugList} />
     </section>
   );
+}
+
+function withResolvedLocationImage(region: V2Region): V2Region {
+  const resolved = resolveLocation(region.slug);
+  const imageSrc =
+    region.imageSrc ?? resolved?.immersiveBgSrc ?? resolved?.slides[0]?.src;
+  return imageSrc === region.imageSrc ? region : { ...region, imageSrc };
 }

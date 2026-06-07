@@ -1,6 +1,8 @@
 // app/(v2)/v2/personajes/page.tsx
 import PersonajesClient from "./PersonajesClient";
 import AtlasPageScene from "@/components/atlas-v2/AtlasPageScene";
+import { resolveAtlasV2CharacterRole } from "@/lib/atlas-v2-character-role";
+import { resolveAtlasV2Portrait } from "@/lib/atlas-v2-portraits";
 import { cachedListByType } from "@/lib/public-cache";
 import type { EntityListItem } from "@/lib/vault";
 import type { V2Character } from "@/data/atlas-v2/characters";
@@ -11,7 +13,7 @@ export const metadata = {
   title: "Personajes · Grimorio de Lore",
 };
 
-// Jugadores de los 6 PJs — no está en el vault, se asigna aquí.
+// Jugadores conocidos; si falta el nombre, el rol PJ se resuelve aparte.
 const JUGADOR: Record<string, string> = {
   mysha: "Kero",
   borok: "Mati",
@@ -21,20 +23,30 @@ const JUGADOR: Record<string, string> = {
   "io-campbell": "Mile",
 };
 
-const PORTRAIT_PLACEHOLDER = "/assets/atlas-v2/portraits/_placeholder-1.svg";
+const IMAGE_LAYOUT_OVERRIDES: Record<
+  string,
+  Pick<V2Character, "imageFit" | "imagePosition">
+> = {
+  champi: {
+    imageFit: "contain",
+    imagePosition: "center center",
+  },
+};
 
 function toV2Character(e: EntityListItem): V2Character {
   return {
     id: e.slug,
     slug: e.slug,
     nombre: e.nombre,
+    aliases: e.aliases ?? [],
     jugador: e.jugador ?? JUGADOR[e.slug],
-    rol: e.rol ?? (JUGADOR[e.slug] !== undefined ? "PJ" : "NPC"),
+    rol: resolveAtlasV2CharacterRole(e.slug, e.rol),
     facciones: e.facciones ?? [],
     region: e.region,
     descripcion: e.descripcion ?? "",
     apariciones: e.apariciones?.length ?? 0,
-    imageSrc: e.image ?? PORTRAIT_PLACEHOLDER,
+    imageSrc: resolveAtlasV2Portrait(e.slug, e.image),
+    ...IMAGE_LAYOUT_OVERRIDES[e.slug],
   };
 }
 
@@ -47,7 +59,7 @@ export default async function PersonajesPage() {
     <AtlasPageScene
       eyebrow="El reparto de la campaña"
       title="Personajes"
-      subtitle="Los seis del grupo y cada figura que cruzó su camino."
+      subtitle="Los jugadores del grupo y cada figura que cruzó su camino."
       variant="character"
     >
       <PersonajesClient characters={characters} />

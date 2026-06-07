@@ -20,6 +20,11 @@ const DEFAULT_VOLUME = 0.35;
 
 type Persisted = { currentSlug?: string; volume?: number; loop?: boolean };
 
+type Props = {
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+};
+
 function readPersisted(): Persisted {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
@@ -31,11 +36,11 @@ function readPersisted(): Persisted {
   }
 }
 
-export default function AtlasMusicPlayer() {
+export default function AtlasMusicPlayer({ open, onOpenChange }: Props = {}) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const [mounted, setMounted] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [internalOpen, setInternalOpen] = useState(false);
   const [currentSlug, setCurrentSlug] = useState(MUSIC_TRACKS[0].slug);
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(DEFAULT_VOLUME);
@@ -43,6 +48,16 @@ export default function AtlasMusicPlayer() {
   const [hydrated, setHydrated] = useState(false);
 
   const current = MUSIC_TRACKS.find((t) => t.slug === currentSlug) ?? MUSIC_TRACKS[0];
+  const isOpen = open ?? internalOpen;
+
+  const setPopoverOpen = useCallback(
+    (next: boolean | ((currentOpen: boolean) => boolean)) => {
+      const nextOpen = typeof next === "function" ? next(isOpen) : next;
+      if (open === undefined) setInternalOpen(nextOpen);
+      onOpenChange?.(nextOpen);
+    },
+    [isOpen, onOpenChange, open],
+  );
 
   // Portal disponible recién en cliente.
   useEffect(() => setMounted(true), []);
@@ -114,13 +129,13 @@ export default function AtlasMusicPlayer() {
   // Cerrar popover con Escape / click afuera. Usa closest para soportar las dos
   // instancias del control (barra inline + flotante portaleada).
   useEffect(() => {
-    if (!open) return;
+    if (!isOpen) return;
     function onPointerDown(e: PointerEvent) {
       const target = e.target as Element | null;
-      if (!target || !target.closest("[data-av2-music]")) setOpen(false);
+      if (!target || !target.closest("[data-av2-music]")) setPopoverOpen(false);
     }
     function onKey(e: KeyboardEvent) {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key === "Escape") setPopoverOpen(false);
     }
     document.addEventListener("pointerdown", onPointerDown);
     window.addEventListener("keydown", onKey);
@@ -128,7 +143,7 @@ export default function AtlasMusicPlayer() {
       document.removeEventListener("pointerdown", onPointerDown);
       window.removeEventListener("keydown", onKey);
     };
-  }, [open]);
+  }, [isOpen, setPopoverOpen]);
 
   const playSlug = useCallback(
     (slug: string) => {
@@ -168,9 +183,9 @@ export default function AtlasMusicPlayer() {
         className="av2-music-btn"
         aria-label={isPlaying ? `Música: sonando ${current.title}` : "Música de la mesa"}
         aria-haspopup="dialog"
-        aria-expanded={open}
+        aria-expanded={isOpen}
         data-playing={isPlaying ? "true" : undefined}
-        onClick={() => setOpen((v) => !v)}
+        onClick={() => setPopoverOpen((v) => !v)}
       >
         <span className="av2-music-eq" aria-hidden="true">
           <span />
@@ -182,7 +197,7 @@ export default function AtlasMusicPlayer() {
         </span>
       </button>
 
-      <div className="av2-music-pop" role="dialog" aria-label="Música de la mesa" hidden={!open}>
+      <div className="av2-music-pop" role="dialog" aria-label="Música de la mesa" hidden={!isOpen}>
         <p className="av2-music-title">Música de la mesa</p>
 
         <ul className="av2-music-list">

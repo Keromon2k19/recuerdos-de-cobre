@@ -334,3 +334,31 @@ Verificado: `typecheck`, 81 tests y `build` (24 rutas) en verde.
 - Operativo: parar el `next dev` antes de `npm run build` (comparten `.next`; si
   no, el dev server tira HTTP 500 hasta reiniciarlo).
 ```
+
+## 9. Actualizacion Codex 2026-06-05 - materialidad bespoke
+
+Completado el pase B pedido por Joaquin: se definio una capa canonica compartida
+al final de `app/(v2)/v2/atlas-v2.css` para alinear Dioses, Facciones y
+Personajes con `av2-narrative-frame`.
+
+Cambios aplicados:
+- Paneles principales: `av2-gods-*`, `av2-faction-*`, `av2-filters`,
+  `av2-personajes-main`, `av2-detail` ahora comparten borde
+  `--av2-rule-copper`, radius 0, fondo warm translucido, sombra/inset y
+  `backdrop-filter: blur(12px) saturate(1.1)`.
+- Corner brackets: color corregido a cobre dim real (`--av2-copper-dim`) tanto
+  en kit (`av2-narrative-frame`) como en paneles bespoke.
+- Superficies internas: inputs, tabs, cards, nodos de faccion, dominios de
+  dioses, cajas meta y retratos usan borde cobre, radius 0 y fondos warm; se
+  corrigio la especificidad que hacia que botones/cards computaran border 0 por
+  el reset `.av2 button`.
+
+Verificacion hecha:
+- Auditoria Playwright de estilos computados con `scripts/_inspect.mjs` contra
+  `/v2`, `/v2/objetos`, `/v2/dioses`, `/v2/facciones`, `/v2/personajes`.
+- Screenshots desktop: `node scripts/v2-screenshot.mjs --routes=/v2,/v2/dioses,/v2/facciones,/v2/personajes --desktop`.
+- `npm run typecheck` OK.
+- `npm test` OK: 17 files, 82 tests.
+
+Residual observado: el browser MCP reporta `favicon.ico` 404 en dev; no parece
+relacionado con este cambio de UI.

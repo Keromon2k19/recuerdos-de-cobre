@@ -158,121 +158,122 @@ export default function DiosesClient({ gods }: Props) {
         </ul>
       </aside>
 
-      <section className="av2-god-profile" aria-label={`Perfil de ${selected.nombre}`}>
-        <div className="av2-god-profile-art" data-tone={selected.tone} aria-hidden="true">
-          <div className="av2-god-symbol">
-            <span className="av2-god-symbol-orbit av2-god-symbol-orbit--outer" />
-            <span className="av2-god-symbol-orbit av2-god-symbol-orbit--inner" />
-            <span className="av2-god-symbol-needle av2-god-symbol-needle--vertical" />
-            <span className="av2-god-symbol-needle av2-god-symbol-needle--horizontal" />
-            <GodSigil god={selected} className="av2-god-symbol-core" />
+      <section className="av2-god-dossier" aria-label={`Archivo divino de ${selected.nombre}`}>
+        <div className="av2-god-identity">
+          <div className="av2-god-profile-art" data-tone={selected.tone} aria-hidden="true">
+            <div className="av2-god-symbol">
+              <span className="av2-god-symbol-orbit av2-god-symbol-orbit--outer" />
+              <span className="av2-god-symbol-orbit av2-god-symbol-orbit--inner" />
+              <span className="av2-god-symbol-needle av2-god-symbol-needle--vertical" />
+              <span className="av2-god-symbol-needle av2-god-symbol-needle--horizontal" />
+              <GodSigil god={selected} className="av2-god-symbol-core" />
+            </div>
           </div>
-        </div>
 
-        <div className="av2-god-profile-main">
-          <p className="av2-god-kicker">{selected.alliance}</p>
-          <h2>{selected.nombre}</h2>
-          <p className="av2-god-title">{selected.titulo}</p>
-
-          <blockquote className="av2-god-quote">
-            <p>{selected.quote}</p>
-          </blockquote>
-
-          <p className="av2-god-copy">{selected.profile}</p>
-        </div>
-
-        <section className="av2-god-domains" aria-label="Dominios">
-          <div className="av2-god-section-head">
-            <span>Dominios</span>
-            <small>{selected.domains.length} registros</small>
-          </div>
-          <div className="av2-god-domain-grid">
-            {selected.domains.map((domain) => (
-              <span key={`${selected.slug}-${domain}`} className="av2-god-domain">
-                {domain}
-              </span>
-            ))}
-          </div>
-        </section>
-      </section>
-
-      <aside className="av2-god-detail" aria-label={`Archivo divino de ${selected.nombre}`}>
-        <div className="av2-god-detail-head">
-          <GodSigil god={selected} className="av2-god-detail-sigil" />
-          <div>
-            <p className="av2-god-kicker">Archivo divino</p>
+          <div className="av2-god-profile-main">
+            <p className="av2-god-kicker">{selected.alliance}</p>
             <h2>{selected.nombre}</h2>
+            <p className="av2-god-title">{selected.titulo}</p>
+
+            <blockquote className="av2-god-quote">
+              <p>{selected.quote}</p>
+            </blockquote>
+
+            <p className="av2-god-copy">{selected.profile}</p>
           </div>
         </div>
 
-        <dl className="av2-god-detail-meta">
-          <div>
-            <dt>Estado</dt>
-            <dd>{selected.estado}</dd>
+        <div className="av2-god-archive">
+          <div className="av2-god-archive-head">
+            <p className="av2-god-kicker">Archivo divino</p>
+            <h3>{selected.nombre}</h3>
           </div>
-          <div>
-            <dt>Simbolo</dt>
-            <dd>{selected.sacredSymbol}</dd>
-          </div>
-        </dl>
 
-        <section className="av2-god-detail-section">
-          <h3>Principios</h3>
-          <ol className="av2-god-principles">
-            {selected.principles.map((principle) => (
-              <li key={`${selected.slug}-${principle}`}>{principle}</li>
-            ))}
-          </ol>
-        </section>
+          <dl className="av2-god-detail-meta">
+            <div>
+              <dt>Estado</dt>
+              <dd>{selected.estado}</dd>
+            </div>
+            <div>
+              <dt>Simbolo</dt>
+              <dd>{selected.sacredSymbol}</dd>
+            </div>
+          </dl>
 
-        <section className="av2-god-detail-section">
-          <h3>Lugares sagrados</h3>
-          <ul className="av2-god-places">
-            {selected.sacredPlaces.map((place) => (
-              <li key={`${selected.slug}-${place.nombre}`}>
-                <strong>{place.nombre}</strong>
-                <span>{place.detalle}</span>
-              </li>
-            ))}
-          </ul>
-        </section>
+          <section className="av2-god-detail-section">
+            <h3>Principios</h3>
+            <ol className="av2-god-principles">
+              {selected.principles.map((principle) => (
+                <li key={`${selected.slug}-${principle}`}>{principle}</li>
+              ))}
+            </ol>
+          </section>
 
-        <section className="av2-god-detail-section">
-          <h3>Lecturas vinculadas</h3>
-          <ul className="av2-god-links">
-            {selected.linkedLore.map((link) => (
-              <li key={`${selected.slug}-${link.label}`}>
-                {link.href ? <Link href={link.href}>{link.label}</Link> : <span>{link.label}</span>}
-                <small>{link.detail}</small>
-              </li>
-            ))}
-          </ul>
-        </section>
+          <section className="av2-god-detail-section">
+            <h3>Lugares sagrados</h3>
+            <ul className="av2-god-places">
+              {selected.sacredPlaces.map((place) => (
+                <li key={`${selected.slug}-${place.nombre}`}>
+                  <strong>{place.nombre}</strong>
+                  <span>{place.detalle}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
 
-        <section className="av2-god-tension">
-          <span>Tension narrativa</span>
-          <p>{selected.tension}</p>
-        </section>
+          <section className="av2-god-detail-section">
+            <h3>Lecturas vinculadas</h3>
+            <ul className="av2-god-links">
+              {selected.linkedLore.map((link) => (
+                <li key={`${selected.slug}-${link.label}`}>
+                  {link.href ? <Link href={link.href}>{link.label}</Link> : <span>{link.label}</span>}
+                  <small>{link.detail}</small>
+                </li>
+              ))}
+            </ul>
+          </section>
 
-        <dl className="av2-god-detail-stats" aria-label="Resumen del panteon">
-          <div>
-            <dt>Pacto</dt>
-            <dd>{pactCount}</dd>
-          </div>
-          <div>
-            <dt>Velados</dt>
-            <dd>{hiddenCount}</dd>
-          </div>
-          <div>
-            <dt>Total</dt>
-            <dd>{gods.length}</dd>
-          </div>
-        </dl>
+          <section className="av2-god-tension">
+            <span>Tension narrativa</span>
+            <p>{selected.tension}</p>
+          </section>
 
-        <Link href={selected.primaryHref} className="av2-btn av2-btn--primary av2-god-cta">
-          Ver entrada del archivo
-        </Link>
-      </aside>
+          <section className="av2-god-domains" aria-label="Dominios">
+            <div className="av2-god-section-head">
+              <span>Dominios</span>
+              <small>{selected.domains.length} registros</small>
+            </div>
+            <div className="av2-god-domain-grid">
+              {selected.domains.map((domain) => (
+                <span key={`${selected.slug}-${domain}`} className="av2-god-domain">
+                  {domain}
+                </span>
+              ))}
+            </div>
+          </section>
+
+          <footer className="av2-god-dossier-footer">
+            <dl className="av2-god-detail-stats" aria-label="Resumen del panteon">
+              <div>
+                <dt>Pacto</dt>
+                <dd>{pactCount}</dd>
+              </div>
+              <div>
+                <dt>Velados</dt>
+                <dd>{hiddenCount}</dd>
+              </div>
+              <div>
+                <dt>Total</dt>
+                <dd>{gods.length}</dd>
+              </div>
+            </dl>
+
+            <Link href={selected.primaryHref} className="av2-btn av2-btn--primary av2-god-cta">
+              Ver entrada del archivo
+            </Link>
+          </footer>
+        </div>
+      </section>
     </div>
   );
 }

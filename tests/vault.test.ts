@@ -99,7 +99,13 @@ describe("entity CRUD", () => {
   it("listByType retorna entidades ordenadas", async () => {
     await initVault(tmpDir);
 
-    const md1 = updateEntityMarkdown(null, { tipo: "personaje", nombre: "Io" }, 1, "P", "familiar");
+    const md1 = updateEntityMarkdown(
+      null,
+      { tipo: "personaje", nombre: "Io", alias: ["Kuzu"] },
+      1,
+      "P",
+      "familiar",
+    );
     const md2 = updateEntityMarkdown(null, { tipo: "personaje", nombre: "Mysha" }, 1, "P", "bruja");
 
     await writeEntity(tmpDir, "personaje", "Io", md1);
@@ -108,6 +114,7 @@ describe("entity CRUD", () => {
     const list = await listByType(tmpDir, "personaje");
     expect(list).toHaveLength(2);
     expect(list[0].nombre).toBe("Io");
+    expect(list[0].aliases).toEqual(["Kuzu"]);
     expect(list[1].nombre).toBe("Mysha");
   });
 });
@@ -162,6 +169,26 @@ describe("extractEpisodeExcerpt", () => {
 
     expect(extractEpisodeExcerpt(body, 140)).toBe(
       "El grupo llega a Underdark con urgencia. La amenaza crece."
+    );
+  });
+
+  it("usa el resumen cronologico si el resumen corto esta vacio", () => {
+    const body = [
+      "## Resumen",
+      "",
+      "## Cast del episodio",
+      "",
+      "- **Mysha**: Dato de reparto que no debe usarse.",
+      "",
+      "## Resumen cronológico",
+      "",
+      "Tras cruzar el desierto, el grupo llega a [[Metrópolis de Cobre]] y acepta un voto de confianza.",
+      "",
+      "Segundo parrafo que no debe entrar.",
+    ].join("\n");
+
+    expect(extractEpisodeExcerpt(body, 160)).toBe(
+      "Tras cruzar el desierto, el grupo llega a Metrópolis de Cobre y acepta un voto de confianza."
     );
   });
 });

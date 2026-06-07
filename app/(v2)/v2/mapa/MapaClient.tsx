@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import AtlasRegionList from "@/components/atlas-v2/AtlasRegionList";
 import AtlasMapViewer from "@/components/atlas-v2/AtlasMapViewer";
 import AtlasRegionInfo from "@/components/atlas-v2/AtlasRegionInfo";
+import { runAtlasViewTransition } from "@/components/atlas-v2/AtlasViewTransitions";
 import type { V2Region } from "@/data/atlas-v2/locations";
 
 export default function MapaClient({
@@ -28,8 +29,18 @@ export default function MapaClient({
   }, [selectedSlug]);
 
   function clearSelection() {
-    setSelectedSlug("");
-    setInfoOpen(false);
+    runAtlasViewTransition(() => {
+      setSelectedSlug("");
+      setInfoOpen(false);
+    }, "state-place");
+  }
+
+  function selectRegion(slug: string) {
+    if (slug === selectedSlug && infoOpen) return;
+    runAtlasViewTransition(() => {
+      setSelectedSlug(slug);
+      setInfoOpen(true);
+    }, "state-place");
   }
 
   if (!selected) {
@@ -41,7 +52,7 @@ export default function MapaClient({
       <AtlasRegionList
         regions={regions}
         selectedSlug={selected.slug}
-        onSelect={setSelectedSlug}
+        onSelect={selectRegion}
       />
       <div className={`av2-mapa-main av2-mapa-main--row ${infoOpen ? "is-info-open" : ""}`}>
         <div className="av2-mapa-canvas">
@@ -49,7 +60,7 @@ export default function MapaClient({
             regions={regions}
             additionSlugs={additionSlugs}
             selectedSlug={selectedSlug || null}
-            onSelect={setSelectedSlug}
+            onSelect={selectRegion}
             onClearSelection={clearSelection}
           />
         </div>
@@ -57,7 +68,11 @@ export default function MapaClient({
         <button
           type="button"
           className="av2-mapa-info-toggle"
-          onClick={() => setInfoOpen((v) => !v)}
+          onClick={() => {
+            runAtlasViewTransition(() => {
+              setInfoOpen((v) => !v);
+            }, "state-place");
+          }}
           aria-label={infoOpen ? "Cerrar panel de información" : "Abrir panel de información"}
           aria-expanded={infoOpen}
           aria-controls="mapa-info-drawer"

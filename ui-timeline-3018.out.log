@@ -1,0 +1,91 @@
+
+> recuerdos-de-cobre@0.1.0 dev
+> next dev -p 3018
+
+   ▲ Next.js 15.5.18
+   - Local:        http://localhost:3018
+   - Network:      http://192.168.1.36:3018
+   - Environments: .env.local
+   - Experiments (use with caution):
+     · serverActions
+
+ ✓ Starting...
+ ✓ Ready in 2.7s
+ ○ Compiling /v2/timeline ...
+ ✓ Compiled /v2/timeline in 2.5s (718 modules)
+ GET /v2/timeline 200 in 3679ms
+ GET /v2/timeline 200 in 272ms
+ ✓ Compiled in 464ms (704 modules)
+ ✓ Compiled in 527ms (260 modules)
+ ✓ Compiled /v2/timeline in 106ms (458 modules)
+ GET /v2/timeline 200 in 1131ms
+ GET /v2/timeline 200 in 336ms
+ GET /v2/timeline 200 in 353ms
+ ○ Compiling /v2/capitulos/[num] ...
+ ✓ Compiled /v2/capitulos/[num] in 753ms (727 modules)
+ GET /v2/capitulos/1 200 in 5910ms
+ GET /v2/timeline 200 in 287ms
+ GET /v2/timeline 200 in 316ms
+ ✓ Compiled in 411ms (727 modules)
+ ✓ Compiled in 622ms (741 modules)
+ GET /v2/timeline 200 in 4820ms
+ GET /v2/capitulos/1 200 in 4820ms
+ GET /v2/timeline 200 in 515ms
+ ✓ Compiled in 351ms (727 modules)
+ GET /v2/timeline 200 in 1214ms
+ GET /v2/capitulos/1 200 in 3758ms
+ GET /v2/timeline 200 in 342ms
+ GET /v2/timeline 200 in 415ms
+ GET /v2/timeline 200 in 343ms
+ ✓ Compiled in 274ms (479 modules)
+ GET /v2/timeline 200 in 896ms
+ ✓ Compiled in 264ms (479 modules)
+ GET /v2/timeline 200 in 934ms
+ ✓ Compiled in 598ms (741 modules)
+ GET /v2/timeline 200 in 800ms
+ GET /v2/timeline 200 in 496ms
+ ○ Compiling /v2/personajes ...
+ ✓ Compiled /v2/personajes in 579ms (744 modules)
+ GET /v2/personajes 200 in 1597ms
+ GET /v2/personajes 200 in 450ms
+ ✓ Compiled in 294ms (490 modules)
+ GET /v2/personajes 200 in 779ms
+ GET /v2/personajes 200 in 431ms
+ ✓ Compiled in 305ms (491 modules)
+ GET /v2/personajes 200 in 689ms
+ GET /v2/personajes 200 in 414ms
+ GET /v2/personajes 200 in 795ms
+ ✓ Compiled in 940ms (747 modules)
+ GET /v2/personajes 200 in 628ms
+ ✓ Compiled in 244ms (747 modules)
+ GET /v2/personajes 200 in 952ms
+ ✓ Compiled in 348ms (492 modules)
+ GET /v2/personajes 200 in 739ms
+ GET /v2/personajes 200 in 538ms
+ ✓ Compiled in 586ms (747 modules)
+ GET /v2/personajes 200 in 690ms
+ GET /v2/personajes 200 in 514ms
+ GET /v2/timeline 200 in 508ms
+ GET /v2/capitulos/1 200 in 4013ms
+ GET /v2/timeline 200 in 176ms
+ GET /v2/capitulos/1 200 in 271ms
+ GET /v2/timeline 200 in 162ms
+ GET /v2/capitulos/1 200 in 228ms
+ GET /v2/timeline 200 in 131ms
+ GET /v2/capitulos/1 200 in 300ms
+ GET /v2/timeline 200 in 124ms
+ GET /v2/capitulos/1 200 in 238ms
+ GET /v2/capitulos/1 200 in 144ms
+ GET /v2/capitulos/1 200 in 146ms
+ GET /v2/capitulos/1 200 in 78ms
+ ○ Compiling /v2/capitulos ...
+ ✓ Compiled /v2/capitulos in 566ms (759 modules)
+ GET /v2/capitulos 200 in 1276ms
+ GET /v2/capitulos/74 200 in 3016ms
+ GET /v2/capitulos/74 200 in 115ms
+ GET /v2/capitulos/74 200 in 72ms
+ GET /v2/capitulos/79 200 in 66ms
+ GET /v2/capitulos/80 200 in 61ms
+ ○ Compiling /v2 ...
+ ✓ Compiled /v2 in 514ms (768 modules)
+ GET /v2 200 in 1188ms

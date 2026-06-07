@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { useEffect, useRef, useState } from "react";
 
 export type CarouselSlide = {
@@ -21,6 +21,7 @@ type Props = {
   intervalMs?: number;
   stats?: HeroStat[];
   cta?: ReactNode;
+  viewTransitionName?: string;
 };
 
 export default function HeroCarousel({
@@ -31,6 +32,7 @@ export default function HeroCarousel({
   intervalMs = 7500,
   stats,
   cta,
+  viewTransitionName,
 }: Props) {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -93,6 +95,11 @@ export default function HeroCarousel({
             alt={i === active ? s.alt : ""}
             aria-hidden={i !== active}
             className={`av2-hc-img ${i === active ? "is-active" : ""}`}
+            style={
+              viewTransitionName && i === active
+                ? ({ viewTransitionName } as CSSProperties)
+                : undefined
+            }
             loading={i === 0 ? "eager" : "lazy"}
             decoding="async"
           />

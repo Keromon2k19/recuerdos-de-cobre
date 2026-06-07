@@ -1,0 +1,414 @@
+
+> recuerdos-de-cobre@0.1.0 dev
+> next dev -p 3018
+
+   ▲ Next.js 15.5.18
+   - Local:        http://localhost:3018
+   - Network:      http://192.168.1.36:3018
+   - Environments: .env.local
+   - Experiments (use with caution):
+     · serverActions
+
+ ✓ Starting...
+ ✓ Ready in 2.6s
+ ○ Compiling /v2/lugares ...
+ ✓ Compiled /v2/lugares in 2.3s (655 modules)
+ GET /v2/lugares 200 in 2812ms
+ GET /v2/lugares 200 in 130ms
+ GET /v2/lugares 200 in 202ms
+ ✓ Compiled in 702ms (655 modules)
+ GET /v2/lugares 200 in 360ms
+ GET /v2/lugares 200 in 160ms
+ ✓ Compiled in 750ms (655 modules)
+ GET /v2/lugares 200 in 444ms
+ GET /v2/lugares 200 in 288ms
+ ✓ Compiled in 592ms (641 modules)
+ ✓ Compiled in 213ms (641 modules)
+ ✓ Compiled in 203ms (641 modules)
+ ✓ Compiled in 593ms (655 modules)
+ GET /v2/lugares 200 in 414ms
+ ✓ Compiled in 769ms (655 modules)
+ GET /v2/lugares 200 in 408ms
+ ✓ Compiled in 668ms (655 modules)
+ GET /v2/lugares 200 in 427ms
+ GET /v2/lugares 200 in 165ms
+ ○ Compiling /v2/lugares/[slug] ...
+ ✓ Compiled /v2/lugares/[slug] in 811ms (731 modules)
+ GET /v2/lugares/santuario-libres 200 in 1261ms
+ GET /v2/lugares 200 in 311ms
+ GET /v2/lugares 200 in 131ms
+ GET /v2/lugares/santuario-libres 200 in 64ms
+ GET /v2/lugares/santuario-libres 200 in 240ms
+ GET /v2/lugares 200 in 142ms
+ GET /v2/lugares/la-metropolis-cobre 200 in 46ms
+ GET /v2/lugares 200 in 140ms
+ GET /v2/lugares 200 in 129ms
+ GET /v2/lugares/la-metropolis-cobre 200 in 79ms
+ GET /v2/lugares/santuario-libres 200 in 183ms
+ GET /v2/lugares 200 in 166ms
+ GET /v2/lugares/la-metropolis-cobre 200 in 62ms
+ GET /v2/lugares 200 in 148ms
+ GET /v2/lugares/la-metropolis-cobre 200 in 87ms
+ GET /v2/lugares 200 in 160ms
+ GET /v2/lugares 200 in 152ms
+ GET /v2/lugares/santuario-libres 200 in 74ms
+ GET /v2/lugares 200 in 148ms
+ ○ Compiling /v2/mapa ...
+ ✓ Compiled /v2/mapa in 831ms (834 modules)
+ GET /v2/mapa 200 in 1024ms
+ ✓ Compiled in 370ms (834 modules)
+ GET /v2/lugares 200 in 285ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 710ms (839 modules)
+ GET /v2/lugares 200 in 511ms
+ GET /v2/mapa 404 in 1184ms
+ GET /v2/mapa 200 in 190ms
+ GET /v2/lugares 200 in 229ms
+ GET /v2/lugares/santuario-libres 200 in 139ms
+ ○ Compiling /v2 ...
+ ✓ Compiled /v2 in 508ms (748 modules)
+ GET /v2 200 in 1487ms
+ GET /v2/lugares/santuario-libres 200 in 685ms
+ ✓ Compiled /v2/mundo in 387ms (764 modules)
+ GET /v2/mundo 200 in 1157ms
+ ✓ Compiled /v2/dioses in 428ms (773 modules)
+ GET /v2/dioses 200 in 541ms
+ ✓ Compiled /v2/personajes in 375ms (789 modules)
+ GET /v2/personajes 200 in 829ms
+ GET /v2 200 in 174ms
+ ○ Compiling /v2/capitulos ...
+ ✓ Compiled /v2/capitulos in 555ms (797 modules)
+ GET /v2/capitulos 200 in 1224ms
+ ✓ Compiled /v2/misterios in 394ms (805 modules)
+ GET /v2/misterios 200 in 1566ms
+ GET /v2/personajes 200 in 396ms
+ ○ Compiling /v2/facciones ...
+ ✓ Compiled /v2/facciones in 535ms (813 modules)
+ GET /v2/facciones 200 in 907ms
+ ✓ Compiled /v2/lugares in 258ms (536 modules)
+ GET /v2/lugares 200 in 390ms
+ ○ Compiling /v2/mapa ...
+ ✓ Compiled /v2/mapa in 960ms (631 modules)
+ GET /v2/mapa 200 in 1182ms
+ GET /v2/dioses 200 in 44ms
+ ○ Compiling /v2/objetos ...
+ ✓ Compiled /v2/objetos in 519ms (920 modules)
+ GET /v2/objetos 200 in 1552ms
+ GET /v2/mundo 200 in 601ms
+ GET /v2/lugares 200 in 59ms
+ ○ Compiling /v2/buscar ...
+ ✓ Compiled /v2/buscar in 557ms (784 modules)
+ GET /v2/buscar 200 in 3691ms
+ GET /v2 200 in 78ms
+ GET /v2/buscar 200 in 98ms
+ GET /v2/lugares 200 in 232ms
+ GET /v2 200 in 61ms
+ GET /v2/buscar 200 in 107ms
+ GET /v2 200 in 54ms
+ GET /v2/buscar 200 in 147ms
+ GET /v2/lugares 200 in 51ms
+ ✓ Compiled /v2/mapa in 240ms (583 modules)
+ GET /v2/mapa 200 in 426ms
+ ✓ Compiled /v2/facciones in 396ms (589 modules)
+ GET /v2/facciones 200 in 745ms
+ GET /v2/lugares 200 in 320ms
+ GET /v2/lugares 200 in 140ms
+ ✓ Compiled in 403ms (488 modules)
+ GET /v2/facciones 200 in 809ms
+ GET /v2/lugares 200 in 816ms
+ ✓ Compiled in 933ms (788 modules)
+ GET /v2/facciones 200 in 498ms
+ GET /v2/lugares 200 in 503ms
+ ✓ Compiled in 576ms (788 modules)
+ GET /v2/lugares 200 in 413ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 574ms (779 modules)
+ GET /v2/facciones 404 in 798ms
+ GET /v2/facciones 200 in 750ms
+ ✓ Compiled in 788ms (793 modules)
+ GET /v2/facciones 200 in 359ms
+ GET /v2/lugares 200 in 362ms
+ GET /v2/lugares 200 in 231ms
+ ✓ Compiled in 584ms (788 modules)
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 2.7s (1126 modules)
+ GET /v2/facciones 404 in 3077ms
+ GET /v2/lugares 500 in 3549ms
+ GET /v2/facciones 200 in 553ms
+ GET /v2/lugares 200 in 115ms
+ GET /v2/facciones 200 in 100ms
+ GET /v2/lugares 200 in 527ms
+ GET /v2/facciones 200 in 502ms
+ GET /v2/lugares 200 in 136ms
+ GET /v2/lugares 200 in 151ms
+ ✓ Compiled in 1025ms (1039 modules)
+ GET /v2/facciones 200 in 795ms
+ GET /v2/lugares 200 in 810ms
+ GET /v2/lugares 200 in 227ms
+ ✓ Compiled in 1031ms (1039 modules)
+ GET /v2/facciones 200 in 519ms
+ GET /v2/lugares 200 in 737ms
+ GET /v2/lugares 200 in 302ms
+ GET /v2/lugares 200 in 143ms
+ GET /v2/lugares 200 in 167ms
+ GET /v2/lugares 200 in 150ms
+ ○ Compiling /v2/lugares/[slug] ...
+ ✓ Compiled /v2/lugares/[slug] in 657ms (613 modules)
+ GET /v2/facciones 200 in 679ms
+ GET /v2/lugares/santuario-libres 200 in 1395ms
+ GET /v2/lugares/santuario-libres 200 in 75ms
+ GET /v2/lugares/santuario-libres 200 in 325ms
+ GET /v2 200 in 629ms
+ ○ Compiling /v2/capitulos ...
+ ✓ Compiled /v2/capitulos in 562ms (611 modules)
+ GET /v2/capitulos 200 in 1623ms
+ GET /v2/facciones 200 in 1061ms
+ GET /v2/capitulos 200 in 374ms
+ GET /v2/lugares/santuario-libres 200 in 1060ms
+ GET /v2/lugares 200 in 214ms
+ ○ Compiling /v2/mapa ...
+ ✓ Compiled /v2/mapa in 640ms (706 modules)
+ GET /v2/mapa 200 in 1915ms
+ GET /v2/capitulos 200 in 1248ms
+ GET /v2/facciones 200 in 1253ms
+ ✓ Compiled /v2/dioses in 304ms (712 modules)
+ GET /v2/dioses 200 in 1483ms
+ GET /v2/capitulos 200 in 1157ms
+ GET /v2/facciones 200 in 1160ms
+ ✓ Compiled /v2/personajes in 244ms (722 modules)
+ GET /v2/personajes 200 in 1005ms
+ GET /v2/dioses 200 in 146ms
+ GET /v2/dioses 200 in 162ms
+ ✓ Compiled in 1196ms (1060 modules)
+ GET /v2/capitulos 200 in 1394ms
+ ✓ Compiled /_not-found in 489ms (1051 modules)
+ GET /v2/facciones 404 in 1889ms
+ GET /v2/dioses 404 in 1872ms
+ GET /v2/dioses 200 in 928ms
+ GET /v2/facciones 200 in 934ms
+ ✓ Compiled /v2/lugares in 234ms (613 modules)
+ GET /v2/capitulos 200 in 1170ms
+ GET /v2/facciones 200 in 1170ms
+ GET /v2/lugares 200 in 1452ms
+ ✓ Compiled /v2/mapa in 402ms (708 modules)
+ GET /v2/mapa 200 in 1541ms
+ GET /v2/capitulos 200 in 1127ms
+ GET /v2/facciones 200 in 1128ms
+ GET /v2/dioses 200 in 132ms
+ GET /v2/personajes 200 in 557ms
+ ✓ Compiled in 1145ms (1159 modules)
+ GET /v2/facciones 200 in 1827ms
+ GET /v2/capitulos 200 in 1832ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 544ms (1150 modules)
+ GET /v2/personajes 404 in 2257ms
+ GET /v2/personajes 200 in 1023ms
+ GET /v2/lugares 200 in 185ms
+ GET /v2/mapa 200 in 146ms
+ GET /v2/dioses 200 in 134ms
+ GET /v2/personajes 200 in 420ms
+ GET /v2/dioses 200 in 143ms
+ GET /v2/lugares 200 in 203ms
+ GET /v2/mapa 200 in 137ms
+ GET /v2/capitulos 200 in 293ms
+ ○ Compiling /v2/misterios ...
+ ✓ Compiled /v2/misterios in 627ms (681 modules)
+ GET /v2/misterios 200 in 1788ms
+ GET /v2/mapa 200 in 1182ms
+ GET /v2/facciones 200 in 1185ms
+ GET /v2/misterios 200 in 308ms
+ GET /v2/facciones 200 in 41ms
+ GET /v2/lugares 200 in 62ms
+ GET /v2/mapa 200 in 45ms
+ GET /v2/dioses 200 in 44ms
+ ✓ Compiled /v2/objetos in 327ms (687 modules)
+ GET /v2/objetos 200 in 2031ms
+ GET /v2/mapa 200 in 1733ms
+ GET /v2/facciones 200 in 1749ms
+ GET /v2/objetos 200 in 453ms
+ ✓ Compiled /v2/mundo in 407ms (693 modules)
+ GET /v2/mundo 200 in 1675ms
+ GET /v2/mapa 200 in 1204ms
+ GET /v2/facciones 200 in 1989ms
+ GET /v2/objetos 200 in 1045ms
+ GET /v2/mundo 200 in 46ms
+ GET /v2/capitulos 200 in 549ms
+ GET /v2/misterios 200 in 1016ms
+ ✓ Compiled /v2 in 376ms (700 modules)
+ GET /v2 200 in 1762ms
+ GET /v2/mapa 200 in 1307ms
+ GET /v2/capitulos 200 in 603ms
+ GET /v2/facciones 200 in 1313ms
+ GET /v2 200 in 841ms
+ GET /v2/capitulos 200 in 509ms
+ GET /v2/misterios 200 in 864ms
+ ○ Compiling /v2/personajes ...
+ ✓ Compiled /v2/personajes in 830ms (684 modules)
+ GET /v2/personajes 200 in 1480ms
+ GET /v2/facciones 200 in 466ms
+ GET /v2/lugares 200 in 100ms
+ GET /v2/mapa 200 in 92ms
+ ✓ Compiled in 1597ms (1112 modules)
+ GET /v2/facciones 200 in 1358ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 948ms (1117 modules)
+ GET /v2/mapa 404 in 2341ms
+ GET /v2/mapa 404 in 2339ms
+ GET /v2/mapa 200 in 641ms
+ GET /v2/mapa 200 in 387ms
+ ✓ Compiled in 1238ms (1112 modules)
+ ✓ Compiled in 1455ms (1126 modules)
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 514ms (1117 modules)
+ GET /v2/facciones 404 in 772ms
+ GET /v2/mapa 404 in 771ms
+ GET /v2/mapa 200 in 817ms
+ GET /v2/mapa 200 in 823ms
+ GET /v2/facciones 200 in 847ms
+ ○ Compiling /v2/timeline ...
+ ✓ Compiled /v2/timeline in 688ms (1126 modules)
+ GET /v2/timeline 200 in 1707ms
+ GET /v2/mapa 200 in 1284ms
+ GET /v2/facciones 200 in 1307ms
+ GET /v2/timeline 200 in 346ms
+ ✓ Compiled in 1067ms (1130 modules)
+ GET /v2/mapa 200 in 1417ms
+ GET /v2/timeline 200 in 1422ms
+ GET /v2/facciones 200 in 1426ms
+ GET /v2/timeline 200 in 379ms
+ ✓ Compiled in 292ms (676 modules)
+ GET /v2/mapa 200 in 1045ms
+ GET /v2/timeline 200 in 1047ms
+ GET /v2/facciones 200 in 1049ms
+ GET /v2/timeline 200 in 579ms
+ GET /v2/timeline 200 in 348ms
+ GET /v2/timeline 200 in 342ms
+ GET /v2/timeline 200 in 307ms
+ GET /v2/timeline 200 in 358ms
+ GET /v2/timeline 200 in 395ms
+ ○ Compiling /v2/capitulos/[num] ...
+ ✓ Compiled /v2/capitulos/[num] in 636ms (1138 modules)
+ GET /v2/capitulos/1 200 in 6117ms
+ GET /v2/timeline 200 in 5572ms
+ GET /v2/timeline 200 in 406ms
+ GET /v2/capitulos/1 200 in 107ms
+ ✓ Compiled in 459ms (697 modules)
+ GET /v2/timeline 200 in 1075ms
+ ✓ Compiled /_not-found in 505ms (1143 modules)
+ GET /v2/facciones 404 in 1709ms
+ GET /v2/timeline 404 in 1114ms
+ GET /v2/mapa 404 in 1711ms
+ GET /v2/mapa 200 in 1952ms
+ GET /v2/timeline 200 in 1986ms
+ GET /v2/facciones 200 in 1993ms
+ GET /v2/timeline 200 in 437ms
+ GET /v2/timeline 200 in 336ms
+ GET /v2/timeline 200 in 364ms
+ GET /v2/timeline 200 in 339ms
+ GET /v2/timeline 200 in 458ms
+ GET /v2/timeline 200 in 414ms
+ GET /v2/timeline 200 in 493ms
+ GET /v2/timeline 200 in 397ms
+ GET /v2/timeline 200 in 402ms
+ GET /v2/capitulos 200 in 230ms
+ GET /v2/timeline 200 in 738ms
+ GET /v2/timeline 200 in 36ms
+ GET /v2/capitulos 200 in 33ms
+ GET /v2/timeline 200 in 34ms
+ GET /v2/timeline 200 in 402ms
+ GET /v2/timeline 200 in 358ms
+ GET /v2/timeline 200 in 379ms
+ GET /v2/timeline 200 in 377ms
+ ✓ Compiled in 631ms (1117 modules)
+ ✓ Compiled in 1021ms (1131 modules)
+ ✓ Compiled /_not-found in 404ms (1122 modules)
+ GET /v2/facciones 404 in 1050ms
+ GET /v2/mapa 404 in 1023ms
+ GET /v2/timeline 404 in 1056ms
+ GET /v2/timeline 200 in 2602ms
+ GET /v2/mapa 200 in 2608ms
+ GET /v2/timeline 200 in 2622ms
+ GET /v2/facciones 200 in 2638ms
+ GET /v2/timeline 200 in 588ms
+ GET /v2/timeline 200 in 450ms
+ ✓ Compiled in 660ms (1117 modules)
+ GET /v2/mapa 200 in 2678ms
+ GET /v2/timeline 200 in 3168ms
+ GET /v2/facciones 200 in 3155ms
+ GET /v2/timeline 200 in 624ms
+ GET /v2/timeline 200 in 362ms
+ ✓ Compiled in 1179ms (1117 modules)
+ ✓ Compiled in 726ms (1131 modules)
+ GET /v2/facciones 200 in 542ms
+ ✓ Compiled in 649ms (1131 modules)
+ GET /v2/facciones 200 in 531ms
+ ✓ Compiled in 622ms (1131 modules)
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 541ms (1122 modules)
+ GET /v2/facciones 404 in 684ms
+ GET /v2/facciones 200 in 750ms
+ GET /v2/timeline 200 in 1554ms
+ GET /v2/timeline 200 in 427ms
+ ✓ Compiled in 1467ms (1131 modules)
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 545ms (1122 modules)
+ GET /v2/facciones 404 in 762ms
+ GET /v2/timeline 404 in 769ms
+ GET /v2/facciones 200 in 2131ms
+ GET /v2/timeline 200 in 1825ms
+ GET /v2/timeline 200 in 371ms
+ ✓ Compiled in 729ms (1117 modules)
+ GET /v2/timeline 200 in 1973ms
+ GET /v2/facciones 200 in 1960ms
+ GET /v2/timeline 200 in 419ms
+ ✓ Compiled in 694ms (1117 modules)
+ GET /v2/timeline 200 in 887ms
+ ✓ Compiled in 510ms (1117 modules)
+ GET /v2/timeline 200 in 922ms
+ ✓ Compiled in 1738ms (1131 modules)
+ GET /v2/timeline 200 in 1224ms
+ ✓ Compiled /_not-found in 434ms (1122 modules)
+ GET /v2/facciones 404 in 1665ms
+ GET /v2/facciones 200 in 707ms
+ GET /v2/timeline 200 in 951ms
+ GET /v2/timeline 200 in 763ms
+ GET /v2/timeline 200 in 445ms
+ GET /v2/timeline 200 in 1435ms
+ GET /v2/timeline 200 in 519ms
+ ✓ Compiled in 361ms (676 modules)
+ GET /v2/timeline 200 in 1143ms
+ GET /v2/facciones 200 in 1144ms
+ ✓ Compiled in 626ms (1117 modules)
+ ✓ Compiled in 339ms (1117 modules)
+ GET /v2/timeline 200 in 1084ms
+ ✓ Compiled in 1561ms (1131 modules)
+ GET /v2/facciones 200 in 1100ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 950ms (1122 modules)
+ GET /v2/timeline 404 in 2173ms
+ GET /v2/timeline 200 in 4687ms
+ GET /v2/timeline 200 in 4665ms
+ ✓ Compiled in 621ms (1117 modules)
+ GET /v2/timeline 200 in 1611ms
+ ✓ Compiled in 1088ms (1131 modules)
+ GET /v2/timeline 200 in 1698ms
+ GET /v2/facciones 200 in 1702ms
+ GET /v2/timeline 200 in 898ms
+ GET /v2/timeline 200 in 443ms
+ GET /v2/timeline 200 in 488ms
+ ✓ Compiled in 762ms (1117 modules)
+ GET /v2/timeline 200 in 1635ms
+ ✓ Compiled in 985ms (1131 modules)
+ GET /v2/facciones 200 in 1514ms
+ GET /v2/timeline 200 in 1521ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 1116ms (1122 modules)
+ GET /v2/timeline 404 in 1570ms
+ GET /v2/timeline 200 in 1142ms
+ GET /v2/timeline 200 in 471ms
+ ✓ Compiled in 2.1s (1131 modules)
+ GET /v2/facciones 200 in 1605ms
+ GET /v2/timeline 200 in 1607ms
+ GET /v2/timeline 200 in 486ms
+ GET /v2/timeline 200 in 482ms
+[?25h

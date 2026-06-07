@@ -761,18 +761,20 @@ git commit -m "fix(timeline): ajustes de QA visual desktop/mobile"
 
 ## Criterios de aceptación
 
-- [ ] `/v2/timeline` lista los episodios en orden ascendente, una card por archivo.
-- [ ] Eje central con nodos numerados; número ópticamente centrado; conector alineado.
-- [ ] Cards alternadas izq/der con eyebrow, título, ubicación, resumen (3 líneas) y
+- [x] `/v2/timeline` lista los episodios en orden ascendente, una card por archivo.
+- [x] Eje central con nodos numerados; número ópticamente centrado; conector alineado.
+- [x] Cards alternadas izq/der con eyebrow, título, ubicación, resumen (3 líneas) y
       chips de personajes (PJs primero, +N de overflow). Sin miniatura.
-- [ ] Animación anclada al scroll (entra/sale), solo `transform`/`opacity`, respeta
+- [x] Animación anclada al scroll (entra/sale), solo `transform`/`opacity`, respeta
       `prefers-reduced-motion` y degrada visible sin JS.
-- [ ] Índice flotante de progreso (rail) a la derecha en desktop, con caption "EP N"
+- [x] Índice flotante de progreso (rail) a la derecha en desktop, con caption "EP N"
       que sigue el scroll; oculto en mobile.
-- [ ] Link "Línea de tiempo" en la nav (grupo Crónicas).
-- [ ] `npx vitest run tests/atlas-v2-timeline.test.ts` en verde; `npx tsc --noEmit` sin
+- [x] Link "Línea de tiempo" en la nav (grupo Crónicas).
+- [x] `npx vitest run tests/atlas-v2-timeline.test.ts` en verde; `npx tsc --noEmit` sin
       errores nuevos.
 - [ ] QA visual desktop + mobile comparada contra `docs/ui-v2/timeline-reference.html`,
       sin P0/P1 abiertos.
+      Desktop verificado en Playwright; mobile queda fuera de alcance por decision
+      actual del usuario.
 - [ ] No se rompió `/v2/capitulos` ni otras rutas existentes.
 ```

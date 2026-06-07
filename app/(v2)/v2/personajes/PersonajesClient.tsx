@@ -10,6 +10,7 @@ import AtlasFilterPanel, {
   type FilterValue,
 } from "@/components/atlas-v2/AtlasFilterPanel";
 import AtlasDetailPanel from "@/components/atlas-v2/AtlasDetailPanel";
+import { characterMatchesSearch } from "@/lib/atlas-v2-character-search";
 import type { V2Character } from "@/data/atlas-v2/characters";
 
 function aparicionBucket(n: number): string {
@@ -50,14 +51,7 @@ export default function PersonajesClient({
   const filtered = useMemo(() => {
     let list = characters;
     if (filters.search) {
-      const q = filters.search.toLowerCase();
-      list = list.filter((c) =>
-        [c.nombre, c.rol, c.epiteto, ...c.facciones]
-          .filter(Boolean)
-          .join(" ")
-          .toLowerCase()
-          .includes(q)
-      );
+      list = list.filter((c) => characterMatchesSearch(c, filters.search));
     }
     if (filters.rol) list = list.filter((c) => c.rol === filters.rol);
     if (filters.faccion)

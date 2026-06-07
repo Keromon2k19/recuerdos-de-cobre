@@ -8,9 +8,10 @@ Los documentos anteriores (`PRODUCT.md`, `DESIGN.md`, `AGENTS.md` y
 contexto historico y tecnico, pero no como direccion final de producto o
 diseno. No reconstruir "Sala de Cobre" como identidad final.
 
-> **Trabajo planificado (no parte de la visión base):** la **timeline de la
-> campaña** (`/v2/timeline`) está diseñada y lista para implementar. Ver el plan
-> en `docs/superpowers/plans/2026-06-05-timeline-de-la-campana.md` y la referencia
+> **Trabajo implementado (no parte de la visión base):** la **timeline de la
+> campaña** (`/v2/timeline`) existe como página exploratoria de la campaña. Ver el
+> plan y estado de aceptación en
+> `docs/superpowers/plans/2026-06-05-timeline-de-la-campana.md`, y la referencia
 > visual en `docs/ui-v2/timeline-reference.html`.
 
 ## Objetivo final
@@ -326,4 +327,3 @@ Una implementacion del reinicio se considera alineada si:
 - El panel local puede seguir operando gratis.
 - La extraccion la hacen Codex/Claude a mano, sin API (Ollama y Gemini retirados).
 - El diseno ya no reproduce "Sala de Cobre" como resultado final.
-

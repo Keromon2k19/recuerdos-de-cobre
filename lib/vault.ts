@@ -157,6 +157,7 @@ export async function writeEntity(
 export type EntityListItem = {
   nombre: string;
   slug: string;
+  aliases?: string[];
   apariciones: number[];
   origen?: string;
   rol?: string;
@@ -170,6 +171,15 @@ export type EntityListItem = {
   /** Primer fragmento de la sección Perfil, o fallback a la primera mención. */
   descripcion?: string;
 };
+
+function asStringArray(value: unknown): string[] {
+  if (typeof value === "string" && value.trim()) return [value.trim()];
+  if (!Array.isArray(value)) return [];
+  return value
+    .filter((item): item is string => typeof item === "string")
+    .map((item) => item.trim())
+    .filter(Boolean);
+}
 
 /**
  * Extrae un fragmento descriptivo del body de una entidad.
@@ -266,6 +276,7 @@ export async function listByType(
         const item: EntityListItem = {
           nombre: (frontmatter.nombre as string) ?? filename.replace(".md", ""),
           slug: filename.replace(".md", ""),
+          aliases: asStringArray(frontmatter.alias),
           apariciones: (frontmatter.apariciones as number[]) ?? [],
           origen: frontmatter.origen as string | undefined,
           rol: frontmatter.rol as string | undefined,
@@ -318,16 +329,46 @@ function truncateText(raw: string, maxLen: number): string {
 }
 
 export function extractEpisodeExcerpt(body: string, maxLen = 190): string {
-  const resumenMatch = body.match(
-    /^##\s+Resumen\s*\n+([\s\S]+?)(?=\n##\s+|\n###\s+|\n*$)/im
+  const resumen = extractHeadingSection(body, /^##\s+Resumen\s*$/i);
+  const resumenCronologico = extractHeadingSection(
+    body,
+    /^##\s+Resumen cronol[oó]gico\s*$/i,
   );
-  const source = resumenMatch?.[1] ?? body;
   const paragraph =
+    firstNarrativeParagraph(resumen) ||
+    firstNarrativeParagraph(resumenCronologico) ||
+    firstNarrativeParagraph(body);
+  return truncateText(paragraph, maxLen);
+}
+
+function extractHeadingSection(body: string, heading: RegExp): string {
+  const lines = body.split(/\r?\n/);
+  const start = lines.findIndex((line) => heading.test(line.trim()));
+  if (start === -1) return "";
+
+  const section: string[] = [];
+  for (let index = start + 1; index < lines.length; index += 1) {
+    const line = lines[index];
+    if (/^#{2,6}\s+/.test(line.trim())) break;
+    section.push(line);
+  }
+  return section.join("\n");
+}
+
+function firstNarrativeParagraph(source: string): string {
+  return (
     source
       .split(/\n{2,}/)
+      .map((paragraph) => paragraph.trim())
+      .filter((paragraph) => {
+        if (!paragraph) return false;
+        if (/^#{1,6}\s+/.test(paragraph)) return false;
+        if (/^[-*]\s+/.test(paragraph)) return false;
+        return true;
+      })
       .map(cleanMarkdownText)
-      .find(Boolean) ?? "";
-  return truncateText(paragraph, maxLen);
+      .find(Boolean) ?? ""
+  );
 }
 
 /**
