@@ -7,27 +7,15 @@ import { readEpisode } from "@/lib/vault";
 import { parseMarkdown } from "@/lib/markdown";
 import { resolveHeroBackground } from "@/data/atlas-v2/hero-backgrounds";
 import { buildHomeChapterSlides } from "@/lib/atlas-v2-home";
-
-// Home v2 lee del vault local (filesystem) — no es DB. ISR cada 60s en vez de
-// force-dynamic deja que Next sirva la página cacheada y revalide en background.
-export const revalidate = 60;
+import { publicVaultPath } from "@/lib/public-vault-path";
 
 const HOME_CHAPTER_SCENE = "/assets/atlas-v2/scenes/metropolis.webp";
 
-function vault() {
-  return process.env.VAULT_PATH?.trim() || "";
-}
+export const dynamic = "force-static";
 
-type V2HomeSearchParams = Record<string, string | string[] | undefined>;
-
-type V2HomePageProps = {
-  searchParams?: Promise<V2HomeSearchParams>;
-};
-
-export default async function V2HomePage({ searchParams }: V2HomePageProps) {
-  const params = searchParams ? await searchParams : {};
-  const heroBackground = resolveHeroBackground(params.bg);
-  const vp = vault();
+export default async function V2HomePage() {
+  const heroBackground = resolveHeroBackground();
+  const vp = publicVaultPath();
 
   const episodes = vp ? await cachedListEpisodes(vp) : [];
   const recentEpisodes = episodes.slice(-5);

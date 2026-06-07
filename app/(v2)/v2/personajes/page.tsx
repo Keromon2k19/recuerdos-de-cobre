@@ -4,10 +4,11 @@ import AtlasPageScene from "@/components/atlas-v2/AtlasPageScene";
 import { resolveAtlasV2CharacterRole } from "@/lib/atlas-v2-character-role";
 import { resolveAtlasV2Portrait } from "@/lib/atlas-v2-portraits";
 import { cachedListByType } from "@/lib/public-cache";
+import { publicVaultPath } from "@/lib/public-vault-path";
 import type { EntityListItem } from "@/lib/vault";
 import type { V2Character } from "@/data/atlas-v2/characters";
 
-export const dynamic = "force-dynamic";
+export const dynamic = "force-static";
 
 export const metadata = {
   title: "Personajes · Grimorio de Lore",
@@ -51,8 +52,7 @@ function toV2Character(e: EntityListItem): V2Character {
 }
 
 export default async function PersonajesPage() {
-  const vp = process.env.VAULT_PATH?.trim() || "";
-  const raw = vp ? await cachedListByType(vp, "personaje") : [];
+  const raw = await cachedListByType(publicVaultPath(), "personaje");
   const characters = raw.map(toV2Character);
 
   return (

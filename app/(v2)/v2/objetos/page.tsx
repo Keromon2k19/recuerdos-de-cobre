@@ -2,16 +2,16 @@ import ObjetosClient from "./ObjetosClient";
 import AtlasPageScene from "@/components/atlas-v2/AtlasPageScene";
 import { toAtlasV2EntitySummary } from "@/lib/atlas-v2-content";
 import { cachedListByType } from "@/lib/public-cache";
+import { publicVaultPath } from "@/lib/public-vault-path";
 
-export const dynamic = "force-dynamic";
+export const dynamic = "force-static";
 
 export const metadata = {
   title: "Objetos - Grimorio de Lore",
 };
 
 export default async function ObjetosPage() {
-  const vp = process.env.VAULT_PATH?.trim() || "";
-  const raw = vp ? await cachedListByType(vp, "objeto") : [];
+  const raw = await cachedListByType(publicVaultPath(), "objeto");
   const items = raw
     .map((item) => toAtlasV2EntitySummary(item, "Objeto"))
     .sort((a, b) => b.appearances - a.appearances || a.name.localeCompare(b.name, "es"));

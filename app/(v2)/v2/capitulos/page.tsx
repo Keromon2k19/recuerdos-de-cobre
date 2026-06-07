@@ -3,9 +3,10 @@ import CapitulosClient from "./CapitulosClient";
 import AtlasPageScene from "@/components/atlas-v2/AtlasPageScene";
 import { cachedListByType, cachedListEpisodes } from "@/lib/public-cache";
 import { parseEpisodioRef } from "@/lib/episode-number";
+import { publicVaultPath } from "@/lib/public-vault-path";
 import type { V2Chapter } from "@/data/atlas-v2/chapters";
 
-export const dynamic = "force-dynamic";
+export const dynamic = "force-static";
 
 export const metadata = {
   title: "Capítulos · Grimorio de Lore",
@@ -121,13 +122,11 @@ function toV2Chapter(ep: VaultEpisode, roles: Map<string, string>): V2Chapter {
 }
 
 export default async function CapitulosPage() {
-  const vp = process.env.VAULT_PATH?.trim() || "";
-  const [episodes, personajes] = vp
-    ? await Promise.all([
-        cachedListEpisodes(vp),
-        cachedListByType(vp, "personaje"),
-      ])
-    : [[], []];
+  const vp = publicVaultPath();
+  const [episodes, personajes] = await Promise.all([
+    cachedListEpisodes(vp),
+    cachedListByType(vp, "personaje"),
+  ]);
   const roles = buildRoleIndex(personajes);
   const chapters = episodes.map((ep) => toV2Chapter(ep, roles)).reverse();
 

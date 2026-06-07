@@ -2,10 +2,11 @@
 import FaccionesClient from "./FaccionesClient";
 import AtlasPageScene from "@/components/atlas-v2/AtlasPageScene";
 import { cachedListByType } from "@/lib/public-cache";
+import { publicVaultPath } from "@/lib/public-vault-path";
 import type { EntityListItem } from "@/lib/vault";
 import type { V2Faction, V2FactionCategory } from "@/data/atlas-v2/factions";
 
-export const dynamic = "force-dynamic";
+export const dynamic = "force-static";
 
 export const metadata = {
   title: "Facciones · Grimorio de Lore",
@@ -49,8 +50,7 @@ function toV2Faction(e: EntityListItem): V2Faction {
 }
 
 export default async function FaccionesPage() {
-  const vp = process.env.VAULT_PATH?.trim() || "";
-  const raw = vp ? await cachedListByType(vp, "faccion") : [];
+  const raw = await cachedListByType(publicVaultPath(), "faccion");
   const factions = raw
     .map(toV2Faction)
     .sort((a, b) => b.apariciones - a.apariciones);

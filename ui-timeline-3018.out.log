@@ -89,3 +89,10 @@
  ○ Compiling /v2 ...
  ✓ Compiled /v2 in 514ms (768 modules)
  GET /v2 200 in 1188ms
+ ✓ Compiled in 382ms (508 modules)
+ ✓ Compiled in 456ms (508 modules)
+ GET /v2/timeline 200 in 3891ms
+ GET /v2 200 in 3627ms
+ GET /v2/timeline 200 in 1807ms
+ GET /v2 200 in 1959ms
+ ✓ Compiled in 303ms (508 modules)

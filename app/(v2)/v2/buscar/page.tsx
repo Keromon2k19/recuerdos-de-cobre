@@ -4,15 +4,16 @@ import { MOCK_GODS } from "@/data/atlas-v2/gods";
 import { buildAtlasV2SearchIndex } from "@/lib/atlas-v2-search";
 import { getAllRegions } from "@/lib/map-overrides";
 import { cachedListByType, cachedListEpisodes } from "@/lib/public-cache";
+import { publicVaultPath } from "@/lib/public-vault-path";
 
-export const dynamic = "force-dynamic";
+export const dynamic = "force-static";
 
 export const metadata = {
   title: "Buscar - Grimorio de Lore",
 };
 
 export default async function BuscarPage() {
-  const vp = process.env.VAULT_PATH?.trim() || "";
+  const vp = publicVaultPath();
   const [
     episodes,
     personajes,
@@ -21,17 +22,15 @@ export default async function BuscarPage() {
     objetos,
     misterios,
     mundo,
-  ] = vp
-    ? await Promise.all([
-        cachedListEpisodes(vp),
-        cachedListByType(vp, "personaje"),
-        cachedListByType(vp, "faccion"),
-        cachedListByType(vp, "lugar"),
-        cachedListByType(vp, "objeto"),
-        cachedListByType(vp, "misterio"),
-        cachedListByType(vp, "worldbuilding"),
-      ])
-    : [[], [], [], [], [], [], []];
+  ] = await Promise.all([
+    cachedListEpisodes(vp),
+    cachedListByType(vp, "personaje"),
+    cachedListByType(vp, "faccion"),
+    cachedListByType(vp, "lugar"),
+    cachedListByType(vp, "objeto"),
+    cachedListByType(vp, "misterio"),
+    cachedListByType(vp, "worldbuilding"),
+  ]);
 
   const items = buildAtlasV2SearchIndex({
     episodes,

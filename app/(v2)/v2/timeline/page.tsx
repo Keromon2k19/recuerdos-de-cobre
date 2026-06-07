@@ -7,8 +7,9 @@ import {
   buildTimelineItems,
   type TimelinePlaceImage,
 } from "@/lib/atlas-v2-timeline";
+import { publicVaultPath } from "@/lib/public-vault-path";
 
-export const dynamic = "force-dynamic";
+export const dynamic = "force-static";
 
 export const metadata = {
   title: "Linea de tiempo - Grimorio de Lore",
@@ -56,13 +57,11 @@ function buildTimelinePlaceImages(): TimelinePlaceImage[] {
 }
 
 export default async function TimelinePage() {
-  const vaultPath = process.env.VAULT_PATH?.trim() || "";
-  const [episodes, personajes] = vaultPath
-    ? await Promise.all([
-        cachedListEpisodes(vaultPath),
-        cachedListByType(vaultPath, "personaje"),
-      ])
-    : [[], []];
+  const vaultPath = publicVaultPath();
+  const [episodes, personajes] = await Promise.all([
+    cachedListEpisodes(vaultPath),
+    cachedListByType(vaultPath, "personaje"),
+  ]);
   const items = buildTimelineItems(
     episodes,
     personajes,
