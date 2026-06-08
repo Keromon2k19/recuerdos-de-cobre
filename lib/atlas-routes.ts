@@ -15,6 +15,7 @@ export const ATLAS_ROUTES = {
 export const LEGACY_PUBLIC_REDIRECTS: Record<string, string> = {
   // Redirecciones de la antigua V2 a la raíz
   "/v2": ATLAS_ROUTES.home,
+  "/v2/timeline": "/timeline",
   "/v2/capitulos": ATLAS_ROUTES.capitulos,
   "/v2/capitulos/:num": `${ATLAS_ROUTES.capitulos}/:num`,
   "/v2/personajes": ATLAS_ROUTES.personajes,
@@ -34,27 +35,15 @@ export const LEGACY_PUBLIC_REDIRECTS: Record<string, string> = {
   "/v2/buscar": ATLAS_ROUTES.buscar,
   "/v2/archivos": ATLAS_ROUTES.objetos,
 
-  // Redirecciones de la antigua V1 a la raíz
-  "/buscar": ATLAS_ROUTES.buscar,
+  // Redirecciones de la antigua V1 a la raíz (solo las que difieren en nombre)
   "/cronicas": ATLAS_ROUTES.capitulos,
   "/cronicas/:num": `${ATLAS_ROUTES.capitulos}/:num`,
-  "/personajes": ATLAS_ROUTES.personajes,
-  "/personajes/:slug": `${ATLAS_ROUTES.personajes}/:slug`,
-  "/facciones": ATLAS_ROUTES.facciones,
-  "/facciones/:slug": `${ATLAS_ROUTES.facciones}/:slug`,
-  "/lugares": ATLAS_ROUTES.lugares,
-  "/lugares/:slug": `${ATLAS_ROUTES.lugares}/:slug`,
-  "/mapa": ATLAS_ROUTES.mapa,
-  "/objetos": ATLAS_ROUTES.objetos,
-  "/objetos/:slug": `${ATLAS_ROUTES.objetos}/:slug`,
-  "/misterios": ATLAS_ROUTES.misterios,
-  "/misterios/:slug": `${ATLAS_ROUTES.misterios}/:slug`,
   "/worldbuilding": ATLAS_ROUTES.mundo,
   "/worldbuilding/:slug": `${ATLAS_ROUTES.mundo}/:slug`,
   "/episodios": ATLAS_ROUTES.capitulos,
   "/episodios/:num": `${ATLAS_ROUTES.capitulos}/:num`,
 
-  // Redirecciones de entidades locales a la raíz
+  // Redirecciones de entidades locales a la raíz (solo las que difieren en nombre)
   "/entidades/personaje": ATLAS_ROUTES.personajes,
   "/entidades/personaje/:slug": `${ATLAS_ROUTES.personajes}/:slug`,
   "/entidades/lugar": ATLAS_ROUTES.lugares,

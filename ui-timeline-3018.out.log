@@ -146,3 +146,64 @@
 
  ✓ Starting...
  ✓ Ready in 2.3s
+   ▲ Next.js 15.5.18
+   - Local:        http://localhost:3018
+   - Network:      http://192.168.1.36:3018
+   - Environments: .env.local
+   - Experiments (use with caution):
+     · serverActions
+
+ ✓ Starting...
+ ✓ Ready in 2.5s
+   ▲ Next.js 15.5.18
+   - Local:        http://localhost:3018
+   - Network:      http://192.168.1.36:3018
+   - Environments: .env.local
+   - Experiments (use with caution):
+     · serverActions
+
+ ✓ Starting...
+ ✓ Ready in 2.1s
+ ○ Compiling / ...
+ ✓ Compiled / in 1691ms (731 modules)
+ GET / 200 in 3039ms
+ ✓ Compiled /capitulos in 422ms (722 modules)
+ GET /capitulos 200 in 976ms
+ ✓ Compiled /_not-found in 236ms (727 modules)
+ GET /v2/timeline 404 in 290ms
+ GET /v2/timeline 404 in 99ms
+ ✓ Compiled /timeline in 288ms (739 modules)
+ GET /timeline 200 in 1106ms
+ GET /timeline 200 in 236ms
+ GET /timeline 200 in 243ms
+ GET /v2/timeline 404 in 20ms
+ GET /v2/timeline 404 in 35ms
+ GET /timeline 200 in 287ms
+ GET /timeline 200 in 349ms
+ GET /timeline 200 in 357ms
+ GET /timeline 200 in 398ms
+ GET /timeline 200 in 311ms
+ ✓ Compiled /dioses in 451ms (740 modules)
+ GET /dioses 200 in 560ms
+ GET /dioses 200 in 175ms
+ ✓ Compiled /mundo in 347ms (756 modules)
+ GET /mundo 200 in 963ms
+ GET / 200 in 479ms
+ GET / 200 in 39ms
+ ✓ Compiled /capitulos in 215ms (495 modules)
+ GET /capitulos 200 in 707ms
+ GET / 200 in 159ms
+ GET / 200 in 105ms
+   ▲ Next.js 15.5.18
+   - Local:        http://localhost:3018
+   - Network:      http://192.168.1.36:3018
+   - Environments: .env.local
+   - Experiments (use with caution):
+     · serverActions
+
+ ✓ Starting...
+ ✓ Ready in 1904ms
+ ○ Compiling / ...
+ ✓ Compiled / in 1308ms (729 modules)
+ GET /personajes 200 in 2979ms
+ GET / 200 in 3188ms
