@@ -8267,13 +8267,14 @@ body:has(.av2-immersive-bg),
   text-wrap: balance;
 }
 .av2-entity-reader-prose {
+  font-size: 1.12rem;
+  line-height: 1.8;
   max-height: 45rem;
   overflow-y: auto;
   padding-right: 0.8rem;
   scrollbar-width: thin;
   scrollbar-color: var(--av2-rule-up) transparent;
   color: var(--av2-ink-soft);
-  line-height: 1.72;
 }
 .av2-entity-reader-prose > * { max-width: 68ch; }
 .av2-entity-reader-prose p + p,
@@ -8599,8 +8600,8 @@ body:has(.av2-immersive-bg),
   display: block;
   margin-top: 0.8rem;
   color: var(--av2-ink-soft);
-  font-size: 0.82rem;
-  line-height: 1.55;
+  font-size: 0.92rem;
+  line-height: 1.6;
 }
 .av2-chapter-detail-reader .av2-narrative-frame-body { min-height: 100%; }
 .av2-chapter-detail-neighbors {
