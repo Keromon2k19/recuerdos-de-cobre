@@ -39,7 +39,7 @@ export default function AtlasChapterDetail({
 
         <div className="av2-chapter-detail-identity">
           <p>Crónica completa</p>
-          <h2>{detail.title}</h2>
+          <h1>{detail.title}</h1>
           <span>{detail.description}</span>
         </div>
 
