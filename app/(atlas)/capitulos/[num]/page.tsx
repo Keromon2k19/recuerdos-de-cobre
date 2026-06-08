@@ -53,8 +53,7 @@ export default async function ChapterDetailPage({ params }: Props) {
   return (
     <AtlasPageScene
       eyebrow={`Registro ${String(number).padStart(3, "0")}`}
-      title={detail.title}
-      subtitle={detail.description}
+      title=""
       variant="chapter"
     >
       <AtlasChapterDetail

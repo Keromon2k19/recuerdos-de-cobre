@@ -22,7 +22,7 @@ export default function AtlasPageHeader({
       <div className="av2-ornament" aria-hidden="true">
         <span className="av2-ornament-diamond" />
       </div>
-      <h1 className="av2-page-header-title">{title}</h1>
+      {title && <h1 className="av2-page-header-title">{title}</h1>}
       {intro && <p className="av2-page-header-intro">{intro}</p>}
     </header>
   );

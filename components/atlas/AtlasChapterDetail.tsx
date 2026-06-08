@@ -26,7 +26,7 @@ export default function AtlasChapterDetail({
         variant="secondary"
         className="av2-chapter-detail-cover"
       >
-        <Link href="/v2/capitulos" className="av2-entity-detail-back">
+        <Link href="/capitulos" className="av2-entity-detail-back">
           <span aria-hidden="true">←</span>
           Volver a capítulos
         </Link>
@@ -42,37 +42,14 @@ export default function AtlasChapterDetail({
           <h2>{detail.title}</h2>
           <span>{detail.description}</span>
         </div>
-      </AtlasNarrativeFrame>
-
-      <AtlasNarrativeFrame
-        variant="primary"
-        className="av2-chapter-detail-reader"
-      >
-        <AtlasEntityReader sections={sections} label="Crónica completa" />
-      </AtlasNarrativeFrame>
-
-      <AtlasNarrativeFrame
-        eyebrow="Señales narrativas"
-        title="Índice del registro"
-        variant="quiet"
-        className="av2-chapter-detail-index"
-      >
-        <dl className="av2-chapter-detail-stats">
-          {detail.stats.map((stat) => (
-            <div key={stat.label}>
-              <dt>{stat.label}</dt>
-              <dd>{stat.value}</dd>
-            </div>
-          ))}
-        </dl>
 
         <nav
           className="av2-chapter-detail-neighbors"
           aria-label="Navegación entre capítulos"
         >
           {previous ? (
-            <Link href={`/v2/capitulos/${previous.number}`}>
-              <small>Registro anterior</small>
+            <Link href={`/capitulos/${previous.number}`} className="previous">
+              <small>← Registro anterior</small>
               <span>{previous.title}</span>
             </Link>
           ) : (
@@ -81,8 +58,8 @@ export default function AtlasChapterDetail({
             </span>
           )}
           {next ? (
-            <Link href={`/v2/capitulos/${next.number}`}>
-              <small>Registro siguiente</small>
+            <Link href={`/capitulos/${next.number}`} className="next">
+              <small>Registro siguiente →</small>
               <span>{next.title}</span>
             </Link>
           ) : (
@@ -91,6 +68,13 @@ export default function AtlasChapterDetail({
             </span>
           )}
         </nav>
+      </AtlasNarrativeFrame>
+
+      <AtlasNarrativeFrame
+        variant="primary"
+        className="av2-chapter-detail-reader"
+      >
+        <AtlasEntityReader sections={sections} label="Crónica completa" />
       </AtlasNarrativeFrame>
     </div>
   );
