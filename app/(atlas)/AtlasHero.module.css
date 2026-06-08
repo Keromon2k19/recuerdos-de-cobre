@@ -1,0 +1,167 @@
+.hero {
+  position: relative;
+  min-height: calc(100dvh - var(--av2-dock-h) - 0.5rem);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.heroBg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background: oklch(0.092 0.010 58);
+}
+.heroBg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    radial-gradient(40% 50% at 18% 65%, oklch(0.50 0.10 55 / 0.18) 0%, transparent 60%),
+    radial-gradient(40% 50% at 82% 65%, oklch(0.50 0.10 55 / 0.18) 0%, transparent 60%),
+    radial-gradient(68% 62% at 50% 35%, oklch(0.22 0.045 55 / 0.28) 0%, transparent 65%),
+    radial-gradient(52% 85% at  4% 50%, oklch(0.06 0.007 58 / 0.50) 0%, transparent 55%),
+    radial-gradient(52% 85% at 96% 50%, oklch(0.06 0.007 58 / 0.50) 0%, transparent 55%),
+    linear-gradient(180deg,
+      oklch(0.07 0.009 58 / 0.42) 0%,
+      oklch(0.06 0.007 58 / 0.10) 22%,
+      oklch(0.06 0.007 58 / 0.42) 70%,
+      oklch(0.05 0.006 58 / 0.85) 100%
+    );
+}
+.heroBg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.76' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.028'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+.heroImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 35%;
+}
+
+.heroTop {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1rem, 3vh, 2.5rem) clamp(1.5rem, 5vw, 4rem) clamp(0.85rem, 2.4vh, 2rem);
+  text-align: center;
+  min-height: clamp(360px, 42vh, 540px);
+}
+
+.heroEyebrow {
+  font-family: var(--av2-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--av2-ink-faint);
+  margin-bottom: 1.4rem;
+}
+
+.ornament {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: min(360px, 62%);
+  margin: 0 auto;
+}
+.ornament::before,
+.ornament::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--av2-copper-dim) 50%, transparent);
+}
+.ornamentDiamond {
+  width: 7px;
+  height: 7px;
+  background: var(--av2-copper-dim);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+
+.heroTitle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.04em;
+  margin: 0.85rem 0 0.65rem;
+  font-family: var(--av2-display);
+  font-weight: 600;
+}
+.titleMain {
+  display: block;
+  font-size: clamp(2.6rem, min(11vw, 13vh), 10.5rem);
+  line-height: 0.87;
+  letter-spacing: -0.008em;
+  text-transform: uppercase;
+  background-image: linear-gradient(
+    180deg,
+    oklch(0.94 0.028 82) 0%,
+    oklch(0.86 0.038 78) 22%,
+    oklch(0.72 0.048 72) 58%,
+    oklch(0.48 0.060 64) 100%
+  );
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+          color: transparent;
+  text-shadow:
+    0 1px 0 oklch(0.96 0.04 80 / 0.22),
+    0 -1px 0 oklch(0.08 0.012 58 / 0.55),
+    0 8px 22px oklch(0.04 0.010 58 / 0.55);
+}
+.titleDe {
+  display: block;
+  font-size: clamp(1.4rem, 3.8vw, 2.9rem);
+  line-height: 1.25;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--av2-ink-soft);
+  letter-spacing: 0.45em;
+  text-transform: lowercase;
+  margin: 0.15em 0 0.1em;
+  text-shadow: 0 1px 0 oklch(0.08 0.012 58 / 0.45);
+}
+.titleCopper {
+  background-image: linear-gradient(
+    180deg,
+    oklch(0.86 0.135 62) 0%,
+    oklch(0.76 0.150 58) 32%,
+    oklch(0.58 0.150 54) 68%,
+    oklch(0.38 0.130 50) 100%
+  );
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+          color: transparent;
+  text-shadow:
+    0 1px 0 oklch(0.90 0.14 65 / 0.40),
+    0 -1px 0 oklch(0.08 0.012 58 / 0.62),
+    0 0 90px oklch(0.715 0.118 56 / 0.50),
+    0 0 180px oklch(0.715 0.118 56 / 0.22);
+}
+
+.heroSub {
+  font-size: clamp(0.78rem, 1.1vw, 0.92rem);
+  color: var(--av2-ink-faint);
+  max-width: 42ch;
+  line-height: 1.55;
+  margin-top: 1.6rem;
+  font-style: italic;
+  letter-spacing: 0.01em;
+  opacity: 0.85;
+}

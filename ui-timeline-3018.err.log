@@ -138,3 +138,23 @@
     at stringify (<anonymous>) {
   digest: '3112629405'
 }
+[Error: ENOENT: no such file or directory, scandir 'C:\Users\joaqu\OneDrive\Documentos\claudeprojects\Mysha\app\(v2)\v2'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'scandir',
+  path: 'C:\\Users\\joaqu\\OneDrive\\Documentos\\claudeprojects\\Mysha\\app\\(v2)\\v2'
+}
+ ⨯ unhandledRejection: [Error: ENOENT: no such file or directory, scandir 'C:\Users\joaqu\OneDrive\Documentos\claudeprojects\Mysha\app\(v2)\v2'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'scandir',
+  path: 'C:\\Users\\joaqu\\OneDrive\\Documentos\\claudeprojects\\Mysha\\app\\(v2)\\v2'
+}
+ ⨯ unhandledRejection:  [Error: ENOENT: no such file or directory, scandir 'C:\Users\joaqu\OneDrive\Documentos\claudeprojects\Mysha\app\(v2)\v2'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'scandir',
+  path: 'C:\\Users\\joaqu\\OneDrive\\Documentos\\claudeprojects\\Mysha\\app\\(v2)\\v2'
+}
+ ⚠ Found a change in next.config.ts. Restarting the server to apply the changes...
+ ⚠ Found a change in next.config.ts. Restarting the server to apply the changes...

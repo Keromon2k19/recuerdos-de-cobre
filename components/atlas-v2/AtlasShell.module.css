@@ -1,0 +1,11 @@
+.av2 {
+  min-height: 100dvh;
+}
+.shell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  padding-bottom: 0;
+  z-index: 1;
+}
