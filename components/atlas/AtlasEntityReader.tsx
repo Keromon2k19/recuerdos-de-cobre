@@ -41,7 +41,6 @@ export default function AtlasEntityReader({
             data-active={section.id === selected.id ? "true" : undefined}
             onClick={() => setSelectedId(section.id)}
           >
-            <span>{String(index + 1).padStart(2, "0")}</span>
             {section.title}
           </button>
         ))}

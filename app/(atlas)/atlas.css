@@ -8219,9 +8219,7 @@ body:has(.av2-immersive-bg),
   color: var(--av2-copper);
 }
 .av2-entity-reader-index button {
-  display: grid;
-  grid-template-columns: 1.7rem minmax(0, 1fr);
-  gap: 0.4rem;
+  display: block;
   width: 100%;
   padding: 0.65rem 0.48rem;
   border-bottom: 1px solid var(--av2-rule);
@@ -8229,11 +8227,6 @@ body:has(.av2-immersive-bg),
   text-align: left;
   font-size: 0.82rem;
   transition: color var(--av2-dur) var(--av2-ease), padding-left var(--av2-dur) var(--av2-ease);
-}
-.av2-entity-reader-index button span {
-  font-family: var(--av2-mono);
-  font-size: 0.55rem;
-  color: var(--av2-copper-dim);
 }
 .av2-entity-reader-index button:hover,
 .av2-entity-reader-index button[data-active="true"] {
