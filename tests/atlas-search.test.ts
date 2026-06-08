@@ -81,16 +81,16 @@ describe("atlas-search", () => {
     expect(items.some((item) => item.kind === ("archivo" as never))).toBe(false);
   });
 
-  it("genera destinos V2 para todos los resultados", () => {
+  it("genera destinos publicos para todos los resultados", () => {
     expect(items.length).toBeGreaterThan(0);
     for (const item of items) {
-      expect(item.href.startsWith("/v2")).toBe(true);
+      expect(item.href.startsWith("/")).toBe(true);
     }
     expect(items.find((item) => item.titulo === "Carta de Nabish")?.href).toBe(
-      "/v2/objetos/carta-de-nabish",
+      "/objetos/carta-de-nabish",
     );
     expect(items.find((item) => item.titulo === "Plano etereo")?.href).toBe(
-      "/v2/mundo/plano-etereo",
+      "/mundo/plano-etereo",
     );
   });
 

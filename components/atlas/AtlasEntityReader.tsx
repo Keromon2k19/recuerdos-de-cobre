@@ -47,9 +47,19 @@ export default function AtlasEntityReader({
         ))}
       </nav>
 
-      <article className="av2-entity-reader-page" data-kind={selected.kind}>
+      <article
+        className="av2-entity-reader-page"
+        data-kind={selected.kind}
+        data-id={selected.id}
+      >
         <header>
-          <p>{selected.kind === "mentions" ? "Registro de apariciones" : label}</p>
+          <p>
+            {selected.id === "citas-destacadas" || selected.id === "quotes"
+              ? "Citas destacadas"
+              : selected.kind === "mentions"
+                ? "Registro de apariciones"
+                : label}
+          </p>
           <h2>{selected.title}</h2>
         </header>
         <div

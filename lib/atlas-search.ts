@@ -78,12 +78,12 @@ export type BuildAtlasSearchIndexInput = {
 };
 
 const ENTITY_ROUTES: Record<SearchEntityKind, string> = {
-  personaje: "/v2/personajes",
-  faccion: "/v2/facciones",
-  lugar: "/v2/lugares",
-  objeto: "/v2/objetos",
-  misterio: "/v2/misterios",
-  mundo: "/v2/mundo",
+  personaje: "/personajes",
+  faccion: "/facciones",
+  lugar: "/lugares",
+  objeto: "/objetos",
+  misterio: "/misterios",
+  mundo: "/mundo",
 };
 
 function snippetOf(text: string, max = 150): string {
@@ -166,7 +166,7 @@ function fromEpisode(episode: SearchEpisode): SearchResult {
     titulo: cleanEpisodeTitle(episode.titulo),
     subtitulo: subtitle,
     snippet,
-    href: `/v2/capitulos/${episode.numero}`,
+    href: `/capitulos/${episode.numero}`,
     haystack: [
       episode.titulo,
       subtitle,
@@ -188,7 +188,7 @@ function fromGod(god: SearchGod): SearchResult {
     titulo: god.nombre,
     subtitulo: subtitle,
     snippet: snippetOf(god.profile),
-    href: `/v2/dioses?dios=${god.slug}`,
+    href: `/dioses?dios=${god.slug}`,
     haystack: [god.nombre, subtitle, god.profile].join(" ").toLowerCase(),
   };
 }
@@ -200,7 +200,7 @@ function fromRegion(region: SearchRegion): SearchResult {
     titulo: region.nombre,
     subtitulo: [region.category, region.tagline].filter(Boolean).join(" · "),
     snippet: snippetOf(region.descripcion),
-    href: `/v2/lugares/${region.slug}`,
+    href: `/lugares/${region.slug}`,
     haystack: [
       region.nombre,
       region.category,

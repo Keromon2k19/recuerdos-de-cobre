@@ -96,8 +96,8 @@ export function buildAtlasWikiResolver(
 ): Promise<WikiResolver> {
   return buildWikiResolverForRoutes(
     vaultPath,
-    (type, legacySegment) => `v2/${V2_SEGMENT_BY_TYPE[type] ?? legacySegment}`,
-    "v2/capitulos",
+    (type, legacySegment) => `${V2_SEGMENT_BY_TYPE[type] ?? legacySegment}`,
+    "capitulos",
   );
 }
 

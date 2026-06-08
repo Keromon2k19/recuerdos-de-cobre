@@ -94,8 +94,8 @@ describe("buildWikiResolver", () => {
 
     const resolve = await buildAtlasWikiResolver(tmpDir);
 
-    expect(resolve("worldbuilding/velo-etereo")).toBe("/v2/mundo/velo-etereo");
-    expect(resolve("lugares/khelgrim")).toBe("/v2/lugares/khelgrim");
-    expect(resolve("012-recuerdos-de-cobre")).toBe("/v2/capitulos/12");
+    expect(resolve("worldbuilding/velo-etereo")).toBe("/mundo/velo-etereo");
+    expect(resolve("lugares/khelgrim")).toBe("/lugares/khelgrim");
+    expect(resolve("012-recuerdos-de-cobre")).toBe("/capitulos/12");
   });
 });

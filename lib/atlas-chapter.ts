@@ -66,17 +66,63 @@ function buildStats(raw: unknown): AtlasChapterDetail["stats"] {
   });
 }
 
+function splitH3Sections(markdown: string): Array<{ title: string; body: string }> {
+  const lines = markdown.split("\n");
+  const subSections: Array<{ title: string; body: string }> = [];
+  let current: { title: string; body: string } | null = null;
+
+  for (const line of lines) {
+    const h3 = line.match(/^### +(.+?)\s*$/);
+    if (h3) {
+      if (current) subSections.push(current);
+      current = { title: h3[1].trim(), body: "" };
+      continue;
+    }
+    if (current) {
+      current.body += line + "\n";
+    }
+  }
+  if (current) subSections.push(current);
+
+  return subSections
+    .map((s) => ({ title: s.title, body: s.body.trim() }))
+    .filter((s) => s.body !== "");
+}
+
 export function parseAtlasChapterDetail(
   content: string,
   number: number,
 ): AtlasChapterDetail {
   const { frontmatter, body } = parseMarkdown(content);
-  const sections = splitEpisodeSections(body).map((section, index) => ({
-    id: slugify(section.title || `parte-${index + 1}`),
-    title: section.title || `Parte ${index + 1}`,
-    kind: sectionKind(section.title),
-    markdown: section.body,
-  }));
+  
+  const rawSections = splitEpisodeSections(body);
+  const sections: AtlasChapterSection[] = [];
+
+  for (const section of rawSections) {
+    if (/lore extra|extraido/i.test(section.title)) {
+      const subSections = splitH3Sections(section.body);
+      for (const sub of subSections) {
+        let title = sub.title;
+        if (/quotes|citas/i.test(title)) {
+          title = "Citas destacadas";
+        }
+        sections.push({
+          id: slugify(title),
+          title,
+          kind: "mentions",
+          markdown: sub.body,
+        });
+      }
+    } else {
+      sections.push({
+        id: slugify(section.title || `parte-${sections.length + 1}`),
+        title: section.title || `Parte ${sections.length + 1}`,
+        kind: sectionKind(section.title),
+        markdown: section.body,
+      });
+    }
+  }
+
   const summary = sections.find((section) => section.kind === "profile");
 
   return {

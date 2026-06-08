@@ -103,7 +103,7 @@ describe("buildTimelineItems", () => {
     expect(items[0].numero).toBe(66);
     expect(items[0].displayNumero).toBe("53.5");
     expect(items[0].eyebrow).toBe("EPISODIO 53.5");
-    expect(items[0].href).toBe("/v2/capitulos/66");
+    expect(items[0].href).toBe("/capitulos/66");
   });
 
   it("asocia una imagen de lugar cuando la mencion coincide con el atlas", () => {

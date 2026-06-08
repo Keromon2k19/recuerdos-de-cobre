@@ -257,7 +257,7 @@ export function buildTimelineItems(
       descripcion: cleanDescripcion(episode.descripcion),
       personajes: sortPersonajes(episode.menciones?.personajes, roles),
       side: index % 2 === 0 ? "left" : "right",
-      href: `/v2/capitulos/${episode.numero}`,
+      href: `/capitulos/${episode.numero}`,
     };
   });
 }
