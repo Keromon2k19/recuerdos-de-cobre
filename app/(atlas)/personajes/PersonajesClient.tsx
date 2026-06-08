@@ -4,14 +4,14 @@
 // Orquesta el estado de selección + filtros + composición de los 4 componentes.
 
 import { useMemo, useState } from "react";
-import AtlasEntityGrid from "@/components/atlas-v2/AtlasEntityGrid";
+import AtlasEntityGrid from "@/components/atlas/AtlasEntityGrid";
 import AtlasFilterPanel, {
   EMPTY_FILTERS,
   type FilterValue,
-} from "@/components/atlas-v2/AtlasFilterPanel";
-import AtlasDetailPanel from "@/components/atlas-v2/AtlasDetailPanel";
-import { characterMatchesSearch } from "@/lib/atlas-v2-character-search";
-import type { V2Character } from "@/data/atlas-v2/characters";
+} from "@/components/atlas/AtlasFilterPanel";
+import AtlasDetailPanel from "@/components/atlas/AtlasDetailPanel";
+import { characterMatchesSearch } from "@/lib/atlas-character-search";
+import type { V2Character } from "@/data/atlas/characters";
 
 function aparicionBucket(n: number): string {
   if (n >= 30) return "Protagónico";

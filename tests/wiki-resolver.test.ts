@@ -5,7 +5,7 @@ import os from "node:os";
 import { initVault, writeEntity } from "@/lib/vault";
 import { updateEntityMarkdown } from "@/lib/markdown";
 import { renderMarkdown } from "@/lib/markdown-render";
-import { buildAtlasV2WikiResolver, buildWikiResolver } from "@/lib/wiki-resolver";
+import { buildAtlasWikiResolver, buildWikiResolver } from "@/lib/wiki-resolver";
 
 let tmpDir: string;
 
@@ -92,7 +92,7 @@ describe("buildWikiResolver", () => {
       )
     );
 
-    const resolve = await buildAtlasV2WikiResolver(tmpDir);
+    const resolve = await buildAtlasWikiResolver(tmpDir);
 
     expect(resolve("worldbuilding/velo-etereo")).toBe("/v2/mundo/velo-etereo");
     expect(resolve("lugares/khelgrim")).toBe("/v2/lugares/khelgrim");

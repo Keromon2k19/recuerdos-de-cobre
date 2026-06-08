@@ -1,5 +1,5 @@
 import type { NextConfig } from "next";
-import { LEGACY_PUBLIC_REDIRECTS } from "./lib/atlas-v2-routes";
+import { LEGACY_PUBLIC_REDIRECTS } from "./lib/atlas-routes";
 
 // Las rutas legacy /episodios y /entidades quedaron reemplazadas por la
 // antología pública (/cronicas, /personajes, /lugares, …). Se redirigen

@@ -2,10 +2,10 @@
 // Escapa del route group (public) — no hereda SiteHeader ni SiteFooter de V1.
 // Solo hereda el root layout (app/layout.tsx): html + body + anti-FOUC script.
 import "../globals.css";
-import "./atlas-v2.css";
-import AtlasShell from "@/components/atlas-v2/AtlasShell";
-import AtlasTopNav from "@/components/atlas-v2/AtlasTopNav";
-import AtlasViewTransitions from "@/components/atlas-v2/AtlasViewTransitions";
+import "./atlas.css";
+import AtlasShell from "@/components/atlas/AtlasShell";
+import AtlasTopNav from "@/components/atlas/AtlasTopNav";
+import AtlasViewTransitions from "@/components/atlas/AtlasViewTransitions";
 
 export const metadata = {
   title: "Grimorio de Lore · Recuerdos de Cobre",

@@ -1,16 +1,16 @@
 // app/(v2)/v2/page.tsx — Home del atlas V2 (ruta /v2).
 // Datos reales del vault cuando VAULT_PATH está configurado.
 // Si no hay vault: estado vacío elegante, sin errores.
-import AtlasHomeFeature from "@/components/atlas-v2/AtlasHomeFeature";
+import AtlasHomeFeature from "@/components/atlas/AtlasHomeFeature";
 import { cachedListByType, cachedListEpisodes } from "@/lib/public-cache";
 import { readEpisode } from "@/lib/vault";
 import { parseMarkdown } from "@/lib/markdown";
-import { resolveHeroBackground } from "@/data/atlas-v2/hero-backgrounds";
-import { buildHomeChapterSlides } from "@/lib/atlas-v2-home";
+import { resolveHeroBackground } from "@/data/atlas/hero-backgrounds";
+import { buildHomeChapterSlides } from "@/lib/atlas-home";
 import { publicVaultPath } from "@/lib/public-vault-path";
 import styles from "./AtlasHero.module.css";
 
-const HOME_CHAPTER_SCENE = "/assets/atlas-v2/scenes/metropolis.webp";
+const HOME_CHAPTER_SCENE = "/assets/atlas/scenes/metropolis.webp";
 
 export const dynamic = "force-static";
 

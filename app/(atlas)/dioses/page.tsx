@@ -2,8 +2,8 @@
 // Server component. Carga dioses curados para revisar la UI V2.
 
 import DiosesClient from "./DiosesClient";
-import AtlasPageScene from "@/components/atlas-v2/AtlasPageScene";
-import { MOCK_GODS } from "@/data/atlas-v2/gods";
+import AtlasPageScene from "@/components/atlas/AtlasPageScene";
+import { MOCK_GODS } from "@/data/atlas/gods";
 
 export const metadata = {
   title: "Dioses - Grimorio de Lore",

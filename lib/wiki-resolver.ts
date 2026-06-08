@@ -91,7 +91,7 @@ export function buildWikiResolver(vaultPath: string): Promise<WikiResolver> {
   );
 }
 
-export function buildAtlasV2WikiResolver(
+export function buildAtlasWikiResolver(
   vaultPath: string,
 ): Promise<WikiResolver> {
   return buildWikiResolverForRoutes(
@@ -113,14 +113,14 @@ export async function cachedBuildWikiResolver(
   return resolve;
 }
 
-export async function cachedBuildAtlasV2WikiResolver(
+export async function cachedBuildAtlasWikiResolver(
   vaultPath: string,
 ): Promise<WikiResolver> {
   const cacheKey = `v2:${vaultPath}`;
   const hit = resolverCache.get(cacheKey);
   if (hit && Date.now() - hit.at < RESOLVER_TTL_MS) return hit.resolve;
 
-  const resolve = await buildAtlasV2WikiResolver(vaultPath);
+  const resolve = await buildAtlasWikiResolver(vaultPath);
   resolverCache.set(cacheKey, { at: Date.now(), resolve });
   return resolve;
 }

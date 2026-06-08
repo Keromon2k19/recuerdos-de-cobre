@@ -2,9 +2,9 @@
 // Catálogo de desarrollo NO enlazado: renderiza cada primitiva del kit en sus
 // variantes para validar el sistema en aislamiento. No se enlaza desde la nav
 // ni se indexa en búsqueda.
-import AtlasPageScene from "@/components/atlas-v2/AtlasPageScene";
-import AtlasSectionHero from "@/components/atlas-v2/AtlasSectionHero";
-import AtlasNarrativeFrame from "@/components/atlas-v2/AtlasNarrativeFrame";
+import AtlasPageScene from "@/components/atlas/AtlasPageScene";
+import AtlasSectionHero from "@/components/atlas/AtlasSectionHero";
+import AtlasNarrativeFrame from "@/components/atlas/AtlasNarrativeFrame";
 
 export const metadata = { title: "Kit V2 (dev) · Grimorio de Lore" };
 
@@ -38,7 +38,7 @@ export default function KitPage() {
         >
           <AtlasSectionHero
             variant="image"
-            imageSrc="/assets/atlas-v2/scenes/metropolis.webp"
+            imageSrc="/assets/atlas/scenes/metropolis.webp"
             glyph="M"
             alt="Metrópolis de Cobre"
             title="Metrópolis de Cobre"

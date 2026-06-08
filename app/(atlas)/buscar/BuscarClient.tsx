@@ -9,7 +9,7 @@ import {
   SEARCH_KINDS,
   type EntityKind,
   type SearchResult,
-} from "@/lib/atlas-v2-search";
+} from "@/lib/atlas-search";
 
 const KIND_FILTERS: Array<EntityKind | null> = [null, ...SEARCH_KINDS];
 

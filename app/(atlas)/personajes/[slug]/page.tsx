@@ -1,13 +1,13 @@
 import AtlasVaultEntityPage, {
-  buildAtlasV2EntityMetadata,
-} from "@/components/atlas-v2/AtlasVaultEntityPage";
+  buildAtlasEntityMetadata,
+} from "@/components/atlas/AtlasVaultEntityPage";
 
 export const dynamic = "force-dynamic";
 
 type Props = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: Props) {
-  return buildAtlasV2EntityMetadata("personaje", (await params).slug);
+  return buildAtlasEntityMetadata("personaje", (await params).slug);
 }
 
 export default async function PersonajeDetailPage({ params }: Props) {

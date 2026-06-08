@@ -1,7 +1,7 @@
 import BuscarClient from "./BuscarClient";
-import AtlasPageScene from "@/components/atlas-v2/AtlasPageScene";
-import { MOCK_GODS } from "@/data/atlas-v2/gods";
-import { buildAtlasV2SearchIndex } from "@/lib/atlas-v2-search";
+import AtlasPageScene from "@/components/atlas/AtlasPageScene";
+import { MOCK_GODS } from "@/data/atlas/gods";
+import { buildAtlasSearchIndex } from "@/lib/atlas-search";
 import { getAllRegions } from "@/lib/map-overrides";
 import { cachedListByType, cachedListEpisodes } from "@/lib/public-cache";
 import { publicVaultPath } from "@/lib/public-vault-path";
@@ -32,7 +32,7 @@ export default async function BuscarPage() {
     cachedListByType(vp, "worldbuilding"),
   ]);
 
-  const items = buildAtlasV2SearchIndex({
+  const items = buildAtlasSearchIndex({
     episodes,
     entities: {
       personaje: personajes,

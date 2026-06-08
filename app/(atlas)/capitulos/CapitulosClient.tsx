@@ -4,9 +4,9 @@
 // Orquesta selección de capítulo. Layout 2 columnas: lista + preview.
 
 import { useState } from "react";
-import AtlasChapterList from "@/components/atlas-v2/AtlasChapterList";
-import AtlasChapterPreview from "@/components/atlas-v2/AtlasChapterPreview";
-import type { V2Chapter } from "@/data/atlas-v2/chapters";
+import AtlasChapterList from "@/components/atlas/AtlasChapterList";
+import AtlasChapterPreview from "@/components/atlas/AtlasChapterPreview";
+import type { V2Chapter } from "@/data/atlas/chapters";
 
 export default function CapitulosClient({ chapters }: { chapters: V2Chapter[] }) {
   // Por defecto seleccionamos el capítulo más reciente (primero)

@@ -1,12 +1,12 @@
-import AtlasPageScene from "@/components/atlas-v2/AtlasPageScene";
-import AtlasTimeline from "@/components/atlas-v2/AtlasTimeline";
-import { resolveLocation } from "@/data/atlas-v2/location-images";
+import AtlasPageScene from "@/components/atlas/AtlasPageScene";
+import AtlasTimeline from "@/components/atlas/AtlasTimeline";
+import { resolveLocation } from "@/data/atlas/location-images";
 import { getAllRegions } from "@/lib/map-overrides";
 import { cachedListByType, cachedListEpisodes } from "@/lib/public-cache";
 import {
   buildTimelineItems,
   type TimelinePlaceImage,
-} from "@/lib/atlas-v2-timeline";
+} from "@/lib/atlas-timeline";
 import { publicVaultPath } from "@/lib/public-vault-path";
 
 export const dynamic = "force-static";

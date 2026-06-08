@@ -1,4 +1,4 @@
-import type { AtlasV2EntityKind } from "./atlas-v2-content";
+import type { AtlasEntityKind } from "./atlas-content";
 import { cachedListByType, cachedListEpisodes } from "./public-cache";
 import path from "path"; // <-- Agregas esto
 
@@ -9,7 +9,7 @@ export function publicVaultPath(): string {
   return process.env.VAULT_PATH?.trim() || DEFAULT_PUBLIC_VAULT_PATH;
 }
 
-export async function publicEntityStaticParams(kind: AtlasV2EntityKind) {
+export async function publicEntityStaticParams(kind: AtlasEntityKind) {
   const entities = await cachedListByType(publicVaultPath(), kind);
   return entities.map((entity) => ({ slug: entity.slug }));
 }

@@ -1,10 +1,10 @@
 // app/(v2)/v2/capitulos/page.tsx
 import CapitulosClient from "./CapitulosClient";
-import AtlasPageScene from "@/components/atlas-v2/AtlasPageScene";
+import AtlasPageScene from "@/components/atlas/AtlasPageScene";
 import { cachedListByType, cachedListEpisodes } from "@/lib/public-cache";
 import { parseEpisodioRef } from "@/lib/episode-number";
 import { publicVaultPath } from "@/lib/public-vault-path";
-import type { V2Chapter } from "@/data/atlas-v2/chapters";
+import type { V2Chapter } from "@/data/atlas/chapters";
 
 export const dynamic = "force-static";
 

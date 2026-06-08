@@ -1,12 +1,12 @@
 // app/(v2)/v2/personajes/page.tsx
 import PersonajesClient from "./PersonajesClient";
-import AtlasPageScene from "@/components/atlas-v2/AtlasPageScene";
-import { resolveAtlasV2CharacterRole } from "@/lib/atlas-v2-character-role";
-import { resolveAtlasV2Portrait } from "@/lib/atlas-v2-portraits";
+import AtlasPageScene from "@/components/atlas/AtlasPageScene";
+import { resolveAtlasCharacterRole } from "@/lib/atlas-character-role";
+import { resolveAtlasPortrait } from "@/lib/atlas-portraits";
 import { cachedListByType } from "@/lib/public-cache";
 import { publicVaultPath } from "@/lib/public-vault-path";
 import type { EntityListItem } from "@/lib/vault";
-import type { V2Character } from "@/data/atlas-v2/characters";
+import type { V2Character } from "@/data/atlas/characters";
 
 export const dynamic = "force-static";
 
@@ -41,12 +41,12 @@ function toV2Character(e: EntityListItem): V2Character {
     nombre: e.nombre,
     aliases: e.aliases ?? [],
     jugador: e.jugador ?? JUGADOR[e.slug],
-    rol: resolveAtlasV2CharacterRole(e.slug, e.rol),
+    rol: resolveAtlasCharacterRole(e.slug, e.rol),
     facciones: e.facciones ?? [],
     region: e.region,
     descripcion: e.descripcion ?? "",
     apariciones: e.apariciones?.length ?? 0,
-    imageSrc: resolveAtlasV2Portrait(e.slug, e.image),
+    imageSrc: resolveAtlasPortrait(e.slug, e.image),
     ...IMAGE_LAYOUT_OVERRIDES[e.slug],
   };
 }

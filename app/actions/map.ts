@@ -15,7 +15,7 @@ import {
   type LocationOverridePatch,
 } from "@/lib/map-overrides";
 import { slugify } from "@/lib/slugify";
-import { MOCK_REGIONS, type V2Region } from "@/data/atlas-v2/locations";
+import { MOCK_REGIONS, type V2Region } from "@/data/atlas/locations";
 
 export type SaveMapResult = { ok: true; count: number } | { ok: false; error: string };
 

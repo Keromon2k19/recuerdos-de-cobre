@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import AtlasChapterDetail from "@/components/atlas-v2/AtlasChapterDetail";
-import AtlasPageScene from "@/components/atlas-v2/AtlasPageScene";
-import { parseAtlasV2ChapterDetail } from "@/lib/atlas-v2-chapter";
+import AtlasChapterDetail from "@/components/atlas/AtlasChapterDetail";
+import AtlasPageScene from "@/components/atlas/AtlasPageScene";
+import { parseAtlasChapterDetail } from "@/lib/atlas-chapter";
 import { renderMarkdown } from "@/lib/markdown-render";
 import { cachedListEpisodes } from "@/lib/public-cache";
 import { readEpisode } from "@/lib/vault";
-import { cachedBuildAtlasV2WikiResolver } from "@/lib/wiki-resolver";
+import { cachedBuildAtlasWikiResolver } from "@/lib/wiki-resolver";
 
 export const dynamic = "force-dynamic";
 
@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ? await readEpisode(vaultPath, number)
     : null;
   if (!content) return { title: "Registro no encontrado · Grimorio de Lore" };
-  const detail = parseAtlasV2ChapterDetail(content, number);
+  const detail = parseAtlasChapterDetail(content, number);
   return { title: `${detail.title} · Grimorio de Lore`, description: detail.description };
 }
 
@@ -31,11 +31,11 @@ export default async function ChapterDetailPage({ params }: Props) {
   const [content, episodes, resolve] = await Promise.all([
     readEpisode(vaultPath, number),
     cachedListEpisodes(vaultPath),
-    cachedBuildAtlasV2WikiResolver(vaultPath),
+    cachedBuildAtlasWikiResolver(vaultPath),
   ]);
   if (!content) notFound();
 
-  const detail = parseAtlasV2ChapterDetail(content, number);
+  const detail = parseAtlasChapterDetail(content, number);
   const sections = detail.sections.map((section) => ({
     id: section.id,
     title: section.title,

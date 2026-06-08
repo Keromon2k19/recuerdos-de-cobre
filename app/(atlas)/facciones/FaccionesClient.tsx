@@ -5,7 +5,7 @@
 
 import Link from "next/link";
 import { useMemo, useState, type CSSProperties } from "react";
-import type { V2Faction, V2FactionCategory } from "@/data/atlas-v2/factions";
+import type { V2Faction, V2FactionCategory } from "@/data/atlas/factions";
 
 const ALL = "Todas" as const;
 

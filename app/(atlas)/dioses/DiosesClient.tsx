@@ -5,7 +5,7 @@
 
 import Link from "next/link";
 import { useMemo, useState, type CSSProperties } from "react";
-import type { V2DivineAlliance, V2God } from "@/data/atlas-v2/gods";
+import type { V2DivineAlliance, V2God } from "@/data/atlas/gods";
 
 const ALL = "Todos" as const;
 

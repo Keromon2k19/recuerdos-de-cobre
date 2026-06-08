@@ -2,8 +2,8 @@ import MapaClient from "./MapaClient";
 import {
   locationSlugsResolved,
   resolveLocation,
-} from "@/data/atlas-v2/location-images";
-import type { V2Region } from "@/data/atlas-v2/locations";
+} from "@/data/atlas/location-images";
+import type { V2Region } from "@/data/atlas/locations";
 import { getAllRegions, getAdditionSlugs } from "@/lib/map-overrides";
 
 export const metadata = {
@@ -26,7 +26,7 @@ export default function MapaPage() {
       <div className="av2-p-bg" aria-hidden="true">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/assets/atlas-v2/backgrounds/hero.png"
+          src="/assets/atlas/backgrounds/hero.png"
           alt=""
           className="av2-p-bg-img"
         />

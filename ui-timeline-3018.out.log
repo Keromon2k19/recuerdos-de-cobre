@@ -119,3 +119,30 @@
 
  ✓ Starting...
  ✓ Ready in 2.7s
+   ▲ Next.js 15.5.18
+   - Local:        http://localhost:3018
+   - Network:      http://192.168.1.36:3018
+   - Environments: .env.local
+   - Experiments (use with caution):
+     · serverActions
+
+ ✓ Starting...
+ ✓ Ready in 2.3s
+   ▲ Next.js 15.5.18
+   - Local:        http://localhost:3018
+   - Network:      http://192.168.1.36:3018
+   - Environments: .env.local
+   - Experiments (use with caution):
+     · serverActions
+
+ ✓ Starting...
+ ✓ Ready in 2.6s
+   ▲ Next.js 15.5.18
+   - Local:        http://localhost:3018
+   - Network:      http://192.168.1.36:3018
+   - Environments: .env.local
+   - Experiments (use with caution):
+     · serverActions
+
+ ✓ Starting...
+ ✓ Ready in 2.3s

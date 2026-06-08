@@ -6,10 +6,10 @@
 
 import fs from "node:fs";
 import path from "node:path";
-import { MOCK_REGIONS, type V2Region } from "@/data/atlas-v2/locations";
+import { MOCK_REGIONS, type V2Region } from "@/data/atlas/locations";
 
-const FILE = path.join(process.cwd(), "data/atlas-v2/location-overrides.json");
-const ADDITIONS_FILE = path.join(process.cwd(), "data/atlas-v2/location-additions.json");
+const FILE = path.join(process.cwd(), "data/atlas/location-overrides.json");
+const ADDITIONS_FILE = path.join(process.cwd(), "data/atlas/location-additions.json");
 
 export type LocationOverridePatch = {
   pin?: { x: number; y: number };

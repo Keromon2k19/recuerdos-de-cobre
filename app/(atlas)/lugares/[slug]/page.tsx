@@ -2,19 +2,19 @@ import { notFound } from "next/navigation";
 import {
   resolveLocation,
   locationSlugsResolved,
-} from "@/data/atlas-v2/location-images";
+} from "@/data/atlas/location-images";
 import { getAllRegions, getAdditionSlugs } from "@/lib/map-overrides";
 import HeroCarousel, {
   type CarouselSlide,
   type HeroStat,
-} from "@/components/atlas-v2/HeroCarousel";
-import PageImmersiveBackground from "@/components/atlas-v2/PageImmersiveBackground";
+} from "@/components/atlas/HeroCarousel";
+import PageImmersiveBackground from "@/components/atlas/PageImmersiveBackground";
 import LugarInfoDrawer, {
   type LugarSection,
-} from "@/components/atlas-v2/LugarInfoDrawer";
+} from "@/components/atlas/LugarInfoDrawer";
 import AtlasVaultEntityPage, {
-  buildAtlasV2EntityMetadata,
-} from "@/components/atlas-v2/AtlasVaultEntityPage";
+  buildAtlasEntityMetadata,
+} from "@/components/atlas/AtlasVaultEntityPage";
 
 // dynamicParams: true para que lugares nuevos (additions) sin pre-render
 // también funcionen sin rebuild.
@@ -33,7 +33,7 @@ export async function generateMetadata({
 }) {
   const { slug } = await params;
   const region = getAllRegions().find((r) => r.slug === slug);
-  if (!region) return buildAtlasV2EntityMetadata("lugar", slug);
+  if (!region) return buildAtlasEntityMetadata("lugar", slug);
   return {
     title: `${region.nombre} - Grimorio de Lore`,
   };
@@ -123,7 +123,7 @@ export default async function LugarDetailPage({
               <p className="av2-lugar-placeholder-note">
                 Aún no hay contenido visual para este lugar.
                 <br />
-                Las imágenes se mapean en <code>data/atlas-v2/location-images.ts</code>.
+                Las imágenes se mapean en <code>data/atlas/location-images.ts</code>.
               </p>
               <div className="av2-hc-cta">
                 <LugarInfoDrawer

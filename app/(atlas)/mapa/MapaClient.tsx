@@ -6,11 +6,11 @@
 // para que el mapa ocupe todo el ancho disponible.
 
 import { useEffect, useState } from "react";
-import AtlasRegionList from "@/components/atlas-v2/AtlasRegionList";
-import AtlasMapViewer from "@/components/atlas-v2/AtlasMapViewer";
-import AtlasRegionInfo from "@/components/atlas-v2/AtlasRegionInfo";
-import { runAtlasViewTransition } from "@/components/atlas-v2/AtlasViewTransitions";
-import type { V2Region } from "@/data/atlas-v2/locations";
+import AtlasRegionList from "@/components/atlas/AtlasRegionList";
+import AtlasMapViewer from "@/components/atlas/AtlasMapViewer";
+import AtlasRegionInfo from "@/components/atlas/AtlasRegionInfo";
+import { runAtlasViewTransition } from "@/components/atlas/AtlasViewTransitions";
+import type { V2Region } from "@/data/atlas/locations";
 
 export default function MapaClient({
   regions,

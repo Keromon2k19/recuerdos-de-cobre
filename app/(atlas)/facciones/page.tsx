@@ -1,10 +1,10 @@
 // app/(v2)/v2/facciones/page.tsx
 import FaccionesClient from "./FaccionesClient";
-import AtlasPageScene from "@/components/atlas-v2/AtlasPageScene";
+import AtlasPageScene from "@/components/atlas/AtlasPageScene";
 import { cachedListByType } from "@/lib/public-cache";
 import { publicVaultPath } from "@/lib/public-vault-path";
 import type { EntityListItem } from "@/lib/vault";
-import type { V2Faction, V2FactionCategory } from "@/data/atlas-v2/factions";
+import type { V2Faction, V2FactionCategory } from "@/data/atlas/factions";
 
 export const dynamic = "force-static";
 

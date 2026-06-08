@@ -1,6 +1,6 @@
 import MisteriosClient from "./MisteriosClient";
-import AtlasPageScene from "@/components/atlas-v2/AtlasPageScene";
-import { toAtlasV2EntitySummary } from "@/lib/atlas-v2-content";
+import AtlasPageScene from "@/components/atlas/AtlasPageScene";
+import { toAtlasEntitySummary } from "@/lib/atlas-content";
 import { cachedListByType } from "@/lib/public-cache";
 import { publicVaultPath } from "@/lib/public-vault-path";
 
@@ -13,7 +13,7 @@ export const metadata = {
 export default async function MisteriosPage() {
   const raw = await cachedListByType(publicVaultPath(), "misterio");
   const items = raw
-    .map((item) => toAtlasV2EntitySummary(item, "Pregunta abierta"))
+    .map((item) => toAtlasEntitySummary(item, "Pregunta abierta"))
     .sort((a, b) => b.appearances - a.appearances || a.name.localeCompare(b.name, "es"));
 
   return (

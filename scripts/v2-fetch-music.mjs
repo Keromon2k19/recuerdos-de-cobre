@@ -1,6 +1,6 @@
 // scripts/v2-fetch-music.mjs
 // Descarga el audio de las pistas de la campaña desde YouTube y las normaliza
-// a mp3 en public/assets/atlas-v2/music/. Idempotente: salta las que ya existen.
+// a mp3 en public/assets/atlas/music/. Idempotente: salta las que ya existen.
 //
 // Uso:
 //   node scripts/v2-fetch-music.mjs            # baja las que falten
@@ -18,7 +18,7 @@ import os from "node:os";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 const REPO_ROOT = resolve(__dirname, "..");
-const OUT_DIR = join(REPO_ROOT, "public", "assets", "atlas-v2", "music");
+const OUT_DIR = join(REPO_ROOT, "public", "assets", "atlas", "music");
 
 // Localiza un ffmpeg que funcione. El C:\ffmpeg\ffmpeg.exe de este equipo está
 // roto (falta un DLL), así que se prefiere el build full de Gyan instalado por
@@ -50,7 +50,7 @@ const FFMPEG = findFfmpeg();
 const COOKIES = process.env.COOKIES && existsSync(process.env.COOKIES) ? process.env.COOKIES : "";
 const FORCE = process.argv.includes("--force");
 
-// slug -> video URL. Debe coincidir con data/atlas-v2/music.ts.
+// slug -> video URL. Debe coincidir con data/atlas/music.ts.
 const TRACKS = [
   ["apertura",         "https://www.youtube.com/watch?v=2N2EeZ3oWrw"],
   ["santuario-libres", "https://www.youtube.com/watch?v=TJuPBBw-l-M"],
