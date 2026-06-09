@@ -211,7 +211,7 @@ const SATS={
 };
 // Expediente — bios de muestra; en la app real salen del frontmatter del vault
 const INFO={
-  mysha:{eye:'PJ · Bruja de Sangre',alias:'Selenne · Veltra · Niña de Sangre · Milla',bio:'Bruja de sangre criada en el Coven Rojo. Tres personalidades conviven en ella — Mysha, Selenne y Veltra. Tras la masacre que destruyó su coven, volvió a su origen para refundarlo.',eps:61,rol:'PJ'},
+  mysha:{eye:'PJ · Bruja de Sangre · Líder actual',alias:'Selenne · Veltra · Niña de Sangre · Milla',bio:'Bruja de sangre criada en el Coven Rojo. Tres personalidades conviven en ella — Mysha, Selenne y Veltra. Tras la masacre que destruyó su coven, volvió a su origen para refundarlo.',eps:61,rol:'PJ'},
   layra:{eye:'PJ · Dracónica',alias:'—',bio:'Dracónica de Té de Media Noche. «No soy una lagartija, soy dracónica.»',eps:58,rol:'PJ'},
   narcissa:{eye:'PJ',alias:'—',bio:'Integrante de Té de Media Noche. Química de venenos y criaturas; su serpiente Bijak la acompaña oculta.',eps:60,rol:'PJ'},
   io:{eye:'PJ · Druida · Retoño de Trent',alias:'—',bio:'Druida nacida del Bosque de las Memorias. Alterna entre su forma humana y su cuerpo constructo.',eps:55,rol:'PJ'},
@@ -220,7 +220,7 @@ const INFO={
   rylen:{eye:'NPC · Compañero del grupo',alias:'—',bio:'Viaja con el grupo como uno más, aunque nunca tiró un dado.',eps:28,rol:'NPC'},
   pilar:{eye:'NPC · Compañera del grupo',alias:'—',bio:'Parte de Té de Media Noche. Su historia se cruza con la de Eryon.',eps:18,rol:'NPC'},
   patpat:{eye:'NPC · Compañera del grupo',alias:'—',bio:'Parte de Té de Media Noche.',eps:15,rol:'NPC'},
-  borok:{eye:'Fundador · se separó',alias:'—',bio:'Fundó Té de Media Noche junto a los primeros. En cierto punto del camino, sus pasos se apartaron del grupo — el vínculo quedó cortado, pero la historia compartida permanece.',eps:22,rol:'Fundador'},
+  borok:{eye:'Primer líder · se separó',alias:'—',bio:'Primer líder de Té de Media Noche — la fundación fue cosa del grupo. El liderazgo fue pasando de mano en mano hasta llegar a Mysha. En cierto punto del camino sus pasos se apartaron; el vínculo quedó cortado, pero la historia compartida permanece.',eps:22,rol:'Ex líder'},
 };
 
 const stage=document.getElementById('stage');
@@ -236,7 +236,7 @@ function nodeHTML(o){
   if(o.k==='fac') return `<span class="disc"><span class="sig">${o.s||o.n[0]}</span></span><span class="nlabel">${o.n}<small>facción</small></span>`;
   if(o.k==='fam') return `<span class="disc"><span class="glyph">🦉</span></span><span class="nlabel">${o.n}<small>familiar</small></span>`;
   const name=o.name||o.n;
-  const sub=o.ex?'<small>fundador · se separó</small>':'';
+  const sub=o.ex?'<small>primer líder · se separó</small>':'';
   return `<span class="ring"></span><span class="disc"><img src="${o.img}" alt="${name}"></span><span class="nlabel">${name}${sub}</span>`;
 }
 function makePos(id){const d=document.createElement('div');d.className='npos';d.dataset.id=id;stage.appendChild(d);return d;}
@@ -327,7 +327,7 @@ function focus(id){
   });
   drawWires(W);
   titleEl.textContent=pj.name;
-  metaEl.innerHTML=pj.ex?`<b>Borok</b> · fundador que dejó Té de Media Noche · otro click abre su expediente`:`<b>${sats.length}</b> vínculos cercanos · otro click abre su expediente`;
+  metaEl.innerHTML=pj.ex?`<b>Borok</b> · primer líder · dejó el grupo · otro click abre su expediente`:`<b>${sats.length}</b> vínculos cercanos · otro click abre su expediente`;
   backEl.classList.add('show');hintEl.style.opacity='0';
 }
 function openCard(id){
@@ -348,7 +348,7 @@ function closeCard(){
   if(!expanded)return;
   expanded=false;card.classList.remove('show');stage.classList.remove('veil');
   if(focused){const pj=PJS.find(p=>p.id===focused);
-    metaEl.innerHTML=pj.ex?`<b>Borok</b> · fundador que dejó Té de Media Noche`:`<b>${(SATS[focused]||[]).length}</b> vínculos cercanos · otro click abre su expediente`;}
+    metaEl.innerHTML=pj.ex?`<b>Borok</b> · primer líder · dejó el grupo`:`<b>${(SATS[focused]||[]).length}</b> vínculos cercanos · otro click abre su expediente`;}
 }
 document.getElementById('cardx').addEventListener('click',e=>{e.stopPropagation();closeCard();});
 card.addEventListener('click',e=>e.stopPropagation());

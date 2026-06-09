@@ -38,7 +38,7 @@ El vault no registra membresía de grupo; se cura en un archivo nuevo
 
 | slug | etiqueta visible | estado |
 |---|---|---|
-| mysha | PJ · Bruja de Sangre | activo |
+| mysha | PJ · Bruja de Sangre · Líder actual | activo |
 | layra | PJ · Dracónica | activo |
 | narcissa | PJ | activo |
 | io-campbell | PJ · Druida, Retoño de Trent | activo |
@@ -47,13 +47,16 @@ El vault no registra membresía de grupo; se cura en un archivo nuevo
 | rylen | NPC · Compañero del grupo | activo |
 | pilar | NPC · Compañera del grupo | activo |
 | pat-pat | NPC · Compañera del grupo | activo |
-| borok | Fundador · se separó | `fundador-separado` |
+| borok | Primer líder · se separó | `separado` |
 
 Notas:
 - La etiqueta visible **gana sobre `rol:` del vault** (el vault marca a
   David y Borok como PJ; Joaquín los clasifica distinto para esta vista).
+- Lore del liderazgo: **la fundación fue grupal** (no de Borok). Borok fue
+  el **primer líder**; el liderazgo fue rotando y hoy lidera **Mysha** (de
+  ahí su etiqueta "Líder actual").
 - **Borok** se renderiza desaturado, marco punteado, etiqueta
-  "fundador · se separó", y su vínculo con el grupo es una **línea cortada**:
+  "primer líder · se separó", y su vínculo con el grupo es una **línea cortada**:
   dos tramos punteados (dash 6/9, hasta t=0.42 de cada extremo) que no se
   tocan. Sin animación de dibujado; fade-in.
 - **Familiares NO van** en el anillo (Champi aparece solo como satélite).
