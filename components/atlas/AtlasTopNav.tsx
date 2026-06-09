@@ -26,28 +26,28 @@ const GROUPS: NavGroup[] = [
     id: "cronicas",
     label: "Crónicas",
     items: [
-      { href: "/v2/capitulos", label: "Capítulos" },
-      { href: "/v2/timeline", label: "Linea de tiempo" },
-      { href: "/v2/misterios", label: "Misterios" },
+      { href: "/capitulos", label: "Capítulos" },
+      { href: "/timeline", label: "Linea de tiempo" },
+      { href: "/misterios", label: "Misterios" },
     ],
   },
   {
     id: "atlas",
     label: "Atlas",
     items: [
-      { href: "/v2/personajes", label: "Personajes" },
-      { href: "/v2/facciones", label: "Facciones" },
-      { href: "/v2/lugares", label: "Lugares" },
-      { href: "/v2/mapa", label: "Mapa" },
+      { href: "/personajes", label: "Personajes" },
+      { href: "/facciones", label: "Facciones" },
+      { href: "/lugares", label: "Lugares" },
+      { href: "/mapa", label: "Mapa" },
     ],
   },
   {
     id: "conocimiento",
     label: "Conocimiento",
     items: [
-      { href: "/v2/dioses", label: "Dioses" },
-      { href: "/v2/objetos", label: "Objetos" },
-      { href: "/v2/mundo", label: "Mundo" },
+      { href: "/dioses", label: "Dioses" },
+      { href: "/objetos", label: "Objetos" },
+      { href: "/mundo", label: "Mundo" },
     ],
   },
 ];
@@ -157,7 +157,7 @@ export default function AtlasTopNav() {
   return (
     <header className="av2-nav" role="banner" ref={rootRef}>
       <Link
-        href="/v2"
+        href="/"
         className="av2-nav-brand"
         aria-label="Recuerdos de Cobre · Inicio"
       >
@@ -174,13 +174,12 @@ export default function AtlasTopNav() {
         className="av2-nav-menu"
         aria-label="Secciones"
         ref={menuRef}
-        data-section="home"
         onMouseLeave={moveIndicatorToActive}
       >
         <Link
-          href="/v2"
+          href="/"
           className="av2-nav-mlink"
-          data-active={pathname === "/v2" ? "true" : undefined}
+          data-active={pathname === "/" ? "true" : undefined}
           data-nav-item="home"
           onMouseEnter={handleIndicatorEnter}
           onFocus={handleIndicatorEnter}
@@ -226,7 +225,7 @@ export default function AtlasTopNav() {
                     strokeWidth="1.6"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                  />
+                    />
                 </svg>
               </button>
               <div
@@ -253,15 +252,15 @@ export default function AtlasTopNav() {
             </div>
           );
         })}
+      </nav>
 
+      <div className="av2-nav-actions">
         <Link
-          href="/v2/buscar"
+          href="/buscar"
           className="av2-nav-search"
           aria-label="Buscar en el archivo"
-          data-active={isLinkActive("/v2/buscar") ? "true" : undefined}
+          data-active={isLinkActive("/buscar") ? "true" : undefined}
           data-nav-item="buscar"
-          onMouseEnter={handleIndicatorEnter}
-          onFocus={handleIndicatorEnter}
         >
           <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
             <path
@@ -278,7 +277,8 @@ export default function AtlasTopNav() {
           open={musicOpen}
           onOpenChange={setMusicOpenExclusive}
         />
-      </nav>
+      </div>
     </header>
   );
+
 }
