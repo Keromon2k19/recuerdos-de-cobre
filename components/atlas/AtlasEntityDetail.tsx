@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { AtlasEntityDetail } from "@/lib/atlas-content";
+import type { WikiResolver } from "@/lib/markdown-render";
 import AtlasEntityReader, {
   type AtlasEntityReaderSection,
 } from "./AtlasEntityReader";
@@ -19,6 +20,7 @@ type Props = {
   variant: AtlasEntityDetailVariant;
   backHref: string;
   backLabel: string;
+  resolve?: WikiResolver;
 };
 
 export default function AtlasEntityDetail({
@@ -27,7 +29,40 @@ export default function AtlasEntityDetail({
   variant,
   backHref,
   backLabel,
+  resolve,
 }: Props) {
+  // Agrupar relaciones por nombre de entidad destino
+  const groupedMap = new Map<string, Array<{ detail: string; episode?: number }>>();
+  for (const rel of detail.relations) {
+    const name = rel.name;
+    if (!groupedMap.has(name)) {
+      groupedMap.set(name, []);
+    }
+    groupedMap.get(name)!.push({ detail: rel.detail, episode: rel.episode });
+  }
+
+  const groupedRelations = Array.from(groupedMap.entries()).map(([name, items]) => {
+    // Las relaciones de frontmatter vienen en orden cronológico natural.
+    // El último estado de la relación es el último elemento del array.
+    const latestItem = items[items.length - 1];
+    // Reversamos para mostrar el historial del más nuevo al más viejo
+    const history = [...items].reverse();
+    return {
+      name,
+      latestDetail: latestItem.detail,
+      latestEpisode: latestItem.episode,
+      history,
+    };
+  });
+
+  // Ordenar por episodio más reciente (los vínculos más activos primero), con fallback alfabético
+  groupedRelations.sort((a, b) => {
+    const epA = a.latestEpisode ?? 0;
+    const epB = b.latestEpisode ?? 0;
+    if (epA !== epB) return epB - epA;
+    return a.name.localeCompare(b.name);
+  });
+
   return (
     <div className="av2-entity-detail" data-variant={variant}>
       <AtlasNarrativeFrame variant="secondary" className="av2-entity-detail-stage">
@@ -78,15 +113,64 @@ export default function AtlasEntityDetail({
         variant="quiet"
         className="av2-entity-detail-relations"
       >
-        {detail.relations.length > 0 ? (
-          <ul>
-            {detail.relations.map((relation, index) => (
-              <li key={`${relation.name}-${relation.detail}-${index}`}>
+        {groupedRelations.length > 0 ? (
+          <ul className="av2-relations-list">
+            {groupedRelations.map((relation, index) => {
+              const href = resolve?.(relation.name);
+              const nameElement = href ? (
+                <Link href={href} className="av2-relation-link">
+                  {relation.name}
+                </Link>
+              ) : (
                 <strong>{relation.name}</strong>
-                <span>{relation.detail}</span>
-                {relation.episode && <small>Ep. {relation.episode}</small>}
-              </li>
-            ))}
+              );
+
+              const hasHistory = relation.history.length > 1;
+
+              if (hasHistory) {
+                return (
+                  <li key={`${relation.name}-${index}`} className="av2-relation-group">
+                    <details>
+                      <summary className="av2-relation-summary">
+                        <div className="av2-relation-header">
+                          {nameElement}
+                          <span className="av2-relation-badge">
+                            {relation.history.length} acts.
+                          </span>
+                        </div>
+                        <div className="av2-relation-latest">
+                          <span>{relation.latestDetail}</span>
+                          {relation.latestEpisode && (
+                            <small>Ep. {relation.latestEpisode}</small>
+                          )}
+                        </div>
+                      </summary>
+                      <ul className="av2-relation-history">
+                        {relation.history.map((hist, hIdx) => (
+                          <li key={hIdx} className="av2-relation-history-item">
+                            <span>{hist.detail}</span>
+                            {hist.episode && <small>Ep. {hist.episode}</small>}
+                          </li>
+                        ))}
+                      </ul>
+                    </details>
+                  </li>
+                );
+              }
+
+              // Elemento simple sin historial
+              return (
+                <li key={`${relation.name}-${index}`} className="av2-relation-group av2-relation-plain">
+                  <div className="av2-relation-header">{nameElement}</div>
+                  <div className="av2-relation-latest">
+                    <span>{relation.latestDetail}</span>
+                    {relation.latestEpisode && (
+                      <small>Ep. {relation.latestEpisode}</small>
+                    )}
+                  </div>
+                </li>
+              );
+            })}
           </ul>
         ) : (
           <p className="av2-entity-detail-empty">

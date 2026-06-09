@@ -77,6 +77,7 @@ export default async function AtlasVaultEntityPage({
         variant={variant}
         backHref={backHref}
         backLabel={backLabel}
+        resolve={resolve}
       />
     </AtlasPageScene>
   );
