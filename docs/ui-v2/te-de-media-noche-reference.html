@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Té de Media Noche — constelación v4</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Spectral:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+:root{
+  --bg:oklch(0.092 0.010 58); --raised:oklch(0.138 0.013 57);
+  --panel:oklch(0.172 0.016 56); --panel-up:oklch(0.210 0.019 56);
+  --copper:oklch(0.715 0.118 56); --copper-hi:oklch(0.808 0.126 62);
+  --copper-dim:oklch(0.490 0.075 53); --copper-deep:oklch(0.328 0.052 51);
+  --gold:oklch(0.826 0.097 82); --ink:oklch(0.908 0.014 78);
+  --ink-soft:oklch(0.710 0.014 76); --ink-faint:oklch(0.472 0.011 70);
+  --rule:oklch(0.268 0.021 55); --rule-up:oklch(0.365 0.038 55);
+  --rule-copper:oklch(0.490 0.072 54 / 0.55);
+  --display:"Cormorant Garamond",Georgia,serif; --body:"Spectral",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace; --ease:cubic-bezier(.22,1,.36,1);
+}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;color:var(--ink);font-family:var(--body);
+  -webkit-font-smoothing:antialiased;overflow:hidden;
+  background:
+    radial-gradient(140% 100% at 50% -8%, oklch(0.328 0.052 51 / .30), transparent 55%),
+    radial-gradient(80% 60% at 50% 120%, oklch(0.210 0.019 56 / .5), transparent 60%),
+    var(--bg);}
+.top{position:fixed;top:0;left:0;right:0;z-index:20;padding:22px 30px;
+  display:flex;align-items:flex-end;justify-content:space-between;gap:18px;
+  background:linear-gradient(180deg, oklch(0.092 0.010 58 / .92), transparent)}
+.tt .eyebrow{font-family:var(--mono);font-size:.66rem;letter-spacing:.24em;text-transform:uppercase;color:var(--copper);margin:0 0 6px}
+.tt h1{font-family:var(--display);font-weight:600;font-size:2.4rem;line-height:1;margin:0;color:var(--ink);letter-spacing:.01em}
+.tt .meta{font-family:var(--mono);font-size:.72rem;color:var(--ink-faint);margin:7px 0 0;letter-spacing:.05em;min-height:1em}
+.tt .meta b{color:var(--gold);font-weight:500}
+.back{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);
+  background:var(--panel);border:1px solid var(--rule-up);border-radius:5px;padding:9px 16px;cursor:pointer;
+  opacity:0;transform:translateY(-6px);pointer-events:none;transition:all .35s var(--ease)}
+.back.show{opacity:1;transform:none;pointer-events:auto}
+.back:hover{border-color:var(--copper);color:var(--copper-hi)}
+#stage{position:fixed;inset:0}
+#wires{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;transition:opacity .5s var(--ease)}
+#stage.veil #wires{opacity:.1}
+#stage.veil .npos{opacity:.08}
+.wire{stroke:var(--rule-copper);stroke-width:2;fill:none;opacity:0;transition:opacity .5s var(--ease)}
+.wire.show{opacity:.7}
+.wire.soft{stroke:var(--rule)}
+.wire.cut{stroke:var(--copper-dim);stroke-dasharray:6 9}
+.wire.cut.show{opacity:.45}
+.npos{position:absolute;left:0;top:0;transform:translate(-50%,-50%);
+  transition:left .9s var(--ease),top .9s var(--ease),opacity .6s var(--ease);will-change:left,top;
+  animation:idle 6s ease-in-out infinite}
+@keyframes idle{0%,100%{transform:translate(-50%,-50%) translateY(0)}50%{transform:translate(-50%,-50%) translateY(-5px)}}
+.npos.dim{opacity:.28}
+.npos.is-ex{opacity:.6}
+.node{position:relative;display:flex;flex-direction:column;align-items:center;gap:9px;
+  background:none;border:none;cursor:pointer;padding:0;
+  animation:nodeIn .95s var(--ease) backwards;}
+@keyframes nodeIn{from{opacity:0;transform:scale(.55)}to{opacity:1;transform:scale(1)}}
+.disc{position:relative;border-radius:5px;overflow:hidden;
+  background:var(--panel-up);box-shadow:0 0 0 1px var(--rule-copper),0 10px 30px -8px oklch(0.04 0.01 58 / .8);
+  transition:transform .4s var(--ease),box-shadow .4s var(--ease),filter .4s var(--ease)}
+.disc img{width:100%;height:100%;object-fit:cover;object-position:50% 22%;display:block;
+  filter:saturate(.78) contrast(1.02) brightness(.92)}
+.disc::after{content:"";position:absolute;inset:0;border-radius:5px;pointer-events:none;
+  box-shadow:inset 0 -22px 30px -14px oklch(0.04 0.01 58 / .9),inset 0 0 0 3px oklch(0.092 0.010 58 / .55)}
+.ring{position:absolute;inset:-5px;border-radius:5px;border:1px solid var(--copper-deep);pointer-events:none;transition:all .4s var(--ease)}
+.node:hover .disc{transform:translateY(-3px) scale(1.05);box-shadow:0 0 0 1px var(--copper),0 0 36px oklch(0.715 0.118 56 / .4);filter:none}
+.node:hover .disc img{filter:saturate(1) contrast(1.04) brightness(1)}
+.node:hover .ring{inset:-8px;border-color:var(--copper)}
+.node:hover .nlabel{color:var(--copper-hi)}
+/* tamaños — cuadros más grandes */
+.pj .disc{width:104px;height:104px}
+.center .disc{width:156px;height:156px;box-shadow:0 0 0 2px var(--copper),0 0 60px oklch(0.715 0.118 56 / .45)}
+.center .disc img{filter:saturate(1) contrast(1.04)}
+.center .ring{inset:-9px;border-color:var(--copper)}
+.center{cursor:zoom-in}
+.sat .disc{width:64px;height:64px}
+.nlabel{position:absolute;top:calc(100% + 9px);left:50%;transform:translateX(-50%);white-space:nowrap;
+  font-family:var(--display);font-weight:600;font-size:1.05rem;color:var(--ink);line-height:1.05;text-align:center;
+  text-shadow:0 2px 12px oklch(0.04 0.01 58 / .9);transition:color .3s;pointer-events:none}
+.center .nlabel{font-size:1.6rem;color:var(--copper-hi)}
+.sat .nlabel{font-size:.86rem;color:var(--ink-soft)}
+.nlabel small{display:block;font-family:var(--mono);font-weight:400;font-size:.54rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-faint);margin-top:3px}
+/* Borok — fundador que se separó */
+.ex .disc img{filter:grayscale(.8) brightness(.6) contrast(.95)}
+.ex .ring{border-style:dashed;border-color:var(--rule-up)}
+.ex .disc{box-shadow:0 0 0 1px var(--rule-up),0 10px 30px -8px oklch(0.04 0.01 58 / .8)}
+.ex .nlabel{color:var(--ink-faint)}
+.ex .nlabel small{color:var(--copper-dim)}
+.ex:hover .disc img{filter:grayscale(.4) brightness(.8)}
+/* facción = sello cuadrado */
+.fac .disc{background:linear-gradient(150deg,var(--panel-up),var(--copper-deep));
+  display:flex;align-items:center;justify-content:center;box-shadow:inset 0 0 0 1px var(--rule-copper)}
+.fac .disc::after{display:none}
+.fac .ring{display:none}
+.fac .sig{font-family:var(--display);font-weight:700;font-size:1.1rem;color:var(--gold)}
+.fam .disc{background:radial-gradient(circle at 50% 38%,var(--panel-up),var(--copper-deep));
+  display:flex;align-items:center;justify-content:center}
+.fam .glyph{font-size:1.3rem;filter:saturate(.6)}
+/* expediente (segundo click) */
+.card{position:fixed;left:50%;top:50%;z-index:30;display:flex;width:min(660px,92vw);
+  background:linear-gradient(180deg,var(--panel),var(--raised));
+  border:1px solid var(--rule-copper);border-radius:8px;overflow:hidden;
+  box-shadow:0 30px 90px -20px oklch(0.04 0.01 58 / .95),0 0 60px oklch(0.715 0.118 56 / .18);
+  opacity:0;transform:translate(-50%,-50%) scale(.93) translateY(12px);pointer-events:none;
+  transition:opacity .5s var(--ease),transform .5s var(--ease)}
+.card.show{opacity:1;transform:translate(-50%,-50%) scale(1);pointer-events:auto}
+.card-img{width:236px;flex:0 0 auto;background:var(--panel-up);position:relative}
+.card-img img{width:100%;height:100%;min-height:330px;object-fit:cover;object-position:50% 18%;display:block}
+.card-img::after{content:"";position:absolute;inset:0;box-shadow:inset -30px 0 40px -24px oklch(0.04 0.01 58 / .8)}
+.card-body{padding:26px 28px 22px;flex:1;display:flex;flex-direction:column}
+.ceye{font-family:var(--mono);font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:var(--copper);margin:0 0 8px}
+.cname{font-family:var(--display);font-weight:600;font-size:2.2rem;line-height:1;margin:0 0 6px;color:var(--ink)}
+.calias{font-family:var(--mono);font-size:.68rem;color:var(--ink-faint);letter-spacing:.04em;margin:0 0 14px}
+.cbio{font-size:.95rem;color:var(--ink-soft);line-height:1.65;margin:0 0 18px;flex:1}
+.cstats{display:flex;gap:26px;border-top:1px dashed var(--rule);padding-top:14px;margin-bottom:14px}
+.cstats b{display:block;font-family:var(--display);font-weight:600;font-size:1.5rem;color:var(--copper-hi);line-height:1}
+.cstats span{font-family:var(--mono);font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint)}
+.cfoot{font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;color:var(--copper);margin:0;cursor:pointer}
+.cfoot:hover{color:var(--copper-hi)}
+.card-x{position:absolute;top:12px;right:12px;z-index:2;font-family:var(--mono);font-size:.8rem;color:var(--ink-soft);
+  background:oklch(0.092 0.010 58 / .6);border:1px solid var(--rule-up);border-radius:5px;width:30px;height:30px;cursor:pointer}
+.card-x:hover{border-color:var(--copper);color:var(--copper-hi)}
+.hint{position:fixed;bottom:18px;left:0;right:0;text-align:center;font-family:var(--mono);
+  font-size:.7rem;color:var(--ink-faint);letter-spacing:.08em;z-index:20;transition:opacity .4s}
+.hint b{color:var(--copper)}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}.npos,.wire{opacity:1}}
+@media(max-width:680px){
+  .pj .disc{width:72px;height:72px}.center .disc{width:112px;height:112px}.sat .disc{width:50px;height:50px}
+  .tt h1{font-size:1.7rem}.nlabel{font-size:.82rem}
+  .card{flex-direction:column;max-height:86vh;overflow:auto}
+  .card-img{width:100%;height:200px}.card-img img{min-height:0;height:200px}
+}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="tt">
+    <p class="eyebrow">Recuerdos de Cobre · Atlas</p>
+    <h1 id="title">Té de Media Noche</h1>
+    <p class="meta" id="meta">El grupo — diez integrantes · tocá a uno para abrir sus vínculos</p>
+  </div>
+  <button class="back" id="back">← Té de Media Noche</button>
+</div>
+
+<div id="stage"><svg id="wires"></svg></div>
+
+<div class="card" id="card">
+  <button class="card-x" id="cardx">✕</button>
+  <div class="card-img"><img id="cimg" alt=""></div>
+  <div class="card-body">
+    <p class="ceye" id="ceye"></p>
+    <h2 class="cname" id="cname"></h2>
+    <p class="calias" id="calias"></p>
+    <p class="cbio" id="cbio"></p>
+    <div class="cstats">
+      <div><b id="ceps"></b><span>episodios</span></div>
+      <div><b id="cvin"></b><span>vínculos</span></div>
+      <div><b id="crol"></b><span>rol</span></div>
+    </div>
+    <p class="cfoot">Ver ficha completa →</p>
+  </div>
+</div>
+
+<p class="hint" id="hint">Pasá el cursor · <b>click</b> abre vínculos · <b>segundo click</b> abre el expediente · click afuera vuelve</p>
+
+<script>
+const BASE='http://localhost:3000';
+const IMG={
+  mysha:BASE+'/assets/atlas/portraits/mysha.png',
+  borok:BASE+'/images/personajes/borok.png',
+  layra:BASE+'/images/personajes/layra.webp',
+  narcissa:BASE+'/images/personajes/narcissa.webp',
+  david:BASE+'/images/personajes/david-ilcard.png',
+  io:BASE+'/assets/atlas/portraits/io-campbell.png',
+  eryon:BASE+'/images/personajes/eryon.jpg',
+  rylen:BASE+'/images/personajes/rylen.png',
+  pilar:BASE+'/images/personajes/pilar.jpg',
+  patpat:BASE+'/images/personajes/pat.png',
+};
+const PJS=[
+  {id:'mysha',name:'Mysha',img:IMG.mysha},
+  {id:'layra',name:'Layra',img:IMG.layra},
+  {id:'narcissa',name:'Narcissa',img:IMG.narcissa},
+  {id:'io',name:'Io Campbell',img:IMG.io},
+  {id:'eryon',name:'Eryon',img:IMG.eryon},
+  {id:'david',name:'David Ilcard',img:IMG.david},
+  {id:'rylen',name:'Rylen',img:IMG.rylen},
+  {id:'pilar',name:'Pilar',img:IMG.pilar},
+  {id:'patpat',name:'Pat-Pat',img:IMG.patpat},
+  {id:'borok',name:'Borok',img:IMG.borok,ex:true},
+];
+const EDGES=[
+  ['mysha','layra'],['mysha','narcissa'],['mysha','io'],['layra','eryon'],
+  ['narcissa','david'],['io','rylen'],['eryon','pilar'],['david','patpat'],
+  ['rylen','pilar'],['narcissa','io'],
+];
+const CUT=[['borok','mysha']]; // vínculo roto: estuvo y se fue
+const SATS={
+  mysha:[{n:'Champi',k:'fam'},{n:'Narcissa',k:'char',img:IMG.narcissa},{n:'Layra',k:'char',img:IMG.layra},{n:'Coven Rojo',k:'fac',s:'CR'},{n:'H. de Cobre',k:'fac',s:'HC'}],
+  layra:[{n:'Mysha',k:'char',img:IMG.mysha},{n:'Io',k:'char',img:IMG.io},{n:'Eryon',k:'char',img:IMG.eryon},{n:'Coven Verde',k:'fac',s:'CV'}],
+  narcissa:[{n:'David',k:'char',img:IMG.david},{n:'Mysha',k:'char',img:IMG.mysha},{n:'Los Nefarios',k:'fac',s:'NF'}],
+  io:[{n:'Layra',k:'char',img:IMG.layra},{n:'Rylen',k:'char',img:IMG.rylen},{n:'Bosque Mem.',k:'fac',s:'BM'}],
+  eryon:[{n:'Pilar',k:'char',img:IMG.pilar},{n:'Layra',k:'char',img:IMG.layra},{n:'H. de Cobre',k:'fac',s:'HC'}],
+  david:[{n:'Narcissa',k:'char',img:IMG.narcissa},{n:'Pat-Pat',k:'char',img:IMG.patpat},{n:'H. de Cobre',k:'fac',s:'HC'}],
+  rylen:[{n:'Io',k:'char',img:IMG.io},{n:'Pilar',k:'char',img:IMG.pilar},{n:'Hermandad',k:'fac',s:'HC'}],
+  pilar:[{n:'Eryon',k:'char',img:IMG.eryon},{n:'Rylen',k:'char',img:IMG.rylen}],
+  patpat:[{n:'David',k:'char',img:IMG.david},{n:'Mysha',k:'char',img:IMG.mysha}],
+  borok:[{n:'Mysha',k:'char',img:IMG.mysha},{n:'H. de Cobre',k:'fac',s:'HC'}],
+};
+// Expediente — bios de muestra; en la app real salen del frontmatter del vault
+const INFO={
+  mysha:{eye:'PJ · Bruja de Sangre',alias:'Selenne · Veltra · Niña de Sangre · Milla',bio:'Bruja de sangre criada en el Coven Rojo. Tres personalidades conviven en ella — Mysha, Selenne y Veltra. Tras la masacre que destruyó su coven, volvió a su origen para refundarlo.',eps:61,rol:'PJ'},
+  layra:{eye:'PJ · Dracónica',alias:'—',bio:'Dracónica de Té de Media Noche. «No soy una lagartija, soy dracónica.»',eps:58,rol:'PJ'},
+  narcissa:{eye:'PJ',alias:'—',bio:'Integrante de Té de Media Noche. Química de venenos y criaturas; su serpiente Bijak la acompaña oculta.',eps:60,rol:'PJ'},
+  io:{eye:'PJ · Druida · Retoño de Trent',alias:'—',bio:'Druida nacida del Bosque de las Memorias. Alterna entre su forma humana y su cuerpo constructo.',eps:55,rol:'PJ'},
+  eryon:{eye:'PJ',alias:'—',bio:'Integrante de Té de Media Noche. Su historia se escribe episodio a episodio en las crónicas.',eps:30,rol:'PJ'},
+  david:{eye:'NPC · Compañero del grupo',alias:'—',bio:'Compañero estable de Té de Media Noche. Ojo para la política y las tramas de la Metrópolis.',eps:47,rol:'NPC'},
+  rylen:{eye:'NPC · Compañero del grupo',alias:'—',bio:'Viaja con el grupo como uno más, aunque nunca tiró un dado.',eps:28,rol:'NPC'},
+  pilar:{eye:'NPC · Compañera del grupo',alias:'—',bio:'Parte de Té de Media Noche. Su historia se cruza con la de Eryon.',eps:18,rol:'NPC'},
+  patpat:{eye:'NPC · Compañera del grupo',alias:'—',bio:'Parte de Té de Media Noche.',eps:15,rol:'NPC'},
+  borok:{eye:'Fundador · se separó',alias:'—',bio:'Fundó Té de Media Noche junto a los primeros. En cierto punto del camino, sus pasos se apartaron del grupo — el vínculo quedó cortado, pero la historia compartida permanece.',eps:22,rol:'Fundador'},
+};
+
+const stage=document.getElementById('stage');
+const wires=document.getElementById('wires');
+const titleEl=document.getElementById('title');
+const metaEl=document.getElementById('meta');
+const backEl=document.getElementById('back');
+const hintEl=document.getElementById('hint');
+const card=document.getElementById('card');
+let focused=null,expanded=false;const posEls={};
+
+function nodeHTML(o){
+  if(o.k==='fac') return `<span class="disc"><span class="sig">${o.s||o.n[0]}</span></span><span class="nlabel">${o.n}<small>facción</small></span>`;
+  if(o.k==='fam') return `<span class="disc"><span class="glyph">🦉</span></span><span class="nlabel">${o.n}<small>familiar</small></span>`;
+  const name=o.name||o.n;
+  const sub=o.ex?'<small>fundador · se separó</small>':'';
+  return `<span class="ring"></span><span class="disc"><img src="${o.img}" alt="${name}"></span><span class="nlabel">${name}${sub}</span>`;
+}
+function makePos(id){const d=document.createElement('div');d.className='npos';d.dataset.id=id;stage.appendChild(d);return d;}
+function place(el,x,y){el.style.left=x+'px';el.style.top=y+'px';}
+function dims(){return {w:stage.clientWidth,h:stage.clientHeight,cx:stage.clientWidth/2,cy:stage.clientHeight/2};}
+
+function build(){
+  PJS.forEach((p,i)=>{
+    const pos=makePos(p.id);
+    const btn=document.createElement('button');
+    btn.className='node pj'+(p.ex?' ex':'');btn.innerHTML=nodeHTML(p);
+    btn.style.animationDelay=(i*110)+'ms';pos.style.animationDelay=(-i*0.8)+'s';
+    btn.addEventListener('click',()=>{ if(focused===p.id && !expanded){openCard(p.id);} else {focus(p.id);} });
+    pos.appendChild(btn);posEls[p.id]=pos;
+  });
+  layoutCompania();
+}
+function clearSats(){document.querySelectorAll('.npos.sat-pos').forEach(e=>e.remove());}
+function mkLine(x1,y1,x2,y2,cls,delay,draw){
+  const l=document.createElementNS('http://www.w3.org/2000/svg','line');
+  l.setAttribute('x1',x1);l.setAttribute('y1',y1);l.setAttribute('x2',x2);l.setAttribute('y2',y2);
+  l.setAttribute('class',cls);
+  if(draw){
+    const len=Math.hypot(x2-x1,y2-y1);
+    l.style.strokeDasharray=len;l.style.strokeDashoffset=len;
+    l.style.transition='stroke-dashoffset 1.15s cubic-bezier(.22,1,.36,1),opacity .4s ease';
+    wires.appendChild(l);
+    requestAnimationFrame(()=>setTimeout(()=>{l.classList.add('show');l.style.strokeDashoffset='0';},delay));
+  }else{
+    l.style.transition='opacity .8s ease';
+    wires.appendChild(l);
+    requestAnimationFrame(()=>setTimeout(()=>l.classList.add('show'),delay));
+  }
+}
+function drawWires(list){
+  wires.innerHTML='';
+  list.forEach((w,i)=>{
+    const delay=i*95+80;
+    if(w.cut){
+      // vínculo roto: dos tramos punteados que no llegan a tocarse
+      const t=0.42,gx=w.x2-w.x1,gy=w.y2-w.y1;
+      mkLine(w.x1,w.y1,w.x1+gx*t,w.y1+gy*t,'wire cut',delay,false);
+      mkLine(w.x2,w.y2,w.x2-gx*t,w.y2-gy*t,'wire cut',delay+120,false);
+    }else{
+      mkLine(w.x1,w.y1,w.x2,w.y2,'wire'+(w.soft?' soft':''),delay,true);
+    }
+  });
+}
+function layoutCompania(){
+  focused=null;closeCard();clearSats();
+  const {cx,cy,w,h}=dims();const R=Math.min(w*0.34,h*0.40,400);
+  const p={};
+  PJS.forEach((pj,i)=>{
+    const a=(-90+i*(360/PJS.length))*Math.PI/180;const x=cx+R*Math.cos(a),y=cy+R*Math.sin(a);
+    p[pj.id]=[x,y];const el=posEls[pj.id];
+    el.className='npos'+(pj.ex?' is-ex':'');el.firstChild.className='node pj'+(pj.ex?' ex':'');place(el,x,y);
+  });
+  const W=EDGES.map(([a,b])=>({x1:p[a][0],y1:p[a][1],x2:p[b][0],y2:p[b][1]}));
+  CUT.forEach(([a,b])=>W.push({x1:p[a][0],y1:p[a][1],x2:p[b][0],y2:p[b][1],cut:true}));
+  drawWires(W);
+  titleEl.textContent='Té de Media Noche';
+  metaEl.innerHTML='El grupo — diez integrantes · tocá a uno para abrir sus vínculos';
+  backEl.classList.remove('show');hintEl.style.opacity='1';
+}
+function focus(id){
+  focused=id;closeCard();clearSats();
+  const {cx,cy,w,h}=dims();const pj=PJS.find(p=>p.id===id);
+  const c=posEls[id];c.className='npos';c.firstChild.className='node pj center'+(pj.ex?' ex':'');place(c,cx,cy);
+  const others=PJS.filter(p=>p.id!==id);const Ro=Math.min(w*0.43,h*0.47,460);const opos={};
+  others.forEach((o,i)=>{
+    const a=(-90+(i+0.5)*(360/others.length))*Math.PI/180;
+    const x=cx+Ro*Math.cos(a),y=cy+Ro*Math.sin(a);opos[o.id]=[x,y];
+    const el=posEls[o.id];el.className='npos dim'+(o.ex?' is-ex':'');el.firstChild.className='node pj'+(o.ex?' ex':'');place(el,x,y);
+  });
+  const sats=SATS[id]||[];const Rs=Math.min(w*0.23,h*0.29,250);const spos=[];
+  sats.forEach((s,i)=>{
+    const a=(-90+i*(360/sats.length))*Math.PI/180;const x=cx+Rs*Math.cos(a),y=cy+Rs*Math.sin(a);spos.push([x,y]);
+    const el=document.createElement('div');el.className='npos sat-pos';el.style.animationDelay=(-i*0.7)+'s';
+    const btn=document.createElement('div');btn.className='node sat '+(s.k==='fac'?'fac':s.k==='fam'?'fam':'');
+    btn.innerHTML=nodeHTML(s);btn.style.animationDelay=(280+i*110)+'ms';
+    el.appendChild(btn);stage.appendChild(el);place(el,x,y);
+  });
+  const W=spos.map(([x,y])=>({x1:cx,y1:cy,x2:x,y2:y}));
+  others.forEach(o=>{
+    const seg={x1:cx,y1:cy,x2:opos[o.id][0],y2:opos[o.id][1]};
+    if(o.ex||pj.ex){seg.cut=true}else{seg.soft=true}
+    W.push(seg);
+  });
+  drawWires(W);
+  titleEl.textContent=pj.name;
+  metaEl.innerHTML=pj.ex?`<b>Borok</b> · fundador que dejó Té de Media Noche · otro click abre su expediente`:`<b>${sats.length}</b> vínculos cercanos · otro click abre su expediente`;
+  backEl.classList.add('show');hintEl.style.opacity='0';
+}
+function openCard(id){
+  const pj=PJS.find(p=>p.id===id);const info=INFO[id]||{};
+  document.getElementById('cimg').src=pj.img;
+  document.getElementById('cimg').alt=pj.name;
+  document.getElementById('ceye').textContent=info.eye||'';
+  document.getElementById('cname').textContent=pj.name;
+  document.getElementById('calias').textContent=info.alias&&info.alias!=='—'?('alias — '+info.alias):' ';
+  document.getElementById('cbio').textContent=info.bio||'';
+  document.getElementById('ceps').textContent=info.eps??'—';
+  document.getElementById('cvin').textContent=(SATS[id]||[]).length;
+  document.getElementById('crol').textContent=info.rol||'—';
+  expanded=true;card.classList.add('show');stage.classList.add('veil');
+  metaEl.innerHTML='Expediente abierto · click afuera o ✕ para cerrar';
+}
+function closeCard(){
+  if(!expanded)return;
+  expanded=false;card.classList.remove('show');stage.classList.remove('veil');
+  if(focused){const pj=PJS.find(p=>p.id===focused);
+    metaEl.innerHTML=pj.ex?`<b>Borok</b> · fundador que dejó Té de Media Noche`:`<b>${(SATS[focused]||[]).length}</b> vínculos cercanos · otro click abre su expediente`;}
+}
+document.getElementById('cardx').addEventListener('click',e=>{e.stopPropagation();closeCard();});
+card.addEventListener('click',e=>e.stopPropagation());
+backEl.addEventListener('click',e=>{e.stopPropagation();layoutCompania();});
+// click afuera: cierra el nivel más alto (expediente → vínculos → grupo)
+document.addEventListener('click',e=>{
+  if(e.target.closest('.node')||e.target.closest('.card')||e.target.closest('.back'))return;
+  if(expanded){closeCard();return;}
+  if(focused)layoutCompania();
+});
+let rt;window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>focused?focus(focused):layoutCompania(),120)});
+build();
+</script>
+</body>
+</html>
