@@ -1432,7 +1432,6 @@ a.av2-latest-pag-arrow:hover {
   padding: calc(var(--av2-nav-h) + 1.2rem) clamp(1.5rem, 4vw, 3rem) clamp(1.4rem, 3vw, 2.2rem);
   text-align: center;
   overflow: hidden;
-  border-bottom: 1px solid var(--av2-rule);
   flex-shrink: 0;
 }
 .av2-page-head::before {
@@ -9123,7 +9122,6 @@ body:has(.av2-immersive-bg),
     gap: 0.42rem;
     padding: calc(var(--av2-nav-h) + 0.75rem) clamp(1.5rem, 4vw, 3rem) clamp(1.4rem, 3vw, 2.2rem);
     overflow: hidden;
-    border-bottom: 1px solid var(--av2-rule);
   }
 
   .av2-page-header::before {
