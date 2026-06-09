@@ -28,4 +28,5 @@ export const TDMN_MEMBERS: TdmnMemberConfig[] = [
 ];
 
 // Vínculos rotos curados (estuvo y se fue): pares [a, b].
+// El orden del par es irrelevante — el vínculo es no dirigido.
 export const TDMN_CUT_LINKS: Array<[string, string]> = [["borok", "mysha"]];
