@@ -64,6 +64,7 @@ function Wire({ w }: { w: WireSpec }) {
 export default function AtlasConstellation({ data }: { data: ConstellationData }) {
   const { members, edges, cutEdges, satsByMember } = data;
   const stageRef = useRef<HTMLDivElement | null>(null);
+  const closeBtnRef = useRef<HTMLButtonElement | null>(null);
   const [size, setSize] = useState({ w: 1200, h: 720 });
   const [focused, setFocused] = useState<string | null>(null);
   const [expanded, setExpanded] = useState(false);
@@ -88,6 +89,11 @@ export default function AtlasConstellation({ data }: { data: ConstellationData }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [expanded, focused]);
+
+  // Al abrir el expediente, llevar el foco al botón de cierre (a11y dialog).
+  useEffect(() => {
+    if (expanded) closeBtnRef.current?.focus();
+  }, [expanded]);
 
   const cx = size.w / 2;
   const cy = size.h / 2;
@@ -141,7 +147,7 @@ export default function AtlasConstellation({ data }: { data: ConstellationData }
         const p = memberPos.get(m.slug);
         if (!p) return;
         const broken = m.estado === "separado" || focusedMember?.estado === "separado";
-        if (broken) pushCut(c, p, `cut-f-${m.slug}`, (sats.length + i) * 95 + 80);
+        if (broken) pushCut(c, p, `cut-f-${focused}-${m.slug}`, (sats.length + i) * 95 + 80);
         else list.push({ key: `o-${focused}-${m.slug}`, x1: c.x, y1: c.y, x2: p.x, y2: p.y, kind: "soft", delay: (sats.length + i) * 95 + 80 });
       });
     }
@@ -158,8 +164,10 @@ export default function AtlasConstellation({ data }: { data: ConstellationData }
   }, [expanded, focused]);
 
   const onMemberClick = useCallback((slug: string) => {
-    if (focused === slug && !expanded) setExpanded(true);
-    else { setExpanded(false); setFocused(slug); }
+    // Con el expediente abierto los nodos están velados: cerrar, no re-enfocar.
+    if (expanded) { setExpanded(false); return; }
+    if (focused === slug) setExpanded(true);
+    else setFocused(slug);
   }, [focused, expanded]);
 
   const meta = expanded
@@ -181,6 +189,7 @@ export default function AtlasConstellation({ data }: { data: ConstellationData }
         <button
           type="button"
           className={`av2-tdmn-back${focused ? " show" : ""}`}
+          tabIndex={focused ? 0 : -1}
           onClick={() => { setExpanded(false); setFocused(null); }}
         >
           ← Té de Media Noche
@@ -249,8 +258,8 @@ export default function AtlasConstellation({ data }: { data: ConstellationData }
       })}
 
       {focusedMember && (
-        <div className={`av2-tdmn-card${expanded ? " show" : ""}`} role="dialog" aria-label={`Expediente de ${focusedMember.name}`}>
-          <button type="button" className="av2-tdmn-card-x" onClick={() => setExpanded(false)} aria-label="Cerrar expediente">✕</button>
+        <div className={`av2-tdmn-card${expanded ? " show" : ""}`} role="dialog" aria-label={`Expediente de ${focusedMember.name}`} inert={!expanded}>
+          <button type="button" className="av2-tdmn-card-x" ref={closeBtnRef} onClick={() => setExpanded(false)} aria-label="Cerrar expediente">✕</button>
           <div className="av2-tdmn-card-img">
             <img src={focusedMember.imageSrc} alt={`Retrato de ${focusedMember.name}`} />
           </div>
