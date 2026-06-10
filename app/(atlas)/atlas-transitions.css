@@ -41,20 +41,20 @@
 
 /* Default Forward / Detail Page Navigation: Slide out to left, slide in from right */
 ::view-transition-old(av2-page) {
-  animation: 1s cubic-bezier(0.4, 0, 0.2, 1) both av2-slide-out-to-left;
+  animation: 400ms cubic-bezier(0.4, 0, 0.2, 1) both av2-slide-out-to-left;
 }
 
 ::view-transition-new(av2-page) {
-  animation: 1s cubic-bezier(0.4, 0, 0.2, 1) both av2-slide-in-from-right;
+  animation: 400ms cubic-bezier(0.4, 0, 0.2, 1) both av2-slide-in-from-right;
 }
 
 /* Back Navigation: Slide out to right, slide in from left */
 :root[data-av2-vt="route-back"]::view-transition-old(av2-page) {
-  animation: 1s cubic-bezier(0.4, 0, 0.2, 1) both av2-slide-out-to-right;
+  animation: 400ms cubic-bezier(0.4, 0, 0.2, 1) both av2-slide-out-to-right;
 }
 
 :root[data-av2-vt="route-back"]::view-transition-new(av2-page) {
-  animation: 1s cubic-bezier(0.4, 0, 0.2, 1) both av2-slide-in-from-left;
+  animation: 400ms cubic-bezier(0.4, 0, 0.2, 1) both av2-slide-in-from-left;
 }
 
 /* Animation Keyframes */
@@ -65,14 +65,14 @@
   }
 
   to {
-    transform: translateX(-100px);
+    transform: translateX(-40px);
     opacity: 0;
   }
 }
 
 @keyframes av2-slide-in-from-right {
   from {
-    transform: translateX(100px);
+    transform: translateX(40px);
     opacity: 0;
   }
 
@@ -89,14 +89,14 @@
   }
 
   to {
-    transform: translateX(100px);
+    transform: translateX(40px);
     opacity: 0;
   }
 }
 
 @keyframes av2-slide-in-from-left {
   from {
-    transform: translateX(-100px);
+    transform: translateX(-40px);
     opacity: 0;
   }
 
