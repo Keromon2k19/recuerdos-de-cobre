@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ficha técnica — flip reordenado</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Spectral:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+:root{
+  --bg:oklch(0.092 0.010 58); --raised:oklch(0.138 0.013 57);
+  --panel:oklch(0.172 0.016 56); --panel-up:oklch(0.210 0.019 56);
+  --copper:oklch(0.715 0.118 56); --copper-hi:oklch(0.808 0.126 62);
+  --copper-dim:oklch(0.490 0.075 53); --copper-deep:oklch(0.328 0.052 51);
+  --gold:oklch(0.826 0.097 82); --ink:oklch(0.908 0.014 78);
+  --ink-soft:oklch(0.710 0.014 76); --ink-faint:oklch(0.472 0.011 70);
+  --rule:oklch(0.268 0.021 55); --rule-up:oklch(0.365 0.038 55);
+  --rule-copper:oklch(0.490 0.072 54 / 0.55);
+  --display:"Cormorant Garamond",Georgia,serif; --body:"Spectral",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace; --ease:cubic-bezier(.22,1,.36,1);
+}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;color:var(--ink);font-family:var(--body);-webkit-font-smoothing:antialiased;
+  padding:46px 26px 70px;display:flex;flex-direction:column;align-items:center;
+  background:radial-gradient(130% 90% at 50% -8%, oklch(0.328 0.052 51 / .26), transparent 55%),var(--bg)}
+.wrap{max-width:640px;width:100%}
+.eyebrow{font-family:var(--mono);font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;color:var(--copper);margin:0 0 12px;text-align:center}
+h1{font-family:var(--display);font-weight:600;font-size:2rem;line-height:1.05;margin:0 0 6px;color:var(--ink);text-align:center}
+.sub{color:var(--ink-soft);margin:0 auto 26px;font-size:.95rem;text-align:center;max-width:52ch}
+.sub b{color:var(--gold);font-weight:500}
+
+.flip{perspective:1800px;width:100%}
+.flip-card{position:relative;transition:transform .8s var(--ease);transform-style:preserve-3d;cursor:pointer}
+.flip-card.flipped{transform:rotateY(180deg)}
+.flip-face{backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.flip-face.back{position:absolute;inset:0;transform:rotateY(180deg)}
+.flip-hint{display:block;text-align:center;margin:14px auto 0;font-family:var(--mono);font-size:.6rem;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint)}
+.flip-hint b{color:var(--copper)}
+
+.card{display:flex;width:100%;min-height:368px;background:linear-gradient(180deg,var(--panel),var(--raised));
+  border:1px solid var(--rule-copper);border-radius:8px;overflow:hidden;
+  box-shadow:0 26px 70px -24px oklch(0.04 0.01 58 / .92)}
+.card-img{width:208px;flex:0 0 auto;background:var(--panel-up);position:relative}
+.card-img img{width:100%;height:100%;object-fit:cover;object-position:50% 16%;display:block}
+.card-img::after{content:"";position:absolute;inset:0;box-shadow:inset -30px 0 40px -24px oklch(0.04 0.01 58 / .8)}
+.card-body{padding:22px 24px;flex:1;min-width:0;display:flex;flex-direction:column}
+.ceye{font-family:var(--mono);font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--copper);margin:0 0 6px}
+.cname{font-family:var(--display);font-weight:600;font-size:1.95rem;line-height:1;margin:0 0 6px;color:var(--ink)}
+.calias{font-family:var(--mono);font-size:.62rem;color:var(--ink-faint);letter-spacing:.03em;margin:0 0 13px;line-height:1.5}
+.cbio{font-size:.9rem;color:var(--ink-soft);line-height:1.62;margin:0}
+
+/* ===== REVERSO reordenado ===== */
+.back .card{background:linear-gradient(180deg,var(--raised),var(--panel))}
+.sheet{padding:20px 22px;flex:1;display:flex;flex-direction:column;gap:14px}
+.sheet-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.sheet-top .who .ceye{margin-bottom:3px}
+.sheet-top .who h3{font-family:var(--display);font-weight:600;font-size:1.5rem;color:var(--ink);margin:0;line-height:1}
+.sheet-top .who .cls{font-family:var(--body);font-size:.82rem;color:var(--copper-hi);margin-top:2px}
+.sheet-top .who .ident{font-family:var(--mono);font-size:.56rem;letter-spacing:.06em;color:var(--ink-faint);margin-top:4px}
+.sheet-top .sz{font-family:var(--mono);font-size:.54rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);
+  border:1px solid var(--rule);border-radius:5px;padding:5px 9px;white-space:nowrap}
+
+/* vitales destacados */
+.vitals{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.vital{background:var(--bg);border:1px solid var(--rule);border-radius:6px;padding:9px 6px;text-align:center}
+.vital b{display:block;font-family:var(--display);font-size:1.5rem;color:var(--copper-hi);line-height:1;font-weight:600}
+.vital span{font-family:var(--mono);font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin-top:3px;display:block}
+
+/* atributos: bloque protagonista */
+.abil{display:grid;grid-template-columns:repeat(6,1fr);gap:5px}
+.ab{background:var(--panel-up);border:1px solid var(--rule);border-radius:5px;padding:6px 2px 5px;text-align:center}
+.ab.hi{border-color:var(--rule-copper);background:linear-gradient(180deg,var(--panel-up),var(--copper-deep))}
+.ab .k{font-family:var(--mono);font-size:.5rem;letter-spacing:.08em;color:var(--ink-faint)}
+.ab .v{font-family:var(--display);font-size:1.15rem;color:var(--ink);line-height:1.15;font-weight:600}
+.ab .m{font-family:var(--mono);font-size:.6rem;color:var(--copper-hi)}
+
+/* rasgos agrupados */
+.traits{display:flex;flex-direction:column;gap:7px;border-top:1px solid var(--rule);padding-top:12px;margin-top:2px}
+.trait{display:grid;grid-template-columns:74px 1fr;gap:10px;align-items:baseline}
+.trait .lab{font-family:var(--mono);font-size:.54rem;letter-spacing:.12em;text-transform:uppercase;color:var(--copper-dim)}
+.trait .val{font-family:var(--body);font-size:.8rem;color:var(--ink-soft);line-height:1.45}
+.trait .val .res{color:var(--gold)}
+
+.opts{display:flex;gap:12px;justify-content:center;margin-top:30px}
+.option{font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);
+  background:var(--panel);border:1px solid var(--rule-up);border-radius:6px;padding:11px 20px;cursor:pointer;transition:all .22s var(--ease)}
+.option:hover{border-color:var(--rule-copper);color:var(--copper-hi)}
+.option.selected{border-color:var(--copper);color:var(--copper-hi);box-shadow:0 0 0 1px var(--copper),0 0 24px oklch(0.715 0.118 56 / .22)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="eyebrow">Mockup · Flip reordenado · paso 2</p>
+  <h1>Reverso con la info ordenada</h1>
+  <p class="sub"><b>Clickeá la tarjeta</b> para darla vuelta. Reverso: vitales arriba, atributos como bloque central, rasgos etiquetados abajo.</p>
+
+  <div class="flip">
+    <div class="flip-card flipped" id="flipCard" onclick="this.classList.toggle('flipped')">
+      <!-- FRENTE -->
+      <div class="flip-face front">
+        <div class="card">
+          <div class="card-img"><img src="http://localhost:3000/assets/atlas/portraits/mysha.png" alt="Mysha"></div>
+          <div class="card-body">
+            <p class="ceye">PJ · Bruja de Sangre · Líder actual</p>
+            <h3 class="cname">Mysha</h3>
+            <p class="calias">alias — Selenne · Veltra · Niña de Sangre · Milla</p>
+            <p class="cbio">Bruja de sangre criada en el Coven Rojo. Tres personalidades conviven en ella. Tras la masacre de su coven, volvió a su origen para refundarlo.</p>
+          </div>
+        </div>
+      </div>
+      <!-- REVERSO -->
+      <div class="flip-face back">
+        <div class="card">
+          <div class="sheet">
+            <div class="sheet-top">
+              <div class="who">
+                <p class="ceye">Ficha técnica · D&D 5e</p>
+                <h3>Mysha</h3>
+                <div class="cls">Blood Witch · Nivel 17</div>
+                <div class="ident">16 años · 1,65 m</div>
+              </div>
+              <div class="sz">Humana</div>
+            </div>
+
+            <div class="vitals">
+              <div class="vital"><b>17</b><span>Clase de Armadura</span></div>
+              <div class="vital"><b>191</b><span>Puntos de golpe</span></div>
+              <div class="vital"><b>30 ft</b><span>Velocidad</span></div>
+            </div>
+
+            <div class="abil">
+              <div class="ab"><div class="k">FUE</div><div class="v">9</div><div class="m">−1</div></div>
+              <div class="ab"><div class="k">DES</div><div class="v">12</div><div class="m">+1</div></div>
+              <div class="ab hi"><div class="k">CON</div><div class="v">18</div><div class="m">+4</div></div>
+              <div class="ab hi"><div class="k">INT</div><div class="v">19</div><div class="m">+4</div></div>
+              <div class="ab"><div class="k">SAB</div><div class="v">15</div><div class="m">+2</div></div>
+              <div class="ab hi"><div class="k">CAR</div><div class="v">20</div><div class="m">+5</div></div>
+            </div>
+
+            <div class="traits">
+              <div class="trait"><div class="lab">Resist.</div><div class="val"><span class="res">frío · fuego · necrótico</span></div></div>
+              <div class="trait"><div class="lab">Inmune</div><div class="val">dormir</div></div>
+              <div class="trait"><div class="lab">Sentidos</div><div class="val">visión en la oscuridad 60 ft · Blood Sense 60 ft</div></div>
+              <div class="trait"><div class="lab">Idiomas</div><div class="val">abisal, común, dracónico, élfico, infernal, orco, infracomún</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <span class="flip-hint">↻ <b>Click</b> en la tarjeta para girar</span>
+  </div>
+
+  <div class="opts">
+    <div class="option" data-choice="ok" onclick="toggleSelect(this)">Así me gusta</div>
+    <div class="option" data-choice="tweak" onclick="toggleSelect(this)">Ajustar algo</div>
+  </div>
+</div>
+</body>
+</html>
