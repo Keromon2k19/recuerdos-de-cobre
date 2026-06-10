@@ -35,6 +35,7 @@ const GROUPS: NavGroup[] = [
     id: "atlas",
     label: "Atlas",
     items: [
+      { href: "/te-de-media-noche", label: "Té de Media Noche" },
       { href: "/personajes", label: "Personajes" },
       { href: "/facciones", label: "Facciones" },
       { href: "/lugares", label: "Lugares" },
