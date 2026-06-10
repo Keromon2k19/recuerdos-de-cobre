@@ -2,7 +2,21 @@
 // Escapa del route group (public) — no hereda SiteHeader ni SiteFooter de V1.
 // Solo hereda el root layout (app/layout.tsx): html + body + anti-FOUC script.
 import "../globals.css";
-import "./atlas.css";
+import "./atlas-tokens.css";
+import "./atlas-layout.css";
+import "./atlas-nav.css";
+import "./atlas-home.css";
+import "./atlas-reproductor.css";
+import "./atlas-mapa.css";
+import "./atlas-dioses.css";
+import "./atlas-facciones.css";
+import "./atlas-lugares.css";
+import "./atlas-timeline.css";
+import "./atlas-personajes.css";
+import "./atlas-cronicas.css";
+import "./atlas-buscar.css";
+import "./atlas-te-de-media-noche.css";
+import "./atlas-transitions.css";
 import AtlasShell from "@/components/atlas/AtlasShell";
 import AtlasTopNav from "@/components/atlas/AtlasTopNav";
 import AtlasViewTransitions from "@/components/atlas/AtlasViewTransitions";

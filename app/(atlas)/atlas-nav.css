@@ -1,0 +1,468 @@
+/* ======================================================================
+   ATLAS-NAV.CSS - Modular atlas stylesheet
+   ====================================================================== */
+
+.av2-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  height: var(--av2-nav-h);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: 0 clamp(1rem, 2.2vw, 2.4rem);
+  background: oklch(0.065 0.01 55 / 0.78);
+  border-bottom: 1px solid var(--av2-rule);
+  backdrop-filter: blur(12px) saturate(1.1);
+  -webkit-backdrop-filter: blur(12px) saturate(1.1);
+  box-shadow: 0 4px 20px oklch(0 0 0 / 0.3);
+  pointer-events: auto;
+}
+
+/* Sus children sí reciben clicks */
+.av2-nav>* {
+  pointer-events: auto;
+}
+
+.av2-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  justify-self: end;
+}
+
+/* Logo RdC — imagen con halo sutil para integrarlo sobre el hero */
+.av2-nav-brand {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 42px;
+  flex-shrink: 0;
+  justify-self: start;
+  transition: transform var(--av2-dur) var(--av2-ease),
+    filter var(--av2-dur) var(--av2-ease);
+  filter:
+    drop-shadow(0 4px 10px oklch(0.04 0.010 58 / 0.85));
+}
+
+.av2-nav-brand img {
+  width: auto;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.av2-nav-brand:hover {
+  transform: translateY(-1px);
+  filter:
+    brightness(1.08) drop-shadow(0 6px 14px oklch(0.715 0.118 56 / 0.30));
+}
+
+/* Links de navegación */
+.av2-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-left: auto;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.av2-nav-links::-webkit-scrollbar {
+  display: none;
+}
+
+.av2-nav-link {
+  font-family: var(--av2-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--av2-ink-soft);
+  padding: 0.55rem 0.82rem;
+  border-radius: var(--av2-r-sm);
+  white-space: nowrap;
+  position: relative;
+  transition: color var(--av2-dur) var(--av2-ease),
+    background var(--av2-dur) var(--av2-ease);
+}
+
+.av2-nav-link:hover {
+  color: var(--av2-copper-hi);
+  background: oklch(0.25 0.020 56 / 0.48);
+}
+
+.av2-nav-link[data-active="true"] {
+  color: var(--av2-copper);
+}
+
+.av2-nav-link[data-active="true"]::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 18px;
+  height: 1px;
+  background: var(--av2-copper);
+}
+
+.av2-nav-link--soon {
+  color: var(--av2-ink-faint);
+  cursor: default;
+  pointer-events: none;
+}
+
+.av2-nav-link--soon::after {
+  content: "·pronto";
+  font-size: 7.5px;
+  letter-spacing: 0.08em;
+  color: var(--av2-copper-deep);
+  margin-left: 0.25rem;
+  vertical-align: super;
+  position: static;
+  width: auto;
+  height: auto;
+  background: none;
+}
+
+/* ── Nav menu horizontal con dropdowns ──────────────────────────────── */
+.av2-nav-menu {
+  --av2-nav-ind-x: 0px;
+  --av2-nav-ind-w: 0px;
+  --av2-nav-ind-opacity: 0;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  position: relative;
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  height: 100%;
+}
+
+.av2-nav-menu[data-section="home"] {
+  --av2-nav-ind-x: 10px;
+  --av2-nav-ind-w: 84px;
+  --av2-nav-ind-opacity: 1;
+}
+
+.av2-nav-menu[data-section="cronicas"] {
+  --av2-nav-ind-x: 97px;
+  --av2-nav-ind-w: 161px;
+  --av2-nav-ind-opacity: 1;
+}
+
+.av2-nav-menu[data-section="atlas"] {
+  --av2-nav-ind-x: 261px;
+  --av2-nav-ind-w: 117px;
+  --av2-nav-ind-opacity: 1;
+}
+
+.av2-nav-menu[data-section="buscar"] {
+  --av2-nav-ind-x: 386px;
+  --av2-nav-ind-w: 36px;
+  --av2-nav-ind-opacity: 1;
+}
+
+.av2-nav-menu:has([data-nav-item="home"]:is(:hover, :focus-visible)) {
+  --av2-nav-ind-x: 10px;
+  --av2-nav-ind-w: 84px;
+  --av2-nav-ind-opacity: 1;
+}
+
+.av2-nav-menu:has([data-nav-item="cronicas"]:is(:hover, :focus-visible)) {
+  --av2-nav-ind-x: 97px;
+  --av2-nav-ind-w: 161px;
+  --av2-nav-ind-opacity: 1;
+}
+
+.av2-nav-menu:has([data-nav-item="atlas"]:is(:hover, :focus-visible)) {
+  --av2-nav-ind-x: 261px;
+  --av2-nav-ind-w: 117px;
+  --av2-nav-ind-opacity: 1;
+}
+
+.av2-nav-menu:has([data-nav-item="buscar"]:is(:hover, :focus-visible)) {
+  --av2-nav-ind-x: 386px;
+  --av2-nav-ind-w: 36px;
+  --av2-nav-ind-opacity: 1;
+}
+
+.av2-nav-menu::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: var(--av2-nav-ind-w, 0px);
+  height: 1px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, var(--av2-copper-hi), transparent);
+  opacity: var(--av2-nav-ind-opacity, 0);
+  transform: translateX(var(--av2-nav-ind-x, 0px));
+  pointer-events: none;
+  transition:
+    transform 260ms var(--av2-ease),
+    width 260ms var(--av2-ease),
+    opacity 160ms var(--av2-ease);
+}
+
+.av2-nav-mlink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.32rem;
+  padding: 0.55rem 0.95rem;
+  border-radius: 4px;
+  font-family: var(--av2-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--av2-ink-soft);
+  background: none;
+  border: 1px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  position: relative;
+  transition:
+    color var(--av2-dur) var(--av2-ease),
+    background var(--av2-dur) var(--av2-ease),
+    border-color var(--av2-dur) var(--av2-ease),
+    transform 220ms var(--av2-ease);
+}
+
+.av2-nav-mlink:hover {
+  color: var(--av2-copper-hi);
+  background: oklch(0.715 0.118 56 / 0.055);
+  transform: translateY(-1px);
+}
+
+.av2-nav-mlink[data-active="true"] {
+  color: var(--av2-ink-soft);
+  background: transparent;
+  border-color: transparent;
+}
+
+.av2-nav-group.is-open>.av2-nav-mlink {
+  color: var(--av2-copper-hi);
+}
+
+.av2-nav-mlink:focus-visible {
+  outline: 2px solid var(--av2-gold);
+  outline-offset: 2px;
+}
+
+.av2-nav-chev {
+  transition: transform var(--av2-dur) var(--av2-ease);
+}
+
+.av2-nav-group.is-open .av2-nav-chev {
+  transform: rotate(180deg);
+}
+
+/* Dropdown panel */
+.av2-nav-group {
+  position: relative;
+}
+
+.av2-nav-pop {
+  position: absolute;
+  top: calc(100% + 0.55rem);
+  left: 50%;
+  transform: translateX(-50%) translateY(-4px);
+  min-width: 200px;
+  background: linear-gradient(180deg,
+      var(--av2-bg-panel-up) 0%,
+      var(--av2-bg-panel) 100%);
+  border: 1px solid var(--av2-rule-copper);
+  border-radius: var(--av2-r);
+  padding: 0.45rem;
+  box-shadow:
+    0 18px 40px -12px oklch(0.04 0.01 58 / 0.85),
+    0 0 0 1px oklch(0.715 0.118 56 / 0.08);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 180ms var(--av2-ease),
+    transform 180ms var(--av2-ease);
+}
+
+.av2-nav-pop[hidden] {
+  display: none;
+}
+
+.av2-nav-group.is-open .av2-nav-pop {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+
+.av2-nav-pop::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 8px;
+  height: 8px;
+  background: var(--av2-bg-panel-up);
+  border-top: 1px solid var(--av2-rule-copper);
+  border-left: 1px solid var(--av2-rule-copper);
+}
+
+.av2-nav-pop-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.av2-nav-pop-item {
+  display: block;
+  padding: 0.62rem 0.9rem;
+  font-family: var(--av2-display);
+  font-size: 0.98rem;
+  color: var(--av2-ink);
+  border-radius: var(--av2-r-sm);
+  text-decoration: none;
+  transition:
+    background var(--av2-dur) var(--av2-ease),
+    color var(--av2-dur) var(--av2-ease),
+    padding-left var(--av2-dur) var(--av2-ease);
+}
+
+.av2-nav-pop-item:hover {
+  background: oklch(0.715 0.118 56 / 0.12);
+  color: var(--av2-copper-hi);
+  padding-left: 1.15rem;
+}
+
+.av2-nav-pop-item[data-active="true"] {
+  color: var(--av2-gold);
+  background: oklch(0.715 0.118 56 / 0.10);
+}
+
+/* Search icon en la nav */
+.av2-nav-search {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  margin-left: 0.3rem;
+  border-radius: 4px;
+  color: var(--av2-ink-soft);
+  border: 1px solid transparent;
+  position: relative;
+  transition:
+    color var(--av2-dur) var(--av2-ease),
+    background var(--av2-dur) var(--av2-ease),
+    border-color var(--av2-dur) var(--av2-ease),
+    transform 220ms var(--av2-ease);
+}
+
+.av2-nav-search:hover {
+  color: var(--av2-copper-hi);
+  background: oklch(0.715 0.118 56 / 0.055);
+  border-color: transparent;
+  transform: translateY(-1px);
+}
+
+.av2-nav-search[data-active="true"] {
+  color: var(--av2-ink-soft);
+  background: transparent;
+  border-color: transparent;
+}
+
+/* Mobile: menú compacto con scroll horizontal */
+@media (max-width: 720px) {
+  .av2-nav {
+    padding: 0.9rem 0.9rem 0;
+  }
+
+  .av2-nav-menu {
+    padding: 0.3rem 0.45rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    max-width: calc(100vw - 110px);
+  }
+
+  .av2-nav-menu::-webkit-scrollbar {
+    display: none;
+  }
+
+  .av2-nav-mlink {
+    padding: 0.5rem 0.7rem;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+  }
+
+  .av2-nav-pop {
+    min-width: 180px;
+  }
+}
+
+/* Acciones nav legacy (sin uso ahora pero por las dudas) */
+.av2-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-left: auto;
+}
+
+.av2-nav-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--av2-r-sm);
+  color: var(--av2-ink-faint);
+  transition: color var(--av2-dur) var(--av2-ease),
+    background var(--av2-dur) var(--av2-ease);
+}
+
+.av2-nav-action:hover {
+  color: var(--av2-ink-soft);
+  background: oklch(0.22 0.015 56 / 0.48);
+}
+
+.av2-nav-action svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Variante medallón — usa la PNG del dock cropped + drop-shadow para flotar */
+.av2-nav-action--medallion {
+  width: 56px;
+  height: 56px;
+  background: transparent !important;
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid oklch(0.50 0.070 60 / 0.42);
+  filter:
+    brightness(0.98) drop-shadow(0 5px 9px oklch(0.04 0.010 58 / 0.80));
+  transition:
+    transform var(--av2-dur) var(--av2-ease),
+    filter var(--av2-dur) var(--av2-ease);
+}
+
+.av2-nav-action--medallion:hover {
+  background: transparent !important;
+  transform: translateY(-2px) scale(1.04);
+  filter:
+    brightness(1.10) drop-shadow(0 8px 14px oklch(0.715 0.118 56 / 0.30));
+}
+
+.av2-nav-action--medallion img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}

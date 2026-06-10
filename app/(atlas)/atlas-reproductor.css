@@ -1,0 +1,350 @@
+/* ======================================================================
+   ATLAS-REPRODUCTOR.CSS - Modular atlas stylesheet
+   ====================================================================== */
+
+/* ============================================================
+   Reproductor de música (av2-music) — control discreto del TopNav
+   ============================================================ */
+
+.av2-music {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.av2-music-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: var(--av2-r-sm);
+  background: transparent;
+  color: var(--av2-ink-soft);
+  cursor: pointer;
+  transition:
+    color var(--av2-dur) var(--av2-ease),
+    border-color var(--av2-dur) var(--av2-ease),
+    background var(--av2-dur) var(--av2-ease);
+}
+
+.av2-music-btn:hover,
+.av2-music-btn[aria-expanded="true"] {
+  color: var(--av2-copper-hi);
+}
+
+.av2-music-btn[data-playing="true"] {
+  color: var(--av2-copper);
+}
+
+/* Ecualizador: 6 barras. Estáticas (cortas) en reposo, animadas al sonar.
+   Cada barra con delay y duración propios → movimiento orgánico, no en bloque. */
+.av2-music-eq {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 16px;
+}
+
+.av2-music-eq>span {
+  width: 3px;
+  height: 15px;
+  /* altura plena; scaleY (GPU) define la visible */
+  border-radius: 1px;
+  background: currentColor;
+  transform: scaleY(0.34);
+  transform-origin: bottom;
+}
+
+.av2-music-btn[data-playing="true"] .av2-music-eq>span {
+  animation: av2-eq 900ms var(--av2-ease) infinite;
+}
+
+.av2-music-btn[data-playing="true"] .av2-music-eq>span:nth-child(1) {
+  animation-delay: 0ms;
+  animation-duration: 920ms;
+}
+
+.av2-music-btn[data-playing="true"] .av2-music-eq>span:nth-child(2) {
+  animation-delay: 180ms;
+  animation-duration: 760ms;
+}
+
+.av2-music-btn[data-playing="true"] .av2-music-eq>span:nth-child(3) {
+  animation-delay: 90ms;
+  animation-duration: 1040ms;
+}
+
+.av2-music-btn[data-playing="true"] .av2-music-eq>span:nth-child(4) {
+  animation-delay: 300ms;
+  animation-duration: 840ms;
+}
+
+.av2-music-btn[data-playing="true"] .av2-music-eq>span:nth-child(5) {
+  animation-delay: 150ms;
+  animation-duration: 980ms;
+}
+
+.av2-music-btn[data-playing="true"] .av2-music-eq>span:nth-child(6) {
+  animation-delay: 240ms;
+  animation-duration: 700ms;
+}
+
+/* Anima transform (compositable), no height (layout). */
+@keyframes av2-eq {
+
+  0%,
+  100% {
+    transform: scaleY(0.34);
+  }
+
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+/* Popover. Layout en columna: título y controles fijos arriba; solo la lista
+   scrollea (con la misma barra fina que los paneles de capítulos). */
+.av2-music-pop {
+  position: absolute;
+  top: calc(100% + 0.95rem);
+  right: 0;
+  z-index: 1001;
+  width: 280px;
+  max-height: min(70vh, 480px);
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+  padding: 0.45rem;
+  border: 1px solid var(--av2-rule-copper);
+  border-radius: var(--av2-r);
+  background: linear-gradient(180deg,
+      var(--av2-bg-panel-up) 0%,
+      var(--av2-bg-panel) 100%);
+  box-shadow:
+    0 18px 40px -12px oklch(0.04 0.01 58 / 0.85),
+    0 0 0 1px oklch(0.715 0.118 56 / 0.08);
+}
+
+.av2-music-pop[hidden] {
+  display: none;
+}
+
+.av2-music-pop::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  right: 2rem;
+  transform: translateX(50%) rotate(45deg);
+  width: 8px;
+  height: 8px;
+  background: var(--av2-bg-panel-up);
+  border-top: 1px solid var(--av2-rule-copper);
+  border-left: 1px solid var(--av2-rule-copper);
+}
+
+.av2-music-title {
+  order: 0;
+  flex: 0 0 auto;
+  margin: 0.3rem 0.45rem 0.55rem;
+  font-family: var(--av2-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--av2-ink-faint);
+}
+
+.av2-music-list {
+  order: 2;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--av2-rule-up) transparent;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.av2-music-track {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  width: 100%;
+  padding: 0.55rem 0.65rem;
+  border: 0;
+  border-radius: var(--av2-r-sm);
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  color: var(--av2-ink-soft);
+  transition: background var(--av2-dur) var(--av2-ease), color var(--av2-dur) var(--av2-ease);
+}
+
+.av2-music-track:hover {
+  background: oklch(0.715 0.118 56 / 0.12);
+  color: var(--av2-copper-hi);
+}
+
+.av2-music-track[data-active="true"] {
+  color: var(--av2-copper);
+}
+
+.av2-music-track-name {
+  font-family: var(--av2-body);
+  font-size: 15px;
+  line-height: 1.25;
+}
+
+.av2-music-track-context {
+  font-family: var(--av2-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--av2-ink-faint);
+}
+
+/* Marca de "sonando" sin depender solo del color */
+.av2-music-track[data-playing="true"] .av2-music-track-name::after {
+  content: " ‹sonando›";
+  font-family: var(--av2-mono);
+  font-size: 10px;
+  color: var(--av2-copper);
+}
+
+.av2-music-controls {
+  order: 1;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.15rem 0.45rem 0.65rem;
+  margin-bottom: 0.45rem;
+  border-bottom: 1px solid var(--av2-rule);
+}
+
+.av2-music-play,
+.av2-music-loop {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--av2-rule-up);
+  border-radius: var(--av2-r-sm);
+  background: var(--av2-bg-raised);
+  color: var(--av2-ink);
+  cursor: pointer;
+  transition: color var(--av2-dur) var(--av2-ease), border-color var(--av2-dur) var(--av2-ease);
+}
+
+.av2-music-play:hover,
+.av2-music-loop:hover {
+  color: var(--av2-copper-hi);
+  border-color: var(--av2-rule-copper);
+}
+
+.av2-music-loop[data-on="true"] {
+  color: var(--av2-copper);
+  border-color: var(--av2-rule-copper);
+}
+
+.av2-music-vol {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  color: var(--av2-ink-faint);
+}
+
+.av2-music-vol input[type="range"] {
+  flex: 1;
+  height: 3px;
+  accent-color: var(--av2-copper);
+  cursor: pointer;
+}
+
+/* Dos variantes del control compartiendo estado: --bar inline en el TopNav
+   (desktop) y --float flotante abajo-derecha (mobile). El TopNav V2 no entra a
+   anchos chicos —Buscar/Atlas también quedan fuera—, así que en mobile se usa
+   la flotante, portaleada a <body> para escapar el backdrop-filter del nav. */
+
+/* Wrapper del portal: reestablece las variables de .av2 pero sin su layout
+   (si no, .av2 pintaría min-height:100dvh + fondo sobre toda la página). */
+.av2.av2-music-portal {
+  min-height: 0;
+  background: none;
+  overflow: visible;
+}
+
+.av2-music--float {
+  display: none;
+}
+
+@media (max-width: 560px) {
+  .av2-music--bar {
+    display: none;
+  }
+
+  .av2-music--float {
+    display: inline-flex;
+    position: fixed;
+    right: 12px;
+    bottom: 12px;
+    z-index: 70;
+  }
+
+  .av2-music--float .av2-music-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 999px;
+    border-color: var(--av2-rule-copper);
+    background: var(--av2-bg-panel);
+    box-shadow: var(--av2-shadow-deep);
+    backdrop-filter: blur(8px) saturate(1.1);
+    -webkit-backdrop-filter: blur(8px) saturate(1.1);
+  }
+
+  .av2-music--float .av2-music-pop {
+    position: fixed;
+    right: 12px;
+    left: 12px;
+    bottom: calc(12px + 44px + 8px);
+    top: auto;
+    width: auto;
+    max-height: min(60vh, 420px);
+  }
+
+  .av2-music--float .av2-music-pop::before {
+    display: none;
+  }
+}
+
+/* Foco visible por teclado en todos los controles del reproductor. */
+.av2-music-btn:focus-visible,
+.av2-music-track:focus-visible,
+.av2-music-play:focus-visible,
+.av2-music-loop:focus-visible,
+.av2-music-vol input[type="range"]:focus-visible {
+  outline: 2px solid var(--av2-copper);
+  outline-offset: 2px;
+}
+
+/* Touch targets más cómodos en el popover flotante (mobile). */
+@media (max-width: 560px) {
+
+  .av2-music--float .av2-music-play,
+  .av2-music--float .av2-music-loop {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .av2-music-btn[data-playing="true"] .av2-music-eq>span {
+    animation: none;
+    transform: scaleY(0.7);
+  }
+}

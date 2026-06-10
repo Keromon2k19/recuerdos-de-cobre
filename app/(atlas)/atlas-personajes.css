@@ -1,0 +1,555 @@
+/* ======================================================================
+   ATLAS-PERSONAJES.CSS - Modular atlas stylesheet
+   ====================================================================== */
+
+/* ── AtlasEntityCard ────────────────────────────────────────────────── */
+/* Card portrait estilo trading card del códice.
+   - Aspect 3:4, imagen llena toda la card
+   - Overlay con gradiente oscuro al pie + nombre + rol/epíteto en cobre
+   - Border 1px cobre-oscuro, activo: borde cobre brillante + tactile push */
+.av2-card {
+  display: block;
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: var(--av2-r);
+  border: 1px solid var(--av2-rule);
+  background: var(--av2-bg-panel);
+  cursor: pointer;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  transition:
+    border-color var(--av2-dur) var(--av2-ease),
+    box-shadow var(--av2-dur) var(--av2-ease),
+    transform var(--av2-dur) var(--av2-ease);
+  will-change: transform;
+}
+
+.av2-card::before,
+.av2-card::after {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  z-index: 3;
+  pointer-events: none;
+  border: 1px solid oklch(0.62 0.095 55 / 0.34);
+  opacity: 0.72;
+}
+
+.av2-card::after {
+  inset: 12px;
+  border-color: transparent;
+  background:
+    linear-gradient(var(--av2-copper-dim), var(--av2-copper-dim)) left top / 26px 1px no-repeat,
+    linear-gradient(var(--av2-copper-dim), var(--av2-copper-dim)) left top / 1px 26px no-repeat,
+    linear-gradient(var(--av2-copper-dim), var(--av2-copper-dim)) right top / 26px 1px no-repeat,
+    linear-gradient(var(--av2-copper-dim), var(--av2-copper-dim)) right top / 1px 26px no-repeat,
+    linear-gradient(var(--av2-copper-dim), var(--av2-copper-dim)) left bottom / 26px 1px no-repeat,
+    linear-gradient(var(--av2-copper-dim), var(--av2-copper-dim)) left bottom / 1px 26px no-repeat,
+    linear-gradient(var(--av2-copper-dim), var(--av2-copper-dim)) right bottom / 26px 1px no-repeat,
+    linear-gradient(var(--av2-copper-dim), var(--av2-copper-dim)) right bottom / 1px 26px no-repeat;
+  opacity: 0.64;
+}
+
+.av2-card:hover {
+  border-color: var(--av2-copper-dim);
+  box-shadow: 0 6px 24px oklch(0 0 0 / 0.45);
+}
+
+.av2-card[data-active="true"] {
+  border-color: var(--av2-copper);
+  box-shadow:
+    0 0 0 1px var(--av2-copper-dim),
+    0 6px 28px oklch(0.715 0.118 56 / 0.22);
+}
+
+.av2-card:active {
+  transform: translateY(1px);
+}
+
+.av2-card:focus-visible {
+  outline: 2px solid var(--av2-copper);
+  outline-offset: 2px;
+}
+
+.av2-card-portrait {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: oklch(0.11 0.016 58);
+  overflow: hidden;
+}
+
+.av2-card-portrait::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(80% 60% at 50% 8%, transparent 0%, transparent 42%, oklch(0 0 0 / 0.42) 100%),
+    linear-gradient(180deg, transparent 0%, transparent 42%, oklch(0.05 0.010 58 / 0.82) 100%);
+  pointer-events: none;
+}
+
+.av2-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  filter: sepia(0.22) contrast(1.06) saturate(0.82) brightness(0.88);
+  transition: transform 0.4s var(--av2-ease);
+}
+
+.av2-card:hover .av2-card-img {
+  transform: scale(1.04);
+}
+
+.av2-card-initials {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--av2-display);
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: var(--av2-copper-dim);
+  background: linear-gradient(160deg, oklch(0.17 0.022 58), oklch(0.10 0.014 58));
+  user-select: none;
+}
+
+.av2-card-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 4;
+  padding: 1.6rem 0.7rem 0.55rem;
+  background: linear-gradient(to top,
+      oklch(0.06 0.010 58 / 0.96) 0%,
+      oklch(0.06 0.010 58 / 0.70) 55%,
+      transparent 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.av2-card-name {
+  font-family: var(--av2-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--av2-ink);
+  line-height: 1.15;
+  text-shadow: 0 1px 4px oklch(0 0 0 / 0.9);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.av2-card-kicker {
+  font-family: var(--av2-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--av2-copper);
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── AtlasEntityGrid ────────────────────────────────────────────────── */
+/* Las columnas se definen por breakpoint en el bloque de personajes-layout
+   más arriba. Acá solo el comportamiento base del grid. */
+.av2-grid {
+  display: grid;
+  gap: 0.7rem;
+  align-content: start;
+}
+
+.av2-grid-empty {
+  padding: 3rem 1.5rem;
+  text-align: center;
+  font-family: var(--av2-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--av2-ink-faint);
+  border: 1px dashed var(--av2-rule);
+  border-radius: var(--av2-r);
+}
+
+/* ── AtlasFilterPanel ───────────────────────────────────────────────── */
+/* Panel izquierdo: header "FILTROS" + search + secciones + clear + count.
+   - Background semi-transparente para que la imagen se vea sutil
+   - Items como list (no chips) — glyph + label
+   - Glyph diamante (◆) activa estado en cobre cuando seleccionado */
+.av2-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.2rem 1rem;
+  background:
+    radial-gradient(65% 100% at 50% -10%, oklch(0.24 0.044 55 / 0.10) 0%, transparent 65%),
+    linear-gradient(180deg, oklch(0.07 0.009 58 / 0.30) 0%, oklch(0.07 0.009 58 / 0.30) 100%);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid var(--av2-rule);
+  border-radius: var(--av2-r);
+  /* Scroll interno: si el accordion crece, scrollea dentro del panel
+     sin empujar el resto del layout. */
+  min-height: 0;
+  max-height: 100%;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--av2-rule-up) transparent;
+}
+
+.av2-filters-head {
+  font-family: var(--av2-mono);
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--av2-copper-dim);
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid var(--av2-rule);
+}
+
+.av2-filters-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.av2-filters-search-icon {
+  position: absolute;
+  left: 0.6rem;
+  display: flex;
+  width: 14px;
+  height: 14px;
+  color: var(--av2-ink-faint);
+  pointer-events: none;
+}
+
+.av2-filters-search-input {
+  width: 100%;
+  background: oklch(0.10 0.014 58);
+  border: 1px solid var(--av2-rule);
+  border-radius: var(--av2-r-sm);
+  color: var(--av2-ink);
+  font-family: var(--av2-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  padding: 0.55rem 0.7rem 0.55rem 2rem;
+  outline: none;
+  transition: border-color var(--av2-dur) var(--av2-ease);
+}
+
+.av2-filters-search-input::placeholder {
+  color: var(--av2-ink-faint);
+  font-style: italic;
+}
+
+.av2-filters-search-input:focus {
+  border-color: var(--av2-copper-dim);
+}
+
+.av2-filter-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  border-top: 1px solid var(--av2-rule);
+  padding-top: 0.7rem;
+}
+
+.av2-filter-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-family: var(--av2-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--av2-ink-soft);
+  transition: color var(--av2-dur) var(--av2-ease);
+}
+
+.av2-filter-section-head:hover {
+  color: var(--av2-copper);
+}
+
+.av2-filter-list {
+  list-style: none;
+  margin: 0;
+  padding: 0.25rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.av2-filter-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0.32rem 0.2rem;
+  font-family: var(--av2-serif);
+  font-size: 0.82rem;
+  color: var(--av2-ink-soft);
+  cursor: pointer;
+  text-align: left;
+  border-radius: var(--av2-r-sm);
+  transition:
+    color var(--av2-dur) var(--av2-ease),
+    background var(--av2-dur) var(--av2-ease);
+}
+
+.av2-filter-item:hover {
+  color: var(--av2-ink);
+  background: oklch(0.13 0.018 58);
+}
+
+.av2-filter-item[data-active="true"] {
+  color: var(--av2-copper);
+  background: oklch(0.490 0.075 53 / 0.10);
+}
+
+.av2-filter-item-glyph {
+  font-size: 8px;
+  color: var(--av2-ink-faint);
+  transition: color var(--av2-dur) var(--av2-ease);
+}
+
+.av2-filter-item[data-active="true"] .av2-filter-item-glyph {
+  color: var(--av2-copper);
+}
+
+.av2-filter-item-label {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.av2-filters-footer {
+  margin-top: auto;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--av2-rule);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.av2-filters-clear {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: var(--av2-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--av2-copper);
+  cursor: pointer;
+  text-align: left;
+  transition: color var(--av2-dur) var(--av2-ease);
+}
+
+.av2-filters-clear:hover {
+  color: var(--av2-copper-bright, oklch(0.78 0.13 56));
+}
+
+.av2-filters-count {
+  font-family: var(--av2-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  color: var(--av2-ink-faint);
+}
+
+/* ── AtlasDetailPanel ───────────────────────────────────────────────── */
+/* Ficha del personaje: portrait + eyebrow + nombre + meta + bio + CTA.
+   - Background ligeramente más opaco que filter panel (más enfocado)
+   - X de cerrar discreto arriba a la derecha
+   - Quote/bio en italic Spectral */
+.av2-detail {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  padding: 1.4rem 1.2rem 1.6rem;
+  background:
+    radial-gradient(65% 100% at 50% -10%, oklch(0.24 0.044 55 / 0.10) 0%, transparent 65%),
+    linear-gradient(180deg, oklch(0.07 0.009 58 / 0.30) 0%, oklch(0.07 0.009 58 / 0.30) 100%);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid var(--av2-rule);
+  border-radius: var(--av2-r);
+  /* Scroll interno: portrait + meta + bio + CTA dentro del panel. */
+  min-height: 0;
+  max-height: 100%;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--av2-rule-up) transparent;
+}
+
+.av2-detail-close {
+  position: absolute;
+  top: 0.7rem;
+  right: 0.7rem;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--av2-rule);
+  border-radius: 50%;
+  color: var(--av2-ink-faint);
+  cursor: pointer;
+  transition:
+    color var(--av2-dur) var(--av2-ease),
+    border-color var(--av2-dur) var(--av2-ease);
+}
+
+.av2-detail-close svg {
+  width: 10px;
+  height: 10px;
+}
+
+.av2-detail-close:hover {
+  color: var(--av2-copper);
+  border-color: var(--av2-copper-dim);
+}
+
+.av2-detail-portrait {
+  position: relative;
+  width: 100%;
+  /* Cap altura para que el resto del detail (nombre/meta/bio/CTA) entre en
+     viewport 900px sin scroll. En pantallas más altas (≥1152) el aspecto 3:4
+     se respeta más, pero nunca pasa de 320px. */
+  height: clamp(200px, 28vh, 280px);
+  overflow: hidden;
+  border-radius: var(--av2-r-sm);
+  border: 1px solid var(--av2-rule-up);
+  background: oklch(0.11 0.016 58);
+  flex-shrink: 0;
+}
+
+.av2-detail-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.av2-detail-portrait-initials {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--av2-display);
+  font-size: 3rem;
+  font-weight: 600;
+  color: var(--av2-copper-dim);
+  background: linear-gradient(160deg, oklch(0.17 0.022 58), oklch(0.10 0.014 58));
+  user-select: none;
+}
+
+.av2-detail-head {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid var(--av2-rule);
+}
+
+.av2-detail-eyebrow {
+  font-family: var(--av2-mono);
+  font-size: 9px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--av2-copper-dim);
+  margin: 0;
+}
+
+.av2-detail-name {
+  font-family: var(--av2-display);
+  font-size: clamp(1.4rem, 2.4vw, 1.95rem);
+  font-weight: 600;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.005em;
+  color: var(--av2-ink);
+  margin: 0;
+}
+
+.av2-detail-epiteto {
+  font-family: var(--av2-serif);
+  font-size: 0.92rem;
+  font-style: italic;
+  color: var(--av2-ink-soft);
+  margin: 0;
+}
+
+.av2-detail-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.av2-detail-section-title {
+  font-family: var(--av2-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--av2-copper-dim);
+  margin: 0;
+}
+
+.av2-detail-meta {
+  margin: 0;
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  column-gap: 0.85rem;
+  row-gap: 0.32rem;
+}
+
+.av2-detail-meta dt {
+  font-family: var(--av2-mono);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--av2-ink-faint);
+  padding-top: 0.18rem;
+}
+
+.av2-detail-meta dd {
+  margin: 0;
+  font-family: var(--av2-serif);
+  font-size: 0.88rem;
+  color: var(--av2-ink-soft);
+  line-height: 1.45;
+}
+
+.av2-detail-bio {
+  font-family: var(--av2-serif);
+  font-size: 0.92rem;
+  font-style: italic;
+  color: var(--av2-ink-soft);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.av2-detail-cta {
+  width: 100%;
+  justify-content: center;
+  margin-top: 0.4rem;
+}

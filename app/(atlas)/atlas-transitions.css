@@ -1,0 +1,107 @@
+/* ======================================================================
+   ATLAS-TRANSITIONS.CSS - Modular atlas stylesheet
+   ====================================================================== */
+
+/* ======================================================================
+   VIEW TRANSITIONS API
+   Custom slide transitions with stacking and sizing fixes.
+   ====================================================================== */
+
+.av2-nav {
+  view-transition-name: av2-nav;
+}
+
+.av2-route-surface {
+  view-transition-name: av2-page;
+}
+
+/* Navbar: Keep completely static and on top of transitions */
+::view-transition-group(av2-nav) {
+  z-index: 10000;
+  animation: none;
+}
+
+::view-transition-old(av2-nav),
+::view-transition-new(av2-nav) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* Page: Slide underneath navbar */
+::view-transition-group(av2-page) {
+  z-index: 1;
+}
+
+::view-transition-old(av2-page),
+::view-transition-new(av2-page) {
+  width: 100%;
+  height: 100%;
+  mix-blend-mode: normal;
+}
+
+/* Default Forward / Detail Page Navigation: Slide out to left, slide in from right */
+::view-transition-old(av2-page) {
+  animation: 1s cubic-bezier(0.4, 0, 0.2, 1) both av2-slide-out-to-left;
+}
+
+::view-transition-new(av2-page) {
+  animation: 1s cubic-bezier(0.4, 0, 0.2, 1) both av2-slide-in-from-right;
+}
+
+/* Back Navigation: Slide out to right, slide in from left */
+:root[data-av2-vt="route-back"]::view-transition-old(av2-page) {
+  animation: 1s cubic-bezier(0.4, 0, 0.2, 1) both av2-slide-out-to-right;
+}
+
+:root[data-av2-vt="route-back"]::view-transition-new(av2-page) {
+  animation: 1s cubic-bezier(0.4, 0, 0.2, 1) both av2-slide-in-from-left;
+}
+
+/* Animation Keyframes */
+@keyframes av2-slide-out-to-left {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  to {
+    transform: translateX(-100px);
+    opacity: 0;
+  }
+}
+
+@keyframes av2-slide-in-from-right {
+  from {
+    transform: translateX(100px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes av2-slide-out-to-right {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  to {
+    transform: translateX(100px);
+    opacity: 0;
+  }
+}
+
+@keyframes av2-slide-in-from-left {
+  from {
+    transform: translateX(-100px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

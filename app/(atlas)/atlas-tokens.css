@@ -1,0 +1,215 @@
+/* ======================================================================
+   ATLAS-TOKENS.CSS - Modular atlas stylesheet
+   ====================================================================== */
+
+/* ======================================================================
+   ATLAS V2 · Recuerdos de Cobre
+   Dark fantasy steampunk atlas — interfaz pública V2
+   Scope: .av2  (no colisiona con .atlas de V1)
+   ====================================================================== */
+
+/* Anti-FOUC: fondo del body para rutas /v2 */
+body {
+  background: oklch(0.092 0.010 58);
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* ── Tokens ─────────────────────────────────────────────────────────── */
+.av2 {
+  /* Fondos */
+  --av2-bg: oklch(0.092 0.010 58);
+  --av2-bg-raised: oklch(0.138 0.013 57);
+  --av2-bg-panel: oklch(0.172 0.016 56);
+  --av2-bg-panel-up: oklch(0.210 0.019 56);
+
+  /* Cobre / bronce / oro */
+  --av2-copper: oklch(0.715 0.118 56);
+  --av2-copper-hi: oklch(0.808 0.126 62);
+  --av2-copper-dim: oklch(0.490 0.075 53);
+  --av2-copper-deep: oklch(0.328 0.052 51);
+  --av2-gold: oklch(0.826 0.097 82);
+  --av2-gold-dim: oklch(0.698 0.068 78);
+  --av2-brass: oklch(0.660 0.088 68);
+  --av2-amber: oklch(0.745 0.146 73);
+
+  /* Texto */
+  --av2-ink: oklch(0.908 0.014 78);
+  --av2-ink-soft: oklch(0.710 0.014 76);
+  --av2-ink-faint: oklch(0.472 0.011 70);
+
+  /* Bordes */
+  --av2-rule: oklch(0.268 0.021 55);
+  --av2-rule-up: oklch(0.365 0.038 55);
+  --av2-rule-copper: oklch(0.490 0.072 54 / 0.55);
+
+  /* Tipografía */
+  --av2-display: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
+  --av2-body: "Spectral", Georgia, "Times New Roman", serif;
+  --av2-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  /* Layout */
+  --av2-nav-h: 68px;
+  --av2-dock-h: 0px;
+  /* Dock retirado: la nav top maneja toda la navegación */
+  --av2-maxw: 1280px;
+
+  /* Motion */
+  --av2-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --av2-dur: 260ms;
+
+  /* Radii */
+  --av2-r-sm: 3px;
+  --av2-r: 8px;
+  --av2-r-lg: 16px;
+
+  /* Sombras */
+  --av2-shadow: 0 2px 24px -8px oklch(0.04 0.01 58 / 0.90),
+    0 1px 0 oklch(0.96 0.04 78 / 0.04) inset;
+  --av2-shadow-deep: 0 8px 60px -12px oklch(0.04 0.01 58 / 0.95);
+  --av2-glow-copper: 0 0 40px oklch(0.715 0.118 56 / 0.28);
+
+  /* Base */
+  background: var(--av2-bg);
+  color: var(--av2-ink);
+  font-family: var(--av2-body);
+  font-size: 17px;
+  line-height: 1.70;
+  min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+
+.av2 *,
+.av2 *::before,
+.av2 *::after {
+  box-sizing: border-box;
+}
+
+.av2 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.av2 img {
+  display: block;
+  max-width: 100%;
+}
+
+.av2 button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font: inherit;
+}
+
+.av2 h1,
+.av2 h2,
+.av2 h3,
+.av2 h4 {
+  font-family: var(--av2-display);
+  font-weight: 600;
+  line-height: 1.06;
+  letter-spacing: 0.002em;
+  margin: 0;
+}
+
+.av2 p {
+  margin: 0;
+}
+
+/* ── Shell ──────────────────────────────────────────────────────────── */
+.av2-shell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  /* Sin dock bottom — la nav top maneja toda la navegación.
+     Sin padding-bottom para evitar el overflow de 8px que generaba scroll. */
+  padding-bottom: 0;
+  z-index: 1;
+}
+
+/* Capa de engranajes (fija, detrás del contenido) */
+.av2-gear-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.av2-gear-wrap {
+  position: absolute;
+  color: var(--av2-copper);
+  transform-origin: center;
+}
+
+.av2-gear-wrap svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+  transform-origin: center;
+}
+
+.av2-gear-wrap--left {
+  left: -120px;
+  top: 30%;
+  transform: translateY(-50%);
+  opacity: 0.12;
+  width: 380px;
+  height: 380px;
+}
+
+.av2-gear-wrap--right {
+  right: -90px;
+  top: 14%;
+  opacity: 0.10;
+  width: 290px;
+  height: 290px;
+}
+
+.av2-gear-wrap--right-sm {
+  right: 65px;
+  top: 52%;
+  opacity: 0.08;
+  width: 155px;
+  height: 155px;
+}
+
+/* En el hero los gears toman protagonismo (matchea home-reference). */
+body:has(.av2-hero) .av2-gear-wrap--left {
+  opacity: 0.32;
+  left: -90px;
+  top: 36%;
+}
+
+body:has(.av2-hero) .av2-gear-wrap--right {
+  opacity: 0.28;
+  right: -70px;
+  top: 18%;
+}
+
+body:has(.av2-hero) .av2-gear-wrap--right-sm {
+  opacity: 0.22;
+  right: 80px;
+  top: 60%;
+}
+
+.av2-gear-wrap--left svg {
+  animation: av2-spin 82s linear infinite;
+}
+
+.av2-gear-wrap--right svg {
+  animation: av2-spin-rev 60s linear infinite;
+}
+
+.av2-gear-wrap--right-sm svg {
+  animation: av2-spin 38s linear infinite;
+}
+
+/* ── Navegación top ─────────────────────────────────────────────────── */
+/* Navbar 100% transparente — los iconos flotan sobre el hero,
+   con margen superior para respiración respecto al borde */

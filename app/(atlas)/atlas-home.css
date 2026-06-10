@@ -1,0 +1,385 @@
+/* ======================================================================
+   ATLAS-HOME.CSS - Modular atlas stylesheet
+   ====================================================================== */
+
+/* ── Hero bottom (último capítulo + shortcuts) ──────────────────────────
+   Marco mecánico de códice:
+   - borde superior con doble línea cobre (rivet line + filete)
+   - separador vertical ornamental entre latest y shortcuts (no 1px plano)
+   - inset shadow para profundidad
+   - background propio más sólido pero con leve textura warm
+*/
+.av2-hero-bottom {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  /* Fondo transparente: la imagen del hero se ve a lo ancho y también detrás
+     del panel y de los atajos. El padding inferior/lateral deja respirar la
+     imagen en los gutters; el panel de capítulo flota como tarjeta. */
+  padding: 0 clamp(1.5rem, 5vw, 4rem) clamp(1rem, 2.5vh, 1.75rem);
+  background: transparent;
+}
+
+/* Separador vertical ornamental entre latest y shortcuts.
+   Línea cobre fina + glyph diamante centrado. */
+.av2-hero-bottom::before {
+  content: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(100% - 320px);
+  /* match grid-template-columns */
+  width: 1px;
+  background: linear-gradient(180deg,
+      transparent 0%,
+      oklch(0.50 0.080 58 / 0.40) 18%,
+      oklch(0.60 0.090 58 / 0.55) 50%,
+      oklch(0.50 0.080 58 / 0.40) 82%,
+      transparent 100%);
+  pointer-events: none;
+}
+
+.av2-hero-bottom::after {
+  content: none;
+  position: absolute;
+  top: 50%;
+  left: calc(100% - 320px);
+  transform: translate(-50%, -50%);
+  color: var(--av2-copper-dim);
+  font-size: 12px;
+  background: oklch(0.075 0.009 58);
+  padding: 2px 4px;
+  pointer-events: none;
+}
+
+/* Panel de último capítulo — texto + imagen panorámica.
+   Códice mecánico: más respiración, textura sutil tipo papel/metal,
+   esquinas ornamentales. */
+/* Panel "Último capítulo" — imagen llenando el panel completo + texto
+   overlay sobre fade oscuro a la izquierda + marco interior cobre. */
+.av2-latest {
+  position: relative;
+  display: block;
+  /* Escala con vh para que en viewports cortos (1080p) no consuma demasiado. */
+  min-height: clamp(240px, min(32vw, 34vh), 340px);
+  padding: clamp(1.35rem, 2.5vw, 2.1rem) clamp(1.9rem, 4.2vw, 3.5rem);
+  overflow: hidden;
+  border: 1px solid oklch(0.42 0.060 60 / 0.45);
+  border-radius: var(--av2-r-sm);
+  background:
+    /* Noise sutil tipo papel/metal */
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"),
+    linear-gradient(180deg,
+      oklch(0.105 0.012 58 / 0.96),
+      oklch(0.075 0.009 58 / 0.98));
+}
+
+/* Ornamentos en esquinas: 4 L's de cobre */
+.av2-latest::before {
+  content: "";
+  position: absolute;
+  inset: 0.6rem;
+  pointer-events: none;
+  background:
+    linear-gradient(to right, var(--av2-copper-dim), transparent) top left / 18px 1px no-repeat,
+    linear-gradient(to bottom, var(--av2-copper-dim), transparent) top left / 1px 18px no-repeat,
+    linear-gradient(to left, var(--av2-copper-dim), transparent) top right / 18px 1px no-repeat,
+    linear-gradient(to bottom, var(--av2-copper-dim), transparent) top right / 1px 18px no-repeat,
+    linear-gradient(to right, var(--av2-copper-dim), transparent) bottom left / 18px 1px no-repeat,
+    linear-gradient(to top, var(--av2-copper-dim), transparent) bottom left / 1px 18px no-repeat,
+    linear-gradient(to left, var(--av2-copper-dim), transparent) bottom right / 18px 1px no-repeat,
+    linear-gradient(to top, var(--av2-copper-dim), transparent) bottom right / 1px 18px no-repeat;
+  opacity: 0.55;
+  z-index: 4;
+}
+
+/* Sin fade overlay — el texto vive en su propia columna del grid */
+.av2-latest::after {
+  display: none;
+}
+
+.av2-latest-text {
+  position: relative;
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  gap: 0.52rem;
+  min-width: 0;
+  max-width: min(42ch, 42%);
+  text-shadow: 0 2px 14px oklch(0 0 0 / 0.78);
+}
+
+/* Divisor cobre fino debajo del label "ÚLTIMO CAPÍTULO" para jerarquía */
+.av2-latest-text::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 1.65em;
+  width: 32px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--av2-copper-dim), transparent);
+  opacity: 0.7;
+}
+
+.av2-latest-scene {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  background: oklch(0.11 0.016 58);
+  margin: 0;
+  pointer-events: none;
+}
+
+.av2-latest-scene img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 48%;
+  /* Tratamiento etching/grabado más brillante para apreciar la imagen */
+  filter: sepia(0.42) contrast(1.08) saturate(0.95) brightness(0.92) hue-rotate(-8deg);
+}
+
+/* Fade oscuro a la izquierda (sobre el texto) + vignette superior sutil */
+.av2-latest-scene::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background:
+    /* Fade horizontal: oscuro pleno donde está el texto, transparente donde se aprecia la imagen */
+    linear-gradient(90deg,
+      oklch(0.040 0.006 58 / 0.96) 0%,
+      oklch(0.048 0.008 58 / 0.88) 18%,
+      oklch(0.060 0.010 58 / 0.50) 38%,
+      oklch(0.070 0.011 58 / 0.15) 56%,
+      transparent 72%),
+    /* Vignette superior sutil para profundidad */
+    radial-gradient(82% 92% at 62% 36%, transparent 35%, oklch(0.035 0.006 58 / 0.45) 100%),
+    /* Sombra al borde inferior para integrar con el chassis */
+    linear-gradient(180deg, transparent 60%, oklch(0.035 0.006 58 / 0.32) 100%);
+  pointer-events: none;
+}
+
+/* Marco cobre fino — bordea todo el panel desde adentro */
+.av2-latest-scene::after {
+  content: "";
+  position: absolute;
+  inset: 0.75rem;
+  z-index: 3;
+  border: 1px solid oklch(0.55 0.075 60 / 0.46);
+  box-shadow:
+    inset 0 0 0 1px oklch(0.04 0.008 58 / 0.42);
+  pointer-events: none;
+}
+
+/* Caption pequeño abajo-derecha — sello del archivo */
+.av2-latest-scene-cap {
+  position: absolute;
+  bottom: 0.55rem;
+  right: 0.7rem;
+  font-family: var(--av2-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: oklch(0.72 0.060 60);
+  background: oklch(0.06 0.010 58 / 0.75);
+  border: 1px solid oklch(0.40 0.06 60 / 0.50);
+  border-radius: 2px;
+  padding: 0.2rem 0.45rem;
+  z-index: 1;
+}
+
+.av2-latest-label {
+  font-family: var(--av2-mono);
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--av2-copper-hi);
+  padding-bottom: 0.4rem;
+}
+
+.av2-latest-num {
+  font-family: var(--av2-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: oklch(0.62 0.018 76);
+}
+
+.av2-latest-title {
+  font-size: clamp(1.45rem, 3.2vw, 2.1rem);
+  color: oklch(0.94 0.016 78);
+  line-height: 1.14;
+  text-wrap: balance;
+  transition: color var(--av2-dur) var(--av2-ease);
+}
+
+.av2-latest-title a:hover {
+  color: var(--av2-copper-hi);
+}
+
+.av2-latest-excerpt {
+  font-size: 0.875rem;
+  color: oklch(0.78 0.018 76);
+  line-height: 1.62;
+  max-width: 54ch;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.av2-latest-feature {
+  position: relative;
+  margin-top: 0.12rem;
+  padding: 0.72rem 0.78rem 0.78rem 0.88rem;
+  border: 1px solid oklch(0.45 0.060 60 / 0.48);
+  border-left: 2px solid var(--av2-copper-hi);
+  border-radius: var(--av2-r-sm);
+  max-width: 48ch;
+  background:
+    radial-gradient(95% 145% at 0% 0%, oklch(0.72 0.110 58 / 0.14), transparent 58%),
+    linear-gradient(180deg, oklch(0.105 0.014 58 / 0.70), oklch(0.050 0.007 58 / 0.70));
+  box-shadow:
+    0 14px 30px oklch(0.025 0.006 58 / 0.40),
+    inset 0 0 0 1px oklch(0.90 0.050 78 / 0.035);
+}
+
+.av2-latest-feature::before {
+  content: "";
+  position: absolute;
+  left: -4px;
+  top: 0.82rem;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--av2-copper-hi);
+  box-shadow: 0 0 14px oklch(0.70 0.13 58 / 0.55);
+}
+
+.av2-latest-feature[data-kind="quote"]::after {
+  content: "“";
+  position: absolute;
+  right: 0.62rem;
+  top: 0.16rem;
+  font-family: var(--av2-display);
+  font-size: 3rem;
+  line-height: 1;
+  color: oklch(0.82 0.090 65 / 0.16);
+  pointer-events: none;
+}
+
+.av2-latest-feature-label {
+  font-family: var(--av2-mono);
+  font-size: 9px;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: oklch(0.70 0.065 62);
+  margin-bottom: 0.22rem;
+}
+
+.av2-latest-feature-text {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.52;
+  color: oklch(0.90 0.024 76);
+}
+
+.av2-latest-feature-text p {
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.av2-latest-feature[data-kind="quote"] .av2-latest-feature-text {
+  font-size: clamp(0.94rem, 1.15vw, 1.06rem);
+  font-style: italic;
+}
+
+.av2-latest-feature-text cite {
+  display: block;
+  margin-top: 0.34rem;
+  font-family: var(--av2-mono);
+  font-size: 9px;
+  font-style: normal;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--av2-copper-hi);
+}
+
+.av2-latest-actions {
+  display: flex;
+  align-items: stretch;
+  gap: 0.62rem;
+  margin-top: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.av2-latest>.av2-latest-actions {
+  position: absolute;
+  top: clamp(1.05rem, 2.2vw, 1.55rem);
+  right: clamp(1.05rem, 2vw, 1.45rem);
+  z-index: 8;
+  margin-top: 0;
+}
+
+/* Par balanceado: cada botón toma la mitad del row, mismo ancho */
+.av2-latest-actions .av2-btn {
+  flex: 0 0 auto;
+  min-width: 0;
+  justify-content: center;
+  padding: 0.62rem 0.95rem;
+  letter-spacing: 0.13em;
+}
+
+/* Paginación entre capítulos — debajo del CTA, alineada con el borde inferior del panel */
+.av2-latest-pagination {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-top: 0.85rem;
+  font-family: var(--av2-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: oklch(0.62 0.018 76);
+}
+
+.av2-latest-pag-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border: 1px solid oklch(0.40 0.060 60 / 0.55);
+  border-radius: 2px;
+  color: var(--av2-copper-dim);
+  font-size: 13px;
+  line-height: 1;
+  background: oklch(0.085 0.011 58 / 0.6);
+  transition: color var(--av2-dur) var(--av2-ease), border-color var(--av2-dur) var(--av2-ease);
+}
+
+a.av2-latest-pag-arrow:hover {
+  color: var(--av2-copper-hi);
+  border-color: var(--av2-copper);
+}
+
+.av2-latest-pag-arrow[aria-disabled="true"] {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.av2-latest-pag-count {
+  font-variant-numeric: tabular-nums;
+  color: oklch(0.78 0.018 76);
+}

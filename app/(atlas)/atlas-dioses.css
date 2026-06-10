@@ -1,0 +1,1321 @@
+/* ======================================================================
+   ATLAS-DIOSES.CSS - Modular atlas stylesheet
+   ====================================================================== */
+
+/* DIOSES - componentes: panteon + simbolo + archivo lateral */
+.av2-p-wrap>.av2-dioses-layout {
+  position: relative;
+  z-index: 1;
+}
+
+.av2-dioses-layout {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  max-width: 1560px;
+  margin-inline: auto;
+  padding: 1.25rem 1.45rem 1.55rem;
+  display: grid;
+  grid-template-columns: 286px minmax(0, 1fr) 364px;
+  gap: 1.15rem;
+  overflow: hidden;
+}
+
+.av2-gods-index,
+.av2-god-profile,
+.av2-god-detail {
+  min-height: 0;
+  min-width: 0;
+  max-height: 100%;
+  border: 1px solid var(--av2-rule-copper);
+  background:
+    linear-gradient(180deg, oklch(0.115 0.012 58 / 0.84), oklch(0.065 0.008 58 / 0.88)),
+    radial-gradient(120% 90% at 50% 0%, oklch(0.42 0.060 58 / 0.13), transparent 55%);
+  box-shadow:
+    inset 0 1px 0 oklch(0.90 0.045 80 / 0.06),
+    0 14px 44px oklch(0.035 0.008 58 / 0.42);
+  backdrop-filter: blur(12px) saturate(1.1);
+  -webkit-backdrop-filter: blur(12px) saturate(1.1);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.av2-gods-index,
+.av2-god-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  overflow: hidden;
+}
+
+.av2-gods-index {
+  padding: 1rem 0.95rem;
+  border: 1px solid var(--av2-rule-copper);
+  background: oklch(0.06 0.01 58 / 0.55);
+  backdrop-filter: blur(12px) saturate(1.1);
+  -webkit-backdrop-filter: blur(12px) saturate(1.1);
+}
+
+.av2-gods-index-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  color: var(--av2-copper-dim);
+  font-family: var(--av2-mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.av2-gods-index-head strong {
+  color: var(--av2-gold);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+}
+
+.av2-gods-search {
+  position: relative;
+  display: block;
+}
+
+.av2-gods-search-icon {
+  position: absolute;
+  top: 50%;
+  left: 0.75rem;
+  transform: translateY(-50%);
+  color: var(--av2-copper-dim);
+  pointer-events: none;
+}
+
+.av2-gods-search input {
+  width: 100%;
+  min-height: 38px;
+  border: 1px solid var(--av2-rule);
+  border-radius: var(--av2-r-sm);
+  background: oklch(0.055 0.008 58 / 0.72);
+  color: var(--av2-ink);
+  font-family: var(--av2-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  outline: none;
+  padding: 0.65rem 0.78rem 0.65rem 2.15rem;
+  transition:
+    border-color var(--av2-dur) var(--av2-ease),
+    background var(--av2-dur) var(--av2-ease);
+}
+
+.av2-gods-search input:focus {
+  border-color: var(--av2-copper-dim);
+  background: oklch(0.075 0.010 58 / 0.82);
+}
+
+.av2-gods-search input::placeholder {
+  color: var(--av2-ink-faint);
+}
+
+.av2-gods-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.42rem;
+}
+
+.av2-gods-tab {
+  min-height: 30px;
+  padding: 0.42rem 0.62rem;
+  border: 1px solid var(--av2-rule);
+  border-radius: var(--av2-r-sm);
+  color: var(--av2-ink-faint);
+  font-family: var(--av2-mono);
+  font-size: 8px;
+  line-height: 1.1;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition:
+    color var(--av2-dur) var(--av2-ease),
+    border-color var(--av2-dur) var(--av2-ease),
+    background var(--av2-dur) var(--av2-ease),
+    transform var(--av2-dur) var(--av2-ease);
+}
+
+.av2-gods-tab:hover,
+.av2-gods-tab[data-active="true"] {
+  color: var(--av2-copper-hi);
+  border-color: var(--av2-copper-dim);
+  background: oklch(0.17 0.025 56 / 0.62);
+}
+
+.av2-gods-tab:active {
+  transform: translateY(1px);
+}
+
+.av2-gods-list {
+  list-style: none;
+  min-height: 0;
+  margin: 0 -0.25rem 0 0;
+  padding: 0 0.25rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.48rem;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--av2-rule-up) transparent;
+}
+
+.av2-god-list-item {
+  width: 100%;
+  min-height: 68px;
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  align-items: center;
+  gap: 0.72rem;
+  padding: 0.58rem 0.62rem;
+  border: 1px solid var(--av2-rule);
+  border-radius: var(--av2-r-sm);
+  color: var(--av2-ink-soft);
+  text-align: left;
+  opacity: 0;
+  animation: av2-god-in 440ms var(--av2-ease) forwards;
+  animation-delay: calc(var(--i, 0) * 42ms);
+  transition:
+    color var(--av2-dur) var(--av2-ease),
+    border-color var(--av2-dur) var(--av2-ease),
+    background var(--av2-dur) var(--av2-ease),
+    transform var(--av2-dur) var(--av2-ease);
+}
+
+.av2-god-list-item:hover,
+.av2-god-list-item[data-active="true"] {
+  color: var(--av2-ink);
+  border-color: var(--av2-copper-dim);
+  background:
+    radial-gradient(140% 120% at 0% 0%, oklch(0.47 0.070 58 / 0.20), transparent 58%),
+    oklch(0.115 0.014 58 / 0.82);
+  transform: translateY(-1px);
+}
+
+.av2-god-list-item:active {
+  transform: translateY(1px);
+}
+
+.av2-god-list-sigil {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--av2-rule-up);
+  border-radius: 50%;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 43%, oklch(0.20 0.020 56), oklch(0.055 0.008 58) 70%),
+    conic-gradient(from 20deg, var(--av2-copper-deep), var(--av2-copper), var(--av2-copper-deep));
+  color: var(--av2-gold);
+  font-family: var(--av2-display);
+  font-size: 1.05rem;
+  line-height: 1;
+  box-shadow: inset 0 0 0 5px oklch(0.035 0.007 58 / 0.55);
+}
+
+.av2-god-list-sigil img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 5px;
+  border-radius: inherit;
+}
+
+.av2-god-list-text {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.14rem;
+}
+
+.av2-god-list-name {
+  color: currentColor;
+  font-family: var(--av2-display);
+  font-size: 1.18rem;
+  line-height: 1.05;
+}
+
+.av2-god-list-meta {
+  color: var(--av2-ink-faint);
+  font-size: 0.78rem;
+  line-height: 1.25;
+}
+
+.av2-god-profile {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(240px, 0.92fr) minmax(0, 1.08fr);
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 0;
+  overflow: hidden;
+}
+
+.av2-god-profile::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, transparent 0 49.8%, var(--av2-rule) 49.8% 50%, transparent 50%),
+    radial-gradient(circle at 34% 46%, oklch(0.57 0.085 58 / 0.12), transparent 33%);
+}
+
+.av2-god-profile-art {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 420px;
+  padding: clamp(1.1rem, 2vw, 1.6rem);
+  overflow: hidden;
+}
+
+.av2-god-profile-art::before,
+.av2-god-profile-art::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.av2-god-profile-art::before {
+  width: min(78%, 430px);
+  aspect-ratio: 1;
+  border: 1px solid oklch(0.55 0.080 58 / 0.24);
+  background:
+    radial-gradient(circle, transparent 0 46%, oklch(0.75 0.100 68 / 0.10) 47% 48%, transparent 49%),
+    repeating-conic-gradient(from -8deg, oklch(0.55 0.080 58 / 0.18) 0 2deg, transparent 2deg 18deg);
+  opacity: 0.86;
+  animation: av2-god-spin 80s linear infinite;
+}
+
+.av2-god-profile-art::after {
+  width: min(54%, 300px);
+  aspect-ratio: 1;
+  border: 1px dashed oklch(0.72 0.090 72 / 0.18);
+  animation: av2-god-spin-rev 56s linear infinite;
+}
+
+.av2-god-profile-art[data-tone="memory"],
+.av2-god-detail-sigil[data-tone="memory"] {
+  --god-accent: oklch(0.69 0.070 268);
+}
+
+.av2-god-profile-art[data-tone="arcane"],
+.av2-god-detail-sigil[data-tone="arcane"] {
+  --god-accent: oklch(0.72 0.080 174);
+}
+
+.av2-god-profile-art[data-tone="justice"],
+.av2-god-detail-sigil[data-tone="justice"] {
+  --god-accent: oklch(0.78 0.090 86);
+}
+
+.av2-god-profile-art[data-tone="moon"],
+.av2-god-detail-sigil[data-tone="moon"] {
+  --god-accent: oklch(0.78 0.045 230);
+}
+
+.av2-god-profile-art[data-tone="flame"],
+.av2-god-detail-sigil[data-tone="flame"] {
+  --god-accent: oklch(0.76 0.135 62);
+}
+
+.av2-god-profile-art[data-tone="death"],
+.av2-god-detail-sigil[data-tone="death"] {
+  --god-accent: oklch(0.65 0.050 145);
+}
+
+.av2-god-profile-art[data-tone="secret"],
+.av2-god-detail-sigil[data-tone="secret"] {
+  --god-accent: oklch(0.62 0.050 305);
+}
+
+.av2-god-profile-art[data-tone="dragon"],
+.av2-god-detail-sigil[data-tone="dragon"] {
+  --god-accent: oklch(0.72 0.105 36);
+}
+
+.av2-god-profile-art[data-tone="storm"],
+.av2-god-detail-sigil[data-tone="storm"] {
+  --god-accent: oklch(0.75 0.070 212);
+}
+
+.av2-god-profile-art[data-tone="origin"],
+.av2-god-detail-sigil[data-tone="origin"] {
+  --god-accent: oklch(0.82 0.070 92);
+}
+
+.av2-god-symbol {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: min(72%, 330px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1px solid oklch(0.74 0.090 72 / 0.35);
+  background:
+    radial-gradient(circle at 48% 38%, oklch(0.90 0.070 86 / 0.16), transparent 16%),
+    radial-gradient(circle at 50% 50%, oklch(0.11 0.018 58 / 0.78), oklch(0.035 0.006 58 / 0.96) 72%),
+    conic-gradient(from 18deg, oklch(0.30 0.045 52), var(--god-accent, var(--av2-copper)), oklch(0.30 0.045 52));
+  box-shadow:
+    inset 0 0 0 10px oklch(0.040 0.008 58 / 0.82),
+    inset 0 0 0 13px oklch(0.70 0.080 70 / 0.12),
+    0 20px 70px oklch(0.03 0.008 58 / 0.72);
+}
+
+.av2-god-symbol-orbit,
+.av2-god-symbol-needle {
+  position: absolute;
+  pointer-events: none;
+}
+
+.av2-god-symbol-orbit {
+  border-radius: 50%;
+  border: 1px solid oklch(0.77 0.080 74 / 0.34);
+}
+
+.av2-god-symbol-orbit--outer {
+  inset: 12%;
+  box-shadow: inset 0 0 0 8px oklch(0.07 0.010 58 / 0.72);
+}
+
+.av2-god-symbol-orbit--inner {
+  inset: 30%;
+  border-style: dashed;
+  border-color: oklch(0.86 0.090 82 / 0.28);
+}
+
+.av2-god-symbol-needle {
+  background: linear-gradient(90deg, transparent, var(--god-accent, var(--av2-gold)), transparent);
+  opacity: 0.68;
+}
+
+.av2-god-symbol-needle--vertical {
+  width: 1px;
+  height: 78%;
+}
+
+.av2-god-symbol-needle--horizontal {
+  width: 78%;
+  height: 1px;
+}
+
+.av2-god-symbol-core {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 39%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid oklch(0.82 0.090 82 / 0.50);
+  background:
+    radial-gradient(circle at 50% 32%, oklch(0.93 0.080 88 / 0.17), transparent 20%),
+    radial-gradient(circle, oklch(0.12 0.018 58), oklch(0.045 0.008 58) 72%);
+  color: var(--av2-gold);
+  font-family: var(--av2-display);
+  font-size: clamp(2.2rem, 4.5vw, 4.4rem);
+  line-height: 1;
+  text-shadow: 0 2px 12px oklch(0.04 0.008 58 / 0.8);
+}
+
+.av2-god-symbol-core img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 10%;
+  border-radius: inherit;
+}
+
+.av2-god-profile-main {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.78rem;
+  padding: clamp(1.1rem, 2.4vw, 2rem);
+}
+
+.av2-god-kicker {
+  color: var(--av2-copper-dim);
+  font-family: var(--av2-mono);
+  font-size: 9px;
+  letter-spacing: 0.24em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+.av2-god-profile-main h2 {
+  color: var(--av2-gold);
+  font-size: clamp(2.55rem, 5vw, 5.1rem);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-shadow: 0 2px 18px oklch(0.03 0.006 58 / 0.72);
+}
+
+.av2-god-title {
+  color: var(--av2-ink-soft);
+  font-size: 1.1rem;
+  font-style: italic;
+  line-height: 1.35;
+}
+
+.av2-god-quote {
+  margin: 0.6rem 0 0;
+  padding: 0.95rem 0 0.95rem 1rem;
+  border-left: 1px solid var(--av2-copper-dim);
+  color: var(--av2-gold-dim);
+  font-style: italic;
+  line-height: 1.55;
+}
+
+.av2-god-copy {
+  color: var(--av2-ink-soft);
+  font-size: 0.98rem;
+  line-height: 1.58;
+}
+
+.av2-god-domains {
+  position: relative;
+  z-index: 1;
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.78rem;
+  padding: 1rem clamp(1rem, 2vw, 1.5rem) 1.15rem;
+  border-top: 1px solid var(--av2-rule);
+  background: oklch(0.052 0.008 58 / 0.46);
+}
+
+.av2-god-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  color: var(--av2-copper-dim);
+  font-family: var(--av2-mono);
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.av2-god-section-head small {
+  color: var(--av2-ink-faint);
+  font-size: 8px;
+  letter-spacing: 0.14em;
+}
+
+.av2-god-domain-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+
+.av2-god-domain {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 46px;
+  padding: 0.58rem 1.05rem;
+  border: 1px solid oklch(0.47 0.066 55 / 0.58);
+  border-radius: var(--av2-r-sm);
+  color: var(--av2-gold);
+  background:
+    linear-gradient(90deg, oklch(0.58 0.080 58 / 0.12), transparent 18% 82%, oklch(0.58 0.080 58 / 0.12)),
+    linear-gradient(180deg, oklch(0.14 0.018 56 / 0.88), oklch(0.052 0.008 58 / 0.94));
+  box-shadow:
+    inset 0 1px 0 oklch(0.88 0.070 82 / 0.09),
+    inset 0 -1px 0 oklch(0.03 0.006 58 / 0.65);
+  font-family: var(--av2-mono);
+  font-size: 9px;
+  letter-spacing: 0.11em;
+  line-height: 1.25;
+  text-align: center;
+  text-transform: uppercase;
+  overflow: hidden;
+}
+
+.av2-god-domain::before,
+.av2-god-domain::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 5px;
+  height: 5px;
+  border: 1px solid var(--av2-copper-dim);
+  background: oklch(0.13 0.018 56);
+  transform: translateY(-50%) rotate(45deg);
+  opacity: 0.82;
+}
+
+.av2-god-domain::before {
+  left: 0.46rem;
+}
+
+.av2-god-domain::after {
+  right: 0.46rem;
+}
+
+.av2-god-detail {
+  padding: 1rem;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--av2-rule-up) transparent;
+}
+
+.av2-god-detail-head {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr);
+  gap: 0.8rem;
+  align-items: center;
+  padding-bottom: 0.82rem;
+  border-bottom: 1px solid var(--av2-rule);
+}
+
+.av2-god-detail-sigil {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid oklch(0.72 0.090 74 / 0.38);
+  background:
+    radial-gradient(circle at 50% 40%, oklch(0.21 0.024 56), oklch(0.048 0.008 58) 72%),
+    conic-gradient(from 10deg, var(--av2-copper-deep), var(--god-accent, var(--av2-copper)), var(--av2-copper-deep));
+  color: var(--av2-gold);
+  font-family: var(--av2-display);
+  font-size: 1.22rem;
+  line-height: 1;
+  box-shadow: inset 0 0 0 6px oklch(0.04 0.008 58 / 0.76);
+}
+
+.av2-god-detail-sigil img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 6px;
+  border-radius: inherit;
+}
+
+.av2-god-detail-head h2 {
+  color: var(--av2-gold);
+  font-size: 1.7rem;
+}
+
+.av2-god-detail-meta,
+.av2-god-detail-stats {
+  margin: 0;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.av2-god-detail-meta {
+  grid-template-columns: 1fr;
+}
+
+.av2-god-detail-meta div,
+.av2-god-detail-stats div {
+  min-width: 0;
+  border: 1px solid var(--av2-rule);
+  border-radius: var(--av2-r-sm);
+  background: oklch(0.07 0.009 58 / 0.50);
+}
+
+.av2-god-detail-meta div {
+  padding: 0.62rem 0.68rem;
+}
+
+.av2-god-detail-meta dt,
+.av2-god-detail-stats dt {
+  color: var(--av2-ink-faint);
+  font-family: var(--av2-mono);
+  font-size: 7.8px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.av2-god-detail-meta dd,
+.av2-god-detail-stats dd {
+  margin: 0.22rem 0 0;
+  color: var(--av2-ink);
+  font-family: var(--av2-display);
+  line-height: 1.15;
+}
+
+.av2-god-detail-meta dd {
+  font-size: 0.94rem;
+}
+
+.av2-god-detail-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding-top: 0.76rem;
+  border-top: 1px solid var(--av2-rule);
+}
+
+.av2-god-detail-section h3 {
+  color: var(--av2-copper-dim);
+  font-family: var(--av2-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.av2-god-principles,
+.av2-god-places,
+.av2-god-links {
+  margin: 0;
+  padding: 0;
+}
+
+.av2-god-principles {
+  list-style-position: inside;
+  color: var(--av2-ink-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  font-size: 0.88rem;
+  line-height: 1.42;
+}
+
+.av2-god-principles li::marker {
+  color: var(--av2-copper-dim);
+  font-family: var(--av2-mono);
+}
+
+.av2-god-places,
+.av2-god-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.av2-god-places li,
+.av2-god-links li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.16rem;
+  padding-left: 0.7rem;
+  border-left: 1px solid var(--av2-rule-up);
+}
+
+.av2-god-places strong,
+.av2-god-links a,
+.av2-god-links span {
+  color: var(--av2-copper);
+  font-family: var(--av2-display);
+  font-size: 0.96rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.av2-god-links a:hover {
+  color: var(--av2-copper-hi);
+}
+
+.av2-god-places span,
+.av2-god-links small {
+  color: var(--av2-ink-soft);
+  font-size: 0.84rem;
+  line-height: 1.42;
+}
+
+.av2-god-tension {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.75rem 0.82rem;
+  border: 1px solid oklch(0.50 0.070 54 / 0.44);
+  border-radius: var(--av2-r-sm);
+  background:
+    radial-gradient(90% 130% at 0% 0%, oklch(0.48 0.070 54 / 0.16), transparent 62%),
+    oklch(0.065 0.009 58 / 0.58);
+}
+
+.av2-god-tension span {
+  color: var(--av2-copper-dim);
+  font-family: var(--av2-mono);
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.av2-god-tension p {
+  color: var(--av2-ink-soft);
+  font-size: 0.87rem;
+  line-height: 1.45;
+}
+
+.av2-god-detail-stats {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.av2-god-detail-stats div {
+  padding: 0.55rem 0.58rem;
+  text-align: center;
+}
+
+.av2-god-detail-stats dd {
+  color: var(--av2-gold);
+  font-size: 1.15rem;
+}
+
+.av2-god-cta {
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: auto;
+}
+
+@keyframes av2-god-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes av2-god-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes av2-god-spin-rev {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@media (min-width: 1800px) {
+  .av2-dioses-layout {
+    max-width: 1700px;
+    grid-template-columns: 320px minmax(0, 1fr) 410px;
+    padding: 1.8rem 2rem 2rem;
+  }
+
+  .av2-god-profile-art {
+    min-height: 520px;
+  }
+}
+
+@media (max-width: 1240px) {
+  .av2-dioses-layout {
+    grid-template-columns: 250px minmax(0, 1fr) 330px;
+    gap: 1rem;
+    padding: 1.1rem 1.1rem 1.35rem;
+  }
+
+  .av2-god-profile {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+  }
+
+  .av2-god-profile::before {
+    background: radial-gradient(circle at 50% 25%, oklch(0.57 0.085 58 / 0.12), transparent 35%);
+  }
+
+  .av2-god-profile-art {
+    min-height: 260px;
+  }
+
+  .av2-god-symbol {
+    width: min(54%, 250px);
+  }
+
+  .av2-god-profile-main {
+    justify-content: start;
+    padding-top: 0.5rem;
+  }
+
+  .av2-god-profile-main h2 {
+    font-size: clamp(2rem, 5vw, 3.4rem);
+  }
+}
+
+@media (max-width: 980px) {
+  .av2-p-wrap:has(.av2-dioses-layout) {
+    height: auto;
+    min-height: calc(100dvh - var(--av2-dock-h));
+    overflow: visible;
+    overflow-x: hidden;
+  }
+
+  .av2-dioses-layout {
+    grid-template-columns: 250px minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    overflow: visible;
+  }
+
+  .av2-god-detail {
+    grid-column: 1 / -1;
+  }
+
+  .av2-gods-index,
+  .av2-god-profile,
+  .av2-god-detail {
+    max-height: none;
+    overflow: visible;
+  }
+
+  .av2-gods-list {
+    overflow: visible;
+  }
+}
+
+@media (max-width: 680px) {
+  .av2-dioses-layout {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    padding: 0.75rem 0.75rem 1rem;
+  }
+
+  .av2-gods-index {
+    padding: 0.9rem 0.8rem;
+  }
+
+  .av2-gods-index-head {
+    font-size: 8.5px;
+    letter-spacing: 0.15em;
+  }
+
+  .av2-gods-tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 0.1rem;
+  }
+
+  .av2-gods-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .av2-gods-tab {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    min-height: 30px;
+    font-size: 8px;
+    letter-spacing: 0.1em;
+  }
+
+  .av2-gods-list {
+    max-height: 330px;
+    overflow-y: auto;
+  }
+
+  .av2-god-list-item {
+    min-height: 64px;
+    grid-template-columns: 44px minmax(0, 1fr);
+  }
+
+  .av2-god-list-sigil {
+    width: 44px;
+    height: 44px;
+  }
+
+  .av2-god-profile-art {
+    min-height: 230px;
+  }
+
+  .av2-god-symbol {
+    width: min(72vw, 250px);
+  }
+
+  .av2-god-symbol-core {
+    font-size: clamp(2rem, 14vw, 3.2rem);
+  }
+
+  .av2-god-profile-main {
+    padding: 0.85rem 0.9rem 1rem;
+  }
+
+  .av2-god-profile-main h2 {
+    font-size: clamp(2rem, 13vw, 3.15rem);
+  }
+
+  .av2-god-domain-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .av2-god-domain {
+    min-height: 48px;
+    aspect-ratio: auto;
+    border-radius: var(--av2-r-sm);
+  }
+
+  .av2-god-detail {
+    padding: 0.9rem 0.82rem;
+  }
+
+  .av2-god-detail-stats {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* Dioses: dossier fusionado (indice + ficha amplia) */
+.av2-dioses-layout {
+  grid-template-columns: 286px minmax(0, 1fr);
+  max-width: 1500px;
+}
+
+.av2-god-dossier {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  display: grid;
+  grid-template-columns: minmax(20rem, 0.78fr) minmax(0, 1.22fr);
+  grid-template-rows: minmax(0, 1fr);
+  column-gap: clamp(1.3rem, 2.4vw, 2.5rem);
+  row-gap: 1.1rem;
+  padding: clamp(1rem, 1.7vw, 1.55rem);
+  overflow: hidden;
+  border: 1px solid var(--av2-rule-copper);
+  border-radius: 0;
+  background:
+    radial-gradient(70% 95% at 20% 8%, oklch(0.49 0.075 53 / 0.12), transparent 62%),
+    linear-gradient(145deg, oklch(0.29 0.04 58 / 0.16), transparent 42%),
+    oklch(0.075 0.012 56 / 0.9);
+  box-shadow:
+    0 22px 60px -32px oklch(0.03 0.01 55 / 0.96),
+    inset 0 1px 0 oklch(0.9 0.05 70 / 0.05),
+    inset 0 0 0 5px oklch(0.04 0.01 55 / 0.32);
+  backdrop-filter: blur(12px) saturate(1.1);
+  -webkit-backdrop-filter: blur(12px) saturate(1.1);
+}
+
+.av2-god-dossier::before,
+.av2-god-dossier::after {
+  content: "";
+  position: absolute;
+  z-index: 3;
+  width: 2.1rem;
+  height: 2.1rem;
+  color: var(--av2-copper-dim);
+  border-color: currentColor;
+  pointer-events: none;
+}
+
+.av2-god-dossier::before {
+  top: 0.48rem;
+  left: 0.48rem;
+  border-top: 1px solid currentColor;
+  border-left: 1px solid currentColor;
+}
+
+.av2-god-dossier::after {
+  right: 0.48rem;
+  bottom: 0.48rem;
+  border-right: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+}
+
+.av2-god-identity,
+.av2-god-archive {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+}
+
+.av2-god-identity {
+  grid-row: 1;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: clamp(1rem, 1.8vw, 1.45rem);
+  padding-right: clamp(0.8rem, 1.5vw, 1.4rem);
+  border-right: 1px solid oklch(0.49 0.072 54 / 0.32);
+}
+
+.av2-god-dossier .av2-god-profile-art {
+  display: grid;
+  place-items: start;
+  min-height: 0;
+  padding: 0;
+  overflow: visible;
+}
+
+.av2-god-dossier .av2-god-profile-art::before,
+.av2-god-dossier .av2-god-profile-art::after,
+.av2-god-dossier .av2-god-symbol-orbit,
+.av2-god-dossier .av2-god-symbol-needle {
+  display: none;
+  animation: none;
+}
+
+.av2-god-dossier .av2-god-symbol {
+  width: min(100%, 30rem);
+  max-height: min(34vh, 21rem);
+  aspect-ratio: 1;
+  border-radius: 0;
+  border: 1px solid var(--av2-rule-copper);
+  background:
+    radial-gradient(circle at 50% 40%, oklch(0.72 0.09 60 / 0.18), transparent 52%),
+    radial-gradient(circle at 50% 120%, oklch(0.29 0.04 58 / 0.42), transparent 68%),
+    oklch(0.04 0.01 55 / 0.82);
+  box-shadow:
+    inset 0 0 0 5px oklch(0.03 0.008 55 / 0.38),
+    0 2rem 5.5rem oklch(0.02 0.008 55 / 0.76);
+}
+
+.av2-god-dossier .av2-god-symbol::before,
+.av2-god-dossier .av2-god-symbol::after {
+  content: "";
+  position: absolute;
+  width: 3.2rem;
+  height: 3.2rem;
+  color: var(--av2-copper-dim);
+  border-color: currentColor;
+  pointer-events: none;
+}
+
+.av2-god-dossier .av2-god-symbol::before {
+  top: 0.75rem;
+  left: 0.75rem;
+  border-top: 1px solid currentColor;
+  border-left: 1px solid currentColor;
+}
+
+.av2-god-dossier .av2-god-symbol::after {
+  right: 0.75rem;
+  bottom: 0.75rem;
+  border-right: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+}
+
+.av2-god-dossier .av2-god-symbol-core {
+  width: min(58%, 16rem);
+  border: 0;
+  border-radius: 0;
+  overflow: visible;
+  background: none;
+  box-shadow: none;
+  color: var(--av2-copper-hi);
+  font-size: clamp(5rem, 10vw, 9rem);
+  text-shadow:
+    0 0 32px oklch(0.715 0.118 56 / 0.35),
+    0 8px 24px oklch(0.02 0.008 55 / 0.88);
+}
+
+.av2-god-dossier .av2-god-symbol-core img {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  object-fit: contain;
+  border-radius: 0;
+}
+
+.av2-god-dossier .av2-god-profile-main {
+  justify-content: start;
+  padding: 0;
+  gap: 0.64rem;
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 0.35rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--av2-rule-up) transparent;
+}
+
+.av2-god-dossier .av2-god-profile-main h2 {
+  max-width: 10ch;
+  font-size: clamp(2.8rem, 4.35vw, 4.85rem);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  text-transform: none;
+}
+
+.av2-god-dossier .av2-god-title,
+.av2-god-dossier .av2-god-copy,
+.av2-god-dossier .av2-god-quote {
+  max-width: 58ch;
+}
+
+.av2-god-dossier .av2-god-quote {
+  margin-top: 0.35rem;
+}
+
+.av2-god-dossier .av2-god-copy {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+  line-clamp: 5;
+}
+
+.av2-god-archive {
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--av2-rule-up) transparent;
+}
+
+.av2-god-archive-head {
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid var(--av2-rule);
+}
+
+.av2-god-archive-head h3 {
+  margin-top: 0.2rem;
+  color: var(--av2-ink);
+  font-size: clamp(1.85rem, 2.3vw, 2.8rem);
+}
+
+.av2-god-dossier .av2-god-detail-meta {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.av2-god-dossier .av2-god-detail-section {
+  gap: 0.7rem;
+  padding-top: 1rem;
+}
+
+.av2-god-dossier .av2-god-principles,
+.av2-god-dossier .av2-god-places,
+.av2-god-dossier .av2-god-links,
+.av2-god-dossier .av2-god-tension p {
+  font-size: 0.98rem;
+  line-height: 1.58;
+}
+
+.av2-god-dossier .av2-god-places,
+.av2-god-dossier .av2-god-links {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.7rem;
+}
+
+.av2-god-dossier .av2-god-places li,
+.av2-god-dossier .av2-god-links li {
+  min-height: 4.4rem;
+  padding: 0.72rem 0.8rem;
+  border: 1px solid oklch(0.49 0.072 54 / 0.32);
+  background: oklch(0.045 0.01 55 / 0.48);
+}
+
+.av2-god-dossier .av2-god-domains {
+  padding: 0.95rem 0 0;
+  border-top: 1px solid var(--av2-rule);
+  background: transparent;
+}
+
+.av2-god-dossier-footer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: end;
+  padding-top: 0.95rem;
+  border-top: 1px solid var(--av2-rule);
+}
+
+.av2-god-dossier-footer .av2-god-detail-stats {
+  grid-template-columns: repeat(3, minmax(6rem, 1fr));
+  max-width: 30rem;
+}
+
+.av2-god-dossier-footer .av2-god-cta {
+  min-width: 15rem;
+  margin-top: 0;
+}
+
+@media (min-width: 1800px) {
+  .av2-dioses-layout {
+    max-width: 1740px;
+    grid-template-columns: 320px minmax(0, 1fr);
+  }
+
+  .av2-god-dossier {
+    grid-template-columns: minmax(25rem, 0.72fr) minmax(0, 1.28fr);
+  }
+}
+
+@media (max-width: 1240px) {
+  .av2-dioses-layout {
+    grid-template-columns: 250px minmax(0, 1fr);
+  }
+
+  .av2-god-dossier {
+    grid-template-columns: minmax(17rem, 0.8fr) minmax(0, 1.2fr);
+    column-gap: 1.2rem;
+  }
+
+  .av2-god-dossier .av2-god-places,
+  .av2-god-dossier .av2-god-links {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 980px) {
+  .av2-dioses-layout {
+    grid-template-columns: 250px minmax(0, 1fr);
+  }
+
+  .av2-god-dossier {
+    grid-template-columns: 1fr;
+    height: auto;
+    overflow: visible;
+  }
+
+  .av2-god-identity {
+    grid-row: auto;
+    grid-template-columns: minmax(12rem, 0.65fr) minmax(0, 1fr);
+    grid-template-rows: auto;
+    border-right: 0;
+    border-bottom: 1px solid var(--av2-rule);
+    padding-right: 0;
+    padding-bottom: 1rem;
+  }
+
+  .av2-god-archive {
+    overflow: visible;
+  }
+
+  .av2-god-dossier .av2-god-domains,
+  .av2-god-dossier-footer {
+    grid-column: 1;
+  }
+}
+
+@media (max-width: 680px) {
+  .av2-dioses-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .av2-god-identity,
+  .av2-god-dossier .av2-god-detail-meta,
+  .av2-god-dossier-footer {
+    grid-template-columns: 1fr;
+  }
+
+  .av2-god-dossier .av2-god-symbol {
+    width: min(100%, 22rem);
+    max-height: none;
+  }
+
+  .av2-god-dossier .av2-god-profile-main h2 {
+    font-size: clamp(2.7rem, 16vw, 4.3rem);
+  }
+
+  .av2-god-dossier-footer .av2-god-detail-stats {
+    max-width: none;
+  }
+
+  .av2-god-dossier-footer .av2-god-cta {
+    min-width: 0;
+  }
+}
