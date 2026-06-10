@@ -14,6 +14,11 @@
   min-height: 560px;
   overflow: hidden;
   border-radius: var(--av2-r);
+  /* scrim: la referencia usa fondo casi negro; sin esto las líneas cobre
+     se pierden contra la ilustración del hero */
+  background: radial-gradient(120% 90% at 50% 32%,
+    oklch(0.092 0.010 58 / .50),
+    oklch(0.092 0.010 58 / .84) 72%);
 }
 
 .av2-tdmn-wires {
@@ -85,7 +90,8 @@
 }
 
 .av2-tdmn-pos.is-ex {
-  opacity: .6
+  /* legible sobre el scrim — el filtro del retrato ya comunica "se fue" */
+  opacity: .85
 }
 
 .av2-tdmn-node {

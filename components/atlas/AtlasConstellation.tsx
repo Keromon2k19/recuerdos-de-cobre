@@ -185,7 +185,8 @@ export default function AtlasConstellation({ data }: { data: ConstellationData }
       onClick={onStageClick}
     >
       <div className="av2-tdmn-head">
-        <p className="av2-tdmn-meta">{meta}</p>
+        {/* En reposo el subtítulo de la página ya presenta al grupo */}
+        <p className="av2-tdmn-meta">{focused ? meta : ""}</p>
         <button
           type="button"
           className={`av2-tdmn-back${focused ? " show" : ""}`}
