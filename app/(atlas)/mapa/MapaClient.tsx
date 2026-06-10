@@ -36,6 +36,7 @@ export default function MapaClient({
   }, [selectedSlug]);
 
   function clearSelection() {
+    if (selectedSlug === "" && !infoOpen) return;
     runAtlasViewTransition(() => {
       setSelectedSlug("");
       setInfoOpen(false);

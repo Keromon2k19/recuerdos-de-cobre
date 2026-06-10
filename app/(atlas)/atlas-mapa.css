@@ -392,6 +392,8 @@
   flex: 1;
   min-height: 360px;
   display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 0.6rem;
   background:
     radial-gradient(65% 100% at 50% -10%, oklch(0.24 0.044 55 / 0.10) 0%, transparent 65%),
@@ -407,7 +409,8 @@
 
 .av2-map-stage {
   position: relative;
-  flex: 1;
+  width: auto;
+  height: auto;
   /* Centra el stage para que la imagen use el espacio máximo sin bandas.
      aspect-ratio del mapa de campaña = 2400/1800 = 4/3 */
   aspect-ratio: 4 / 3;
@@ -443,7 +446,7 @@
 .av2-map-canvas {
   position: relative;
   width: 100%;
-  height: 100%;
+  height: auto;
   z-index: 1;
   transform-origin: center center;
   transition: transform 0.3s var(--av2-ease);
@@ -452,12 +455,11 @@
 }
 
 .av2-map-img {
-  position: absolute;
-  inset: 0;
+  display: block;
   width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
   filter: saturate(0.72) sepia(0.16) brightness(0.68) contrast(1.08);
   pointer-events: none;
   user-select: none;
