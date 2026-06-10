@@ -94,6 +94,7 @@ describe("buildConstellation", () => {
     expect(sats[0].episode).toBeGreaterThanOrEqual(sats[sats.length - 1].episode ?? 0);
     expect(sats.find((s) => s.slug === "coven-rojo")?.kind).toBe("faccion");
     expect(sats.find((s) => s.slug === "champi")?.kind).toBe("personaje");
+    expect(sats.find((s) => s.slug === "narcissa")?.episode).toBe(8);
   });
 
   it("satélites que no resuelven a entidad del atlas quedan fuera", () => {

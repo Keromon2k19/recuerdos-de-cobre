@@ -105,7 +105,8 @@ export function buildConstellation(
     const d = details.get(cfg.slug);
     if (!d) continue;
     for (const rel of d.relations) {
-      const parsed = resolve(rel.name) ? parseAtlasPath(resolve(rel.name)!) : null;
+      const path = resolve(rel.name);
+      const parsed = path ? parseAtlasPath(path) : null;
       if (!parsed || parsed.segment !== "personajes") continue;
       const target = parsed.slug;
       if (!memberSlugs.has(target) || target === cfg.slug) continue;
