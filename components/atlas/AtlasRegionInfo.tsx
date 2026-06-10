@@ -9,6 +9,13 @@ import type { V2Region } from "@/data/atlas/locations";
 
 type Props = {
   region: V2Region;
+  connections?: Array<{
+    slug: string;
+    nombre: string;
+    imageSrc: string;
+    relation: string;
+    episode?: number;
+  }>;
 };
 
 const META_LABELS: Array<[keyof V2Region["meta"], string]> = [
@@ -18,7 +25,7 @@ const META_LABELS: Array<[keyof V2Region["meta"], string]> = [
   ["influencia", "Nivel de influencia"],
 ];
 
-export default function AtlasRegionInfo({ region }: Props) {
+export default function AtlasRegionInfo({ region, connections = [] }: Props) {
   const imageStyle = {
     viewTransitionName: `av2-place-${region.slug}`,
   } as CSSProperties;
@@ -45,8 +52,43 @@ export default function AtlasRegionInfo({ region }: Props) {
         <h2 className="av2-region-info-name">{region.nombre}</h2>
         <p className="av2-region-info-tagline">{region.tagline}</p>
         <p className="av2-region-info-desc">{region.descripcion}</p>
+
+        {connections.length > 0 && (
+          <div className="av2-region-linked-chars">
+            <h3 className="av2-region-linked-title">Personajes vinculados</h3>
+            <ul className="av2-region-linked-list">
+              {connections.map((conn, idx) => {
+                const charLetter = conn.nombre.charAt(0).toUpperCase();
+                return (
+                  <li key={`${conn.slug}-${idx}`}>
+                    <Link
+                      href={`/personajes/${conn.slug}`}
+                      className="av2-region-linked-char"
+                      title={`${conn.nombre}: ${conn.relation}${conn.episode ? ` (Ep. ${conn.episode})` : ""}`}
+                    >
+                      {conn.imageSrc ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={conn.imageSrc}
+                          alt=""
+                          className="av2-region-linked-avatar"
+                        />
+                      ) : (
+                        <span className="av2-region-linked-avatar-fallback">
+                          {charLetter}
+                        </span>
+                      )}
+                      <span>{conn.nombre}</span>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        )}
+
         <Link
-          href={`/v2/lugares/${region.slug}`}
+          href={`/lugares/${region.slug}`}
           className="av2-region-info-cta"
           aria-label={`Ver ${region.nombre}`}
         >

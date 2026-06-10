@@ -16,8 +16,9 @@ relaciones:
     tipo: anfitrion y posible aliado rebelde
     episodio: 81
 facciones: []
+image: /images/personajes/smooth.jpg
+imageAlt: Smooth
 ---
-
 ## Menciones por episodio
 
 ### [[076-recuerdos-de-cobre-66-camino-al-underdark|Ep. 76 — Recuerdos de Cobre 66: Camino al Underdark]]
@@ -25,4 +26,3 @@ facciones: []
 
 ### [[081-recuerdos-de-cobre-65-los-esclavos-de-siltris|Ep. 81 — Recuerdos de Cobre 65: Los esclavos de Siltris]]
 - Genasi de aire de la Sombra de Siltris que recibe a Te de Medianoche en el Caldero Gris y explica la revolucion que estan preparando.
-

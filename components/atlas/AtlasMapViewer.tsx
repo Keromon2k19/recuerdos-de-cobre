@@ -29,6 +29,7 @@ type Props = {
   selectedSlug: string | null;
   onSelect: (slug: string) => void;
   onClearSelection?: () => void;
+  characterJourneys?: Array<{ slug: string; nombre: string; journey: string[] }>;
 };
 
 type PinOverride = { x: number; y: number };
@@ -40,6 +41,7 @@ export default function AtlasMapViewer({
   selectedSlug,
   onSelect,
   onClearSelection,
+  characterJourneys = [],
 }: Props) {
   const [zoom, setZoom] = useState(1);
   const [pan, setPan] = useState({ x: 0, y: 0 });
@@ -51,6 +53,7 @@ export default function AtlasMapViewer({
   const [addMode, setAddMode] = useState(false);
   const [draftPoint, setDraftPoint] = useState<{ x: number; y: number } | null>(null);
   const [createdFlag, setCreatedFlag] = useState(false);
+  const [activeJourneyChar, setActiveJourneyChar] = useState<string>("");
   const router = useRouter();
 
   const stageRef = useRef<HTMLDivElement | null>(null);
@@ -171,7 +174,7 @@ export default function AtlasMapViewer({
     // Suprimir click si el último gesto fue un drag (pan o pin)
     if (lastDragMovedRef.current) return;
     if (pinDragRef.current?.moved) return;
-    if ((e.target as HTMLElement).closest(".av2-add-root, .av2-map-pin-wrap, .av2-map-zoom, .av2-map-edit-panel")) return;
+    if ((e.target as HTMLElement).closest(".av2-add-root, .av2-map-pin-wrap, .av2-map-zoom, .av2-map-edit-panel, .av2-map-journey-select-container")) return;
 
     if (addMode) {
       // Capturar coords como % del image visible. Usamos offsetWidth*zoom (state)
@@ -357,6 +360,40 @@ export default function AtlasMapViewer({
   const cursor = addMode ? "crosshair" : isPanning ? "grabbing" : zoom > 1 ? "grab" : "default";
   const zoomLabel = zoom % 1 === 0 ? `${zoom}x` : `${zoom.toFixed(1)}x`;
 
+  // Calcular camino del viaje activo
+  const activeJourneyObj = characterJourneys.find((j) => j.slug === activeJourneyChar);
+  const currentJourney = activeJourneyObj ? activeJourneyObj.journey : [];
+  const lastJourneySlug = currentJourney[currentJourney.length - 1];
+
+  const pathsList: React.ReactNode[] = [];
+  for (let i = 0; i < currentJourney.length - 1; i++) {
+    const r1 = visibleRegions.find((r) => r.slug === currentJourney[i]);
+    const r2 = visibleRegions.find((r) => r.slug === currentJourney[i + 1]);
+    if (r1 && r2) {
+      const c1 = getCurrentPinCoords(r1.slug, r1.pin.x, r1.pin.y);
+      const c2 = getCurrentPinCoords(r2.slug, r2.pin.x, r2.pin.y);
+      
+      const midX = (c1.x + c2.x) / 2;
+      const midY = (c1.y + c2.y) / 2 - Math.min(6, Math.abs(c1.x - c2.x) * 0.12);
+
+      pathsList.push(
+        <path
+          key={`journey-line-${i}`}
+          d={`M ${c1.x} ${c1.y} Q ${midX} ${midY} ${c2.x} ${c2.y}`}
+          fill="none"
+          stroke="var(--av2-copper)"
+          strokeWidth="0.4"
+          strokeLinecap="round"
+          filter="drop-shadow(0 0 2px var(--av2-copper-dim))"
+          style={{
+            strokeDasharray: "2.5 1.5",
+            animation: "av2-journey-flow 25s linear infinite",
+          }}
+        />
+      );
+    }
+  }
+
   return (
     <section className="av2-map-viewer" aria-label="Mapa del mundo">
       <div
@@ -370,6 +407,26 @@ export default function AtlasMapViewer({
         onDoubleClick={onStageDoubleClick}
         style={{ cursor, touchAction: zoom > 1 ? "none" : "auto" }}
       >
+        {/* Selector de Trazado de Viaje */}
+        {characterJourneys.length > 0 && (
+          <div className="av2-map-journey-select-container">
+            <span className="av2-map-journey-label">Trazado de viaje</span>
+            <select
+              className="av2-map-journey-select"
+              value={activeJourneyChar}
+              onChange={(e) => setActiveJourneyChar(e.target.value)}
+              aria-label="Seleccionar personaje para trazar su viaje"
+            >
+              <option value="">-- Sin trazado --</option>
+              {characterJourneys.map((j) => (
+                <option key={j.slug} value={j.slug}>
+                  {j.nombre}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+
         <div
           className="av2-map-canvas"
           style={{
@@ -384,6 +441,24 @@ export default function AtlasMapViewer({
             className="av2-map-img"
             draggable={false}
           />
+
+          {/* SVG Overlay para Hilos de Viaje */}
+          {activeJourneyChar !== "" && currentJourney.length > 0 && (
+            <svg
+              viewBox="0 0 100 100"
+              preserveAspectRatio="none"
+              style={{
+                position: "absolute",
+                inset: 0,
+                width: "100%",
+                height: "100%",
+                pointerEvents: "none",
+                zIndex: 2,
+              }}
+            >
+              {pathsList}
+            </svg>
+          )}
 
           {draftPoint && (
             <span
@@ -405,12 +480,18 @@ export default function AtlasMapViewer({
             const moved = !!overrides[r.slug] && overrides[r.slug] !== "deleted";
             const isDraggingThis = pinDragRef.current?.slug === r.slug && pinDragRef.current?.moved;
             const isAddition = additionSlugSet.has(r.slug);
+            
+            const inJourney = currentJourney.includes(r.slug);
+            const isDimmed = activeJourneyChar !== "" && !inJourney;
+            const isLastOfJourney = activeJourneyChar !== "" && lastJourneySlug === r.slug;
+
             return (
               <span
                 key={r.slug}
                 className="av2-map-pin-wrap"
                 data-selected={selectedSlug === r.slug ? "true" : undefined}
                 data-moved={moved ? "true" : undefined}
+                data-dimmed={isDimmed ? "true" : undefined}
                 style={{ left: `${coords.x}%`, top: `${coords.y}%` }}
               >
                 <button
@@ -421,6 +502,7 @@ export default function AtlasMapViewer({
                   data-tone={r.tone}
                   data-moved={moved ? "true" : undefined}
                   data-dragging={isDraggingThis ? "true" : undefined}
+                  data-journey-active={isLastOfJourney ? "true" : undefined}
                   onPointerDown={(e) => onPinPointerDown(r.slug, r.pin.x, r.pin.y, e)}
                   onPointerMove={onPinPointerMove}
                   onPointerUp={(e) => onPinPointerUp(r.slug, e)}

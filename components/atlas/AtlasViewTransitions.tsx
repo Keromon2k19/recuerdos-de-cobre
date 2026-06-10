@@ -92,14 +92,34 @@ export default function AtlasViewTransitions() {
       const target = event.target as Element | null;
       const anchor = target?.closest<HTMLAnchorElement>("a[href]");
       if (!anchor || !anchor.closest(".av2")) return;
-      if (anchor.closest(".av2-nav")) return;
       if (anchor.target && anchor.target !== "_self") return;
       if (anchor.hasAttribute("download")) return;
       if (anchor.dataset.noViewTransition === "true") return;
 
+      // Restricción por Rutas Principales / Navegación Estructural
+      const isNav = anchor.closest(".av2-nav") !== null;
+      const isBack = anchor.closest(".av2-entity-detail-back") !== null || anchor.classList.contains("av2-entity-detail-back");
+      const isChapterNeighbors = anchor.closest(".av2-chapter-detail-neighbors") !== null;
+      const isHomeShortcut = anchor.closest(".av2-latest-actions") !== null || anchor.closest(".av2-latest-feature") !== null;
+      const isDetailCta = anchor.closest(".av2-detail-cta") !== null || anchor.classList.contains("av2-detail-cta") || anchor.closest(".av2-chapter-cta") !== null || anchor.classList.contains("av2-chapter-cta");
+      const isTimelineCard = anchor.closest(".av2-tl-card") !== null || anchor.classList.contains("av2-tl-card");
+      const isChapterFoot = anchor.closest(".av2-chapter-list-foot") !== null || anchor.classList.contains("av2-chapter-list-foot");
+
+      const isStructural = isNav || isBack || isChapterNeighbors || isHomeShortcut || isDetailCta || isTimelineCard || isChapterFoot;
+      if (!isStructural) return;
+
       const url = new URL(anchor.href, window.location.href);
       if (url.origin !== window.location.origin) return;
-      if (!url.pathname.startsWith("/v2")) return;
+
+      // Excluir rutas del sistema, de API, assets estáticos y archivos directos
+      if (
+        url.pathname.startsWith("/_next") ||
+        url.pathname.startsWith("/api") ||
+        url.pathname.startsWith("/assets") ||
+        url.pathname.includes(".")
+      ) {
+        return;
+      }
 
       const currentPath = window.location.pathname;
       const sameLocation =
@@ -121,7 +141,7 @@ export default function AtlasViewTransitions() {
       const transition = doc.startViewTransition(
         () =>
           new Promise<void>((resolve) => {
-            const timeoutId = window.setTimeout(resolvePending, 350);
+            const timeoutId = window.setTimeout(resolvePending, 2000);
             pendingRef.current = { resolve, timeoutId };
             router.push(href);
           }),
@@ -139,3 +159,5 @@ export default function AtlasViewTransitions() {
 
   return null;
 }
+
+

@@ -99,8 +99,9 @@ relaciones:
 facciones: []
 relacion_party: enemigo
 relacion_party_nota: dudoso
+image: /images/personajes/vecna.png
+imageAlt: Vecna
 ---
-
 ## Perfil
 
 Vecna es un NPC divino de la campaña: el dios de los secretos, venerado también como dios de la tecnología y la restauración, que opera entre bastidores a través de visiones, marcas y sueños. Su arco central gira en torno a [[borok|Borok]], a quien guía y tienta hasta que este entrega su alma para convertirse en su campeón, mientras [[aria|Aria]] lo interpreta como una figura que carga secretos para liberar a otros. Persigue romper la barrera de Shadowlands y entrar al plano material valiéndose de su campeón anterior, [[zaros-creighton|Zaros Creighton]], y de seguidores actuales como [[galdur-bloodblade|Galdur Bloodblade]]. Es una presencia ambigua: revelador de verdades ocultas y, a la vez, dios asociado a un ejército que reclama almas.

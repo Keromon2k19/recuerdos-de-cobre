@@ -15,10 +15,10 @@ relaciones:
       recompensa.
     episodio: 77
 facciones: []
+image: /images/personajes/nendra.jpg
+imageAlt: Nendra
 ---
-
 ## Menciones por episodio
 
 ### [[077-recuerdos-de-cobre-67-ecos-en-la-catedral|Ep. 77 — Recuerdos de Cobre 67: Ecos en la catedral]]
 - Drow de la catedral que verifica que los minotauros entregados esten vivos y sin mutilaciones, y paga la recompensa al grupo.
-

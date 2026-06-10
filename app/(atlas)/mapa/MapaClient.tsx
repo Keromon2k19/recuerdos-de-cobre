@@ -15,9 +15,16 @@ import type { V2Region } from "@/data/atlas/locations";
 export default function MapaClient({
   regions,
   additionSlugs = [],
+  characterJourneys = [],
+  locationConnections = {},
 }: {
   regions: V2Region[];
   additionSlugs?: string[];
+  characterJourneys?: Array<{ slug: string; nombre: string; journey: string[] }>;
+  locationConnections?: Record<
+    string,
+    Array<{ slug: string; nombre: string; imageSrc: string; relation: string; episode?: number }>
+  >;
 }) {
   const [selectedSlug, setSelectedSlug] = useState<string>(regions[0]?.slug ?? "");
   const [infoOpen, setInfoOpen] = useState<boolean>(true);
@@ -62,6 +69,7 @@ export default function MapaClient({
             selectedSlug={selectedSlug || null}
             onSelect={selectRegion}
             onClearSelection={clearSelection}
+            characterJourneys={characterJourneys}
           />
         </div>
 
@@ -94,7 +102,10 @@ export default function MapaClient({
           className="av2-mapa-info-drawer"
           aria-hidden={!infoOpen}
         >
-          <AtlasRegionInfo region={selected} />
+          <AtlasRegionInfo
+            region={selected}
+            connections={locationConnections[selected.slug] || []}
+          />
         </aside>
       </div>
     </div>

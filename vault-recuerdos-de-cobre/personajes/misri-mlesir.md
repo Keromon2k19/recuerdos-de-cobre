@@ -18,8 +18,9 @@ relaciones:
       devolucion del poliformador.
     episodio: 78
 facciones: []
+image: /images/personajes/misri-mlesir.jpg
+imageAlt: Misri Mlesir
 ---
-
 ## Menciones por episodio
 
 ### [[077-recuerdos-de-cobre-67-ecos-en-la-catedral|Ep. 77 — Recuerdos de Cobre 67: Ecos en la catedral]]
@@ -27,4 +28,3 @@ facciones: []
 
 ### [[078-recuerdos-de-cobre-68-moralidad-fragmentada|Ep. 78 — Recuerdos de Cobre 68: Moralidad Fragmentada]]
 - Drow investigadora y comerciante del Vientre de la Tejedora que compra libros de superficie y vende venenos, aire embotellado y artefactos de Fires Res.
-

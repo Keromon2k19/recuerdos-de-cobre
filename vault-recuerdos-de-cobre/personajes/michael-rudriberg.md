@@ -14,10 +14,10 @@ relaciones:
     episodio: 7
 facciones: []
 region: Metrópolis de Cobre
+image: /images/personajes/michael-rudriberg.jpg
+imageAlt: Michael Rudriberg
 ---
-
 ## Menciones por episodio
 
 ### [[007-recuerdos-de-cobre-4-parte-2-cultista-se-pasa-de-rosca|Ep. 7 — Recuerdos de Cobre 4 Parte 2: Cultista se pasa de rosca]]
 - Es mencionado por Darko como concejal que realiza viajes en tren frecuentes sin destino claro.
-

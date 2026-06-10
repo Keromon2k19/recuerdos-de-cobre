@@ -28,8 +28,9 @@ relaciones:
     episodio: 70
 facciones:
   - Coven Negro
+image: /images/personajes/aisha.jpg
+imageAlt: Aisha
 ---
-
 ## Perfil
 
 Aisha es exploradora y segunda al mando del [[coven-negro|Coven Negro]], y la amiga más fiel de [[eryon|Eryon]] desde la infancia en el coven, bajo la matriarca [[melissa|Melissa]]. Fue enviada a buscar el [[tirano-de-piedra|Tirano de Piedra]] para forjar con su corazón una ocarina capaz de revertir la petrificación del bosque; al caer inconsciente ante él, Eryon la rescató. En el acto desesperado contra el [[personajes/wendigo|Wendigo]] selló junto a Eryon un pacto con [[nabish|Nabish]]: sacrificó su vista bajo la luz a cambio de que el grupo pudiera ver en la oscuridad.
@@ -44,4 +45,3 @@ Aisha es exploradora y segunda al mando del [[coven-negro|Coven Negro]], y la am
 
 ### [[071-recuerdos-de-cobre-58-consecuencias|Ep. 71 — Recuerdos De Cobre 58: Consecuencias]]
 - Carga culpa por la tragedia del Coven Negro y recibe contencion de Mysha, Narcissa y Melissa para seguir ayudando.
-

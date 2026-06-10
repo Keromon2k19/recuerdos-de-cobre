@@ -29,8 +29,9 @@ relaciones:
 facciones:
   - Coven Negro
 region: Bosque Petrificado
+image: /images/personajes/melissa.png
+imageAlt: Melissa
 ---
-
 ## Perfil
 
 Melissa es la matriarca del [[coven-negro|Coven Negro]], oculto en un bosque petrificado. Crió y formó a [[eryon|Eryon]] y a [[aisha|Aisha]], y dirigió la defensa del pueblo durante el asedio del [[personajes/wendigo|Wendigo]] —desatado cuando [[borok|Borok]], al servicio de [[personajes/vecna|Vecna]], destruyó las [[lagrimas-de-selune|Lágrimas de Selune]] que protegían el bosque—. Tras sobrevivir, reconoce a [[mysha|Mysha]] como matriarca del Coven Rojo y envía a Eryon con el [[te-de-medianoche|Té de Medianoche]].
@@ -45,4 +46,3 @@ Melissa es la matriarca del [[coven-negro|Coven Negro]], oculto en un bosque pet
 
 ### [[071-recuerdos-de-cobre-58-consecuencias|Ep. 71 — Recuerdos De Cobre 58: Consecuencias]]
 - Matriarca del Coven Negro que agradece al grupo, reconoce a Mysha como matriarca del Cobre Rojo y envia a Eryon con el Te de Medianoche.
-

@@ -13,10 +13,10 @@ relaciones:
     tipo: Recibe escamas de dragon y le regala un cristal de cantrip.
     episodio: 76
 facciones: []
+image: /images/personajes/magma.jpg
+imageAlt: Magma
 ---
-
 ## Menciones por episodio
 
 ### [[076-recuerdos-de-cobre-66-camino-al-underdark|Ep. 76 — Recuerdos de Cobre 66: Camino al Underdark]]
 - Genasi de fuego de la Forja de Lava que entrega una esfera de feyglass a Tali y regala a Mysha un cristal capaz de lanzar un cantrip almacenado.
-

@@ -24,10 +24,10 @@ relaciones:
       la Metropolis.
     episodio: 74
 facciones: []
+image: /images/personajes/alexia-vostrofer.jpg
+imageAlt: Alexia Vostrofer
 ---
-
 ## Menciones por episodio
 
 ### [[074-recuerdos-de-cobre-61-puntos-de-vista|Ep. 74 — Recuerdos De Cobre 61: Puntos de vista]]
 - Concejal de guerra y defensa de la Metropolis de Cobre; llega con guardias y ocultistas para arrestar a la Hermandad, pierde la White Hawk y advierte que Anora tiene conexiones infernales y con Asmodeus.
-

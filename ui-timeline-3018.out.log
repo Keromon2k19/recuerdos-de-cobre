@@ -207,3 +207,253 @@
  ✓ Compiled / in 1308ms (729 modules)
  GET /personajes 200 in 2979ms
  GET / 200 in 3188ms
+ ✓ Compiled /capitulos in 327ms (720 modules)
+ GET /capitulos 200 in 1077ms
+ ✓ Compiled /timeline in 168ms (732 modules)
+ GET /timeline 200 in 734ms
+ ✓ Compiled /misterios in 418ms (748 modules)
+ GET /misterios 200 in 1301ms
+ ✓ Compiled /personajes in 177ms (491 modules)
+ GET /personajes 200 in 546ms
+ ✓ Compiled /facciones in 402ms (769 modules)
+ GET /facciones 200 in 664ms
+ ○ Compiling /lugares ...
+ ✓ Compiled /lugares in 527ms (775 modules)
+ GET /lugares 200 in 710ms
+ ○ Compiling /lugares/[slug] ...
+ ✓ Compiled /lugares/[slug] in 653ms (805 modules)
+ GET /lugares/santuario-libres 200 in 1357ms
+ ○ Compiling /mapa ...
+ ✓ Compiled /mapa in 636ms (908 modules)
+ GET /mapa 200 in 786ms
+ GET /lugares/santuario-libres 200 in 85ms
+ ✓ Compiled /dioses in 369ms (917 modules)
+ GET /dioses 200 in 485ms
+ ✓ Compiled /mundo/[slug] in 308ms (922 modules)
+ GET /mundo/familiar-de-la-raven-queen 200 in 3756ms
+ ✓ Compiled /objetos in 461ms (930 modules)
+ GET /objetos 200 in 1200ms
+ ✓ Compiled /objetos/[slug] in 458ms (932 modules)
+ GET /objetos/carta-de-nabish 200 in 3945ms
+ ✓ Compiled /mundo in 499ms (940 modules)
+ GET /mundo 200 in 1095ms
+ GET /mundo/maldicion-del-desierto 200 in 2597ms
+ ○ Compiling /capitulos/[num] ...
+ ✓ Compiled /capitulos/[num] in 631ms (944 modules)
+ GET /capitulos/24 200 in 4206ms
+ GET /capitulos/24 200 in 54ms
+ ✓ Compiled in 552ms (494 modules)
+ GET /capitulos/24 200 in 5923ms
+ ✓ Compiled in 1933ms (800 modules)
+ GET /capitulos/24 200 in 5472ms
+ ✓ Compiled in 1016ms (800 modules)
+ GET /capitulos/24 200 in 6375ms
+ ✓ Compiled in 1014ms (800 modules)
+ GET /capitulos/24 200 in 6570ms
+ ✓ Compiled in 927ms (800 modules)
+ GET /capitulos/24 200 in 6053ms
+ ✓ Compiled in 1150ms (800 modules)
+ GET /capitulos/24 200 in 6086ms
+ GET /capitulos/24 500 in 5948ms
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 4.8s (1133 modules)
+ GET /capitulos/24 500 in 9433ms
+ GET /capitulos/24 200 in 7777ms
+ GET /capitulos/24 500 in 1332ms
+ GET /capitulos/24 500 in 1646ms
+ GET /capitulos/24 500 in 1508ms
+ GET /capitulos/24 500 in 1172ms
+ GET /capitulos/24 500 in 1334ms
+ GET /capitulos/24 500 in 1089ms
+ GET /capitulos/24 500 in 911ms
+ GET /capitulos/24 500 in 1045ms
+ ✓ Compiled in 518ms (688 modules)
+ ✓ Compiled in 324ms (688 modules)
+ ✓ Compiled in 776ms (1147 modules)
+ ✓ Compiled in 713ms (1147 modules)
+ ✓ Compiled in 594ms (1147 modules)
+ GET /capitulos/24 200 in 19ms
+ GET /capitulos/24 500 in 509ms
+ GET /capitulos/24 500 in 45ms
+ GET /capitulos/24 500 in 31ms
+ GET /capitulos/24 500 in 33ms
+ GET /capitulos/24 500 in 40ms
+ GET /capitulos/24 500 in 37ms
+ GET /capitulos/24 500 in 33ms
+ GET /capitulos/24 500 in 39ms
+ GET /capitulos/24 500 in 37ms
+ GET /capitulos/24 500 in 31ms
+ GET /capitulos/24 500 in 35ms
+ GET /capitulos/24 500 in 31ms
+ GET /capitulos/24 500 in 41ms
+ GET /capitulos/24 500 in 32ms
+ GET /capitulos/24 500 in 32ms
+ GET /capitulos/24 500 in 31ms
+ GET /capitulos/24 500 in 34ms
+ GET /capitulos/24 500 in 31ms
+ GET /capitulos/24 500 in 40ms
+ GET /capitulos/24 500 in 32ms
+ GET /capitulos/24 500 in 31ms
+ GET /capitulos/24 500 in 46ms
+ GET /capitulos/24 500 in 36ms
+ GET /capitulos/24 500 in 34ms
+ GET /capitulos/24 500 in 31ms
+ GET /capitulos/24 500 in 33ms
+ GET /capitulos/24 500 in 38ms
+ GET /capitulos/24 500 in 38ms
+ GET /capitulos/24 500 in 33ms
+ GET /capitulos/24 500 in 31ms
+ GET /capitulos/24 500 in 31ms
+ GET /capitulos/24 500 in 49ms
+ GET /capitulos/24 500 in 33ms
+ GET /capitulos/24 500 in 31ms
+ GET /capitulos/24 500 in 34ms
+ GET /capitulos/24 500 in 32ms
+ GET /capitulos/24 500 in 43ms
+ GET /capitulos/24 500 in 32ms
+ GET /capitulos/24 500 in 31ms
+ GET /capitulos/24 500 in 33ms
+ GET /capitulos/24 500 in 48ms
+ GET /capitulos/24 500 in 33ms
+ GET /capitulos/24 500 in 31ms
+ GET /capitulos/24 500 in 33ms
+ GET /capitulos/24 500 in 32ms
+ GET /capitulos/24 500 in 32ms
+ GET /capitulos/24 500 in 32ms
+ GET /capitulos/24 500 in 33ms
+ GET /capitulos/24 500 in 32ms
+ GET /capitulos/24 500 in 32ms
+ GET /capitulos/24 500 in 47ms
+ GET /capitulos/24 500 in 32ms
+ GET /capitulos/24 500 in 36ms
+ GET /capitulos/24 500 in 32ms
+ GET /capitulos/24 500 in 31ms
+ GET /capitulos/24 500 in 42ms
+ GET /capitulos/24 500 in 32ms
+ GET /capitulos/24 500 in 33ms
+ GET /capitulos/24 500 in 32ms
+ GET /capitulos/24 500 in 45ms
+ GET /capitulos/24 500 in 35ms
+ GET /capitulos/24 500 in 32ms
+ GET /capitulos/24 500 in 31ms
+ GET /capitulos/24 500 in 32ms
+ GET /capitulos/24 500 in 33ms
+ GET /capitulos/24 500 in 32ms
+ GET /capitulos/24 500 in 32ms
+ GET /capitulos/24 500 in 31ms
+ GET /capitulos/24 500 in 31ms
+ GET /capitulos/24 500 in 49ms
+ GET /capitulos/24 500 in 31ms
+ GET /capitulos/24 500 in 31ms
+ GET /capitulos/24 500 in 32ms
+ GET /capitulos/24 500 in 31ms
+ GET /capitulos/24 500 in 43ms
+ GET /capitulos/24 500 in 32ms
+ GET /capitulos/24 500 in 33ms
+ GET /capitulos/24 500 in 31ms
+ GET /capitulos/24 500 in 46ms
+ GET /capitulos/24 500 in 39ms
+ GET /capitulos/24 500 in 33ms
+ GET /capitulos/24 500 in 33ms
+ GET /capitulos/24 500 in 32ms
+ GET /capitulos/24 500 in 32ms
+ GET /capitulos/24 500 in 32ms
+ GET /capitulos/24 500 in 32ms
+ GET /capitulos/24 500 in 38ms
+ GET /capitulos/24 500 in 40ms
+ GET /capitulos/24 500 in 65ms
+ GET /capitulos/24 500 in 34ms
+ GET /capitulos/24 500 in 30ms
+ GET /capitulos/24 500 in 34ms
+ GET /capitulos/24 500 in 32ms
+ GET /capitulos/24 500 in 45ms
+ GET /capitulos/24 500 in 32ms
+ GET /capitulos/24 500 in 40ms
+ GET /capitulos/24 500 in 34ms
+ GET /capitulos/24 500 in 49ms
+ GET /capitulos/24 500 in 37ms
+ GET /capitulos/24 500 in 33ms
+ GET /capitulos/24 500 in 32ms
+ GET /capitulos/24 500 in 36ms
+ GET /capitulos/24 500 in 33ms
+ GET /capitulos/24 500 in 35ms
+ GET /capitulos/24 500 in 30ms
+ GET /capitulos/24 500 in 31ms
+ GET /capitulos/24 500 in 33ms
+ GET /capitulos/24 500 in 50ms
+ GET /capitulos/24 500 in 33ms
+ GET /capitulos/24 500 in 33ms
+ GET /capitulos/24 500 in 31ms
+ GET /capitulos/24 500 in 30ms
+ GET /capitulos/24 500 in 45ms
+ GET /capitulos/24 500 in 32ms
+ GET /capitulos/24 500 in 31ms
+ GET /capitulos/24 500 in 31ms
+ GET /capitulos/24 500 in 43ms
+ GET /capitulos/24 500 in 33ms
+ GET /capitulos/24 500 in 32ms
+ GET /capitulos/24 500 in 31ms
+ GET /capitulos/24 500 in 30ms
+ GET /capitulos/24 500 in 33ms
+ GET /capitulos/24 500 in 30ms
+ GET /capitulos/24 500 in 31ms
+ GET /capitulos/24 500 in 31ms
+ GET /capitulos/24 500 in 32ms
+ GET /capitulos/24 500 in 47ms
+ GET /capitulos/24 500 in 31ms
+ GET /capitulos/24 500 in 31ms
+ GET /capitulos/24 500 in 33ms
+ GET /capitulos/24 500 in 30ms
+ GET /capitulos/24 500 in 41ms
+ GET /capitulos/24 500 in 31ms
+ GET /capitulos/24 500 in 31ms
+ GET /capitulos/24 500 in 34ms
+ GET /capitulos/24 500 in 46ms
+ GET /capitulos/24 500 in 35ms
+ GET /capitulos/24 500 in 34ms
+ GET /capitulos/24 500 in 31ms
+ GET /capitulos/24 500 in 30ms
+ GET /capitulos/24 500 in 32ms
+ GET /capitulos/24 500 in 30ms
+ GET /capitulos/24 500 in 32ms
+ GET /capitulos/24 500 in 32ms
+ GET /capitulos/24 500 in 31ms
+ GET /capitulos/24 500 in 59ms
+ ✓ Compiled in 575ms (688 modules)
+ ✓ Compiled in 822ms (1133 modules)
+ ✓ Compiled in 476ms (688 modules)
+ GET /capitulos/24 500 in 6238ms
+ GET /capitulos/24 500 in 321ms
+ ✓ Compiled in 469ms (688 modules)
+ GET /capitulos/24 500 in 428ms
+ ✓ Compiled in 382ms (688 modules)
+ GET /capitulos/24 500 in 393ms
+ ✓ Compiled in 679ms (1147 modules)
+ GET /capitulos/24 500 in 526ms
+ ✓ Compiled in 976ms (1133 modules)
+ ✓ Compiled in 891ms (1147 modules)
+ ✓ Compiled in 1286ms (1147 modules)
+ ✓ Compiled in 2.3s (1147 modules)
+ ✓ Compiled in 1954ms (1147 modules)
+ ✓ Compiled in 798ms (1147 modules)
+ ✓ Compiled in 811ms (1147 modules)
+ ✓ Compiled in 1565ms (1133 modules)
+ ✓ Compiled in 1017ms (1147 modules)
+ ✓ Compiled in 911ms (1147 modules)
+ ✓ Compiled in 1233ms (1147 modules)
+ ✓ Compiled in 380ms (688 modules)
+ ✓ Compiled in 202ms (688 modules)
+ ✓ Compiled in 771ms (1147 modules)
+ ✓ Compiled in 780ms (1147 modules)
+ ✓ Compiled in 221ms (688 modules)
+ ✓ Compiled in 610ms (1159 modules)
+ ✓ Compiled in 102ms (459 modules)
+ ✓ Compiled in 100ms (459 modules)
+ ✓ Compiled in 720ms (1173 modules)
+ ✓ Compiled in 149ms (459 modules)
+ ✓ Compiled in 331ms (1159 modules)
+ ✓ Compiled in 376ms (1159 modules)
+ ✓ Compiled in 1241ms (1173 modules)
+ ✓ Compiled in 501ms (700 modules)
+ ✓ Compiled in 490ms (1159 modules)
+ ✓ Compiled in 518ms (1159 modules)

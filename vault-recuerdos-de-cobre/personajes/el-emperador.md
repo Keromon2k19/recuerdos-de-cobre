@@ -43,8 +43,9 @@ relaciones:
     episodio: 68
 facciones: []
 relacion_party: enemigo
+image: /images/personajes/el-emperador.png
+imageAlt: El Emperador
 ---
-
 ## Menciones por episodio
 
 ### [[067-recuerdos-de-cobre-54-viva-la-nueva-aristocracia|Ep. 67 — Recuerdos De Cobre 54: Viva la nueva Aristocracia]]

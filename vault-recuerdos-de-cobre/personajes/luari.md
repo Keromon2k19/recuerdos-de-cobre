@@ -10,8 +10,9 @@ rol: NPC
 tags:
   - npc
 facciones: []
+image: /images/personajes/luari.jpg
+imageAlt: Luari
 ---
-
 ## Menciones por episodio
 
 ### [[075-recuerdos-de-cobre-64-la-flor-que-freno-su-tiempo|Ep. 75 — Recuerdos de Cobre 64: La Flor que Frenó su Tiempo]]
@@ -19,4 +20,3 @@ facciones: []
 
 ### [[080-recuerdos-de-cobre-63-el-secreto-de-la-biblioteca|Ep. 80 — Recuerdos de Cobre 63: El Secreto de la Biblioteca]]
 - Nutria de Randy que acompaña la reconstruccion de la Nutriopolis.
-

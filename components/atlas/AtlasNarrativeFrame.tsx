@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 type Props = {
   children: ReactNode;
   eyebrow?: string;
-  title?: string;
+  title?: ReactNode;
   variant?: "primary" | "secondary" | "quiet";
   className?: string;
 };

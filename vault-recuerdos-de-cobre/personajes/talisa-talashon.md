@@ -66,8 +66,9 @@ relaciones:
     episodio: 82
 facciones: []
 relacion_party: aliado
+image: /images/personajes/talisa-talashon.jpg
+imageAlt: Talisa Talashon
 ---
-
 ## Menciones por episodio
 
 ### [[076-recuerdos-de-cobre-66-camino-al-underdark|Ep. 76 — Recuerdos de Cobre 66: Camino al Underdark]]
