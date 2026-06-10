@@ -11351,3 +11351,149 @@ body:has(.av2-immersive-bg),
   background: var(--av2-copper-hi);
   box-shadow: 0 0 12px var(--av2-copper-hi);
 }
+
+/* ============================================================
+   Té de Media Noche — constelación del grupo (.av2-tdmn-*)
+   Referencia: docs/ui-v2/te-de-media-noche-reference.html
+   ============================================================ */
+
+.av2-tdmn-stage{position:relative;width:100%;height:min(78dvh,860px);min-height:560px;
+  overflow:hidden;border-radius:var(--av2-r);}
+.av2-tdmn-wires{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;
+  transition:opacity .5s var(--av2-ease)}
+.av2-tdmn-stage.is-veil .av2-tdmn-wires{opacity:.1}
+.av2-tdmn-stage.is-veil .av2-tdmn-pos{opacity:.08}
+
+.av2-tdmn-wire{stroke:var(--av2-rule-copper);stroke-width:2;fill:none;opacity:0;
+  transition:opacity .5s var(--av2-ease)}
+.av2-tdmn-wire.show{opacity:.7}
+.av2-tdmn-wire.is-soft{stroke:var(--av2-rule)}
+.av2-tdmn-wire.is-cut{stroke:var(--av2-copper-dim);stroke-dasharray:6 9}
+.av2-tdmn-wire.is-cut.show{opacity:.45}
+
+.av2-tdmn-pos{position:absolute;left:0;top:0;transform:translate(-50%,-50%);
+  transition:left .9s var(--av2-ease),top .9s var(--av2-ease),opacity .6s var(--av2-ease);
+  will-change:left,top;animation:av2TdmnIdle 6s ease-in-out infinite}
+@keyframes av2TdmnIdle{0%,100%{transform:translate(-50%,-50%) translateY(0)}
+  50%{transform:translate(-50%,-50%) translateY(-5px)}}
+.av2-tdmn-pos.is-dim{opacity:.28}
+.av2-tdmn-pos.is-ex{opacity:.6}
+
+.av2-tdmn-node{position:relative;display:flex;flex-direction:column;align-items:center;gap:9px;
+  background:none;border:none;cursor:pointer;padding:0;
+  animation:av2TdmnNodeIn .95s var(--av2-ease) backwards}
+@keyframes av2TdmnNodeIn{from{opacity:0;transform:scale(.55)}to{opacity:1;transform:scale(1)}}
+
+.av2-tdmn-disc{position:relative;border-radius:5px;overflow:hidden;background:var(--av2-bg-panel-up);
+  box-shadow:0 0 0 1px var(--av2-rule-copper),0 10px 30px -8px oklch(0.04 0.01 58 / .8);
+  transition:transform .4s var(--av2-ease),box-shadow .4s var(--av2-ease),filter .4s var(--av2-ease)}
+.av2-tdmn-disc img{width:100%;height:100%;object-fit:cover;object-position:50% 22%;display:block;
+  filter:saturate(.78) contrast(1.02) brightness(.92)}
+.av2-tdmn-disc::after{content:"";position:absolute;inset:0;border-radius:5px;pointer-events:none;
+  box-shadow:inset 0 -22px 30px -14px oklch(0.04 0.01 58 / .9),inset 0 0 0 3px oklch(0.092 0.010 58 / .55)}
+.av2-tdmn-ring{position:absolute;inset:-5px;border-radius:5px;border:1px solid var(--av2-copper-deep);
+  pointer-events:none;transition:all .4s var(--av2-ease)}
+.av2-tdmn-node:hover .av2-tdmn-disc{transform:translateY(-3px) scale(1.05);
+  box-shadow:0 0 0 1px var(--av2-copper),0 0 36px oklch(0.715 0.118 56 / .4);filter:none}
+.av2-tdmn-node:hover .av2-tdmn-disc img{filter:saturate(1) contrast(1.04) brightness(1)}
+.av2-tdmn-node:hover .av2-tdmn-ring{inset:-8px;border-color:var(--av2-copper)}
+.av2-tdmn-node:hover .av2-tdmn-label{color:var(--av2-copper-hi)}
+
+.av2-tdmn-node .av2-tdmn-disc{width:104px;height:104px}
+.av2-tdmn-node.is-center .av2-tdmn-disc{width:156px;height:156px;
+  box-shadow:0 0 0 2px var(--av2-copper),0 0 60px oklch(0.715 0.118 56 / .45)}
+.av2-tdmn-node.is-center .av2-tdmn-disc img{filter:saturate(1) contrast(1.04)}
+.av2-tdmn-node.is-center .av2-tdmn-ring{inset:-9px;border-color:var(--av2-copper)}
+.av2-tdmn-node.is-center{cursor:zoom-in}
+.av2-tdmn-node.is-sat .av2-tdmn-disc{width:64px;height:64px}
+
+.av2-tdmn-label{position:absolute;top:calc(100% + 9px);left:50%;transform:translateX(-50%);
+  white-space:nowrap;font-family:var(--av2-display);font-weight:600;font-size:1.05rem;
+  color:var(--av2-ink);line-height:1.05;text-align:center;
+  text-shadow:0 2px 12px oklch(0.04 0.01 58 / .9);transition:color .3s;pointer-events:none}
+.av2-tdmn-node.is-center .av2-tdmn-label{font-size:1.6rem;color:var(--av2-copper-hi)}
+.av2-tdmn-node.is-sat .av2-tdmn-label{font-size:.86rem;color:var(--av2-ink-soft)}
+.av2-tdmn-label small{display:block;font-family:var(--av2-mono);font-weight:400;font-size:.54rem;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--av2-ink-faint);margin-top:3px}
+
+/* Borok — primer líder que se separó */
+.av2-tdmn-node.is-ex .av2-tdmn-disc img{filter:grayscale(.8) brightness(.6) contrast(.95)}
+.av2-tdmn-node.is-ex .av2-tdmn-ring{border-style:dashed;border-color:var(--av2-rule-up)}
+.av2-tdmn-node.is-ex .av2-tdmn-disc{box-shadow:0 0 0 1px var(--av2-rule-up),0 10px 30px -8px oklch(0.04 0.01 58 / .8)}
+.av2-tdmn-node.is-ex .av2-tdmn-label{color:var(--av2-ink-faint)}
+.av2-tdmn-node.is-ex .av2-tdmn-label small{color:var(--av2-copper-dim)}
+.av2-tdmn-node.is-ex:hover .av2-tdmn-disc img{filter:grayscale(.4) brightness(.8)}
+
+/* facción = sello cuadrado con sigla */
+.av2-tdmn-node.is-fac .av2-tdmn-disc{background:linear-gradient(150deg,var(--av2-bg-panel-up),var(--av2-copper-deep));
+  display:flex;align-items:center;justify-content:center;box-shadow:inset 0 0 0 1px var(--av2-rule-copper)}
+.av2-tdmn-node.is-fac .av2-tdmn-disc::after{display:none}
+.av2-tdmn-node.is-fac .av2-tdmn-ring{display:none}
+.av2-tdmn-sig{font-family:var(--av2-display);font-weight:700;font-size:1.1rem;color:var(--av2-gold)}
+
+/* overlay interno: subtítulo dinámico + volver */
+.av2-tdmn-head{position:absolute;top:14px;left:18px;right:18px;z-index:5;display:flex;
+  align-items:center;justify-content:space-between;gap:14px;pointer-events:none}
+.av2-tdmn-meta{font-family:var(--av2-mono);font-size:.72rem;color:var(--av2-ink-faint);
+  letter-spacing:.05em;margin:0}
+.av2-tdmn-meta b{color:var(--av2-gold);font-weight:500}
+.av2-tdmn-back{pointer-events:auto;font-family:var(--av2-mono);font-size:.72rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--av2-ink-soft);background:var(--av2-bg-panel);
+  border:1px solid var(--av2-rule-up);border-radius:5px;padding:9px 16px;cursor:pointer;
+  opacity:0;transform:translateY(-6px);pointer-events:none;transition:all .35s var(--av2-ease)}
+.av2-tdmn-back.show{opacity:1;transform:none;pointer-events:auto}
+.av2-tdmn-back:hover{border-color:var(--av2-copper);color:var(--av2-copper-hi)}
+.av2-tdmn-hint{position:absolute;bottom:12px;left:0;right:0;text-align:center;z-index:5;
+  font-family:var(--av2-mono);font-size:.7rem;color:var(--av2-ink-faint);letter-spacing:.08em;
+  transition:opacity .4s;pointer-events:none}
+.av2-tdmn-hint b{color:var(--av2-copper)}
+
+/* expediente (segundo click) */
+.av2-tdmn-card{position:absolute;left:50%;top:50%;z-index:10;display:flex;width:min(660px,92%);
+  background:linear-gradient(180deg,var(--av2-bg-panel),var(--av2-bg-raised));
+  border:1px solid var(--av2-rule-copper);border-radius:8px;overflow:hidden;
+  box-shadow:0 30px 90px -20px oklch(0.04 0.01 58 / .95),0 0 60px oklch(0.715 0.118 56 / .18);
+  opacity:0;transform:translate(-50%,-50%) scale(.93) translateY(12px);pointer-events:none;
+  transition:opacity .5s var(--av2-ease),transform .5s var(--av2-ease)}
+.av2-tdmn-card.show{opacity:1;transform:translate(-50%,-50%) scale(1);pointer-events:auto}
+.av2-tdmn-card-img{width:236px;flex:0 0 auto;background:var(--av2-bg-panel-up);position:relative}
+.av2-tdmn-card-img img{width:100%;height:100%;min-height:330px;object-fit:cover;
+  object-position:50% 18%;display:block}
+.av2-tdmn-card-img::after{content:"";position:absolute;inset:0;
+  box-shadow:inset -30px 0 40px -24px oklch(0.04 0.01 58 / .8)}
+.av2-tdmn-card-body{padding:26px 28px 22px;flex:1;display:flex;flex-direction:column}
+.av2-tdmn-card-eye{font-family:var(--av2-mono);font-size:.64rem;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--av2-copper);margin:0 0 8px}
+.av2-tdmn-card-name{font-family:var(--av2-display);font-weight:600;font-size:2.2rem;line-height:1;
+  margin:0 0 6px;color:var(--av2-ink)}
+.av2-tdmn-card-alias{font-family:var(--av2-mono);font-size:.68rem;color:var(--av2-ink-faint);
+  letter-spacing:.04em;margin:0 0 14px;min-height:1em}
+.av2-tdmn-card-bio{font-size:.95rem;color:var(--av2-ink-soft);line-height:1.65;margin:0 0 18px;flex:1}
+.av2-tdmn-card-stats{display:flex;gap:26px;border-top:1px dashed var(--av2-rule);
+  padding-top:14px;margin-bottom:14px}
+.av2-tdmn-card-stats b{display:block;font-family:var(--av2-display);font-weight:600;
+  font-size:1.5rem;color:var(--av2-copper-hi);line-height:1}
+.av2-tdmn-card-stats span{font-family:var(--av2-mono);font-size:.56rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--av2-ink-faint)}
+.av2-tdmn-card-foot{font-family:var(--av2-mono);font-size:.68rem;letter-spacing:.08em;
+  color:var(--av2-copper);margin:0;text-decoration:none;display:inline-block}
+.av2-tdmn-card-foot:hover{color:var(--av2-copper-hi)}
+.av2-tdmn-card-x{position:absolute;top:12px;right:12px;z-index:2;font-family:var(--av2-mono);
+  font-size:.8rem;color:var(--av2-ink-soft);background:oklch(0.092 0.010 58 / .6);
+  border:1px solid var(--av2-rule-up);border-radius:5px;width:30px;height:30px;cursor:pointer}
+.av2-tdmn-card-x:hover{border-color:var(--av2-copper);color:var(--av2-copper-hi)}
+
+@media (prefers-reduced-motion: reduce){
+  .av2-tdmn-pos,.av2-tdmn-node{animation:none!important}
+  .av2-tdmn-pos,.av2-tdmn-wire,.av2-tdmn-card{transition:none!important}
+  .av2-tdmn-wire{opacity:.7}
+}
+@media(max-width:680px){
+  .av2-tdmn-node .av2-tdmn-disc{width:72px;height:72px}
+  .av2-tdmn-node.is-center .av2-tdmn-disc{width:112px;height:112px}
+  .av2-tdmn-node.is-sat .av2-tdmn-disc{width:50px;height:50px}
+  .av2-tdmn-label{font-size:.82rem}
+  .av2-tdmn-card{flex-direction:column;max-height:86%;overflow:auto}
+  .av2-tdmn-card-img{width:100%;height:200px}
+  .av2-tdmn-card-img img{min-height:0;height:200px}
+}
