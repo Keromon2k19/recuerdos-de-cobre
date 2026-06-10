@@ -1,0 +1,279 @@
+"use client";
+
+// Constelación de Té de Media Noche. Coreografía determinista (anillo →
+// foco → expediente) — NO es el grafo force-directed (AtlasRelationsGraph).
+// Referencia visual: docs/ui-v2/te-de-media-noche-reference.html
+
+import Link from "next/link";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import type {
+  ConstellationData,
+  ConstellationMember,
+  ConstellationSat,
+} from "@/lib/te-de-media-noche";
+
+type XY = { x: number; y: number };
+type WireSpec = {
+  key: string;
+  x1: number; y1: number; x2: number; y2: number;
+  kind: "normal" | "soft" | "cut";
+  delay: number;
+};
+
+const DEG = Math.PI / 180;
+
+function ringPos(cx: number, cy: number, r: number, count: number, i: number, offset = 0): XY {
+  const a = (-90 + (i + offset) * (360 / count)) * DEG;
+  return { x: cx + r * Math.cos(a), y: cy + r * Math.sin(a) };
+}
+
+// Línea con animación de dibujado (stroke-dashoffset) o fade (cut).
+function Wire({ w }: { w: WireSpec }) {
+  const [on, setOn] = useState(false);
+  useEffect(() => {
+    const t = setTimeout(() => setOn(true), w.delay);
+    return () => clearTimeout(t);
+  }, [w.delay]);
+  const len = Math.hypot(w.x2 - w.x1, w.y2 - w.y1);
+  const draw = w.kind !== "cut";
+  return (
+    <line
+      x1={w.x1} y1={w.y1} x2={w.x2} y2={w.y2}
+      className={`av2-tdmn-wire${w.kind === "soft" ? " is-soft" : ""}${w.kind === "cut" ? " is-cut" : ""}${on ? " show" : ""}`}
+      style={
+        draw
+          ? {
+              strokeDasharray: len,
+              strokeDashoffset: on ? 0 : len,
+              transition:
+                "stroke-dashoffset 1.15s cubic-bezier(.22,1,.36,1), opacity .4s ease",
+            }
+          : { transition: "opacity .8s ease" }
+      }
+    />
+  );
+}
+
+export default function AtlasConstellation({ data }: { data: ConstellationData }) {
+  const { members, edges, cutEdges, satsByMember } = data;
+  const stageRef = useRef<HTMLDivElement | null>(null);
+  const [size, setSize] = useState({ w: 1200, h: 720 });
+  const [focused, setFocused] = useState<string | null>(null);
+  const [expanded, setExpanded] = useState(false);
+
+  useLayoutEffect(() => {
+    const el = stageRef.current;
+    if (!el) return;
+    const update = () => setSize({ w: el.clientWidth, h: el.clientHeight });
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  // Escape cierra por niveles
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (e.key !== "Escape") return;
+      if (expanded) setExpanded(false);
+      else if (focused) setFocused(null);
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [expanded, focused]);
+
+  const cx = size.w / 2;
+  const cy = size.h / 2;
+
+  // Posiciones por miembro según estado
+  const memberPos = useMemo(() => {
+    const map = new Map<string, XY>();
+    if (!focused) {
+      const R = Math.min(size.w * 0.34, size.h * 0.4, 400);
+      members.forEach((m, i) => map.set(m.slug, ringPos(cx, cy, R, members.length, i)));
+    } else {
+      map.set(focused, { x: cx, y: cy });
+      const others = members.filter((m) => m.slug !== focused);
+      const Ro = Math.min(size.w * 0.43, size.h * 0.47, 460);
+      others.forEach((m, i) => map.set(m.slug, ringPos(cx, cy, Ro, others.length, i, 0.5)));
+    }
+    return map;
+  }, [members, focused, cx, cy, size.w, size.h]);
+
+  const sats: ConstellationSat[] = focused ? satsByMember[focused] ?? [] : [];
+  const satPos = useMemo(() => {
+    const Rs = Math.min(size.w * 0.23, size.h * 0.29, 250);
+    return sats.map((_, i) => ringPos(cx, cy, Rs, Math.max(sats.length, 1), i));
+  }, [sats, cx, cy, size.w, size.h]);
+
+  // Wires según estado. Cut = dos tramos punteados con hueco (t=0.42).
+  const wires = useMemo(() => {
+    const list: WireSpec[] = [];
+    const pushCut = (p1: XY, p2: XY, key: string, delay: number) => {
+      const t = 0.42, gx = p2.x - p1.x, gy = p2.y - p1.y;
+      list.push({ key: `${key}-a`, x1: p1.x, y1: p1.y, x2: p1.x + gx * t, y2: p1.y + gy * t, kind: "cut", delay });
+      list.push({ key: `${key}-b`, x1: p2.x, y1: p2.y, x2: p2.x - gx * t, y2: p2.y - gy * t, kind: "cut", delay: delay + 120 });
+    };
+    if (!focused) {
+      edges.forEach((e, i) => {
+        const p1 = memberPos.get(e.a), p2 = memberPos.get(e.b);
+        if (p1 && p2) list.push({ key: `e-${e.a}-${e.b}`, x1: p1.x, y1: p1.y, x2: p2.x, y2: p2.y, kind: "normal", delay: i * 95 + 80 });
+      });
+      cutEdges.forEach(([a, b], i) => {
+        const p1 = memberPos.get(a), p2 = memberPos.get(b);
+        if (p1 && p2) pushCut(p1, p2, `cut-${a}-${b}`, (edges.length + i) * 95 + 80);
+      });
+    } else {
+      const c = { x: cx, y: cy };
+      sats.forEach((s, i) => {
+        const p = satPos[i];
+        list.push({ key: `s-${focused}-${s.slug}`, x1: c.x, y1: c.y, x2: p.x, y2: p.y, kind: "normal", delay: i * 95 + 80 });
+      });
+      const focusedMember = members.find((m) => m.slug === focused);
+      members.filter((m) => m.slug !== focused).forEach((m, i) => {
+        const p = memberPos.get(m.slug);
+        if (!p) return;
+        const broken = m.estado === "separado" || focusedMember?.estado === "separado";
+        if (broken) pushCut(c, p, `cut-f-${m.slug}`, (sats.length + i) * 95 + 80);
+        else list.push({ key: `o-${focused}-${m.slug}`, x1: c.x, y1: c.y, x2: p.x, y2: p.y, kind: "soft", delay: (sats.length + i) * 95 + 80 });
+      });
+    }
+    return list;
+  }, [focused, edges, cutEdges, memberPos, sats, satPos, members, cx, cy]);
+
+  const focusedMember: ConstellationMember | undefined = members.find((m) => m.slug === focused);
+
+  const onStageClick = useCallback((e: React.MouseEvent) => {
+    const t = e.target as Element;
+    if (t.closest(".av2-tdmn-node") || t.closest(".av2-tdmn-card") || t.closest(".av2-tdmn-back")) return;
+    if (expanded) setExpanded(false);
+    else if (focused) setFocused(null);
+  }, [expanded, focused]);
+
+  const onMemberClick = useCallback((slug: string) => {
+    if (focused === slug && !expanded) setExpanded(true);
+    else { setExpanded(false); setFocused(slug); }
+  }, [focused, expanded]);
+
+  const meta = expanded
+    ? "Expediente abierto · click afuera o ✕ para cerrar"
+    : focusedMember
+      ? focusedMember.estado === "separado"
+        ? `${focusedMember.name} · primer líder · dejó el grupo · otro click abre su expediente`
+        : `${sats.length} vínculos cercanos · otro click abre su expediente`
+      : "El grupo — diez integrantes · tocá a uno para abrir sus vínculos";
+
+  return (
+    <div
+      ref={stageRef}
+      className={`av2-tdmn-stage${expanded ? " is-veil" : ""}`}
+      onClick={onStageClick}
+    >
+      <div className="av2-tdmn-head">
+        <p className="av2-tdmn-meta">{meta}</p>
+        <button
+          type="button"
+          className={`av2-tdmn-back${focused ? " show" : ""}`}
+          onClick={() => { setExpanded(false); setFocused(null); }}
+        >
+          ← Té de Media Noche
+        </button>
+      </div>
+
+      <svg className="av2-tdmn-wires" width={size.w} height={size.h}>
+        {wires.map((w) => <Wire key={w.key} w={w} />)}
+      </svg>
+
+      {members.map((m, i) => {
+        const p = memberPos.get(m.slug)!;
+        const isCenter = focused === m.slug;
+        const isDim = focused !== null && !isCenter;
+        return (
+          <div
+            key={m.slug}
+            className={`av2-tdmn-pos${isDim ? " is-dim" : ""}${m.estado === "separado" && !isCenter ? " is-ex" : ""}`}
+            style={{ left: p.x, top: p.y, animationDelay: `${-i * 0.8}s` }}
+          >
+            <button
+              type="button"
+              className={`av2-tdmn-node${isCenter ? " is-center" : ""}${m.estado === "separado" ? " is-ex" : ""}`}
+              style={{ animationDelay: `${i * 110}ms` }}
+              onClick={() => onMemberClick(m.slug)}
+              aria-label={isCenter ? `Abrir expediente de ${m.name}` : `Ver vínculos de ${m.name}`}
+            >
+              <span className="av2-tdmn-ring" />
+              <span className="av2-tdmn-disc">
+                <img src={m.imageSrc} alt={`Retrato de ${m.name}`} />
+              </span>
+              <span className="av2-tdmn-label">
+                {m.name}
+                {m.estado === "separado" && <small>primer líder · se separó</small>}
+              </span>
+            </button>
+          </div>
+        );
+      })}
+
+      {focused && sats.map((s, i) => {
+        const p = satPos[i];
+        return (
+          <div
+            key={`${focused}-${s.slug}`}
+            className="av2-tdmn-pos"
+            style={{ left: p.x, top: p.y, animationDelay: `${-i * 0.7}s` }}
+          >
+            <div
+              className={`av2-tdmn-node is-sat${s.kind === "faccion" ? " is-fac" : ""}`}
+              style={{ animationDelay: `${280 + i * 110}ms` }}
+            >
+              <span className="av2-tdmn-ring" />
+              <span className="av2-tdmn-disc">
+                {s.kind === "faccion"
+                  ? <span className="av2-tdmn-sig">{s.sigla}</span>
+                  : <img src={s.imageSrc} alt={`Retrato de ${s.name}`} />}
+              </span>
+              <span className="av2-tdmn-label">
+                {s.name}
+                {s.kind === "faccion" && <small>facción</small>}
+              </span>
+            </div>
+          </div>
+        );
+      })}
+
+      {focusedMember && (
+        <div className={`av2-tdmn-card${expanded ? " show" : ""}`} role="dialog" aria-label={`Expediente de ${focusedMember.name}`}>
+          <button type="button" className="av2-tdmn-card-x" onClick={() => setExpanded(false)} aria-label="Cerrar expediente">✕</button>
+          <div className="av2-tdmn-card-img">
+            <img src={focusedMember.imageSrc} alt={`Retrato de ${focusedMember.name}`} />
+          </div>
+          <div className="av2-tdmn-card-body">
+            <p className="av2-tdmn-card-eye">{focusedMember.etiqueta}</p>
+            <h2 className="av2-tdmn-card-name">{focusedMember.name}</h2>
+            <p className="av2-tdmn-card-alias">
+              {focusedMember.aliases.length > 0 ? `alias — ${focusedMember.aliases.join(" · ")}` : " "}
+            </p>
+            <p className="av2-tdmn-card-bio">{focusedMember.bio}</p>
+            <div className="av2-tdmn-card-stats">
+              <div><b>{focusedMember.episodes}</b><span>episodios</span></div>
+              <div><b>{(satsByMember[focusedMember.slug] ?? []).length}</b><span>vínculos</span></div>
+              <div><b>{focusedMember.rolCorto}</b><span>rol</span></div>
+            </div>
+            <Link className="av2-tdmn-card-foot" href={focusedMember.href}>Ver ficha completa →</Link>
+          </div>
+        </div>
+      )}
+
+      <p className="av2-tdmn-hint" style={{ opacity: focused ? 0 : 1 }}>
+        Pasá el cursor · <b>click</b> abre vínculos · <b>segundo click</b> abre el expediente · click afuera vuelve
+      </p>
+    </div>
+  );
+}
