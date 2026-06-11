@@ -275,12 +275,12 @@ export default function AtlasConstellation({ data }: { data: ConstellationData }
         <div
           className={`av2-tdmn-card${expanded ? " show" : ""}${flipped ? " is-flipped" : ""}`}
           role="dialog"
-          aria-label={`Expediente de ${focusedMember.name}`}
+          aria-label={flipped ? `Ficha técnica de ${focusedMember.name}` : `Expediente de ${focusedMember.name}`}
           inert={!expanded}
         >
           <div className="av2-tdmn-card-flip">
             {/* FRENTE — narrativa */}
-            <div className="av2-tdmn-card-face is-front">
+            <div className="av2-tdmn-card-face is-front" inert={flipped || undefined}>
               <button type="button" className="av2-tdmn-card-x" ref={closeBtnRef} onClick={() => setExpanded(false)} aria-label="Cerrar expediente">✕</button>
               <div className="av2-tdmn-card-img">
                 <img src={focusedMember.imageSrc} alt={`Retrato de ${focusedMember.name}`} />
@@ -306,7 +306,7 @@ export default function AtlasConstellation({ data }: { data: ConstellationData }
 
             {/* REVERSO — ficha técnica (solo si hay stats) */}
             {focusedMember.stats && (
-              <div className="av2-tdmn-card-face is-back">
+              <div className="av2-tdmn-card-face is-back" inert={!flipped || undefined}>
                 <div className="av2-tdmn-sheet">
                   <div className="av2-tdmn-sheet-top">
                     <div>
@@ -356,7 +356,7 @@ export default function AtlasConstellation({ data }: { data: ConstellationData }
                     )}
                   </div>
                 </div>
-                <button type="button" className="av2-tdmn-flip-btn" onClick={() => setFlipped(false)}>↻ Volver</button>
+                <button type="button" className="av2-tdmn-flip-btn" onClick={() => { setFlipped(false); closeBtnRef.current?.focus(); }}>↻ Volver</button>
               </div>
             )}
           </div>
