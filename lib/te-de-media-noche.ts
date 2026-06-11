@@ -7,6 +7,7 @@ import {
   ATLAS_V2_KNOWN_PORTRAITS,
   ATLAS_V2_PORTRAIT_PLACEHOLDER,
 } from "@/lib/atlas-portraits";
+import type { MemberStats } from "@/lib/foundry-stats";
 import {
   TDMN_MEMBERS,
   TDMN_CUT_LINKS,
@@ -23,6 +24,10 @@ export type ConstellationMember = {
   aliases: string[];
   bio: string;
   episodes: number;
+  raza: string | null;
+  edad: string | null;
+  altura: string | null;
+  stats: MemberStats | null;
   href: string; // ficha completa
 };
 
@@ -73,6 +78,7 @@ function parseAtlasPath(path: string): { segment: string; slug: string } | null 
 export function buildConstellation(
   details: Map<string, AtlasEntityDetail | null>,
   resolve: Resolver,
+  stats: Record<string, MemberStats> = {},
 ): ConstellationData {
   const memberSlugs = new Set(TDMN_MEMBERS.map((m) => m.slug));
 
@@ -88,6 +94,10 @@ export function buildConstellation(
       aliases: d?.aliases ?? [],
       bio: d?.description ?? "",
       episodes: d?.appearances.length ?? 0,
+      raza: cfg.raza ?? null,
+      edad: cfg.edad ?? null,
+      altura: cfg.altura ?? null,
+      stats: stats[cfg.slug] ?? null,
       href: `/personajes/${cfg.slug}`,
     };
   });

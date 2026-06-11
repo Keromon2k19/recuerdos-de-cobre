@@ -2,6 +2,7 @@ import AtlasPageScene from "@/components/atlas/AtlasPageScene";
 import AtlasConstellation from "@/components/atlas/AtlasConstellation";
 import { TDMN_MEMBERS } from "@/data/atlas/te-de-media-noche";
 import { buildConstellation } from "@/lib/te-de-media-noche";
+import { TDMN_STATS } from "@/data/atlas/tdmn-stats";
 import { cachedAtlasEntityDetail } from "@/lib/public-cache";
 import { cachedBuildAtlasWikiResolver } from "@/lib/wiki-resolver";
 import { publicVaultPath } from "@/lib/public-vault-path";
@@ -30,7 +31,7 @@ export default async function TeDeMediaNochePage() {
   const detailMap = new Map<string, AtlasEntityDetail | null>(
     TDMN_MEMBERS.map((m, i) => [m.slug, details[i] ?? null]),
   );
-  const data = buildConstellation(detailMap, resolve);
+  const data = buildConstellation(detailMap, resolve, TDMN_STATS);
 
   return (
     <AtlasPageScene

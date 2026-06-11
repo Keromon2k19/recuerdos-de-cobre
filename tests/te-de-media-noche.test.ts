@@ -3,6 +3,7 @@ import { describe, it, expect } from "vitest";
 import type { AtlasEntityDetail } from "@/lib/atlas-content";
 import { TDMN_MEMBERS, TDMN_CUT_LINKS } from "@/data/atlas/te-de-media-noche";
 import { buildConstellation } from "@/lib/te-de-media-noche";
+import { TDMN_STATS } from "@/data/atlas/tdmn-stats";
 
 function fakeDetail(partial: Partial<AtlasEntityDetail> & { slug: string }): AtlasEntityDetail {
   return {
@@ -103,5 +104,29 @@ describe("buildConstellation", () => {
     ] })]]);
     const data = buildConstellation(details, resolve);
     expect(data.satsByMember["mysha"]).toEqual([]);
+  });
+});
+
+describe("buildConstellation — ficha técnica e identidad", () => {
+  it("adjunta stats por slug y null si no hay", () => {
+    const data = buildConstellation(new Map(), resolve, { mysha: TDMN_STATS.mysha });
+    const mysha = data.members.find((m) => m.slug === "mysha")!;
+    const pilar = data.members.find((m) => m.slug === "pilar")!;
+    expect(mysha.stats?.clase).toBe("Blood Witch");
+    expect(pilar.stats).toBeNull();
+  });
+
+  it("expone la identidad curada de la config", () => {
+    const data = buildConstellation(new Map(), resolve);
+    const mysha = data.members.find((m) => m.slug === "mysha")!;
+    expect(mysha.raza).toBe("Humana");
+    expect(mysha.edad).toBe("16");
+    expect(mysha.altura).toBe("1,65 m");
+  });
+
+  it("stats por defecto vacío no rompe las 7 tests previas (3 args opcional)", () => {
+    const data = buildConstellation(new Map(), resolve);
+    expect(data.members).toHaveLength(10);
+    expect(data.members.every((m) => m.stats === null)).toBe(true);
   });
 });

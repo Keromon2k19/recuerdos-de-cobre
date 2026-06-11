@@ -12,10 +12,13 @@ export type TdmnMemberConfig = {
   etiqueta: string;      // eyebrow del expediente
   rolCorto: string;      // stat "rol" del expediente
   estado: TdmnEstado;
+  raza?: string;        // curado — Foundry lo tiene vacío (race: null)
+  edad?: string;        // curado — Foundry lo tiene vacío
+  altura?: string;      // curado — Foundry lo tiene vacío
 };
 
 export const TDMN_MEMBERS: TdmnMemberConfig[] = [
-  { slug: "mysha", nombre: "Mysha", etiqueta: "PJ · Bruja de Sangre · Líder actual", rolCorto: "PJ", estado: "activo" },
+  { slug: "mysha", nombre: "Mysha", etiqueta: "PJ · Bruja de Sangre · Líder actual", rolCorto: "PJ", estado: "activo", raza: "Humana", edad: "16", altura: "1,65 m" },
   { slug: "layra", nombre: "Layra", etiqueta: "PJ · Dracónica", rolCorto: "PJ", estado: "activo" },
   { slug: "narcissa", nombre: "Narcissa", etiqueta: "PJ", rolCorto: "PJ", estado: "activo" },
   { slug: "io-campbell", nombre: "Io Campbell", etiqueta: "PJ · Druida, Retoño de Trent", rolCorto: "PJ", estado: "activo" },
