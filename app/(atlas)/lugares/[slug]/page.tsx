@@ -59,11 +59,9 @@ export default async function LugarDetailPage({
     );
   }
 
-  // Lugares nuevos (additions) que aún no tienen imágenes: renderizamos un
+  // Lugares nuevos (additions) o preexistentes sin imágenes: renderizamos un
   // placeholder elegante en lugar de 404.
   const resolved = resolveLocation(slug);
-  const isAddition = getAdditionSlugs().has(slug);
-  if (!resolved && !isAddition) notFound();
 
   const slides: CarouselSlide[] = resolved?.slides ?? [];
 

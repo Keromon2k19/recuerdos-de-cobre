@@ -20,12 +20,9 @@ export const metadata = {
 export default async function MapaPage() {
   // Lugares con imágenes (originales curados) + lugares creados desde la UI.
   // Se filtran las originales sin imágenes (Yggdrasil, Nararok, Murmek).
-  const imageSlugs = locationSlugsResolved();
   const addedSlugs = getAdditionSlugs();
   const additionSlugList = Array.from(addedSlugs);
-  const visible = new Set([...imageSlugs, ...addedSlugs]);
   const regions = getAllRegions()
-    .filter((r) => visible.has(r.slug))
     .map(withResolvedLocationImage);
 
   const vp = publicVaultPath();

@@ -33,9 +33,6 @@ function toLugarIndexItem(
   const resolved = resolveLocation(region.slug);
   const isAddition = additionSlugs.has(region.slug);
 
-  // La ficha de detalle solo abre lugares con imagen resuelta o additions.
-  if (!resolved && !isAddition) return null;
-
   return {
     region,
     resolved,

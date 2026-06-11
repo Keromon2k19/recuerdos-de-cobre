@@ -1,8 +1,8 @@
 {
   "lorenza": {
     "pin": {
-      "x": 78.38,
-      "y": 79
+      "x": 90.4,
+      "y": 78.75
     }
   },
   "mar-leviatan": {
@@ -13,14 +13,14 @@
   },
   "la-metropolis-cobre": {
     "pin": {
-      "x": 78.53,
-      "y": 89.81
+      "x": 90.8,
+      "y": 89.14
     }
   },
   "arkala": {
     "pin": {
-      "x": 60.6,
-      "y": 87.28
+      "x": 65.4,
+      "y": 86.2
     },
     "hideFromMap": false
   },
@@ -46,6 +46,13 @@
     "pin": {
       "x": 50.75,
       "y": 54.92
+    },
+    "hideFromMap": false
+  },
+  "gleetjeris": {
+    "pin": {
+      "x": 60.68,
+      "y": 10.59
     },
     "hideFromMap": false
   }
