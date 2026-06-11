@@ -60,7 +60,7 @@ function traitList(node: unknown, map: Record<string, string>): string[] {
       if (k) out.push(map[k.toLowerCase()] ?? cap(k));
     }
   }
-  return out;
+  return [...new Set(out)];
 }
 
 function abilityMod(value: number): number {
@@ -98,7 +98,7 @@ export function parseFoundryActor(actor: unknown): MemberStats {
   // HP máximo (nunca el value/temp en vivo)
   const hpMax = Number(sys.attributes?.hp?.max) || 0;
 
-  // Velocidad
+  // Velocidad (solo walk; fly/swim/burrow se ignoran por diseño en la ficha Esencial)
   const mv = sys.attributes?.movement ?? {};
   const walk = mv.walk != null && mv.walk !== "" ? `${mv.walk} ${mv.units ?? "ft"}` : "";
 
