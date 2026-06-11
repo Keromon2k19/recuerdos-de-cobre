@@ -34,6 +34,13 @@ function ringPos(cx: number, cy: number, r: number, count: number, i: number, of
   return { x: cx + r * Math.cos(a), y: cy + r * Math.sin(a) };
 }
 
+const ABILITY_ROWS: Array<[string, "str" | "dex" | "con" | "int" | "wis" | "cha"]> = [
+  ["FUE", "str"], ["DES", "dex"], ["CON", "con"], ["INT", "int"], ["SAB", "wis"], ["CAR", "cha"],
+];
+function fmtMod(n: number): string {
+  return n >= 0 ? `+${n}` : `−${Math.abs(n)}`; // signo menos tipográfico U+2212
+}
+
 // Línea con animación de dibujado (stroke-dashoffset) o fade (cut).
 function Wire({ w }: { w: WireSpec }) {
   const [on, setOn] = useState(false);
@@ -68,6 +75,7 @@ export default function AtlasConstellation({ data }: { data: ConstellationData }
   const [size, setSize] = useState({ w: 1200, h: 720 });
   const [focused, setFocused] = useState<string | null>(null);
   const [expanded, setExpanded] = useState(false);
+  const [flipped, setFlipped] = useState(false);
 
   useLayoutEffect(() => {
     const el = stageRef.current;
@@ -93,6 +101,11 @@ export default function AtlasConstellation({ data }: { data: ConstellationData }
   // Al abrir el expediente, llevar el foco al botón de cierre (a11y dialog).
   useEffect(() => {
     if (expanded) closeBtnRef.current?.focus();
+  }, [expanded]);
+
+  // Resetea el giro al cerrar el expediente.
+  useEffect(() => {
+    if (!expanded) setFlipped(false);
   }, [expanded]);
 
   const cx = size.w / 2;
@@ -259,24 +272,93 @@ export default function AtlasConstellation({ data }: { data: ConstellationData }
       })}
 
       {focusedMember && (
-        <div className={`av2-tdmn-card${expanded ? " show" : ""}`} role="dialog" aria-label={`Expediente de ${focusedMember.name}`} inert={!expanded}>
-          <button type="button" className="av2-tdmn-card-x" ref={closeBtnRef} onClick={() => setExpanded(false)} aria-label="Cerrar expediente">✕</button>
-          <div className="av2-tdmn-card-img">
-            <img src={focusedMember.imageSrc} alt={`Retrato de ${focusedMember.name}`} />
-          </div>
-          <div className="av2-tdmn-card-body">
-            <p className="av2-tdmn-card-eye">{focusedMember.etiqueta}</p>
-            <h2 className="av2-tdmn-card-name">{focusedMember.name}</h2>
-            <p className="av2-tdmn-card-alias">
-              {focusedMember.aliases.length > 0 ? `alias — ${focusedMember.aliases.join(" · ")}` : " "}
-            </p>
-            <p className="av2-tdmn-card-bio">{focusedMember.bio}</p>
-            <div className="av2-tdmn-card-stats">
-              <div><b>{focusedMember.episodes}</b><span>episodios</span></div>
-              <div><b>{(satsByMember[focusedMember.slug] ?? []).length}</b><span>vínculos</span></div>
-              <div><b>{focusedMember.rolCorto}</b><span>rol</span></div>
+        <div
+          className={`av2-tdmn-card${expanded ? " show" : ""}${flipped ? " is-flipped" : ""}`}
+          role="dialog"
+          aria-label={flipped ? `Ficha técnica de ${focusedMember.name}` : `Expediente de ${focusedMember.name}`}
+          inert={!expanded}
+        >
+          <div className="av2-tdmn-card-flip">
+            {/* FRENTE — narrativa */}
+            <div className="av2-tdmn-card-face is-front" inert={flipped || undefined}>
+              <button type="button" className="av2-tdmn-card-x" ref={closeBtnRef} onClick={() => setExpanded(false)} aria-label="Cerrar expediente">✕</button>
+              <div className="av2-tdmn-card-img">
+                <img src={focusedMember.imageSrc} alt={`Retrato de ${focusedMember.name}`} />
+              </div>
+              <div className="av2-tdmn-card-body">
+                <p className="av2-tdmn-card-eye">{focusedMember.etiqueta}</p>
+                <h2 className="av2-tdmn-card-name">{focusedMember.name}</h2>
+                <p className="av2-tdmn-card-alias">
+                  {focusedMember.aliases.length > 0 ? `alias — ${focusedMember.aliases.join(" · ")}` : " "}
+                </p>
+                <p className="av2-tdmn-card-bio">{focusedMember.bio}</p>
+                <div className="av2-tdmn-card-stats">
+                  <div><b>{focusedMember.episodes}</b><span>episodios</span></div>
+                  <div><b>{(satsByMember[focusedMember.slug] ?? []).length}</b><span>vínculos</span></div>
+                  <div><b>{focusedMember.rolCorto}</b><span>rol</span></div>
+                </div>
+                <Link className="av2-tdmn-card-foot" href={focusedMember.href}>Ver ficha completa →</Link>
+              </div>
+              {focusedMember.stats && (
+                <button type="button" className="av2-tdmn-flip-btn" onClick={() => setFlipped(true)}>↻ Ficha técnica</button>
+              )}
             </div>
-            <Link className="av2-tdmn-card-foot" href={focusedMember.href}>Ver ficha completa →</Link>
+
+            {/* REVERSO — ficha técnica (solo si hay stats) */}
+            {focusedMember.stats && (
+              <div className="av2-tdmn-card-face is-back" inert={!flipped || undefined}>
+                <div className="av2-tdmn-sheet">
+                  <div className="av2-tdmn-sheet-top">
+                    <div>
+                      <p className="av2-tdmn-card-eye">Ficha técnica · D&amp;D 5e</p>
+                      <h3>{focusedMember.name}</h3>
+                      <div className="av2-tdmn-sheet-cls">{focusedMember.stats.clase} · Nivel {focusedMember.stats.nivel}</div>
+                      {(focusedMember.edad || focusedMember.altura) && (
+                        <div className="av2-tdmn-sheet-ident">
+                          {[focusedMember.edad ? `${focusedMember.edad} años` : null, focusedMember.altura].filter(Boolean).join(" · ")}
+                        </div>
+                      )}
+                    </div>
+                    {focusedMember.raza && <div className="av2-tdmn-sheet-race">{focusedMember.raza}</div>}
+                  </div>
+
+                  <div className="av2-tdmn-vitals">
+                    {focusedMember.stats.ac != null && <div className="av2-tdmn-vital"><b>{focusedMember.stats.ac}</b><span>Clase de Armadura</span></div>}
+                    <div className="av2-tdmn-vital"><b>{focusedMember.stats.hpMax}</b><span>Puntos de golpe</span></div>
+                    {focusedMember.stats.speed && <div className="av2-tdmn-vital"><b>{focusedMember.stats.speed}</b><span>Velocidad</span></div>}
+                  </div>
+
+                  <div className="av2-tdmn-abil">
+                    {ABILITY_ROWS.map(([label, key]) => {
+                      const ab = focusedMember.stats!.abilities[key];
+                      return (
+                        <div key={key} className={`av2-tdmn-ab${ab.mod >= 4 ? " is-hi" : ""}`}>
+                          <div className="k">{label}</div>
+                          <div className="v">{ab.value}</div>
+                          <div className="m">{fmtMod(ab.mod)}</div>
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  <div className="av2-tdmn-traits">
+                    {focusedMember.stats.resistances.length > 0 && (
+                      <div className="av2-tdmn-trait"><div className="lab">Resist.</div><div className="val res">{focusedMember.stats.resistances.join(" · ")}</div></div>
+                    )}
+                    {[...focusedMember.stats.damageImmunities, ...focusedMember.stats.conditionImmunities].length > 0 && (
+                      <div className="av2-tdmn-trait"><div className="lab">Inmune</div><div className="val">{[...focusedMember.stats.damageImmunities, ...focusedMember.stats.conditionImmunities].join(" · ")}</div></div>
+                    )}
+                    {focusedMember.stats.senses.length > 0 && (
+                      <div className="av2-tdmn-trait"><div className="lab">Sentidos</div><div className="val">{focusedMember.stats.senses.join(" · ")}</div></div>
+                    )}
+                    {focusedMember.stats.languages.length > 0 && (
+                      <div className="av2-tdmn-trait"><div className="lab">Idiomas</div><div className="val">{focusedMember.stats.languages.join(", ")}</div></div>
+                    )}
+                  </div>
+                </div>
+                <button type="button" className="av2-tdmn-flip-btn" onClick={() => { setFlipped(false); requestAnimationFrame(() => closeBtnRef.current?.focus()); }}>↻ Volver</button>
+              </div>
+            )}
           </div>
         </div>
       )}

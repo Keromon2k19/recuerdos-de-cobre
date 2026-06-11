@@ -491,6 +491,66 @@
   display: inline-block
 }
 
+/* ============================================================
+   Ficha técnica — flip del expediente (.av2-tdmn-card / -sheet)
+   Referencia: docs/ui-v2/te-de-media-noche-ficha-reference.html
+   ============================================================ */
+/* Altura fija: ambas caras son absolute inset:0, así que la card necesita
+   altura definida. 400px piso cómodo para front y hoja; si algo desborda,
+   scrollea adentro en vez de recortarse. */
+.av2-tdmn-card { perspective: 1800px; min-height: 400px; }
+.av2-tdmn-card-flip {
+  position: relative; width: 100%; height: 100%; min-height: inherit;
+  transform-style: preserve-3d; transition: transform .8s var(--av2-ease);
+}
+.av2-tdmn-card.is-flipped .av2-tdmn-card-flip { transform: rotateY(180deg); }
+.av2-tdmn-card-face {
+  position: absolute; inset: 0; display: flex; backface-visibility: hidden;
+  -webkit-backface-visibility: hidden; border-radius: 8px; overflow: hidden;
+}
+.av2-tdmn-card-face.is-back { transform: rotateY(180deg); flex-direction: column; }
+.av2-tdmn-card-face.is-front .av2-tdmn-card-body { overflow-y: auto; }
+
+/* botón de giro */
+.av2-tdmn-flip-btn {
+  position: absolute; bottom: 12px; right: 14px; z-index: 3;
+  font-family: var(--av2-mono); font-size: .58rem; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--av2-ink-soft); background: oklch(0.092 0.010 58 / .6);
+  border: 1px solid var(--av2-rule-up); border-radius: 20px; padding: 6px 13px; cursor: pointer;
+  transition: all .22s var(--av2-ease);
+}
+.av2-tdmn-flip-btn:hover { border-color: var(--av2-copper); color: var(--av2-copper-hi); }
+
+/* hoja del reverso */
+.av2-tdmn-sheet { padding: 20px 22px 44px; flex: 1; display: flex; flex-direction: column; gap: 13px; overflow-y: auto; }
+.av2-tdmn-sheet-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+.av2-tdmn-sheet-top h3 { font-family: var(--av2-display); font-weight: 600; font-size: 1.5rem; color: var(--av2-ink); margin: 0; line-height: 1; }
+.av2-tdmn-sheet-cls { font-family: var(--av2-body); font-size: .82rem; color: var(--av2-copper-hi); margin-top: 2px; }
+.av2-tdmn-sheet-ident { font-family: var(--av2-mono); font-size: .56rem; letter-spacing: .06em; color: var(--av2-ink-faint); margin-top: 4px; }
+.av2-tdmn-sheet-race {
+  font-family: var(--av2-mono); font-size: .54rem; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--av2-ink-faint); border: 1px solid var(--av2-rule); border-radius: 5px; padding: 5px 9px; white-space: nowrap;
+}
+.av2-tdmn-vitals { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.av2-tdmn-vital { background: var(--av2-bg); border: 1px solid var(--av2-rule); border-radius: 6px; padding: 9px 6px; text-align: center; }
+.av2-tdmn-vital b { display: block; font-family: var(--av2-display); font-size: 1.5rem; color: var(--av2-copper-hi); line-height: 1; font-weight: 600; }
+.av2-tdmn-vital span { font-family: var(--av2-mono); font-size: .5rem; letter-spacing: .14em; text-transform: uppercase; color: var(--av2-ink-faint); margin-top: 3px; display: block; }
+.av2-tdmn-abil { display: grid; grid-template-columns: repeat(6, 1fr); gap: 5px; }
+.av2-tdmn-ab { background: var(--av2-bg-panel-up); border: 1px solid var(--av2-rule); border-radius: 5px; padding: 6px 2px 5px; text-align: center; }
+.av2-tdmn-ab.is-hi { border-color: var(--av2-rule-copper); background: linear-gradient(180deg, var(--av2-bg-panel-up), var(--av2-copper-deep)); }
+.av2-tdmn-ab .k { font-family: var(--av2-mono); font-size: .5rem; letter-spacing: .08em; color: var(--av2-ink-faint); }
+.av2-tdmn-ab .v { font-family: var(--av2-display); font-size: 1.15rem; color: var(--av2-ink); line-height: 1.15; font-weight: 600; }
+.av2-tdmn-ab .m { font-family: var(--av2-mono); font-size: .6rem; color: var(--av2-copper-hi); }
+.av2-tdmn-traits { display: flex; flex-direction: column; gap: 7px; border-top: 1px solid var(--av2-rule); padding-top: 11px; margin-top: 2px; }
+.av2-tdmn-trait { display: grid; grid-template-columns: 74px 1fr; gap: 10px; align-items: baseline; }
+.av2-tdmn-trait .lab { font-family: var(--av2-mono); font-size: .54rem; letter-spacing: .12em; text-transform: uppercase; color: var(--av2-copper-dim); }
+.av2-tdmn-trait .val { font-family: var(--av2-body); font-size: .8rem; color: var(--av2-ink-soft); line-height: 1.45; }
+.av2-tdmn-trait .val.res { color: var(--av2-gold); }
+
+@media (prefers-reduced-motion: reduce) {
+  .av2-tdmn-card-flip { transition: none !important; }
+}
+
 .av2-tdmn-card-foot:hover {
   color: var(--av2-copper-hi)
 }

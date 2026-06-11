@@ -87,3 +87,6 @@ public/assets/atlas-v2/ornaments/
 graphify-out/
 
 .vercel
+
+# Exports crudos de FoundryVTT (se procesan a data/atlas/tdmn-stats.ts)
+foundry-export/
