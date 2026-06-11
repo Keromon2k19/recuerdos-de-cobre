@@ -30,6 +30,7 @@ type Props = {
   onSelect: (slug: string) => void;
   onClearSelection?: () => void;
   characterJourneys?: Array<{ slug: string; nombre: string; journey: string[] }>;
+  actionsRef?: React.MutableRefObject<{ deletePin: (slug: string) => void } | null>;
 };
 
 type PinOverride = { x: number; y: number };
@@ -42,6 +43,7 @@ export default function AtlasMapViewer({
   onSelect,
   onClearSelection,
   characterJourneys = [],
+  actionsRef,
 }: Props) {
   const [zoom, setZoom] = useState(1);
   const [pan, setPan] = useState({ x: 0, y: 0 });
@@ -57,6 +59,23 @@ export default function AtlasMapViewer({
   const router = useRouter();
 
   const stageRef = useRef<HTMLDivElement | null>(null);
+
+  // Exponer callback para eliminar pin desde el panel de información (drawer)
+  useEffect(() => {
+    if (actionsRef) {
+      actionsRef.current = {
+        deletePin: (slug: string) => {
+          setOverrides((o) => ({ ...o, [slug]: "deleted" }));
+          if (selectedSlug === slug && onClearSelection) onClearSelection();
+        },
+      };
+    }
+    return () => {
+      if (actionsRef) {
+        actionsRef.current = null;
+      }
+    };
+  }, [actionsRef, selectedSlug, onClearSelection]);
 
   // Drag stage (pan)
   const panDragRef = useRef<{
@@ -511,23 +530,6 @@ export default function AtlasMapViewer({
                 >
                   <span className="av2-map-pin-dot" aria-hidden="true" />
                   <span className="av2-map-pin-label">{r.nombre}</span>
-                </button>
-                <button
-                  type="button"
-                  className="av2-map-pin-x"
-                  onClick={(e) => onPinDelete(r.slug, e)}
-                  aria-label={isAddition ? `Eliminar ${r.nombre}` : `Quitar marca de ${r.nombre}`}
-                  title={isAddition ? `Eliminar ${r.nombre}` : `Quitar marca de ${r.nombre}`}
-                >
-                  <svg viewBox="0 0 16 16" width="10" height="10" aria-hidden="true">
-                    <path
-                      d="M4 4l8 8M12 4l-8 8"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                  </svg>
                 </button>
               </span>
             );

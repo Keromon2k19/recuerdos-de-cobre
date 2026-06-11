@@ -667,50 +667,7 @@
   top: auto;
 }
 
-/* Botón X — solo visible al hover sobre el wrapper o el pin activo */
-.av2-map-pin-x {
-  position: absolute;
-  top: -14px;
-  right: -18px;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: oklch(0.035 0.008 58 / 0.94);
-  border: 1px solid oklch(0.78 0.18 25 / 0.76);
-  color: oklch(0.95 0.05 25);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  opacity: 0;
-  pointer-events: none;
-  transform: scale(0.72);
-  box-shadow: 0 10px 24px -9px oklch(0 0 0 / 0.92);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  transition:
-    opacity 160ms var(--av2-ease),
-    transform 160ms var(--av2-ease),
-    color var(--av2-dur) var(--av2-ease),
-    background var(--av2-dur) var(--av2-ease),
-    border-color var(--av2-dur) var(--av2-ease);
-  z-index: 1;
-}
 
-.av2-map-pin-wrap:hover .av2-map-pin-x,
-.av2-map-pin-wrap:focus-within .av2-map-pin-x,
-.av2-map-pin-wrap[data-selected="true"] .av2-map-pin-x {
-  opacity: 1;
-  pointer-events: auto;
-  transform: scale(1);
-}
-
-.av2-map-pin-x:hover {
-  background: oklch(0.55 0.18 25 / 0.70);
-  /* rojizo cobre suave */
-  border-color: oklch(0.78 0.18 25);
-  color: oklch(0.95 0.05 25);
-}
 
 /* Pin movido: dot dorado para indicar que tiene override */
 .av2-map-pin[data-moved="true"] .av2-map-pin-dot {
@@ -1613,11 +1570,18 @@
   margin: 0;
 }
 
+.av2-region-info-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-top: 0.85rem;
+}
+
 .av2-region-info-cta {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  margin-top: 0.85rem;
+  margin-top: 0;
   padding: 0.55rem 1.05rem;
   border-radius: 999px;
   font-family: var(--av2-mono);
@@ -1634,6 +1598,39 @@
     color var(--av2-dur) var(--av2-ease),
     transform var(--av2-dur) var(--av2-ease);
   width: max-content;
+}
+
+.av2-region-info-delete-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.55rem 1.05rem;
+  border-radius: 999px;
+  font-family: var(--av2-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: oklch(0.60 0.15 25);
+  background: oklch(0.12 0.03 25 / 0.35);
+  border: 1px solid oklch(0.50 0.12 25 / 0.5);
+  cursor: pointer;
+  transition:
+    background var(--av2-dur) var(--av2-ease),
+    border-color var(--av2-dur) var(--av2-ease),
+    color var(--av2-dur) var(--av2-ease),
+    transform var(--av2-dur) var(--av2-ease);
+  width: max-content;
+}
+
+.av2-region-info-delete-btn:hover {
+  background: oklch(0.55 0.18 25 / 0.22);
+  border-color: oklch(0.68 0.18 25);
+  color: oklch(0.85 0.15 25);
+  transform: translateY(-1px);
+}
+
+.av2-region-info-delete-btn:focus-visible {
+  outline: 2px solid oklch(0.68 0.18 25);
+  outline-offset: 2px;
 }
 
 .av2-region-info-cta:hover {

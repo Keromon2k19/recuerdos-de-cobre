@@ -16,6 +16,8 @@ type Props = {
     relation: string;
     episode?: number;
   }>;
+  isAddition?: boolean;
+  onDelete?: () => void;
 };
 
 const META_LABELS: Array<[keyof V2Region["meta"], string]> = [
@@ -25,7 +27,7 @@ const META_LABELS: Array<[keyof V2Region["meta"], string]> = [
   ["influencia", "Nivel de influencia"],
 ];
 
-export default function AtlasRegionInfo({ region, connections = [] }: Props) {
+export default function AtlasRegionInfo({ region, connections = [], isAddition = false, onDelete }: Props) {
   const imageStyle = {
     viewTransitionName: `av2-place-${region.slug}`,
   } as CSSProperties;
@@ -87,23 +89,35 @@ export default function AtlasRegionInfo({ region, connections = [] }: Props) {
           </div>
         )}
 
-        <Link
-          href={`/lugares/${region.slug}`}
-          className="av2-region-info-cta"
-          aria-label={`Ver ${region.nombre}`}
-        >
-          Ver lugar
-          <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
-            <path
-              d="M5 12h14M13 5l7 7-7 7"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </Link>
+        <div className="av2-region-info-actions">
+          <Link
+            href={`/lugares/${region.slug}`}
+            className="av2-region-info-cta"
+            aria-label={`Ver ${region.nombre}`}
+          >
+            Ver lugar
+            <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+              <path
+                d="M5 12h14M13 5l7 7-7 7"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </Link>
+          {onDelete && (
+            <button
+              type="button"
+              className="av2-region-info-delete-btn"
+              onClick={onDelete}
+              title={isAddition ? "Eliminar permanentemente este lugar" : "Quitar marca de este lugar del mapa"}
+            >
+              {isAddition ? "Eliminar" : "Quitar marca"}
+            </button>
+          )}
+        </div>
       </div>
 
       <dl className="av2-region-info-meta">

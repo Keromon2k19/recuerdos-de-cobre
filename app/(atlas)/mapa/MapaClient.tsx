@@ -5,7 +5,7 @@
 // El drawer se abre automáticamente al seleccionar un lugar; el toggle permite cerrarlo
 // para que el mapa ocupe todo el ancho disponible.
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import AtlasRegionList from "@/components/atlas/AtlasRegionList";
 import AtlasMapViewer from "@/components/atlas/AtlasMapViewer";
 import AtlasRegionInfo from "@/components/atlas/AtlasRegionInfo";
@@ -28,6 +28,7 @@ export default function MapaClient({
 }) {
   const [selectedSlug, setSelectedSlug] = useState<string>(regions[0]?.slug ?? "");
   const [infoOpen, setInfoOpen] = useState<boolean>(true);
+  const mapActionsRef = useRef<{ deletePin: (slug: string) => void } | null>(null);
   const selected = regions.find((r) => r.slug === selectedSlug) ?? regions[0];
 
   // Re-abrir el drawer cuando se selecciona un nuevo lugar
@@ -71,6 +72,7 @@ export default function MapaClient({
             onSelect={selectRegion}
             onClearSelection={clearSelection}
             characterJourneys={characterJourneys}
+            actionsRef={mapActionsRef}
           />
         </div>
 
@@ -106,6 +108,12 @@ export default function MapaClient({
           <AtlasRegionInfo
             region={selected}
             connections={locationConnections[selected.slug] || []}
+            isAddition={additionSlugs.includes(selected.slug)}
+            onDelete={() => {
+              if (mapActionsRef.current) {
+                mapActionsRef.current.deletePin(selected.slug);
+              }
+            }}
           />
         </aside>
       </div>
