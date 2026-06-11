@@ -137,6 +137,46 @@ export const LOCATION_IMAGES: Record<string, LocationImageMap> = {
     folder: "Plano Abisal",
     immersiveBg: "1er capa, Pazunia,/1_pazunia_landscape_abyss.webp",
   },
+  "feywilds": {
+    folder: "Feywilds",
+    immersiveBg: "Feywilds.webp",
+  },
+  "desierto-espejos": {
+    folder: "Plano Material/Los Renegados/Desierto de los Espejos",
+    immersiveBg: "Desierto de los Espejos.webp",
+  },
+  "el-diablillo": {
+    folder: "Plano Material/Zonas Grises/Mar del Leviatán/El Diablillo",
+    immersiveBg: "ManOfWar_examples05.webp",
+  },
+  "syranus": {
+    folder: "Plano Material/Zonas Grises/Bosque de las Memorias/Syranus",
+    immersiveBg: "Jungle Ruindd - 40x44 - 72 DPI.webp",
+  },
+  "zona-corrupcion": {
+    folder: "Plano Material/Zonas Grises/Zona de Corrupción",
+    immersiveBg: "5401460b8d43c0733bafc0df90cb961b.webp",
+  },
+  "far-realm": {
+    folder: "Plano Astral/Far Realm",
+    immersiveBg: "Far_Realm.webp",
+  },
+  "sigil": {
+    folder: "Plano Astral/Sigil",
+    immersiveBg: "Sigil.webp",
+  },
+  "aldea-molinos": {
+    folder: "Plano Material/Aldea de Molinos",
+    immersiveBg: "elliot-upton-rhubarbapproach.webp",
+  },
+  "dinastia-alas-metalicas": {
+    folder: "Plano Material/Dinastía de las Alas Metálicas",
+    immersiveBg: "Dracan.webp",
+  },
+  "oceano-tesoros-perdidos": {
+    folder: "Plano Material/Zonas Grises/Océano de los Tesoros Perdidos",
+    immersiveBg: "afueras del barco.webp",
+  },
 };
 
 // ── Helpers ──
