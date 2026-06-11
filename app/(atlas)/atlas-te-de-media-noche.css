@@ -14,11 +14,32 @@
   min-height: 560px;
   overflow: hidden;
   border-radius: var(--av2-r);
-  /* scrim: la referencia usa fondo casi negro; sin esto las líneas cobre
-     se pierden contra la ilustración del hero */
-  background: radial-gradient(120% 90% at 50% 32%,
-    oklch(0.092 0.010 58 / .50),
-    oklch(0.092 0.010 58 / .84) 72%);
+}
+
+/* En reposo la ilustración queda cruda (inmersión); al enfocar, el stage
+   se oscurece en transición para leer. El ::after es una viñeta fija solo
+   de bordes: enmarca la constelación sin tapar el centro. */
+.av2-tdmn-stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 90% at 50% 38%,
+    oklch(0.092 0.010 58 / .42),
+    oklch(0.092 0.010 58 / .80) 75%);
+  opacity: 0;
+  transition: opacity .7s var(--av2-ease);
+  pointer-events: none;
+}
+.av2-tdmn-stage.is-focused::before { opacity: 1; }
+.av2-tdmn-stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(115% 100% at 50% 44%,
+    transparent 52%,
+    oklch(0.04 0.008 58 / .42) 86%,
+    oklch(0.04 0.008 58 / .68) 100%);
+  pointer-events: none;
 }
 
 .av2-tdmn-wires {
@@ -35,7 +56,8 @@
 }
 
 .av2-tdmn-stage.is-veil .av2-tdmn-pos {
-  opacity: .08
+  opacity: 0;
+  pointer-events: none
 }
 
 .av2-tdmn-wire {
@@ -43,11 +65,32 @@
   stroke-width: 2;
   fill: none;
   opacity: 0;
-  transition: opacity .5s var(--av2-ease)
+  transition: opacity .5s var(--av2-ease), stroke .35s var(--av2-ease), filter .35s var(--av2-ease)
 }
 
 .av2-tdmn-wire.show {
-  opacity: .7
+  opacity: .7;
+  filter: drop-shadow(0 0 3px oklch(0.715 0.118 56 / .45))
+}
+
+/* Respiración del glow — desfase por línea vía animation-delay inline */
+.av2-tdmn-wire.show:not(.is-soft):not(.is-cut) {
+  animation: av2TdmnWireGlow 4.6s ease-in-out infinite
+}
+@keyframes av2TdmnWireGlow {
+  0%, 100% { filter: drop-shadow(0 0 2px oklch(0.715 0.118 56 / .30)) }
+  50%      { filter: drop-shadow(0 0 6px oklch(0.808 0.126 62 / .65)) }
+}
+
+/* Hover sobre un retrato (en reposo): sus vínculos se encienden, el resto cede */
+.av2-tdmn-wire.is-lit {
+  stroke: var(--av2-copper-hi);
+  opacity: 1;
+  filter: drop-shadow(0 0 7px oklch(0.808 0.126 62 / .8))
+}
+.av2-tdmn-wire.is-dimmed {
+  opacity: .14;
+  animation: none
 }
 
 .av2-tdmn-wire.is-soft {
@@ -347,13 +390,10 @@
   color: var(--av2-copper-hi)
 }
 
+/* Leyenda fuera del stage (debajo) — no pisa labels del anillo */
 .av2-tdmn-hint {
-  position: absolute;
-  bottom: 12px;
-  left: 0;
-  right: 0;
   text-align: center;
-  z-index: 5;
+  margin: 14px 0 0;
   font-family: var(--av2-mono);
   font-size: .7rem;
   color: var(--av2-ink-faint);
@@ -371,14 +411,13 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  z-index: 10;
+  /* sobre el fade de página (9995) y la nav (9990) */
+  z-index: 9996;
   display: flex;
   width: min(660px, 92%);
-  background: linear-gradient(180deg, var(--av2-bg-panel), var(--av2-bg-raised));
-  border: 1px solid var(--av2-rule-copper);
+  /* fondo/borde/sombra viven en cada cara (.av2-tdmn-card-face): un
+     contenedor con overflow:hidden aplanaría el preserve-3d del flip */
   border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 30px 90px -20px oklch(0.04 0.01 58 / .95), 0 0 60px oklch(0.715 0.118 56 / .18);
   opacity: 0;
   transform: translate(-50%, -50%) scale(.93) translateY(12px);
   pointer-events: none;
@@ -507,22 +546,51 @@
 .av2-tdmn-card-face {
   position: absolute; inset: 0; display: flex; backface-visibility: hidden;
   -webkit-backface-visibility: hidden; border-radius: 8px; overflow: hidden;
+  background: linear-gradient(180deg, var(--av2-bg-panel), var(--av2-bg-raised));
+  border: 1px solid var(--av2-rule-copper);
+  box-shadow: 0 30px 90px -20px oklch(0.04 0.01 58 / .95), 0 0 60px oklch(0.715 0.118 56 / .18);
 }
 .av2-tdmn-card-face.is-back { transform: rotateY(180deg); flex-direction: column; }
 .av2-tdmn-card-face.is-front .av2-tdmn-card-body { overflow-y: auto; }
 
-/* botón de giro */
-.av2-tdmn-flip-btn {
-  position: absolute; bottom: 12px; right: 14px; z-index: 3;
-  font-family: var(--av2-mono); font-size: .58rem; letter-spacing: .1em; text-transform: uppercase;
-  color: var(--av2-ink-soft); background: oklch(0.092 0.010 58 / .6);
-  border: 1px solid var(--av2-rule-up); border-radius: 20px; padding: 6px 13px; cursor: pointer;
-  transition: all .22s var(--av2-ease);
+/* giro como link de pie (discreto, sin botón flotante) */
+.av2-tdmn-foot-row {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
 }
-.av2-tdmn-flip-btn:hover { border-color: var(--av2-copper); color: var(--av2-copper-hi); }
+.av2-tdmn-flip-link {
+  background: none; border: none; padding: 0; cursor: pointer;
+}
+.av2-tdmn-flip-back {
+  margin-top: auto; align-self: flex-start; padding-top: 12px;
+}
 
 /* hoja del reverso */
-.av2-tdmn-sheet { padding: 20px 22px 44px; flex: 1; display: flex; flex-direction: column; gap: 13px; overflow-y: auto; }
+.av2-tdmn-sheet { padding: 20px 22px; flex: 1; display: flex; flex-direction: column; gap: 13px; overflow-y: auto; }
+
+/* el contenido de la ficha sube en cascada al girar */
+.av2-tdmn-card.is-flipped .av2-tdmn-sheet-top { animation: av2TdmnRise .5s var(--av2-ease) .22s backwards; }
+.av2-tdmn-card.is-flipped .av2-tdmn-vitals { animation: av2TdmnRise .5s var(--av2-ease) .32s backwards; }
+.av2-tdmn-card.is-flipped .av2-tdmn-abil { animation: av2TdmnRise .5s var(--av2-ease) .42s backwards; }
+.av2-tdmn-card.is-flipped .av2-tdmn-traits { animation: av2TdmnRise .5s var(--av2-ease) .52s backwards; }
+@keyframes av2TdmnRise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* fade de página completa al abrir el expediente (tipo cine, tapa la nav) */
+.av2-tdmn-page-fade {
+  position: fixed;
+  inset: 0;
+  z-index: 9995;
+  background: oklch(0.04 0.008 58 / .82);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .55s var(--av2-ease);
+}
+.av2-tdmn-page-fade.show {
+  opacity: 1;
+  pointer-events: auto;
+}
 .av2-tdmn-sheet-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
 .av2-tdmn-sheet-top h3 { font-family: var(--av2-display); font-weight: 600; font-size: 1.5rem; color: var(--av2-ink); margin: 0; line-height: 1; }
 .av2-tdmn-sheet-cls { font-family: var(--av2-body); font-size: .82rem; color: var(--av2-copper-hi); margin-top: 2px; }
@@ -549,6 +617,12 @@
 
 @media (prefers-reduced-motion: reduce) {
   .av2-tdmn-card-flip { transition: none !important; }
+  .av2-tdmn-wire,
+  .av2-tdmn-card.is-flipped .av2-tdmn-sheet-top,
+  .av2-tdmn-card.is-flipped .av2-tdmn-vitals,
+  .av2-tdmn-card.is-flipped .av2-tdmn-abil,
+  .av2-tdmn-card.is-flipped .av2-tdmn-traits { animation: none !important; }
+  .av2-tdmn-page-fade, .av2-tdmn-stage::before { transition: none !important; }
 }
 
 .av2-tdmn-card-foot:hover {

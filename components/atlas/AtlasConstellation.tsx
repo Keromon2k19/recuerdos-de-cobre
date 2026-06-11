@@ -25,6 +25,8 @@ type WireSpec = {
   x1: number; y1: number; x2: number; y2: number;
   kind: "normal" | "soft" | "cut";
   delay: number;
+  lit?: boolean;   // hover: vínculo del retrato señalado
+  dim?: boolean;   // hover: el resto cede protagonismo
 };
 
 const DEG = Math.PI / 180;
@@ -53,7 +55,7 @@ function Wire({ w }: { w: WireSpec }) {
   return (
     <line
       x1={w.x1} y1={w.y1} x2={w.x2} y2={w.y2}
-      className={`av2-tdmn-wire${w.kind === "soft" ? " is-soft" : ""}${w.kind === "cut" ? " is-cut" : ""}${on ? " show" : ""}`}
+      className={`av2-tdmn-wire${w.kind === "soft" ? " is-soft" : ""}${w.kind === "cut" ? " is-cut" : ""}${on ? " show" : ""}${w.lit ? " is-lit" : ""}${w.dim ? " is-dimmed" : ""}`}
       style={
         draw
           ? {
@@ -61,6 +63,8 @@ function Wire({ w }: { w: WireSpec }) {
               strokeDashoffset: on ? 0 : len,
               transition:
                 "stroke-dashoffset 1.15s cubic-bezier(.22,1,.36,1), opacity .4s ease",
+              // desfasa la respiración del glow para que no late todo junto
+              animationDelay: `${(w.delay % 900)}ms`,
             }
           : { transition: "opacity .8s ease" }
       }
@@ -76,6 +80,7 @@ export default function AtlasConstellation({ data }: { data: ConstellationData }
   const [focused, setFocused] = useState<string | null>(null);
   const [expanded, setExpanded] = useState(false);
   const [flipped, setFlipped] = useState(false);
+  const [hoveredSlug, setHoveredSlug] = useState<string | null>(null);
 
   useLayoutEffect(() => {
     const el = stageRef.current;
@@ -87,16 +92,17 @@ export default function AtlasConstellation({ data }: { data: ConstellationData }
     return () => ro.disconnect();
   }, []);
 
-  // Escape cierra por niveles
+  // Escape cierra por niveles (ficha → expediente → foco → reposo)
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       if (e.key !== "Escape") return;
-      if (expanded) setExpanded(false);
+      if (flipped) setFlipped(false);
+      else if (expanded) setExpanded(false);
       else if (focused) setFocused(null);
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [expanded, focused]);
+  }, [flipped, expanded, focused]);
 
   // Al abrir el expediente, llevar el foco al botón de cierre (a11y dialog).
   useEffect(() => {
@@ -141,13 +147,20 @@ export default function AtlasConstellation({ data }: { data: ConstellationData }
       list.push({ key: `${key}-b`, x1: p2.x, y1: p2.y, x2: p2.x - gx * t, y2: p2.y - gy * t, kind: "cut", delay: delay + 120 });
     };
     if (!focused) {
+      const hov = hoveredSlug;
       edges.forEach((e, i) => {
         const p1 = memberPos.get(e.a), p2 = memberPos.get(e.b);
-        if (p1 && p2) list.push({ key: `e-${e.a}-${e.b}`, x1: p1.x, y1: p1.y, x2: p2.x, y2: p2.y, kind: "normal", delay: i * 95 + 80 });
+        if (!p1 || !p2) return;
+        const lit = hov != null && (e.a === hov || e.b === hov);
+        list.push({ key: `e-${e.a}-${e.b}`, x1: p1.x, y1: p1.y, x2: p2.x, y2: p2.y, kind: "normal", delay: i * 95 + 80, lit, dim: hov != null && !lit });
       });
       cutEdges.forEach(([a, b], i) => {
         const p1 = memberPos.get(a), p2 = memberPos.get(b);
-        if (p1 && p2) pushCut(p1, p2, `cut-${a}-${b}`, (edges.length + i) * 95 + 80);
+        if (!p1 || !p2) return;
+        const lit = hov != null && (a === hov || b === hov);
+        const before = list.length;
+        pushCut(p1, p2, `cut-${a}-${b}`, (edges.length + i) * 95 + 80);
+        for (let k = before; k < list.length; k++) { list[k].lit = lit; list[k].dim = hov != null && !lit; }
       });
     } else {
       const c = { x: cx, y: cy };
@@ -165,7 +178,7 @@ export default function AtlasConstellation({ data }: { data: ConstellationData }
       });
     }
     return list;
-  }, [focused, edges, cutEdges, memberPos, sats, satPos, members, cx, cy]);
+  }, [focused, hoveredSlug, edges, cutEdges, memberPos, sats, satPos, members, cx, cy]);
 
   const focusedMember: ConstellationMember | undefined = members.find((m) => m.slug === focused);
 
@@ -192,11 +205,13 @@ export default function AtlasConstellation({ data }: { data: ConstellationData }
       : "El grupo — diez integrantes · tocá a uno para abrir sus vínculos";
 
   return (
+    <>
     <div
       ref={stageRef}
-      className={`av2-tdmn-stage${expanded ? " is-veil" : ""}`}
+      className={`av2-tdmn-stage${expanded ? " is-veil" : ""}${focused ? " is-focused" : ""}`}
       onClick={onStageClick}
     >
+      <div className={`av2-tdmn-page-fade${expanded ? " show" : ""}`} aria-hidden="true" />
       <div className="av2-tdmn-head">
         {/* En reposo el subtítulo de la página ya presenta al grupo */}
         <p className="av2-tdmn-meta">{focused ? meta : ""}</p>
@@ -229,6 +244,8 @@ export default function AtlasConstellation({ data }: { data: ConstellationData }
               className={`av2-tdmn-node${isCenter ? " is-center" : ""}${m.estado === "separado" ? " is-ex" : ""}`}
               style={{ animationDelay: `${i * 110}ms` }}
               onClick={() => onMemberClick(m.slug)}
+              onMouseEnter={() => { if (!focused) setHoveredSlug(m.slug); }}
+              onMouseLeave={() => setHoveredSlug(null)}
               aria-label={isCenter ? `Abrir expediente de ${m.name}` : `Ver vínculos de ${m.name}`}
             >
               <span className="av2-tdmn-ring" />
@@ -286,7 +303,8 @@ export default function AtlasConstellation({ data }: { data: ConstellationData }
                 <img src={focusedMember.imageSrc} alt={`Retrato de ${focusedMember.name}`} />
               </div>
               <div className="av2-tdmn-card-body">
-                <p className="av2-tdmn-card-eye">{focusedMember.etiqueta}</p>
+                {/* La audiencia es el grupo: nada de PJ/NPC como apertura */}
+                {focusedMember.etiqueta && <p className="av2-tdmn-card-eye">{focusedMember.etiqueta}</p>}
                 <h2 className="av2-tdmn-card-name">{focusedMember.name}</h2>
                 <p className="av2-tdmn-card-alias">
                   {focusedMember.aliases.length > 0 ? `alias — ${focusedMember.aliases.join(" · ")}` : " "}
@@ -295,13 +313,19 @@ export default function AtlasConstellation({ data }: { data: ConstellationData }
                 <div className="av2-tdmn-card-stats">
                   <div><b>{focusedMember.episodes}</b><span>episodios</span></div>
                   <div><b>{(satsByMember[focusedMember.slug] ?? []).length}</b><span>vínculos</span></div>
-                  <div><b>{focusedMember.rolCorto}</b><span>rol</span></div>
+                  {focusedMember.stats && (
+                    <div><b>{focusedMember.stats.nivel}</b><span>nivel</span></div>
+                  )}
                 </div>
-                <Link className="av2-tdmn-card-foot" href={focusedMember.href}>Ver ficha completa →</Link>
+                <div className="av2-tdmn-foot-row">
+                  <Link className="av2-tdmn-card-foot" href={focusedMember.href}>Ver ficha completa →</Link>
+                  {focusedMember.stats && (
+                    <button type="button" className="av2-tdmn-card-foot av2-tdmn-flip-link" onClick={() => setFlipped(true)}>
+                      Ficha técnica ↻
+                    </button>
+                  )}
+                </div>
               </div>
-              {focusedMember.stats && (
-                <button type="button" className="av2-tdmn-flip-btn" onClick={() => setFlipped(true)}>↻ Ficha técnica</button>
-              )}
             </div>
 
             {/* REVERSO — ficha técnica (solo si hay stats) */}
@@ -355,17 +379,24 @@ export default function AtlasConstellation({ data }: { data: ConstellationData }
                       <div className="av2-tdmn-trait"><div className="lab">Idiomas</div><div className="val">{focusedMember.stats.languages.join(", ")}</div></div>
                     )}
                   </div>
+                  <button
+                    type="button"
+                    className="av2-tdmn-card-foot av2-tdmn-flip-link av2-tdmn-flip-back"
+                    onClick={() => { setFlipped(false); requestAnimationFrame(() => closeBtnRef.current?.focus()); }}
+                  >
+                    ↻ Volver al expediente
+                  </button>
                 </div>
-                <button type="button" className="av2-tdmn-flip-btn" onClick={() => { setFlipped(false); requestAnimationFrame(() => closeBtnRef.current?.focus()); }}>↻ Volver</button>
               </div>
             )}
           </div>
         </div>
       )}
 
-      <p className="av2-tdmn-hint" style={{ opacity: focused ? 0 : 1 }}>
-        Pasá el cursor · <b>click</b> abre vínculos · <b>segundo click</b> abre el expediente · click afuera vuelve
-      </p>
     </div>
+    <p className="av2-tdmn-hint" style={{ opacity: focused ? 0 : 1 }}>
+      Pasá el cursor · <b>click</b> abre vínculos · <b>segundo click</b> abre el expediente · click afuera vuelve
+    </p>
+    </>
   );
 }

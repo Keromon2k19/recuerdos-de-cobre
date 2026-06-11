@@ -17,16 +17,18 @@ export type TdmnMemberConfig = {
   altura?: string;      // curado — Foundry lo tiene vacío
 };
 
+// Etiquetas sin prefijo PJ/NPC: la audiencia es el propio grupo y el DM —
+// ya saben quién es quién. La etiqueta describe al personaje, no su rol.
 export const TDMN_MEMBERS: TdmnMemberConfig[] = [
-  { slug: "mysha", nombre: "Mysha", etiqueta: "PJ · Bruja de Sangre · Líder actual", rolCorto: "PJ", estado: "activo", raza: "Humana", edad: "16", altura: "1,65 m" },
-  { slug: "layra", nombre: "Layra", etiqueta: "PJ · Dracónica", rolCorto: "PJ", estado: "activo" },
-  { slug: "narcissa", nombre: "Narcissa", etiqueta: "PJ", rolCorto: "PJ", estado: "activo" },
-  { slug: "io-campbell", nombre: "Io Campbell", etiqueta: "PJ · Druida, Retoño de Trent", rolCorto: "PJ", estado: "activo" },
-  { slug: "eryon", nombre: "Eryon", etiqueta: "PJ", rolCorto: "PJ", estado: "activo" },
-  { slug: "david-ilcard", nombre: "David Ilcard", etiqueta: "NPC · Compañero del grupo", rolCorto: "NPC", estado: "activo" },
-  { slug: "rylen", nombre: "Rylen", etiqueta: "NPC · Compañero del grupo", rolCorto: "NPC", estado: "activo" },
-  { slug: "pilar", nombre: "Pilar", etiqueta: "NPC · Compañera del grupo", rolCorto: "NPC", estado: "activo" },
-  { slug: "pat-pat", nombre: "Pat-Pat", etiqueta: "NPC · Compañera del grupo", rolCorto: "NPC", estado: "activo" },
+  { slug: "mysha", nombre: "Mysha", etiqueta: "Bruja de Sangre · Líder actual", rolCorto: "PJ", estado: "activo", raza: "Humana", edad: "16", altura: "1,65 m" },
+  { slug: "layra", nombre: "Layra", etiqueta: "Dracónica", rolCorto: "PJ", estado: "activo" },
+  { slug: "narcissa", nombre: "Narcissa", etiqueta: "", rolCorto: "PJ", estado: "activo" },
+  { slug: "io-campbell", nombre: "Io Campbell", etiqueta: "Druida, Retoño de Trent", rolCorto: "PJ", estado: "activo" },
+  { slug: "eryon", nombre: "Eryon", etiqueta: "", rolCorto: "PJ", estado: "activo" },
+  { slug: "david-ilcard", nombre: "David Ilcard", etiqueta: "Compañero del grupo", rolCorto: "NPC", estado: "activo" },
+  { slug: "rylen", nombre: "Rylen", etiqueta: "Compañero del grupo", rolCorto: "NPC", estado: "activo" },
+  { slug: "pilar", nombre: "Pilar", etiqueta: "Compañera del grupo", rolCorto: "NPC", estado: "activo" },
+  { slug: "pat-pat", nombre: "Pat-Pat", etiqueta: "Compañera del grupo", rolCorto: "NPC", estado: "activo" },
   { slug: "borok", nombre: "Borok", etiqueta: "Primer líder · se separó", rolCorto: "Ex líder", estado: "separado" },
 ];
 
