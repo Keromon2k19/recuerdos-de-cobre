@@ -356,7 +356,7 @@ export default function AtlasConstellation({ data }: { data: ConstellationData }
                     )}
                   </div>
                 </div>
-                <button type="button" className="av2-tdmn-flip-btn" onClick={() => { setFlipped(false); closeBtnRef.current?.focus(); }}>↻ Volver</button>
+                <button type="button" className="av2-tdmn-flip-btn" onClick={() => { setFlipped(false); requestAnimationFrame(() => closeBtnRef.current?.focus()); }}>↻ Volver</button>
               </div>
             )}
           </div>
