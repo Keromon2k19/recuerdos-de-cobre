@@ -1,329 +1,96 @@
-# GOAL.md - Reinicio canonico de Antologia Recuerdos de Cobre
+# GOAL.md — El Regalo (replanteo junio 2026)
 
-Este documento es la fuente de verdad vigente para el reinicio del proyecto.
-Si otro documento contradice este objetivo, este archivo tiene prioridad.
+Este documento es la fuente de verdad vigente. Reemplaza al GOAL anterior
+(reinicio canónico; conservado en el historial de git). Si otro documento
+contradice este objetivo, este archivo tiene prioridad.
 
-Los documentos anteriores (`PRODUCT.md`, `DESIGN.md`, `AGENTS.md` y
-`CLAUDE.md`) describen el MVP y la iteracion visual previa. Sirven como
-contexto historico y tecnico, pero no como direccion final de producto o
-diseno. No reconstruir "Sala de Cobre" como identidad final.
+## Estrella polar
 
-> **Trabajo implementado (no parte de la visión base):** la **timeline de la
-> campaña** (`/v2/timeline`) existe como página exploratoria de la campaña. Ver el
-> plan y estado de aceptación en
-> `docs/superpowers/plans/2026-06-05-timeline-de-la-campana.md`, y la referencia
-> visual en `docs/ui-v2/timeline-reference.html`.
+> En la próxima partida (~mediados de julio 2026), la antología se revela como
+> **sorpresa para el DM**: busca cualquier cosa de los caps 1–70 y llega a una
+> ficha correcta, legible y cinemática en menos de un minuto.
 
-## Objetivo final
+No es un producto. Es un regalo para la mesa, pulido como tal.
 
-Convertir el proyecto en una antologia publica read-only de la campana
-TTRPG **Recuerdos de Cobre**.
+## Por qué este replanteo
 
-La app final debe ser:
-
-- Linda, moderna y funcional.
-- Facil de leer durante sesiones largas.
-- Explorable por los companeros de campana y el DM.
-- Visualmente rica, con imagenes de personajes, lugares, facciones y episodios.
-- Preparada para un mapa interactivo y memoria conectada mas adelante.
-- Separada del panel tecnico de procesamiento.
-
-El procesamiento de episodios debe seguir siendo local, gratis y controlado por
-Joaquin.
+- El contenido **ya existe**: 81 episodios procesados y ~5.600 archivos de lore
+  en el vault. La fase de producción terminó; empieza la fase **editorial**:
+  corregir, conectar y presentar.
+- El feedback real de los compañeros que ya la vieron fue sobre **errores de
+  texto y nombres** — no sobre falta de features. Eso define el trabajo.
+- Las ~12.500 líneas de CSS son sedimento de iteraciones con IA, no diseño
+  intencional. La poda es prerequisito de la suavidad cinemática, no su rival.
 
 ## Audiencia
 
-### Usuario principal
+La mesa (7–8 personas) + algún curioso. **Menos de 15 personas, jamás masivo.**
+El DM no debe ver el sitio antes de la partida: deploy con link privado,
+`noindex`, sin difusión.
 
-Joaquin mantiene el archivo, procesa episodios, revisa extracciones y edita el
-vault Markdown.
+## Ley visual
 
-### Audiencia publica
+**Detalles ornamentales sí, pero nunca protagonistas.** Cinemático y suave =
+transiciones 150–300ms con `transform`/`opacity`, `prefers-reduced-motion`,
+cero jank, legibilidad primero (medida de columna, line-height amplio,
+contraste alto). El steampunk decora los bordes; el centro es lectura.
 
-Los jugadores y el DM acceden a una version read-only para consultar:
+## El camino del DM (alcance del mes)
 
-- Que paso en cada episodio.
-- Quien es cada personaje.
-- Donde aparecio cada lugar.
-- Que facciones, misterios, objetos y eventos siguen activos.
-- Como se conectan los elementos de la campana.
-
-No hay comentarios, cuentas, roles, permisos ni edicion publica. Si alguien
-tiene feedback, se lo comunica directamente a Joaquin.
-
-## Principio de producto
-
-La app publica responde esta pregunta:
-
-> Quiero recordar que paso, quien era quien, donde aparecio, y como se conecta
-> todo.
-
-El panel local responde otra:
-
-> Quiero procesar episodios y alimentar el archivo.
-
-Son dos experiencias distintas aunque vivan en el mismo repositorio.
-
-## Direccion visual
-
-La direccion vigente es:
-
-**archivo oscuro moderno + atlas narrativo + expedientes de campana + memoria
-conectada**.
-
-Debe sentirse como una antologia visual y explorable, no como dashboard, wiki
-generica ni formulario administrativo.
-
-### Referencias de estilo
-
-- Archivo oscuro moderno.
-- Dark academia funcional.
-- Atlas narrativo.
-- Expedientes y documentos de caso.
-- Biblioteca oscura.
-- Grimorio o pergamino solo como detalle visual si mejora la experiencia.
-- Imagenes grandes y atmosfericas.
-- Composicion editorial clara.
-
-### Permitido
-
-- Fondos oscuros modernos.
-- Paneles de lectura claros tipo papel viejo o marfil si ayudan a leer.
-- Imagenes de personajes, lugares, facciones y episodios.
-- Notas marginales, metadata, relaciones y apariciones.
-- Texturas sutiles.
-- Animaciones suaves.
-- Cobre oxidado, rojo vino, dorado viejo, verde musgo, azul petroleo y gris
-  humo como acentos controlados.
-
-### Evitar
-
-- Dashboard generico tipo SaaS.
-- Wiki fria.
-- Sidebar dominante como experiencia principal.
-- Home administrativa.
-- Texto comprimido.
-- Fantasia medieval barata.
-- Pastiche de pergamino, cuero falso, sellos o remaches usados sin criterio.
-- Neon, cyberpunk o efectos gamer.
-- Animaciones que compitan con la lectura.
-
-## Reglas de lectura y UX
-
-- El texto largo debe ser comodo: medida de columna controlada, line-height
-  amplio y contraste alto.
-- La navegacion publica debe ser clara y predecible.
-- La home debe invitar a explorar la campana, no a procesar episodios.
-- La UI debe funcionar bien en desktop y mobile.
-- Las animaciones deben usar `transform` y `opacity`, durar aprox. 150-300ms y
-  respetar `prefers-reduced-motion`.
-- Las imagenes deben reservar espacio para evitar saltos de layout.
-- Cada imagen significativa debe tener `alt` descriptivo.
-
-## Estructura publica deseada
+La pantalla núcleo es **Búsqueda**. Pero la búsqueda es un router: su valor es
+la calidad de las páginas destino. El alcance del mes es el camino completo:
 
 ```txt
-/
-  Home narrativa
-
-/cronicas
-  Lista de episodios como registros
-
-/cronicas/[num]
-  Expediente completo del episodio
-
-/personajes
-/lugares
-/facciones
-/objetos
-/misterios
-/worldbuilding
-  Listados visuales con filtros
-
-/personajes/[slug]
-/lugares/[slug]
-/facciones/[slug]
-  Fichas individuales con imagen, apariciones y relaciones
-
-/mapa
-  Futuro mapa interactivo / memoria conectada
-
-/buscar
-  Busqueda global
+home → buscar → ficha de personaje / capítulo / lugar / misterio
 ```
 
-La home publica no debe ser el formulario de carga. Debe funcionar como portada
-del archivo y punto de entrada a la lectura.
+Esas pantallas (y solo esas) reciben el ciclo completo:
+**contenido correcto → conexiones correctas → polish cinemático**, en ese orden.
+Las demás de las 21 páginas quedan congeladas: no se borran, no se pulen.
 
-## Estructura local privada
+## Plan del mes
 
-```txt
-/procesar
-  Playlist, descarga, Whisper y estado de jobs
+### Semana 1 — Auditoría triple
+- **Datos/lore**: inventario de errores (nombres, textos, duplicados,
+  conexiones rotas) con triage P0 (info incorrecta) / P1 (se muestra mal) /
+  P2 (cosmético). Incluye el **reporte de NPCs incompletos**: entidades con
+  nombre dudoso o sin imagen — la información "perdida" se recupera de
+  transcripts/resúmenes con grep dirigido, no de memoria.
+- **CSS**: medir código muerto/duplicado, consolidar tokens, podar por archivo.
+- **Feedback de la mesa**: convertir lo ya recibido en issues con prioridad.
 
-/review
-  Revision de extraccion
+### Semana 2 — Búsqueda impecable + destinos correctos
+Búsqueda encuentra todo (alias incluidos) y las fichas destino muestran
+información correcta. Acá se queman los P0.
 
-/importar
-  Sincronizacion de playlist
+### Semana 3 — Polish cinemático del camino del DM
+Home → buscar → fichas, en desktop **y móvil** (la mesa va a abrir esto desde
+el teléfono). Acá se queman los P1 y el polish.
 
-/admin
-  Opcional: acceso central al backstage local
-```
+### Semana 4 — Cap 70 + deploy + ensayo general
+Procesar el cap 70 cuando esté subido. Deploy read-only con link privado.
+Ensayo: recorrer el camino del DM completo como si fuera la partida.
 
-Esta zona no debe publicarse o debe quedar protegida/local. Puede tener un
-diseno mas funcional que la parte publica, porque su tarea es operar el
-pipeline.
+## No-goals del mes
 
-## Pantallas base del reinicio
+- Páginas nuevas o features nuevas (mapa expandido, té de media noche, kit…).
+- Pulir las 21 páginas — solo el camino del DM.
+- Audiencia más allá de la mesa; SEO; cuentas; comentarios.
+- Reescrituras de arquitectura. El pipeline local y gratis no se toca.
 
-Antes de migrar toda la app, disenar y validar estas pantallas:
+## Criterios de aceptación
 
-1. Home publica.
-2. Lista de cronicas.
-3. Expediente de episodio.
-4. Ficha de personaje.
+- El DM encuentra cualquier NPC/lugar/misterio/capítulo en <1 minuto.
+- Cero errores conocidos de nombres/textos en el camino del DM.
+- NPCs del camino con nombre canónico e imagen (o placeholder digno).
+- Funciona suave en desktop y móvil; sin jank en transiciones.
+- Deploy read-only accesible por link privado; el DM no lo vio antes.
+- Cap 70 procesado y visible.
 
-Si estas cuatro pantallas no se sienten como la nueva direccion, no avanzar con
-el resto.
+## Lo que sobrevive del GOAL anterior
 
-## Home publica
-
-La home debe ser narrativa y visual.
-
-Debe incluir:
-
-- Hero con imagen atmosferica grande.
-- Titulo "Recuerdos de Cobre".
-- Bajada corta de antologia.
-- Acceso al ultimo registro procesado.
-- Entradas a cronicas, personajes, lugares, facciones, misterios y mapa.
-- Bloques de entidades destacadas o hilos recientes.
-
-No debe incluir como foco principal:
-
-- Formulario de carga.
-- Estado de jobs.
-- Campos de resumen.
-- Botones de extraccion.
-
-## Expediente de episodio
-
-Cada episodio debe sentirse como un registro o expediente.
-
-Debe incluir:
-
-- Numero y titulo del registro.
-- Imagen atmosferica o placeholder.
-- Resumen cronologico.
-- Cast del episodio.
-- Lugares y facciones mencionadas.
-- Decisiones clave.
-- Misterios abiertos.
-- Objetos o lore relevante.
-- Relaciones nuevas o importantes.
-- Navegacion al episodio anterior/siguiente.
-
-## Ficha de entidad
-
-Una ficha de personaje, lugar o faccion debe incluir:
-
-- Imagen o placeholder.
-- Nombre, tipo y aliases.
-- Resumen canonico o descripcion principal.
-- Apariciones por episodio.
-- Relaciones.
-- Momentos importantes.
-- Misterios o notas asociadas.
-
-## Imagenes
-
-Desde el inicio, la estructura debe soportar imagenes aunque sean genericas.
-
-Campos recomendados en frontmatter:
-
-```yaml
-image: "/images/placeholders/personajes/personaje-oscuro-01.webp"
-imageAlt: "Retrato atmosferico de personaje"
-imageCredit: "Placeholder"
-imageCaption: ""
-```
-
-Carpetas recomendadas:
-
-```txt
-public/images/
-  placeholders/
-    personajes/
-    lugares/
-    facciones/
-    episodios/
-  personajes/
-  lugares/
-  facciones/
-  episodios/
-```
-
-Las imagenes iniciales pueden ser genericas. Joaquin las reemplazara despues.
-
-## Pipeline local y gratis
-
-El pipeline deseado es:
-
-```txt
-Whisper local
-  -> transcripcion cruda
-  -> Codex o Claude resumen manual siguiendo PROMPT_RESUMEN.md
-  -> resumen limpio
-  -> Codex/Claude extrae lore estructurado a mano (sin API)
-  -> revision manual
-  -> commit al vault
-  -> sitio publico read-only
-```
-
-### Resumen narrativo
-
-- Provider: Codex o Claude, elegido manualmente segun disponibilidad.
-- Entrada: transcript Whisper.
-- Instruccion obligatoria: `PROMPT_RESUMEN.md`.
-- Salida: `output/epNN.resumen.md`.
-- Motivo: evitar bloqueos, mala interpretacion de contenido oscuro y perdida de
-  criterio narrativo.
-
-El resumen no debe depender de Gemini/Ollama por defecto.
-
-### Extraccion estructurada
-
-- Provider: Codex/Claude a mano (sin API), validado con Zod (`lib/schema.ts`).
-- Entrada: resumen ya curado.
-- Salida: JSON validado con Zod.
-- Ollama y Gemini fueron retirados del pipeline.
-- El vault Markdown sigue siendo la fuente de verdad editable.
-
-## Publicacion
-
-Cuando los capitulos esten cargados, publicar una version read-only para los
-companeros y el DM.
-
-Reglas:
-
-- El sitio publico no debe depender de Ollama, Gemini, Whisper, jobs ni escritura
-  en disco.
-- La generacion y el procesamiento ocurren localmente.
-- El deploy consume datos ya procesados.
-- No exponer claves, rutas internas, endpoints de procesamiento ni panel admin.
-- El vault sigue siendo editable localmente.
-
-## Criterios de aceptacion
-
-Una implementacion del reinicio se considera alineada si:
-
-- La home publica no es administrativa.
-- La navegacion separa claramente lectura publica y procesamiento local.
-- Las pantallas principales usan imagenes o placeholders visuales.
-- La lectura de resumenes largos es comoda.
-- El sitio funciona en desktop y mobile.
-- La parte publica es read-only.
-- El panel local puede seguir operando gratis.
-- La extraccion la hacen Codex/Claude a mano, sin API (Ollama y Gemini retirados).
-- El diseno ya no reproduce "Sala de Cobre" como resultado final.
+Estructura pública (`/`, `/cronicas`, `/personajes`, `/buscar`, …), reglas de
+lectura y UX, pipeline local sin API (Whisper → resumen/extracción a mano →
+vault Markdown), separación público/panel local, y la prohibición de
+dashboard genérico / pastiche / neón. Todo lo demás del documento anterior es
+contexto histórico (git).

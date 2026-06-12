@@ -55,5 +55,42 @@
       "y": 10.59
     },
     "hideFromMap": false
+  },
+  "bosque-petrificado": {
+    "pin": {
+      "x": 62.47,
+      "y": 18.87
+    }
+  },
+  "dinastia-alas-metalicas": {
+    "pin": {
+      "x": 57.31,
+      "y": 27.92
+    }
+  },
+  "cordillera-libertad": {
+    "pin": {
+      "x": 40.48,
+      "y": 54.69
+    }
+  },
+  "oceano-tesoros-perdidos": {
+    "pin": {
+      "x": 55.49,
+      "y": 93.04
+    }
+  },
+  "desierto-espejos": {
+    "pin": {
+      "x": 61.28,
+      "y": 75.36
+    }
+  },
+  "nutriopolis": {
+    "pin": {
+      "x": 34.54,
+      "y": 83.66
+    },
+    "hideFromMap": false
   }
 }

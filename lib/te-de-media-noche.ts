@@ -69,6 +69,42 @@ function siglaDe(nombre: string): string {
   return words.slice(0, 2).map((w) => w[0]).join("").toUpperCase() || nombre.slice(0, 2).toUpperCase();
 }
 
+// La prosa del vault suele abrir aclarando el rol ("<Nombre> es una de las PJ /
+// un NPC de la campaña…"): info obvia para quien lee el expediente. Y como la
+// descripción se autoextrae y se trunca, a veces cierra a mitad de oración. Acá
+// limpiamos solo la bio de la constelación (no toca el vault ni la description
+// global): sacamos la apertura obvia de rol y cerramos en oración completa.
+function cleanBio(raw: string, name: string): string {
+  let t = raw.trim();
+  if (!t) return t;
+
+  // 1. Si la primera cláusula (hasta la primera coma/punto/…) nombra al personaje
+  //    y aclara su rol, es relleno obvio: la quitamos.
+  const firstClause = t.match(/^[^,.;:—–]*[,.;:]\s*/);
+  if (firstClause) {
+    const clause = firstClause[0].toLowerCase();
+    const mentionsRole = /\b(pj|pjs|pg|pgs|npc|npcs|personaje|jugador|integrante)\b/.test(clause);
+    const mentionsName = clause.includes(name.toLowerCase());
+    if (mentionsRole && mentionsName) t = t.slice(firstClause[0].length).trimStart();
+  }
+
+  // 2. Si venía truncada ("…"/"..."), cerrar en el último corte de oración para
+  //    que no quede colgada a mitad de frase.
+  if (/(\.\.\.|…)\s*$/.test(t)) {
+    t = t.replace(/(\.\.\.|…)\s*$/, "").trimEnd();
+    let stop = Math.max(t.lastIndexOf("."), t.lastIndexOf("!"), t.lastIndexOf("?"));
+    const soft = Math.max(t.lastIndexOf(":"), t.lastIndexOf(";"));
+    if (soft > stop) stop = soft;
+    if (stop >= 80) {
+      t = t.slice(0, stop).trimEnd();
+      if (!/[.!?]$/.test(t)) t += ".";
+    }
+  }
+
+  // 3. Capitalizar la inicial (quedó en minúscula al sacar la apertura).
+  return t ? t[0].toUpperCase() + t.slice(1) : t;
+}
+
 function parseAtlasPath(path: string): { segment: string; slug: string } | null {
   const parts = path.split("/").filter(Boolean);
   if (parts.length < 2) return null;
@@ -92,7 +128,7 @@ export function buildConstellation(
       estado: cfg.estado,
       imageSrc: portraitFor(cfg.slug, d),
       aliases: d?.aliases ?? [],
-      bio: d?.description ?? "",
+      bio: cleanBio(d?.description ?? "", d?.name ?? cfg.nombre),
       episodes: d?.appearances.length ?? 0,
       raza: cfg.raza ?? null,
       edad: cfg.edad ?? null,

@@ -307,7 +307,9 @@ export default function AtlasConstellation({ data }: { data: ConstellationData }
                 {focusedMember.etiqueta && <p className="av2-tdmn-card-eye">{focusedMember.etiqueta}</p>}
                 <h2 className="av2-tdmn-card-name">{focusedMember.name}</h2>
                 <p className="av2-tdmn-card-alias">
-                  {focusedMember.aliases.length > 0 ? `alias — ${focusedMember.aliases.join(" · ")}` : " "}
+                  {focusedMember.aliases.length > 0
+                    ? `alias — ${focusedMember.aliases.slice(0, 3).join(" · ")}${focusedMember.aliases.length > 3 ? `  +${focusedMember.aliases.length - 3} más` : ""}`
+                    : " "}
                 </p>
                 <p className="av2-tdmn-card-bio">{focusedMember.bio}</p>
                 <div className="av2-tdmn-card-stats">

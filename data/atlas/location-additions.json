@@ -1,1 +1,21 @@
-[]
+[
+  {
+    "slug": "irma-alari",
+    "nombre": "Irma Alari",
+    "category": "Lugar",
+    "tagline": "",
+    "glyph": "IA",
+    "descripcion": "",
+    "meta": {
+      "gobierno": "—",
+      "poblacion": "—",
+      "industria": "—",
+      "influencia": "—"
+    },
+    "pin": {
+      "x": 32.18,
+      "y": 57.83
+    },
+    "tone": "copper"
+  }
+]

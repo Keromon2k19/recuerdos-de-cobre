@@ -65,6 +65,27 @@ describe("buildConstellation", () => {
     expect(mysha.episodes).toBe(3);
   });
 
+  it("limpia la biografía removiendo prefijos de rol redundantes y corrigiendo truncados", () => {
+    const details = new Map([
+      ["mysha", fakeDetail({
+        slug: "mysha",
+        name: "Mysha",
+        description: "Mysha es una de las PJ de la campaña. Joven bruja de sangre que busca respuestas...",
+      })],
+      ["layra", fakeDetail({
+        slug: "layra",
+        name: "Layra",
+        description: "Layra es un NPC de la campaña, una elfa que controla los engranajes; ella es muy astuta.",
+      })],
+    ]);
+    const data = buildConstellation(details, resolve);
+    const mysha = data.members.find((m) => m.slug === "mysha")!;
+    const layra = data.members.find((m) => m.slug === "layra")!;
+
+    expect(mysha.bio).toBe("Joven bruja de sangre que busca respuestas");
+    expect(layra.bio).toBe("Una elfa que controla los engranajes; ella es muy astuta.");
+  });
+
   it("arma edges entre miembros, deduplicados por par y sin borok", () => {
     const details = new Map([
       ["mysha", fakeDetail({ slug: "mysha", relations: [
