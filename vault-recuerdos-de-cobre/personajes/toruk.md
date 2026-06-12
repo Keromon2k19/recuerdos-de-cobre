@@ -23,7 +23,7 @@ relaciones:
   - con: '[[grupo-de-mysha|Grupo de Mysha]]'
     tipo: les indica un pasadizo peligroso hacia el pueblo de Layra
     episodio: 45
-  - con: '[[dragon-rojo|Dragón rojo]]'
+  - con: '[[personajes/devorador-de-lava|Dragón rojo]]'
     tipo: busca venganza y se suma al ataque como fuerza de choque
     episodio: 48
   - con: '[[devorador-de-lava|Devorador de Lava]]'

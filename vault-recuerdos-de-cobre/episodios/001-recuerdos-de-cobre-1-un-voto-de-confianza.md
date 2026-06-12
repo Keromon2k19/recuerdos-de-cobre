@@ -19,7 +19,7 @@ menciones:
     - '[[celeste|Celeste]]'
     - '[[guardiana-del-casino|Guardiana del casino]]'
     - '[[tabaxi-de-la-estacion|Tabaxi de la estación]]'
-    - '[[senor-johnson|Señor Johnson]]'
+    - '[[personajes/carl-johnson|Señor Johnson]]'
     - '[[puck|Puck]]'
   lugares:
     - '[[lugares/metropolis-de-cobre|Metrópolis de Cobre]]'
@@ -120,7 +120,7 @@ Bajan a las alcantarillas: primero una zona limpia donde vive gente pobre que el
 - **[[celeste|Celeste]]** — Devuelve las pertenencias del grupo de un baúl, lo guía por el gremio hasta la taberna y pone a David a cargo de la misión.
 - **[[guardiana-del-casino|Guardiana del casino]]** — Custodia la puerta de Plumas Doradas; deja pasar a Borok y Mysha y le advierte a Borok que no responda a los insultos o terminará a los golpes.
 - **[[tabaxi-de-la-estacion|Tabaxi de la estación]]** — Anota el nombre y el motivo de cada viajero que baja del tren en la estación, 'para mantener a la población a salvo'.
-- **[[senor-johnson|Señor Johnson]]** — Objetivo de la misión que no llega a aparecer: un civil de Lorenza con bastón, sombrero de paja y manos marcadas, al que el grupo debe interceptar y hacerle firmar un documento.
+- **[[personajes/carl-johnson|Señor Johnson]]** — Objetivo de la misión que no llega a aparecer: un civil de Lorenza con bastón, sombrero de paja y manos marcadas, al que el grupo debe interceptar y hacerle firmar un documento.
 - **[[puck|Puck]]** — Maestro orco al que Borok dice estar buscando en la Metrópolis; lo describe ante Annora pero no aparece.
 
 ### Lugares
@@ -170,7 +170,7 @@ Bajan a las alcantarillas: primero una zona limpia donde vive gente pobre que el
 - [[anora|Anora]] ↔ [[facciones/hermandad-de-cobre|Hermandad de Cobre]] — es la jefa
 - [[anora|Anora]] ↔ [[mysha|Mysha]] — le propone el voto de confianza
 - [[anora|Anora]] ↔ [[borok|Borok]] — le propone el voto de confianza
-- [[anora|Anora]] ↔ [[senor-johnson|Señor Johnson]] — encarga interceptarlo y hacerlo firmar
+- [[anora|Anora]] ↔ [[personajes/carl-johnson|Señor Johnson]] — encarga interceptarlo y hacerlo firmar
 - [[margarita|Margarita]] ↔ [[mysha|Mysha]] — le extrae una gota de sangre
 - [[margarita|Margarita]] ↔ [[borok|Borok]] — le extrae una gota de sangre
 - [[margarita|Margarita]] ↔ [[layra|Layra]] — le extrae una gota de sangre

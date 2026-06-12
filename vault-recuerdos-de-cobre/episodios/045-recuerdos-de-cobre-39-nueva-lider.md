@@ -14,7 +14,7 @@ menciones:
     - '[[david-ilcard|David Ilcard]]'
     - '[[rylen|Rylen]]'
     - '[[lebruktik|Lebruktik]]'
-    - '[[dragon-rojo|Dragón rojo]]'
+    - '[[personajes/devorador-de-lava|Dragón rojo]]'
     - '[[federico|Federico]]'
     - '[[Navish]]'
   lugares:
@@ -135,7 +135,7 @@ Después de rescatarlos, el grupo se da cuenta de que debería haber pedido guí
 - **[[david-ilcard|David Ilcard]]** — Acompaña la huida hacia las cuevas, participa en la exploración y cae con el grupo por los túneles resbaladizos antes de improvisar una forma de no estrellarse.
 - **[[rylen|Rylen]]** — Su capa de fuego mantiene al grupo cerca de una fuente de calor. Recibe Jump, carga a Narcissa transformada y ayuda a Io a fabricar un trineo pequeño para Milla.
 - **[[lebruktik|Lebruktik]]** — No aparece en persona, pero Navish recuerda su nombre cuando el grupo intenta explicar quién está detrás del dragón rojo. Queda señalado como responsable o controlador de la amenaza.
-- **[[dragon-rojo|Dragón rojo]]** — Persigue al grupo por la tundra, derrite el hielo a su paso, ignora el señuelo de sangre de Mysha y lanza su aliento de fuego contra ella antes de que el grupo logre refugiarse en las cuevas.
+- **[[personajes/devorador-de-lava|Dragón rojo]]** — Persigue al grupo por la tundra, derrite el hielo a su paso, ignora el señuelo de sangre de Mysha y lanza su aliento de fuego contra ella antes de que el grupo logre refugiarse en las cuevas.
 - **[[federico|Federico]]** — Pingüino anciano que lidera un grupo atrapado en una cámara de hielo. Tras ser rescatado, acepta guiar al grupo por las cuevas a cambio de bayas mágicas, a las que llama bolas rojas.
 - **[[Navish]]** — Interviene desde la mente de Mysha para recordar el nombre de Lebrutic cuando el grupo intenta explicarle a Toruk quién controla o dirige al dragón rojo.
 
@@ -182,10 +182,10 @@ Después de rescatarlos, el grupo se da cuenta de que debería haber pedido guí
 - [[layra|Layra]] ↔ [[toruk|Toruk]] — supera su prueba de resistencia y gana su reconocimiento
 - [[toruk|Toruk]] ↔ [[layra|Layra]] — la reconoce como líder fuerte y aliada contra el dragón rojo
 - [[goliaths-de-toruk|Goliaths de Toruk]] ↔ [[facciones/draconidos-del-pueblo-de-layra|Pueblo de Layra]] — mantienen una enemistad histórica de masacres mutuas
-- [[goliaths-de-toruk|Goliaths de Toruk]] ↔ [[dragon-rojo|Dragón rojo]] — buscan venganza porque el dragón mató miembros de la manada
-- [[lebruktik|Lebruktik]] ↔ [[dragon-rojo|Dragón rojo]] — queda señalado como responsable o controlador de la amenaza
+- [[goliaths-de-toruk|Goliaths de Toruk]] ↔ [[personajes/devorador-de-lava|Dragón rojo]] — buscan venganza porque el dragón mató miembros de la manada
+- [[lebruktik|Lebruktik]] ↔ [[personajes/devorador-de-lava|Dragón rojo]] — queda señalado como responsable o controlador de la amenaza
 - [[Navish]] ↔ [[mysha|Mysha]] — le recuerda el nombre de Lebrutic desde su mente
-- [[mysha|Mysha]] ↔ [[dragon-rojo|Dragón rojo]] — lo hiere y atrae su aliento de fuego para proteger al grupo
+- [[mysha|Mysha]] ↔ [[personajes/devorador-de-lava|Dragón rojo]] — lo hiere y atrae su aliento de fuego para proteger al grupo
 - [[layra|Layra]] ↔ [[hielo-eterno-debilitado|Hielo eterno debilitado]] — confirma que sus defensas y magia se derriten o pierden potencia
 - [[narcissa|Narcissa]] ↔ [[layra|Layra]] — la sostiene con plantas, curación y magia contra la hipotermia
 - [[io-campbell|Io Campbell]] ↔ [[layra|Layra]] — entra al agua helada para darle Resistance durante la prueba
@@ -214,8 +214,8 @@ Después de rescatarlos, el grupo se da cuenta de que debería haber pedido guí
 > "Me gusta la bola roja." — Federico
 
 ### Decisiones clave
-- El grupo decide correr hacia las cuevas de los goliaths para escapar del dragón rojo. ([[grupo-de-mysha|Grupo de Mysha]], [[dragon-rojo|Dragón rojo]], [[goliaths-de-toruk|Goliaths de Toruk]])
-- Mysha decide exponerse para atraer el Fire Breath del dragón y proteger a Layra y David. ([[mysha|Mysha]], [[dragon-rojo|Dragón rojo]], [[layra|Layra]], [[david-ilcard|David Ilcard]])
+- El grupo decide correr hacia las cuevas de los goliaths para escapar del dragón rojo. ([[grupo-de-mysha|Grupo de Mysha]], [[personajes/devorador-de-lava|Dragón rojo]], [[goliaths-de-toruk|Goliaths de Toruk]])
+- Mysha decide exponerse para atraer el Fire Breath del dragón y proteger a Layra y David. ([[mysha|Mysha]], [[personajes/devorador-de-lava|Dragón rojo]], [[layra|Layra]], [[david-ilcard|David Ilcard]])
 - Layra acepta la prueba de Toruk para demostrar fuerza ante los goliaths. ([[layra|Layra]], [[toruk|Toruk]], [[goliaths-de-toruk|Goliaths de Toruk]])
 - El grupo decide ayudar activamente a Layra durante la prueba, y Toruk acepta que la fuerza del grupo forma parte del desafío. ([[grupo-de-mysha|Grupo de Mysha]], [[layra|Layra]], [[toruk|Toruk]])
 - Toruk decide compartir información sobre el pueblo de Layra y señalar un pasadizo subterráneo. ([[toruk|Toruk]], [[layra|Layra]], [[grupo-de-mysha|Grupo de Mysha]])

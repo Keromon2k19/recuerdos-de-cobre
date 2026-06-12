@@ -478,7 +478,7 @@ relaciones:
   - con: '[[miriel|Miriel]]'
     tipo: paga la deuda de huevos asociada al trato
     episodio: 44
-  - con: '[[orion|Orión]]'
+  - con: '[[personajes/orion-volderminer|Orión]]'
     tipo: paga la deuda de huevos asociada al trato
     episodio: 44
   - con: '[[mysha|Mysha]]'

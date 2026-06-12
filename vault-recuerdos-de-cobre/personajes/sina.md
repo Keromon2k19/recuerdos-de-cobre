@@ -6,6 +6,7 @@ alias:
   - Matriarca
   - Madre de Mysha
 apariciones:
+  - 25
   - 36
   - 37
   - 38
@@ -36,6 +37,11 @@ relaciones:
       Investiga la casa, libro, ropa y familiar de la matriarca para recuperar
       la historia perdida de su madre.
     episodio: 37
+  - con: >-
+      [[familiar-de-la-matriarca-del-coven-rojo|Familiar de la matriarca del
+      Coven Rojo]]
+    tipo: sirve a
+    episodio: 25
 facciones:
   - Coven Rojo
 ---
@@ -56,3 +62,8 @@ facciones:
 - Ante Lexia, Sina defiende que el Salón de Sangre es el lugar más sagrado del Coven Rojo y que las brujas de distinto coven no deberían atacarse.
 - Abre el Salón de Sangre marcando con sangre el cuerpo de un cuervo negro disecado, pero advierte que la matriarca dijo que todo aquel que bajara moriría.
 - Después de que Lexia y parte del Coven Verde bajan, Sina usa la sangre de los cuerpos del piso para liberar a sus hijas y conducir la huida. En el exterior, el Wendigo devora a varias hermanas mientras Sina lo enfrenta para ganar tiempo.
+
+## Menciones importadas de personajes/matriarca-del-coven-rojo
+
+### [[025-recuerdos-de-cobre-18-la-traicion-se-paga-con-sangre|Ep. 25 — Recuerdos de Cobre 18: La Traición Se Paga Con Sangre]]
+- Figura que envio a su familiar al Plano Etereo tras prever una catastrofe apenas segundos antes de que ocurriera.

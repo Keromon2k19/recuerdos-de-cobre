@@ -23,7 +23,7 @@ menciones:
     - '[[hatch|Hatch]]'
     - '[[pepnuk|Pepnuk]]'
     - '[[nori|Nori]]'
-    - '[[dracelas|Dracelas]]'
+    - '[[personajes/dracelas-luminis|Dracelas]]'
     - '[[hijo-de-dracelas|Hijo de Dracelas]]'
     - '[[lidia|Lidia]]'
     - '[[amari-zaled|Amari Zaled]]'
@@ -390,7 +390,7 @@ El episodio cierra con David y Layra llegando a un puerto que no está en el agu
 - **[[hatch|Hatch]]** — Miembro de los Soñadores que abraza a Borok, presume la mantícora cazada y cuenta el hallazgo de una posible entrada al Underdark.
 - **[[pepnuk|Pepnuk]]** — Miembro de los Soñadores y seguidor de Tyr que se opone a darle poder a Vecna y podría tener una forma de localizar objetos lejanos.
 - **[[nori|Nori]]** — Tabaxi de La Cabina y antiguo conocido de Borok que recibe a los Soñadores, organiza mesas y propone la Velada de las Máscaras.
-- **[[dracelas|Dracelas]]** — Dracónido dorado que atiende el Oráculo Encantado, vende objetos mágicos, identifica el diario infernal y maneja con calma la petrificación de Raylen.
+- **[[personajes/dracelas-luminis|Dracelas]]** — Dracónido dorado que atiende el Oráculo Encantado, vende objetos mágicos, identifica el diario infernal y maneja con calma la petrificación de Raylen.
 - **[[hijo-de-dracelas|Hijo de Dracelas]]** — Niño dracónido dorado que reconoce a Mysha como la Niña de Sangre, recibe una firma suya y ayuda a venderle un libro de dracónico.
 - **[[lidia|Lidia]]** — Joven de granja con la que David conversa en La Cabina antes de ir al puerto con Layra.
 - **[[amari-zaled|Amari Zaled]]** — Teniente Coronel del Ejército de la Libertad que envía a Layra una carta con requerimientos para preparar la misión contra el dragón rojo.
@@ -537,9 +537,9 @@ El episodio cierra con David y Layra llegando a un puerto que no está en el agu
 - [[aria|Aria]] ↔ [[raven-queen|Raven Queen]] — Usa la supuesta relación de Mysha con esa entidad para sembrar desconfianza.
 - [[hatch|Hatch]] ↔ [[lugares/underdark|Underdark]] — Describe una posible entrada descubierta en la cueva de la mantícora.
 - [[rylen|Rylen]] ↔ [[lugares/underdark|Underdark]] — Aporta conocimiento sobre sus cavernas, criaturas y minerales.
-- [[dracelas|Dracelas]] ↔ [[objetos/libro-de-mysha|Libro de Mysha]] — Lo identifica como un artefacto, no como un objeto mágico común.
+- [[personajes/dracelas-luminis|Dracelas]] ↔ [[objetos/libro-de-mysha|Libro de Mysha]] — Lo identifica como un artefacto, no como un objeto mágico común.
 - [[rylen|Rylen]] ↔ [[rapier-de-rosas|Rapier de rosas]] — Intenta robarla y queda petrificado por la trampa de la tienda.
-- [[dracelas|Dracelas]] ↔ [[diario-infernal|Diario infernal]] — Identifica su maldición sadista y advierte que requeriría un lugar sagrado para quitarla.
+- [[personajes/dracelas-luminis|Dracelas]] ↔ [[diario-infernal|Diario infernal]] — Identifica su maldición sadista y advierte que requeriría un lugar sagrado para quitarla.
 - [[amari-zaled|Amari Zaled]] ↔ [[layra|Layra]] — Le envía una carta con requerimientos para preparar la misión contra el dragón rojo.
 - [[david-ilcard|David Ilcard]] ↔ [[drakan|Drakan]] — Investiga rutas comerciales para transportar vino familiar hacia la capital dracónida.
 
@@ -622,7 +622,7 @@ El episodio cierra con David y Layra llegando a un puerto que no está en el agu
 - Arya acepta disculparse con Mysha para poder acercarse al grupo de Borok. ([[aria|Aria]], [[borok|Borok]], [[mysha|Mysha]])
 - Mysha toma discretamente sangre de Arya durante el saludo. ([[mysha|Mysha]], [[aria|Aria]])
 - El grupo decide dividirse entre el Oráculo Encantado y el puerto. (Grupo, [[david-ilcard|David Ilcard]], [[layra|Layra]])
-- Mysha compra un libro para aprender dracónico. ([[mysha|Mysha]], [[dracelas|Dracelas]], [[hijo-de-dracelas|Hijo de Dracelas]])
+- Mysha compra un libro para aprender dracónico. ([[mysha|Mysha]], [[personajes/dracelas-luminis|Dracelas]], [[hijo-de-dracelas|Hijo de Dracelas]])
 - Raylen intenta robar la rapier y queda petrificado. ([[rylen|Rylen]])
-- El grupo compra la rapier en vez de restaurar inmediatamente a Raylen. (Grupo, [[dracelas|Dracelas]], [[rylen|Rylen]])
+- El grupo compra la rapier en vez de restaurar inmediatamente a Raylen. (Grupo, [[personajes/dracelas-luminis|Dracelas]], [[rylen|Rylen]])
 - Layra recibe la carta de Amari y queda encargada de preparar una única respuesta detallada. ([[layra|Layra]], [[amari-zaled|Amari Zaled]])

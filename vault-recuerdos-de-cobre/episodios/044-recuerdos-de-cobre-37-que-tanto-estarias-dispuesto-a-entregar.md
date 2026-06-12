@@ -20,7 +20,7 @@ menciones:
     - '[[facciones/merfolks|Merfolks]]'
     - '[[facciones/merrows|Merrows]]'
     - '[[miriel|Miriel]]'
-    - '[[orion|Orión]]'
+    - '[[personajes/orion-volderminer|Orión]]'
     - '[[personajes/chancho|Chancho]]'
   lugares:
     - '[[mar-del-leviatan|Mar del Leviatán]]'
@@ -215,7 +215,7 @@ Layra y Borok hablan sobre sus errores. Ella le dice que le agradó que se discu
 - **[[facciones/merfolks|Merfolks]]** — Atienden a sus heridos con algas, permanecen refugiados en la pecera y luego son liberados para honrar a sus muertos. Su pueblo queda salvado, aunque con muchas pérdidas.
 - **[[facciones/merrows|Merrows]]** — Siguen patrullando las ruinas y transportando huevos. El grupo embosca varias patrullas y termina destruyendo a los restantes para proteger a los merfolks liberados.
 - **[[miriel|Miriel]]** — No aparece, pero sus tratos pesan por la brújula, la armadura feérica, las balas-larva y la deuda de los huevos.
-- **[[orion|Orión]]** — No aparece, pero queda asociado al pago de los huevos y a las mercancías planares compradas previamente.
+- **[[personajes/orion-volderminer|Orión]]** — No aparece, pero queda asociado al pago de los huevos y a las mercancías planares compradas previamente.
 - **[[personajes/chancho|Chancho]]** — Ilumina la cueva de descanso, nervioso ante Mysha por la maldición de Druidia y la relación entre magia espiritual y animales.
 
 ### Lugares
@@ -295,7 +295,7 @@ Layra y Borok hablan sobre sus errores. Ella le dice que le agradó que se discu
 - [[narcissa|Narcissa]] ↔ [[balas-larva|Balas-larva]] — deduce su origen extraplanar y posible reproducción
 - [[david-ilcard|David Ilcard]] ↔ [[brujula-de-agua|Brújula de agua]] — la identifica como detector de superficies de agua
 - [[borok|Borok]] ↔ [[miriel|Miriel]] — paga la deuda de huevos asociada al trato
-- [[borok|Borok]] ↔ [[orion|Orión]] — paga la deuda de huevos asociada al trato
+- [[borok|Borok]] ↔ [[personajes/orion-volderminer|Orión]] — paga la deuda de huevos asociada al trato
 - [[grupo-de-mysha|Grupo de Mysha]] ↔ [[facciones/merrows|Merrows]] — los embosca y elimina para proteger a los merfolks
 - [[grupo-de-mysha|Grupo de Mysha]] ↔ [[facciones/merfolks|Merfolks]] — los libera de la pecera y les devuelve la posibilidad de honrar a sus muertos
 - [[om|Om]] ↔ [[grupo-de-mysha|Grupo de Mysha]] — agradece junto a Vedak tras la liberación
@@ -332,6 +332,6 @@ Layra y Borok hablan sobre sus errores. Ella le dice que le agradó que se discu
 - Io toma el collar de Arya pero decide no vincularse con él. ([[io-campbell|Io Campbell]], [[collar-protector-de-aria|Collar protector de Aria]])
 - El grupo decide limpiar a los merrows restantes en vez de retirarse con solo algunos huevos. ([[grupo-de-mysha|Grupo de Mysha]], [[facciones/merrows|Merrows]], [[facciones/merfolks|Merfolks]])
 - El grupo libera a los merfolks frente a los cuerpos de su pueblo para que puedan hacer sus ritos. ([[grupo-de-mysha|Grupo de Mysha]], [[facciones/merfolks|Merfolks]])
-- Borok paga la deuda de los huevos con Miriel y Orión. ([[borok|Borok]], [[miriel|Miriel]], [[orion|Orión]])
+- Borok paga la deuda de los huevos con Miriel y Orión. ([[borok|Borok]], [[miriel|Miriel]], [[personajes/orion-volderminer|Orión]])
 - Raylen entrega a Narcissa las balas-larva para intentar estudiarlas o reproducirlas. ([[rylen|Rylen]], [[narcissa|Narcissa]])
 - Layra acepta que Borok conserve su anillo, pero descubre que el hielo eterno se derrite. ([[layra|Layra]], [[borok|Borok]])

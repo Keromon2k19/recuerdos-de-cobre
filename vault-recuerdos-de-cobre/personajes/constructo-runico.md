@@ -11,7 +11,7 @@ rol: NPC
 tags:
   - npc
 relaciones:
-  - con: '[[criaturas-de-barro|Criaturas de barro]]'
+  - con: '[[personajes/criaturas-de-barro-y-piedra|Criaturas de barro]]'
     tipo: las genera desde el suelo durante el combate
     episodio: 20
   - con: '[[borok|Borok]]'

@@ -35,7 +35,7 @@ relaciones: []
 
 ## Perfil
 
-El Santuario de los Libres es la ciudad capital multicultural de los Renegados, donde la esclavitud es ilegal y conviven culturas, templos y un puerto aéreo. Funciona como gran escenario de eventos públicos del grupo —el Festival de las Culturas, el Torneo del Santuario, la Velada de las Máscaras y el Oráculo Encantado—, lugar donde [[mysha|Mysha]] recuerda haber llegado lastimada tras la caída del Coven y donde el grupo conoce a [[rylen|Rylen]] y se despide de [[borok|Borok]]. Su arco es el de una urbe vibrante pero cada vez más corrupta y peligrosa, atravesada por tensiones políticas con Lefaye y la influencia del Corruptor y los Nefarios, que según [[dracelas|Dracelas]] la acercan a convertirse en campo de guerra.
+El Santuario de los Libres es la ciudad capital multicultural de los Renegados, donde la esclavitud es ilegal y conviven culturas, templos y un puerto aéreo. Funciona como gran escenario de eventos públicos del grupo —el Festival de las Culturas, el Torneo del Santuario, la Velada de las Máscaras y el Oráculo Encantado—, lugar donde [[mysha|Mysha]] recuerda haber llegado lastimada tras la caída del Coven y donde el grupo conoce a [[rylen|Rylen]] y se despide de [[borok|Borok]]. Su arco es el de una urbe vibrante pero cada vez más corrupta y peligrosa, atravesada por tensiones políticas con Lefaye y la influencia del Corruptor y los Nefarios, que según [[personajes/dracelas-luminis|Dracelas]] la acercan a convertirse en campo de guerra.
 
 ## Menciones por episodio
 

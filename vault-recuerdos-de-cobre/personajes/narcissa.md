@@ -113,7 +113,7 @@ relaciones:
   - con: '[[mysha|Mysha]]'
     tipo: compañeros de grupo
     episodio: 1
-  - con: '[[senor-johnson|Señor Johnson]]'
+  - con: '[[personajes/carl-johnson|Señor Johnson]]'
     tipo: lo presiona y persuade
     episodio: 2
   - con: '[[borok|Borok]]'
@@ -167,7 +167,7 @@ relaciones:
   - con: '[[mysha|Mysha]]'
     tipo: le reparte el valor de Jacob
     episodio: 4
-  - con: '[[padre-de-tina|Padre de Tina]]'
+  - con: '[[personajes/nestor|Padre de Tina]]'
     tipo: lo duerme con Sleep y lo ata
     episodio: 5
   - con: '[[barbara|Bárbara]]'
@@ -365,7 +365,7 @@ relaciones:
   - con: '[[sar|Sar]]'
     tipo: sospecha que era doppelganger
     episodio: 27
-  - con: '[[nim-iglazer|Nim Iglazer]]'
+  - con: '[[personajes/nim|Nim Iglazer]]'
     tipo: compra y cura
     episodio: 27
   - con: '[[champi|Champi]]'
@@ -405,7 +405,7 @@ relaciones:
       Lo usa como refugio, laboratorio, jardin y punto de planificacion del
       grupo.
     episodio: 34
-  - con: '[[zar|Zar]]'
+  - con: '[[personajes/sar|Zar]]'
     tipo: Abre el regalo que el le dejo y descubre una larva de desierto.
     episodio: 34
   - con: '[[mysha|Mysha]]'

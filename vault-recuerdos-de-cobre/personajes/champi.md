@@ -125,7 +125,7 @@ relaciones:
   - con: '[[mysha|Mysha]]'
     tipo: Detecta que está siendo controlada y después la abraza al volver.
     episodio: 36
-  - con: '[[familiar-de-la-matriarca|Familiar de la matriarca]]'
+  - con: '[[personajes/familiar-de-la-matriarca-del-coven-rojo|Familiar de la matriarca]]'
     tipo: >-
       Se horroriza ante la amenaza final del familiar y afirma que él jamás
       diría algo así a Mysha.

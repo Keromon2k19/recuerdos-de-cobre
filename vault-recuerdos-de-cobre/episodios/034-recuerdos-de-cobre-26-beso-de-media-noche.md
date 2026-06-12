@@ -18,7 +18,7 @@ menciones:
     - '[[rey|Rey]]'
     - '[[el-corruptor|El Corruptor]]'
     - '[[vargov-norsk|Vargov Norsk]]'
-    - '[[zar|Zar]]'
+    - '[[personajes/sar|Zar]]'
     - '[[adriano|Adriano]]'
     - '[[clementia|Clementia]]'
     - '[[capitan-foster|Capitan Foster]]'
@@ -334,7 +334,7 @@ El episodio termina con ese contraste: Borok compartiendo un beso oculto con Ari
 - **[[rey|Rey]]** — Marinero semi-orco que facilita El Ensueño a Margot, advierte sobre el Mar del Leviatan y pide que devuelvan su barco familiar.
 - **[[el-corruptor|El Corruptor]]** — Autor de la carta sangrienta a Raylen; castiga su insubordinacion matando guardias y a Vargov Norsk.
 - **[[vargov-norsk|Vargov Norsk]]** — Suboficial mayor que recibia los reportes de los guardias y fue asesinado por orden del Corrector.
-- **[[zar|Zar]]** — Figura del desierto que habia entregado a Narcissa un huevo; el regalo eclosiona en una larva posiblemente peligrosa.
+- **[[personajes/sar|Zar]]** — Figura del desierto que habia entregado a Narcissa un huevo; el regalo eclosiona en una larva posiblemente peligrosa.
 - **[[adriano|Adriano]]** — Escorpion de Narcissa, regalo de Zar, que aparece mas grande y docil dentro del estudio-jardin.
 - **[[clementia|Clementia]]** — Su cabeza es retirada del libro de Mysha y puesta por Narcissa a limpiar y conservar en el estudio.
 - **[[capitan-foster|Capitan Foster]]** — Capitan de airship cuya ruta a Drakan queda como posible forma de interceptar El Ensueño en el Mar del Leviatan.
@@ -454,7 +454,7 @@ El episodio termina con ese contraste: Borok compartiendo un beso oculto con Ari
 - [[nefarios|Nefarios]] ↔ [[el-ensueno|El Ensueño]] — Contratan el barco para salir la noche siguiente por el Mar del Leviatan.
 - [[champi|Champi]] ↔ [[nefarios|Nefarios]] — Sigue a contactos y detecta otra zona asociada a puertas de la organizacion.
 - [[narcissa|Narcissa]] ↔ [[estudio-jardin-de-narcissa|Estudio-jardin de Narcissa]] — Lo usa como refugio, laboratorio, jardin y punto de planificacion del grupo.
-- [[narcissa|Narcissa]] ↔ [[zar|Zar]] — Abre el regalo que el le dejo y descubre una larva de desierto.
+- [[narcissa|Narcissa]] ↔ [[personajes/sar|Zar]] — Abre el regalo que el le dejo y descubre una larva de desierto.
 - [[narcissa|Narcissa]] ↔ [[mysha|Mysha]] — La acompaña en su rechazo a Aria y sostiene que no debe sentirse obligada a exponer su historia.
 - [[aria|Aria]] ↔ [[mysha|Mysha]] — Intenta ir al Coven para probar su lectura sobre la Raven Queen, pero Mysha no la quiere alli.
 - [[aria|Aria]] ↔ [[borok|Borok]] — Le entrega el collar de Vecna, quiere escucharlo mientras esten separados y luego lo besa bajo la lluvia.
@@ -515,7 +515,7 @@ El episodio termina con ese contraste: Borok compartiendo un beso oculto con Ari
 - Champi decide seguir a los contactos desde el aire despues de la reunion. ([[champi|Champi]], [[rylen|Rylen]], [[borok|Borok]])
 - El grupo decide marcar en un mapa las puertas y zonas nefarias conocidas. (Grupo, [[champi|Champi]])
 - Narcissa decide abrir su estudio-jardin para reunir al grupo y organizar informacion. ([[narcissa|Narcissa]], Grupo)
-- Narcissa abre el huevo de Zar al recordar que ya pasaron los diez dias indicados. ([[narcissa|Narcissa]], [[zar|Zar]])
+- Narcissa abre el huevo de Zar al recordar que ya pasaron los diez dias indicados. ([[narcissa|Narcissa]], [[personajes/sar|Zar]])
 - Layra decide contar al grupo que sus ataques de ira no son nuevos y que le dan verguenza. ([[layra|Layra]], Grupo)
 - Raylen propone priorizar la intercepcion de El Ensueño antes de perder el rastro. ([[rylen|Rylen]], Grupo)
 - El grupo decide que el Coven de Mysha es la prioridad inicial antes de resolver el barco y la ruta a Layra. (Grupo, [[mysha|Mysha]])

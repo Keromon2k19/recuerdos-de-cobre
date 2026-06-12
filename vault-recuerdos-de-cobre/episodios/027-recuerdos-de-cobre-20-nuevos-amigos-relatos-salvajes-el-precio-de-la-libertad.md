@@ -14,7 +14,7 @@ menciones:
     - '[[layra|Layra]]'
     - '[[david-ilcard|David Ilcard]]'
     - '[[champi|Champi]]'
-    - '[[nim-iglazer|Nim Iglazer]]'
+    - '[[personajes/nim|Nim Iglazer]]'
     - '[[larren|Larren]]'
     - '[[freda|Freda]]'
     - '[[burel|Burel]]'
@@ -241,7 +241,7 @@ El grupo entra finalmente a la ciudad. Ven farolas mágicas, iglesias de distint
 - **[[layra|Layra]]** — Apoya con hielo, crea una funda para el dedo de Borok, usa Gust para recuperar a Champi y registra los familiares corrompidos.
 - **[[david-ilcard|David Ilcard]]** — Habla con Nim en elfico, informa al grupo sobre su esclavitud, combate acelerado por Haste y luego busca relajarse en el Santuario.
 - **[[champi|Champi]]** — Explora la granja, accidentalmente despierta a Loki, ayuda a Mysha y muere brevemente antes de ser revivido por Narcissa.
-- **[[nim-iglazer|Nim Iglazer]]** — Joven elfo esclavizado en la granja de Larren y Freda, capturado junto a su familia y comprado por el grupo para llevarlo al Santuario.
+- **[[personajes/nim|Nim Iglazer]]** — Joven elfo esclavizado en la granja de Larren y Freda, capturado junto a su familia y comprado por el grupo para llevarlo al Santuario.
 - **[[larren|Larren]]** — Granjero semi-orco que da refugio al grupo, negocia ayuda con la cosecha y los lleva al Santuario en carreta.
 - **[[freda|Freda]]** — Esposa embarazada de Larren, revisada por Narcissa y quien acepta vender a Nim por cien monedas de oro.
 - **[[burel|Burel]]** — Hijo de Larren y Freda, joven semi-orco canchero que intenta impresionar a David y queda traumatizado por el ataque de familiares.
@@ -340,9 +340,9 @@ El grupo entra finalmente a la ciudad. Ven farolas mágicas, iglesias de distint
 - [[borok|Borok]] ↔ [[objetos/dedo-esqueletico-de-borok|Dedo esqueletico de Borok]] — revela
 - [[layra|Layra]] ↔ [[borok|Borok]] — crea cubierta de hielo para
 - [[narcissa|Narcissa]] ↔ [[sar|Sar]] — sospecha que era doppelganger
-- [[david-ilcard|David Ilcard]] ↔ [[nim-iglazer|Nim Iglazer]] — descubre historia de
-- [[narcissa|Narcissa]] ↔ [[nim-iglazer|Nim Iglazer]] — compra y cura
-- [[freda|Freda]] ↔ [[nim-iglazer|Nim Iglazer]] — vende
+- [[david-ilcard|David Ilcard]] ↔ [[personajes/nim|Nim Iglazer]] — descubre historia de
+- [[narcissa|Narcissa]] ↔ [[personajes/nim|Nim Iglazer]] — compra y cura
+- [[freda|Freda]] ↔ [[personajes/nim|Nim Iglazer]] — vende
 - [[larren|Larren]] ↔ [[te-de-medianoche|Te de Medianoche]] — da refugio y transporte a
 - [[mysha|Mysha]] ↔ [[familiar-de-la-matriarca-del-coven-rojo|Familiar de la matriarca del Coven Rojo]] — recibe advertencia de
 - [[facciones/familiares-corrompidos|Familiares corrompidos]] ↔ [[coven-rojo|Coven Rojo]] — podrian provenir de
@@ -350,7 +350,7 @@ El grupo entra finalmente a la ciudad. Ven farolas mágicas, iglesias de distint
 - [[borok|Borok]] ↔ [[narcissa|Narcissa]] — le entrega diamante para Revivify
 - [[veltra|Veltra]] ↔ [[facciones/familiares-corrompidos|Familiares corrompidos]] — entierra y llora
 - [[champi|Champi]] ↔ [[veltra|Veltra]] — promete arreglarlo
-- [[guardia-semi-elfa-del-santuario|Guardia semi-elfa del Santuario]] ↔ [[nim-iglazer|Nim Iglazer]] — advierte que puede pedir ayuda
+- [[guardia-semi-elfa-del-santuario|Guardia semi-elfa del Santuario]] ↔ [[personajes/nim|Nim Iglazer]] — advierte que puede pedir ayuda
 - [[facciones/ejercito-de-la-libertad|Ejercito de la Libertad]] ↔ [[facciones/renegados|Renegados]] — fundadores historicos de
 
 ### Misterios
@@ -393,11 +393,11 @@ El grupo entra finalmente a la ciudad. Ven farolas mágicas, iglesias de distint
 - Obtener pelo y sangre de David para futuros rituales. ([[narcissa|Narcissa]], [[david-ilcard|David Ilcard]])
 - Hablar con Larren en vez de acampar sin permiso cerca de la granja. ([[te-de-medianoche|Te de Medianoche]], [[larren|Larren]])
 - Ayudar con la cosecha a cambio de transporte al Santuario. ([[te-de-medianoche|Te de Medianoche]], [[larren|Larren]])
-- Escuchar a Nim y compartir su situacion con el grupo. ([[david-ilcard|David Ilcard]], [[nim-iglazer|Nim Iglazer]])
+- Escuchar a Nim y compartir su situacion con el grupo. ([[david-ilcard|David Ilcard]], [[personajes/nim|Nim Iglazer]])
 - Comprar la libertad de Nim por cien monedas de oro. ([[narcissa|Narcissa]], [[freda|Freda]])
 - Usar Bloodsense para revisar a Freda y detectar anemia. ([[mysha|Mysha]], [[freda|Freda]])
 - Activar The Stars al sentir la alarma del familiar. ([[mysha|Mysha]])
 - Revivir a Champi con Revivify y un diamante. ([[narcissa|Narcissa]], [[borok|Borok]], [[champi|Champi]])
 - Enterrar a los familiares corrompidos con cabalias y petalos. ([[veltra|Veltra]], [[narcissa|Narcissa]], [[te-de-medianoche|Te de Medianoche]])
-- Vestir y proteger a Nim antes de entrar al Santuario. ([[te-de-medianoche|Te de Medianoche]], [[nim-iglazer|Nim Iglazer]])
+- Vestir y proteger a Nim antes de entrar al Santuario. ([[te-de-medianoche|Te de Medianoche]], [[personajes/nim|Nim Iglazer]])
 - Separarse temporalmente dentro del Santuario con punto de reunion en la Cabina de tragos magico-burbujeantes. ([[te-de-medianoche|Te de Medianoche]])

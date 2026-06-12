@@ -2,7 +2,6 @@
 tipo: personaje
 nombre: Lexia
 alias:
-  - Alexia
   - Matriarca del Coven Verde
 apariciones:
   - 36

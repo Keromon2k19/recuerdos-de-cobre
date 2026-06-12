@@ -5,7 +5,10 @@ alias:
   - Tali
   - Talisa
   - Hija de la Luz
+  - Talasia
+  - Taly
 apariciones:
+  - 75
   - 76
   - 77
   - 78
@@ -47,7 +50,7 @@ relaciones:
       Le explica que una resurreccion mil años despues requiere que su alma haya
       sido buscada intencionalmente.
     episodio: 78
-  - con: '[[meri|Meri]]'
+  - con: '[[personajes/mary|Meri]]'
     tipo: >-
       No puede mentir sobre la promesa de entregar un cuerpo y complica la
       negociacion del grupo.
@@ -64,6 +67,11 @@ relaciones:
   - con: '[[layra|Layra]]'
     tipo: proteccion con Death Ward y apoyo en combate
     episodio: 82
+  - con: '[[anora|Anora]]'
+    tipo: >-
+      La considera una posible clave para liberar a Narcissa mediante Dispel
+      Magic de gran poder.
+    episodio: 75
 facciones: []
 relacion_party: aliado
 image: /images/personajes/talisa-talashon.jpg
@@ -85,3 +93,8 @@ imageAlt: Talisa Talashon
 
 ### [[082-recuerdos-de-cobre-69-mente-colmena|Ep. 82 — Recuerdos de Cobre 69: Mente Colmena]]
 - Acompana al grupo en el Underdark, revive a Io, bendice a Layra, disipa la dominacion de Io y sostiene al grupo con auras y curaciones.
+
+## Menciones importadas de personajes/tali
+
+### [[075-recuerdos-de-cobre-64-la-flor-que-freno-su-tiempo|Ep. 75 — Recuerdos de Cobre 64: La Flor que Frenó su Tiempo]]
+- Paladina de Luzne que Anora y Aylor consideran una posible clave para usar un Dispel Magic suficientemente poderoso.

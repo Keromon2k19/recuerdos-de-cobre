@@ -14,7 +14,7 @@ menciones:
     - '[[uhtuk|Uhtuk]]'
     - '[[misri-mlesir|Misri Mlesir]]'
     - '[[viconia|Viconia]]'
-    - '[[meri|Meri]]'
+    - '[[personajes/mary|Meri]]'
     - '[[kardir|Kardir]]'
     - '[[champi|Champi]]'
     - '[[madre|Madre]]'
@@ -207,7 +207,7 @@ Meri les indica avanzar un poco y luego dormir para la conexion mental. Mysha sa
 - **[[uhtuk|Uhtuk]]** — Rechaza aliarse con los mind flayers enemigos, usa poderes psionicos en combate y consume una cabeza de ilithid para descubrir datos sobre la colonia y Madre.
 - **[[misri-mlesir|Misri Mlesir]]** — Drow investigadora y comerciante del Vientre de la Tejedora que compra libros de superficie y vende venenos, aire embotellado y artefactos de Fires Res.
 - **[[viconia|Viconia]]** — Drow domadora de frecuencias que alquila fire beetles y vende criaturas de advertencia, orientacion y rastreo mineral.
-- **[[meri|Meri]]** — Devorador de intelecto con voz de nina que quiere un cuerpo y ofrece conectar al grupo con Madre para atravesar la colonia mind flayer.
+- **[[personajes/mary|Meri]]** — Devorador de intelecto con voz de nina que quiere un cuerpo y ofrece conectar al grupo con Madre para atravesar la colonia mind flayer.
 - **[[kardir|Kardir]]** — Duergar superviviente de una expedicion minera atacada por mind flayers; Mysha lo cura antes de que Meri lo reclame como cuerpo.
 - **[[champi|Champi]]** — Saca a Mysha de la pecera durante el combate y sufre un efecto de Fires Res que lo envejece temporalmente.
 - **[[madre|Madre]]** — Elder Brain de la colonia mind flayer cercana, creado en este plano y usado como centro mental, defensa y expansion de la colonia.
@@ -290,10 +290,10 @@ Meri les indica avanzar un poco y luego dormir para la conexion mental. Mysha sa
 - [[mysha|Mysha]] ↔ [[mind-flayers-de-la-colonia|Mind flayers de la colonia]] — Mata a dos ilithids y conserva sus cabezas para obtener informacion.
 - [[eryon|Eryon]] ↔ [[mind-flayers-de-la-colonia|Mind flayers de la colonia]] — Decapita a uno de ellos y mira a Uhtuk con desconfianza despues del combate.
 - [[uhtuk|Uhtuk]] ↔ [[madre|Madre]] — Descubre, al comer una cabeza, que la colonia posee un Elder Brain llamado Madre.
-- [[meri|Meri]] ↔ [[kardir|Kardir]] — Intenta reclamar su cuerpo debilitado para poder sobrevivir con una forma fisica.
+- [[personajes/mary|Meri]] ↔ [[kardir|Kardir]] — Intenta reclamar su cuerpo debilitado para poder sobrevivir con una forma fisica.
 - [[mysha|Mysha]] ↔ [[kardir|Kardir]] — Lo cura y evita que Meri use su cuerpo.
-- [[meri|Meri]] ↔ [[te-de-medianoche|Te de Medianoche]] — Ofrece conectarlos con Madre a cambio de que le permitan reclamar un cuerpo adecuado.
-- [[talisa-talashon|Talisa Talashon]] ↔ [[meri|Meri]] — No puede mentir sobre la promesa de entregar un cuerpo y complica la negociacion del grupo.
+- [[personajes/mary|Meri]] ↔ [[te-de-medianoche|Te de Medianoche]] — Ofrece conectarlos con Madre a cambio de que le permitan reclamar un cuerpo adecuado.
+- [[talisa-talashon|Talisa Talashon]] ↔ [[personajes/mary|Meri]] — No puede mentir sobre la promesa de entregar un cuerpo y complica la negociacion del grupo.
 
 ### Misterios
 - Que ocurrira al dormir y conectarse mentalmente con Madre.
@@ -330,6 +330,6 @@ Meri les indica avanzar un poco y luego dormir para la conexion mental. Mysha sa
 - Uhtuk intenta leer mas profundamente a las criaturas por delante, aceptando el riesgo de alertarlas. ([[uhtuk|Uhtuk]], [[ratas-de-turmalina|Ratas de Turmalina]])
 - Uhtuk rechaza aliarse con los mind flayers que atacan al grupo. ([[uhtuk|Uhtuk]], [[mind-flayers-de-la-colonia|Mind flayers de la colonia]])
 - Mysha permite que Uhtuk coma una cabeza de mind flayer para obtener informacion tactica. ([[mysha|Mysha]], [[uhtuk|Uhtuk]], [[mind-flayers-de-la-colonia|Mind flayers de la colonia]])
-- Mysha cura a Kardir y el grupo decide no entregarlo a Meri. ([[mysha|Mysha]], [[kardir|Kardir]], [[meri|Meri]])
-- El grupo acepta un trato limitado con Meri: ella los conecta con Madre y ellos no se opondran si aparece otro cuerpo adecuado. ([[te-de-medianoche|Te de Medianoche]], [[meri|Meri]], [[madre|Madre]])
-- Mysha y Layra se preparan para dormir dentro de la carroza tortuga y permitir la conexion mental. ([[mysha|Mysha]], [[layra|Layra]], [[meri|Meri]], [[talisa-talashon|Talisa Talashon]])
+- Mysha cura a Kardir y el grupo decide no entregarlo a Meri. ([[mysha|Mysha]], [[kardir|Kardir]], [[personajes/mary|Meri]])
+- El grupo acepta un trato limitado con Meri: ella los conecta con Madre y ellos no se opondran si aparece otro cuerpo adecuado. ([[te-de-medianoche|Te de Medianoche]], [[personajes/mary|Meri]], [[madre|Madre]])
+- Mysha y Layra se preparan para dormir dentro de la carroza tortuga y permitir la conexion mental. ([[mysha|Mysha]], [[layra|Layra]], [[personajes/mary|Meri]], [[talisa-talashon|Talisa Talashon]])

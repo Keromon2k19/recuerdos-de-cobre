@@ -4,8 +4,6 @@ nombre: Mysha
 alias:
   - Milla
   - Misha
-  - Selenne
-  - Veltra
   - Selen
   - Niña de Sangre
   - Aria Spirit Shovel
@@ -381,7 +379,7 @@ relaciones:
   - con: '[[casmus|Casmus]]'
     tipo: Lo vence como Veltra después de resistir miedo e ilusiones.
     episodio: 28
-  - con: '[[lor-arieth|Lor Arieth]]'
+  - con: '[[personajes/lor-arieth-mournleaf|Lor Arieth]]'
     tipo: >-
       Pacta intercambiar información sobre una magia o lugar que ambos reconocen
       parcialmente.
@@ -473,7 +471,7 @@ relaciones:
   - con: '[[champi|Champi]]'
     tipo: Detecta que está siendo controlada y después la abraza al volver.
     episodio: 36
-  - con: '[[zorro-blanco|Zorro blanco]]'
+  - con: '[[personajes/familiar-de-la-matriarca-del-coven-rojo|Zorro blanco]]'
     tipo: Lo ve en el plano etéreo casi cubierto por esencia rosada.
     episodio: 36
   - con: '[[narcissa|Narcissa]]'
@@ -505,7 +503,7 @@ relaciones:
       Investiga la casa, libro, ropa y familiar de la matriarca para recuperar
       la historia perdida de su madre.
     episodio: 37
-  - con: '[[familiar-de-la-matriarca|Familiar de la matriarca]]'
+  - con: '[[personajes/familiar-de-la-matriarca-del-coven-rojo|Familiar de la matriarca]]'
     tipo: >-
       Intenta hablar con él en el plano espiritual, pero lo ve disolverse tras
       una amenaza de venganza.
@@ -611,7 +609,7 @@ relaciones:
   - con: '[[nabish|Nabish]]'
     tipo: le recuerda el nombre de Lebrutic desde su mente
     episodio: 45
-  - con: '[[dragon-rojo|Dragón rojo]]'
+  - con: '[[personajes/devorador-de-lava|Dragón rojo]]'
     tipo: lo hiere y atrae su aliento de fuego para proteger al grupo
     episodio: 45
   - con: '[[facciones/draconidos-de-gleetjeris|Dracónidos de Gleetjeris]]'

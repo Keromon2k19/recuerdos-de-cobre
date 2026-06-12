@@ -5,11 +5,15 @@ alias:
   - Star
   - Zar
   - Saar
+  - Sar
+  - Zhaar
 apariciones:
   - 23
   - 24
   - 25
   - 26
+  - 34
+  - 66
 ultima_actualizacion: '2026-05-19T13:16:11.151Z'
 rol: NPC
 tags:
@@ -79,6 +83,9 @@ relaciones:
   - con: '[[sar-original|Sar original]]'
     tipo: encuentra posibles restos de
     episodio: 26
+  - con: '[[narcissa|Narcissa]]'
+    tipo: Abre el regalo que el le dejo y descubre una larva de desierto.
+    episodio: 34
 facciones: []
 region: Desierto de los Espejos
 ---
@@ -97,3 +104,12 @@ region: Desierto de los Espejos
 ### [[026-recuerdos-de-cobre-19-despedida-dezhaartica|Ep. 26 — Recuerdos de Cobre 19: Despedida Dezhaartica]]
 - Guia al grupo hasta el borde del desierto, conserva la piedra de Marco Aurelio, intercambia cartas con Narcissa y se despide antes de una revelacion inquietante sobre su identidad.
 
+## Menciones importadas de personajes/zar
+
+### [[034-recuerdos-de-cobre-26-beso-de-media-noche|Ep. 34 — Recuerdos de cobre 26: Beso de media noche]]
+- Figura del desierto que habia entregado a Narcissa un huevo; el regalo eclosiona en una larva posiblemente peligrosa.
+
+## Menciones importadas de personajes/zhaar
+
+### [[066-recuerdos-de-cobre-535-lore-con-tesito|Ep. 66 — Recuerdos de Cobre 53.5: Lore con tesito]]
+- Guia del Desierto de los Espejos recordado por tener cartas de tarot muy poderosas.

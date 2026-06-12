@@ -3,7 +3,6 @@ tipo: personaje
 nombre: Lucky
 alias:
   - Laqui
-  - Loki
 apariciones:
   - 76
   - 81

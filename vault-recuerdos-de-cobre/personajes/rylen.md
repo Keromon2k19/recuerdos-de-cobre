@@ -129,7 +129,7 @@ relaciones:
   - con: '[[cazador-de-carne|Cazador de carne]]'
     tipo: atrae su atención y es tragado para ser llevado a la Cárcel Viviente
     episodio: 55
-  - con: '[[cautivo-con-bozal|Cautivo con bozal]]'
+  - con: '[[personajes/randy|Cautivo con bozal]]'
     tipo: rompe o golpea su bozal y le permite hablar
     episodio: 55
   - con: '[[pat-pat|Pat-Pat]]'
@@ -196,7 +196,7 @@ relaciones:
       Lo despide con una fiesta improvisada en Nutriopolis y confirma que sigue
       siendo parte del grupo.
     episodio: 75
-  - con: '[[dracelas|Dracelas]]'
+  - con: '[[personajes/dracelas-luminis|Dracelas]]'
     tipo: Activa las defensas de su tienda al intentar robar una rapier.
     episodio: 31
   - con: '[[dracelas-luminis|Dracelas Luminis]]'

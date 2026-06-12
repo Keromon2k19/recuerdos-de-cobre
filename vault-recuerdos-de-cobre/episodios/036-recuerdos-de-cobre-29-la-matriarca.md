@@ -19,7 +19,7 @@ menciones:
     - '[[tana|Tana]]'
     - '[[phelan|Phelan]]'
     - '[[criatura-con-la-ropa-de-la-matriarca|Criatura con la ropa de la matriarca]]'
-    - '[[zorro-blanco|Zorro blanco]]'
+    - '[[personajes/familiar-de-la-matriarca-del-coven-rojo|Zorro blanco]]'
     - '[[personajes/wendigo|Wendigo]]'
     - '[[profesora-del-coven-rojo|Profesora del Coven Rojo]]'
     - '[[facciones/coven-rojo|Hermanas del Coven Rojo]]'
@@ -347,7 +347,7 @@ Los demás ven a Mysha recorrer el Coven en trance: entra, corre hacia afuera y 
 - **[[tana|Tana]]** — Hermana del Coven Rojo que aparece en la cabaña de Sina y luego ayuda a arrastrar a Mysha durante la huida.
 - **[[phelan|Phelan]]** — Hermana del Coven Rojo que aparece junto a Tana y ayuda a sacar a Mysha del desastre durante la huida.
 - **[[criatura-con-la-ropa-de-la-matriarca|Criatura con la ropa de la matriarca]]** — Ser feérico cubierto por la capa ritual de Sina, rodeado de polillas rojas, capaz de encantar, invocar bestias de savia y lanzar magia ácida.
-- **[[zorro-blanco|Zorro blanco]]** — Presencia espiritual vista por Mysha en el plano etéreo, casi cubierta por esencia rosada y visiblemente triste.
+- **[[personajes/familiar-de-la-matriarca-del-coven-rojo|Zorro blanco]]** — Presencia espiritual vista por Mysha en el plano etéreo, casi cubierta por esencia rosada y visiblemente triste.
 - **[[personajes/wendigo|Wendigo]]** — Criatura enorme que devora a Sina durante la huida del Coven Rojo y obliga a Tana y Phelan a arrastrar a Mysha.
 - **[[profesora-del-coven-rojo|Profesora del Coven Rojo]]** — Bruja que guía a las niñas en rituales de sangre antes de detectar el ataque y ordenarles refugiarse.
 - **[[facciones/coven-rojo|Hermanas del Coven Rojo]]** — Niñas y brujas del Coven que son asesinadas por caminantes etéreos, fuego mágico y lanzas del Coven Verde durante la masacre.
@@ -477,7 +477,7 @@ Los demás ven a Mysha recorrer el Coven en trance: entra, corre hacia afuera y 
 - [[champi|Champi]] ↔ [[mysha|Mysha]] — Detecta que está siendo controlada y después la abraza al volver.
 - [[david-ilcard|David Ilcard]] ↔ [[criatura-con-la-ropa-de-la-matriarca|Criatura con la ropa de la matriarca]] — Consume sus resistencias legendarias y finalmente la aturde.
 - [[aria|Aria]] ↔ [[criatura-con-la-ropa-de-la-matriarca|Criatura con la ropa de la matriarca]] — La remata con Blight.
-- [[mysha|Mysha]] ↔ [[zorro-blanco|Zorro blanco]] — Lo ve en el plano etéreo casi cubierto por esencia rosada.
+- [[mysha|Mysha]] ↔ [[personajes/familiar-de-la-matriarca-del-coven-rojo|Zorro blanco]] — Lo ve en el plano etéreo casi cubierto por esencia rosada.
 - [[io-campbell|Io Campbell]] ↔ [[personajes/druidia|Druidia]] — Recibe su bendición al conectarse con la red natural del bosque.
 - [[narcissa|Narcissa]] ↔ [[mysha|Mysha]] — Le toma la mano, la abraza y la acompaña durante el retorno de los recuerdos.
 - [[mysha|Mysha]] ↔ [[sina|Sina]] — Recuerda que la matriarca era su madre y murió protegiéndola.

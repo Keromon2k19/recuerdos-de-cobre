@@ -21,7 +21,7 @@ menciones:
     - '[[pablo|Pablo]]'
     - '[[masa-de-carne-de-hellgrim|Masa de carne de Hellgrim]]'
     - '[[martin|Martin]]'
-    - '[[marco|Marco]]'
+    - '[[personajes/darko|Marco]]'
     - '[[andrew-mironov|Andrew Mironov]]'
   lugares:
     - '[[khelgrim|Khelgrim]]'
@@ -235,7 +235,7 @@ Celeste no permite que Mysha se quede con la piedra sin tratarla y la llama a un
 - **[[pablo|Pablo]]** — Bartender que atiende a Layra, lleva el anillo que ella le regalo y le explica el tsunami anual de Metropolis de Cobre.
 - **[[masa-de-carne-de-hellgrim|Masa de carne de Hellgrim]]** — Criatura deformada que no muere pese a los golpes; un fragmento llevado al estudio de Narcissa responde levemente a curacion.
 - **[[martin|Martin]]** — Aliado de Lorenza a quien Champi debe avisar que el grupo volvera mas tarde.
-- **[[marco|Marco]]** — Aliado mencionado por Anora y Celeste como parte de la investigacion que conecta el culto con un concejal.
+- **[[personajes/darko|Marco]]** — Aliado mencionado por Anora y Celeste como parte de la investigacion que conecta el culto con un concejal.
 - **[[andrew-mironov|Andrew Mironov]]** — Concejal sospechado de estar relacionado con el culto de Vecna o con la red politica que lo protege.
 
 ### Lugares

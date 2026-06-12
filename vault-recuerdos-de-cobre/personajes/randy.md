@@ -5,6 +5,7 @@ alias:
   - La Nutria
   - Cautivo con bozal
 apariciones:
+  - 55
   - 56
   - 57
   - 58
@@ -47,6 +48,9 @@ relaciones:
       le deja una carta donde expresa cómo ve al grupo y la importancia de su
       familia encontrada
     episodio: 65
+  - con: '[[rylen|Rylen]]'
+    tipo: rompe o golpea su bozal y le permite hablar
+    episodio: 55
 facciones:
   - Nutriópolis
 region: Nutriópolis
@@ -75,3 +79,7 @@ region: Nutriópolis
 ### [[080-recuerdos-de-cobre-63-el-secreto-de-la-biblioteca|Ep. 80 — Recuerdos de Cobre 63: El Secreto de la Biblioteca]]
 - Reconstruye la Nutriopolis junto a Luari y recibe ayuda del grupo despues de la investigacion.
 
+## Menciones importadas de personajes/cautivo-con-bozal
+
+### [[055-recuerdos-de-cobre-46-yendonos-al-diablo-parte-2|Ep. 55 — Recuerdos De Cobre 46: Yendonos al Diablo (parte 2)]]
+- Ser pequeño de capa verde, ojos rojos, olor terrible y bozal metálico que está prisionero en la Cárcel Viviente. Rylen rompe o golpea su bozal y le permite hablar.

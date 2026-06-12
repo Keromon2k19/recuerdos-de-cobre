@@ -16,14 +16,14 @@ menciones:
     - '[[champi|Champi]]'
     - '[[breos-kalathras|Breos Kalathras]]'
     - '[[casmus|Casmus]]'
-    - '[[lor-arieth|Lor Arieth]]'
+    - '[[personajes/lor-arieth-mournleaf|Lor Arieth]]'
     - '[[alira|Alira]]'
     - '[[einoa|Einoa]]'
     - '[[varnan|Varnan]]'
     - '[[felurel|Felurel]]'
     - '[[orson|Orson]]'
     - '[[hector|Hector]]'
-    - '[[teodora|Teodora]]'
+    - '[[personajes/teodora-malister|Teodora]]'
     - '[[nino-mensajero-de-la-zona-roja|Niño mensajero de la Zona Roja]]'
     - '[[personajes/aldinak|Aldinak]]'
     - '[[Bijak]]'
@@ -307,14 +307,14 @@ David se dispone a ir a hablar con Teodora, pero antes de que pueda hacerlo se a
 - **[[champi|Champi]]** — Observa el incidente del baño, advierte a los agresores, roba el pouch de polvo amarillo y luego se presenta formalmente ante Raylen.
 - **[[breos-kalathras|Breos Kalathras]]** — Rival vinculado al pasado de Raylen que se mueve como bajo estimulantes, derrota a Felurel, presiona a Raylen para probar una sustancia y pierde una muestra de droga amarilla.
 - **[[casmus|Casmus]]** — Señor de las Sombras que enfrenta a Mysha con miedo e ilusiones, es derrotado por Veltra y luego explica a David cómo se construye el miedo como actuación.
-- **[[lor-arieth|Lor Arieth]]** — Campeón anterior que derrota a Hector con portales rosados y magia de bosque, acuerda intercambiar información con Mysha y al final menciona a la matriarca.
+- **[[personajes/lor-arieth-mournleaf|Lor Arieth]]** — Campeón anterior que derrota a Hector con portales rosados y magia de bosque, acuerda intercambiar información con Mysha y al final menciona a la matriarca.
 - **[[alira|Alira]]** — Combatiente de Morningstar y aura oscura que vence primero a Orson y luego a Einoa, avanzando como una de las figuras fuertes del torneo.
 - **[[einoa|Einoa]]** — Genasi de aire que derrota rápidamente a Varnan con rayos, pero luego cae ante Alira.
 - **[[varnan|Varnan]]** — Joven bardo con lira y gato blanco que intenta vencer a Einoa con encanto y relámpagos, pero pierde rápido.
 - **[[felurel|Felurel]]** — Guerrera semiorca disciplinada que cae ante la velocidad, dagas ocultas y posible estimulación de Breos.
 - **[[orson|Orson]]** — Mago anciano que usa Fireball, vuelo e ilusiones contra Alira, pero termina derrotado.
 - **[[hector|Hector]]** — Combatiente de martillo que es derrotado con facilidad por Lor Arieth y sus portales.
-- **[[teodora|Teodora]]** — Recibe la disculpa de Layra y una rosa de hielo eterno, dejando su rivalidad en términos más sanos.
+- **[[personajes/teodora-malister|Teodora]]** — Recibe la disculpa de Layra y una rosa de hielo eterno, dejando su rivalidad en términos más sanos.
 - **[[nino-mensajero-de-la-zona-roja|Niño mensajero de la Zona Roja]]** — Niño visto por Narcissa entre las gradas con un símbolo de la Zona Roja y un código gestual para contactar personas.
 - **[[personajes/aldinak|Aldinak]]** — Entidad demoníaca y ciudad abisal mencionada por Las Voces como parte de un tratado sociocomercial inquietante.
 - **[[Bijak]]** — Serpiente de Mysha que sale de su manga para saludar brevemente a Raylen.
@@ -409,9 +409,9 @@ David se dispone a ir a hablar con Teodora, pero antes de que pueda hacerlo se a
 - [[las-voces-del-santuario|Las Voces del Santuario]] ↔ [[personajes/aldinak|Aldinak]] — Discuten un tratado sociocomercial y posible apoyo en guerra.
 - [[mysha|Mysha]] ↔ [[casmus|Casmus]] — Lo vence como Veltra después de resistir miedo e ilusiones.
 - [[casmus|Casmus]] ↔ [[david-ilcard|David Ilcard]] — Le explica cómo construir miedo mediante actuación y contagio emocional.
-- [[mysha|Mysha]] ↔ [[lor-arieth|Lor Arieth]] — Pacta intercambiar información sobre una magia o lugar que ambos reconocen parcialmente.
-- [[lor-arieth|Lor Arieth]] ↔ [[sina|Sina]] — Menciona que Mysha aprendió bien de ella, revelando conocimiento previo.
-- [[layra|Layra]] ↔ [[teodora|Teodora]] — Se disculpa y le regala una rosa de hielo eterno.
+- [[mysha|Mysha]] ↔ [[personajes/lor-arieth-mournleaf|Lor Arieth]] — Pacta intercambiar información sobre una magia o lugar que ambos reconocen parcialmente.
+- [[personajes/lor-arieth-mournleaf|Lor Arieth]] ↔ [[sina|Sina]] — Menciona que Mysha aprendió bien de ella, revelando conocimiento previo.
+- [[layra|Layra]] ↔ [[personajes/teodora-malister|Teodora]] — Se disculpa y le regala una rosa de hielo eterno.
 - [[breos-kalathras|Breos Kalathras]] ↔ [[rylen|Rylen]] — Lo presiona por obligaciones con el Corruptor y por una prueba con muestras.
 - [[rylen|Rylen]] ↔ [[breos-kalathras|Breos Kalathras]] — Lo amenaza con el revólver para detener la golpiza a Borok.
 - [[breos-kalathras|Breos Kalathras]] ↔ [[polvo-amarillo|Polvo amarillo]] — Lo guarda escondido en el baño y lo pierde cuando Champi lo roba.
@@ -467,8 +467,8 @@ David se dispone a ir a hablar con Teodora, pero antes de que pueda hacerlo se a
 - Narcissa le cuenta a Io que los Halcones Grises van al Bosque de las Memorias. ([[narcissa|Narcissa]], [[io-campbell|Io Campbell]])
 - David decide hablar con Toshi como amigo después del combate. ([[david-ilcard|David Ilcard]], [[toshi|Toshi]])
 - Toshi pide a David que gane el torneo para abrirle acceso a la jefa del Ejército de la Libertad. ([[toshi|Toshi]], [[david-ilcard|David Ilcard]])
-- Mysha acepta un trato de intercambio de información con Lor Arieth. ([[mysha|Mysha]], [[lor-arieth|Lor Arieth]])
-- Layra se disculpa con Teodora y le entrega una rosa de hielo eterno. ([[layra|Layra]], [[teodora|Teodora]])
+- Mysha acepta un trato de intercambio de información con Lor Arieth. ([[mysha|Mysha]], [[personajes/lor-arieth-mournleaf|Lor Arieth]])
+- Layra se disculpa con Teodora y le entrega una rosa de hielo eterno. ([[layra|Layra]], [[personajes/teodora-malister|Teodora]])
 - Narcissa informa a la guardia que sospecha consumo o posesión de drogas por parte de Breos. ([[narcissa|Narcissa]], [[guardia-gris|Guardia Gris]], [[breos-kalathras|Breos Kalathras]])
 - Borok sigue a Raylen y Breos al baño para intervenir. ([[borok|Borok]], [[rylen|Rylen]], [[breos-kalathras|Breos Kalathras]])
 - Raylen apunta a Breos con el revólver para impedir que sigan golpeando a Borok. ([[rylen|Rylen]], [[breos-kalathras|Breos Kalathras]], [[borok|Borok]])

@@ -263,7 +263,7 @@ La revelación final cambia el conflicto de forma importante. Lebruktik no se pr
 - [[anora|Anora]] ↔ [[grupo-de-mysha|Grupo de Mysha]] — les presta objetos, oro y munición para la misión
 - [[amari-zaled|Amari Zaled]] ↔ [[zafira-mirovic|Zafira Mirovic]] — moviliza el Escuadrón 75 bajo su mando para apoyar la ofensiva
 - [[zafira-mirovic|Zafira Mirovic]] ↔ [[grupo-de-mysha|Grupo de Mysha]] — coordina el consejo de guerra con una prioridad militar estricta
-- [[toruk|Toruk]] ↔ [[dragon-rojo|Dragón rojo]] — busca venganza y se suma al ataque como fuerza de choque
+- [[toruk|Toruk]] ↔ [[personajes/devorador-de-lava|Dragón rojo]] — busca venganza y se suma al ataque como fuerza de choque
 - [[champi|Champi]] ↔ [[mysha|Mysha]] — vuelve ofendido pero obedece y realiza exploración crítica
 - [[io-campbell|Io Campbell]] ↔ [[layra|Layra]] — percibe su inseguridad como líder y la acompaña emocionalmente
 - [[david-ilcard|David Ilcard]] ↔ [[lebruktik|Lebruktik]] — activa su dominio cuando la negociación se vuelve amenaza directa

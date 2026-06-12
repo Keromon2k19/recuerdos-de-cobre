@@ -18,8 +18,8 @@ menciones:
     - '[[pat-pat|Pat-Pat]]'
     - '[[Bijak]]'
     - '[[constructo-runico|Constructo rúnico]]'
-    - '[[criaturas-de-barro|Criaturas de barro]]'
-    - '[[masa-de-carne-del-ultimo-bastion|Masa de carne del Último Bastión]]'
+    - '[[personajes/criaturas-de-barro-y-piedra|Criaturas de barro]]'
+    - '[[personajes/masa-de-carne-de-hellgrim|Masa de carne del Último Bastión]]'
     - '[[anora|Anora]]'
   lugares:
     - '[[caverna-de-las-puertas-negras|Caverna de las puertas negras]]'
@@ -197,8 +197,8 @@ El grupo prueba con cautela. La carne no reacciona a voces en Undercommon, ni al
 - **[[pat-pat|Pat-Pat]]** — Apoya en el combate con ballesta, se mueve para cubrir al grupo y avisa con gestos cuando conviene retirarse.
 - **[[Bijak]]** — Serpiente de Narcissa que debe salir de su ropa cuando el ácido del constructo empieza a quemarla.
 - **[[constructo-runico|Constructo rúnico]]** — Guardián de piedra con runas celestes, capaz de generar barro, invocar criaturas y absorber daño elemental mediante runas.
-- **[[criaturas-de-barro|Criaturas de barro]]** — Extensiones o sirvientes del constructo que nacen del barro, hostigan al grupo y se evaporan cuando el guardián cae.
-- **[[masa-de-carne-del-ultimo-bastion|Masa de carne del Último Bastión]]** — Restos humanoides deformados y aún respirantes que sostienen un libro y una carta, con el símbolo de Vecna en la palma.
+- **[[personajes/criaturas-de-barro-y-piedra|Criaturas de barro]]** — Extensiones o sirvientes del constructo que nacen del barro, hostigan al grupo y se evaporan cuando el guardián cae.
+- **[[personajes/masa-de-carne-de-hellgrim|Masa de carne del Último Bastión]]** — Restos humanoides deformados y aún respirantes que sostienen un libro y una carta, con el símbolo de Vecna en la palma.
 - **[[anora|Anora]]** — Es mencionada como la persona que regaló la llave a Narcissa y le encarga plantas para pactos del gremio.
 
 ### Lugares
@@ -277,7 +277,7 @@ El grupo prueba con cautela. La carne no reacciona a voces en Undercommon, ni al
 - [[narcissa|Narcissa]] ↔ [[aliento-de-vecna|Aliento de Vecna]] — explica que lo usa para pactos de secreto
 - [[anora|Anora]] ↔ [[narcissa|Narcissa]] — le regaló la llave y le encarga plantas para el gremio
 - [[borok|Borok]] ↔ [[personajes/mystra|Mystra]] — aprendió runas asociadas a ella mediante su maestro
-- [[constructo-runico|Constructo rúnico]] ↔ [[criaturas-de-barro|Criaturas de barro]] — las genera desde el suelo durante el combate
+- [[constructo-runico|Constructo rúnico]] ↔ [[personajes/criaturas-de-barro-y-piedra|Criaturas de barro]] — las genera desde el suelo durante el combate
 - [[borok|Borok]] ↔ [[constructo-runico|Constructo rúnico]] — identifica sus runas de absorción elemental
 - [[narcissa|Narcissa]] ↔ [[constructo-runico|Constructo rúnico]] — lo destruye con Inflict Wounds
 - [[mysha|Mysha]] ↔ [[gema-del-constructo|Gema del constructo]] — la recupera del núcleo agrietado del guardián
@@ -287,9 +287,9 @@ El grupo prueba con cautela. La carne no reacciona a voces en Undercommon, ni al
 - [[layra|Layra]] ↔ [[tribu-draconica-de-layra|Tribu dracónica de Layra]] — encuentra restos de su tribu y guarda un símbolo
 - [[david-ilcard|David Ilcard]] ↔ [[asimares|Asimares]] — encuentra signos de asimares entre los muertos
 - [[pilar|Pilar]] ↔ [[la-rueda-de-la-fortuna|La Rueda de la Fortuna]] — la identifica como el objeto con mayor concentración mágica
-- [[masa-de-carne-del-ultimo-bastion|Masa de carne del Último Bastión]] ↔ [[el-que-todo-lo-contiene|El que todo lo contiene]] — lo sostiene en una de sus manos deformadas
-- [[masa-de-carne-del-ultimo-bastion|Masa de carne del Último Bastión]] ↔ [[la-rueda-de-la-fortuna|La Rueda de la Fortuna]] — la sostiene como objeto de gran poder mágico
-- [[masa-de-carne-del-ultimo-bastion|Masa de carne del Último Bastión]] ↔ [[objetos/simbolo-de-vecna|Símbolo de Vecna]] — lo muestra en la palma cuando se retira el libro
+- [[personajes/masa-de-carne-de-hellgrim|Masa de carne del Último Bastión]] ↔ [[el-que-todo-lo-contiene|El que todo lo contiene]] — lo sostiene en una de sus manos deformadas
+- [[personajes/masa-de-carne-de-hellgrim|Masa de carne del Último Bastión]] ↔ [[la-rueda-de-la-fortuna|La Rueda de la Fortuna]] — la sostiene como objeto de gran poder mágico
+- [[personajes/masa-de-carne-de-hellgrim|Masa de carne del Último Bastión]] ↔ [[objetos/simbolo-de-vecna|Símbolo de Vecna]] — lo muestra en la palma cuando se retira el libro
 - [[narcissa|Narcissa]] ↔ [[el-que-todo-lo-contiene|El que todo lo contiene]] — lo retira usando agua bendita para separarlo de la carne
 
 ### Misterios

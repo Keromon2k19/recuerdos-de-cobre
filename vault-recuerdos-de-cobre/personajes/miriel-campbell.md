@@ -2,11 +2,10 @@
 tipo: personaje
 nombre: Miriel Campbell
 alias:
-  - Miriel
   - Campbell
-  - Miri
   - Mirelle Campbell
   - Señorita Campbell
+  - Miriel Campbell
 apariciones:
   - 18
   - 57
@@ -14,6 +13,7 @@ apariciones:
   - 59
   - 61
   - 65
+  - 66
   - 75
   - 80
 ultima_actualizacion: '2026-05-23T13:04:35.581Z'
@@ -61,6 +61,9 @@ relaciones:
       Los recibe en el Bosque de las Memorias, les da comida para Pilar y
       PatPat, y los transforma en aves.
     episodio: 80
+  - con: '[[facciones/halcones-grises|Halcones Grises]]'
+    tipo: les informa que la crisis de Feywild ya estaba resuelta
+    episodio: 66
 facciones: []
 image: /images/personajes/miriel-campbell.png
 imageAlt: Miriel Campbell
@@ -97,3 +100,7 @@ Miriel Campbell es la jefa de la **Aldea Sheedra** y figura materna de **Io Camp
 ### [[080-recuerdos-de-cobre-63-el-secreto-de-la-biblioteca|Ep. 80 — Recuerdos de Cobre 63: El Secreto de la Biblioteca]]
 - Madre de Io que sostiene magia sobre el Bosque de las Memorias, transforma al grupo en aves y permite que Mysha busque una disculpa con Ravinak.
 
+## Menciones importadas de personajes/campbell
+
+### [[066-recuerdos-de-cobre-535-lore-con-tesito|Ep. 66 — Recuerdos de Cobre 53.5: Lore con tesito]]
+- Informa a los Halcones Grises que el problema de Feywild ya estaba resuelto y ayuda a tranquilizar a las voces de los Renegados.

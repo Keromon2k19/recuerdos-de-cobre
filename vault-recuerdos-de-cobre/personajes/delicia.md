@@ -1,8 +1,7 @@
 ---
 tipo: personaje
 nombre: Delicia
-alias:
-  - Sirena de Cristal
+alias: []
 apariciones:
   - 30
   - 31

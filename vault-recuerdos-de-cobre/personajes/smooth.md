@@ -2,7 +2,6 @@
 tipo: personaje
 nombre: Smooth
 alias:
-  - El Desconocido
   - Smoot
 apariciones:
   - 76

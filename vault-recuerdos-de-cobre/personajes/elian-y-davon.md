@@ -2,7 +2,6 @@
 tipo: personaje
 nombre: Elian y Davon
 alias:
-  - Elian
   - Davon
 apariciones:
   - 74

@@ -17,7 +17,7 @@ menciones:
     - '[[familiar-de-la-matriarca-del-coven-rojo|Familiar de la matriarca del Coven Rojo]]'
     - '[[personajes/dama-del-desierto|Dama del Desierto]]'
     - '[[otza|Otza]]'
-    - '[[matriarca-del-coven-rojo|Matriarca del Coven Rojo]]'
+    - '[[personajes/sina|Matriarca del Coven Rojo]]'
     - '[[presencia-esqueletica|Presencia esqueletica]]'
     - '[[escorpion-de-sar|Escorpion de Sar]]'
   lugares:
@@ -227,7 +227,7 @@ Una presencia esquelética aparece detrás de él y acomoda su mano. La transfor
 - **[[familiar-de-la-matriarca-del-coven-rojo|Familiar de la matriarca del Coven Rojo]]** — Lobo blanco de ojos rojos y dos colas, herido en el Plano Etereo, que advierte a Selenne que vaya al Coven Negro y no se deje enganar.
 - **[[personajes/dama-del-desierto|Dama del Desierto]]** — Entidad cuya maldicion afecta al grupo y cuya magia, segun Zitzil, bendice a los onuti y esta profundamente ligada a Sar.
 - **[[otza|Otza]]** — Cadaver del lider derrotado que el grupo carga en un escorpion como posible prueba de fuerza ante los onuti.
-- **[[matriarca-del-coven-rojo|Matriarca del Coven Rojo]]** — Figura que envio a su familiar al Plano Etereo tras prever una catastrofe apenas segundos antes de que ocurriera.
+- **[[personajes/sina|Matriarca del Coven Rojo]]** — Figura que envio a su familiar al Plano Etereo tras prever una catastrofe apenas segundos antes de que ocurriera.
 - **[[presencia-esqueletica|Presencia esqueletica]]** — Entidad que aparece en el sueno de Borok, le ofrece poder para proteger a los debiles y transforma su dedo indice en hueso.
 - **[[escorpion-de-sar|Escorpion de Sar]]** — Montura y aliado de Sar que queda rostizado durante la persecucion y es guardado dentro de una piedra.
 
@@ -314,7 +314,7 @@ Una presencia esquelética aparece detrás de él y acomoda su mano. La transfor
 - [[sar|Sar]] ↔ [[personajes/dama-del-desierto|Dama del Desierto]] — esta profundamente ligado a
 - [[mysha|Mysha]] ↔ [[familiar-de-la-matriarca-del-coven-rojo|Familiar de la matriarca del Coven Rojo]] — recibe advertencia de
 - [[familiar-de-la-matriarca-del-coven-rojo|Familiar de la matriarca del Coven Rojo]] ↔ [[coven-negro|Coven Negro]] — dirige a Selenne hacia
-- [[familiar-de-la-matriarca-del-coven-rojo|Familiar de la matriarca del Coven Rojo]] ↔ [[matriarca-del-coven-rojo|Matriarca del Coven Rojo]] — sirve a
+- [[familiar-de-la-matriarca-del-coven-rojo|Familiar de la matriarca del Coven Rojo]] ↔ [[personajes/sina|Matriarca del Coven Rojo]] — sirve a
 - [[mysha|Mysha]] ↔ [[coven-negro|Coven Negro]] — decide priorizar
 - [[mysha|Mysha]] ↔ [[the-stars|The Stars]] — usa para entrar al Plano Etereo
 - [[champi|Champi]] ↔ [[mysha|Mysha]] — advierte del ataque

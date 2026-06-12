@@ -1,8 +1,7 @@
 ---
 tipo: personaje
 nombre: Clementia
-alias:
-  - Sirena de Cristal
+alias: []
 apariciones:
   - 30
   - 31

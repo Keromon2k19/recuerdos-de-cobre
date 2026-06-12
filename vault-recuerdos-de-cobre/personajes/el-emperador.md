@@ -4,7 +4,6 @@ nombre: El Emperador
 alias:
   - Diemperor
   - The Emperor
-  - David
   - Emperador
 apariciones:
   - 67

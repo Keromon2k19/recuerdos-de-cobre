@@ -54,7 +54,7 @@ relaciones:
   - con: '[[anora|Anora]]'
     tipo: lo menciona como posible concejal conectado con el culto
     episodio: 21
-  - con: '[[senor-johnson|Señor Johnson]]'
+  - con: '[[personajes/carl-johnson|Señor Johnson]]'
     tipo: intenta despojarle las tierras
     episodio: 2
 facciones:

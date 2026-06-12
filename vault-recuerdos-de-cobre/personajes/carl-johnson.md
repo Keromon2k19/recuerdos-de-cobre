@@ -5,7 +5,10 @@ alias:
   - Carl Johnson
   - CJ
   - Johnson
+  - Señor Johnson
 apariciones:
+  - 1
+  - 2
   - 15
   - 16
   - 17
@@ -17,7 +20,7 @@ rol: NPC
 tags:
   - npc
 relaciones:
-  - con: 'Grupo'
+  - con: Grupo
     tipo: los recibe como ayuda prometida del gremio
     episodio: 15
   - con: '[[andrew-mironov|Andrew Mironov]]'
@@ -35,7 +38,7 @@ relaciones:
   - con: '[[sargento-gaston-chersey|Sargento Gastón Chersey]]'
     tipo: lo interroga para identificar al grupo
     episodio: 19
-  - con: 'Grupo'
+  - con: Grupo
     tipo: los protege negando saber nombres u origen
     episodio: 19
   - con: '[[anora|Anora]]'
@@ -43,6 +46,24 @@ relaciones:
       usa el trato con sus agricultores para conectar Lorenza con la red
       economica de la Hermandad de Cobre
     episodio: 66
+  - con: '[[anora|Anora]]'
+    tipo: encarga interceptarlo y hacerlo firmar
+    episodio: 1
+  - con: '[[facciones/hermandad-de-cobre|Hermandad de Cobre]]'
+    tipo: se afilia firmando el contrato
+    episodio: 2
+  - con: '[[david-ilcard|David Ilcard]]'
+    tipo: negocia y cierra la afiliación
+    episodio: 2
+  - con: '[[narcissa|Narcissa]]'
+    tipo: lo presiona y persuade
+    episodio: 2
+  - con: '[[anora|Anora]]'
+    tipo: le ofreció el trato por carta
+    episodio: 2
+  - con: '[[andrew-mironov|Andrew Mironov]]'
+    tipo: intenta despojarle las tierras
+    episodio: 2
 facciones:
   - Aliados de Carl Johnson
 region: Lorenza
@@ -67,3 +88,11 @@ region: Lorenza
 
 ### [[066-recuerdos-de-cobre-535-lore-con-tesito|Ep. 66 — Recuerdos de Cobre 53.5: Lore con tesito]]
 - Su trato inicial con el grupo en Lorenza queda conectado con la entrada de sus agricultores en la red de la Hermandad de Cobre y los acuerdos con los enanos.
+
+## Menciones importadas de personajes/senor-johnson
+
+### [[001-recuerdos-de-cobre-1-un-voto-de-confianza|Ep. 1 — Recuerdos de Cobre 1: Un Voto de Confianza]]
+- Objetivo de la misión que no llega a aparecer: un civil de Lorenza con bastón, sombrero de paja y manos marcadas, al que el grupo debe interceptar y hacerle firmar un documento.
+
+### [[002-recuerdos-de-cobre-2-parte-1-bajo-la-sombra-del-tsunami|Ep. 2 — Recuerdos de Cobre 2, Parte 1: Bajo la Sombra del Tsunami]]
+- Se revela como Carl Johnson, granjero viejo de barba gris, sombrero de paja, bastón y palmas marcadas; representa a su comunidad asediada por gnolls y, angustiado por sus dos hijas, firma el contrato para afiliarse a la Hermandad de Cobre. Revela el rumor sobre el concejal Mironov.

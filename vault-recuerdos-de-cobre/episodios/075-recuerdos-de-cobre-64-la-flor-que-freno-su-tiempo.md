@@ -20,7 +20,7 @@ menciones:
     - '[[darko|Darko]]'
     - '[[aylor-indel|Aylor Indel]]'
     - '[[miriel-campbell|Miriel Campbell]]'
-    - '[[tali|Tali]]'
+    - '[[personajes/talisa-talashon|Tali]]'
     - '[[borok|Borok]]'
     - '[[tana|Tana]]'
     - '[[phelan|Phelan]]'
@@ -280,7 +280,7 @@ Darko habia pedido que la protegieran. Culpa especialmente a Mysha porque estaba
 - **[[darko|Darko]]** — Al enterarse de que Narcissa quedo atrapada, culpa al grupo y ataca a Mysha antes de derrumbarse llorando sobre ella.
 - **[[aylor-indel|Aylor Indel]]** — Mago elfico vinculado a Lefaye y Anora que llega al Santuario de los Libres, lleva al grupo a la Metropolis y menciona a Tali como posible ayuda.
 - **[[miriel-campbell|Miriel Campbell]]** — Recibe al grupo tras la trampa de Solaria y confirma que no puede disipar un efecto de tal escala.
-- **[[tali|Tali]]** — Paladina de Luzne que Anora y Aylor consideran una posible clave para usar un Dispel Magic suficientemente poderoso.
+- **[[personajes/talisa-talashon|Tali]]** — Paladina de Luzne que Anora y Aylor consideran una posible clave para usar un Dispel Magic suficientemente poderoso.
 - **[[borok|Borok]]** — Posee un objeto capaz de disipar magia al maximo nivel y es localizado con los renegados, a punto de cruzar el desierto con un ejercito de muertos.
 - **[[tana|Tana]]** — Responde al Sending de Mysha, confirma la destruccion del Wendigo, la muerte de Felan y su ubicacion en la ciudad dracónida.
 - **[[phelan|Phelan]]** — No responde al Sending porque murio defendiendo a Tana.
@@ -376,7 +376,7 @@ Darko habia pedido que la protegieran. Culpa especialmente a Mysha porque estaba
 - [[narcissa|Narcissa]] ↔ [[aeron-sylvaris|Aeron Sylvaris]] — Fue comprada por su casa y usada en la masacre de honor que destruyo a los Sylvaris.
 - [[narcissa|Narcissa]] ↔ [[Eldrin Van Lorten]] — Siente una atraccion hacia su libro de transmutacion y queda atrapada al tocarlo.
 - [[Navish]] ↔ [[narcissa|Narcissa]] — Queda atrapado nuevamente con ella en la trampa temporal y no logra conectarse con su mente.
-- [[anora|Anora]] ↔ [[tali|Tali]] — La considera una posible clave para liberar a Narcissa mediante Dispel Magic de gran poder.
+- [[anora|Anora]] ↔ [[personajes/talisa-talashon|Tali]] — La considera una posible clave para liberar a Narcissa mediante Dispel Magic de gran poder.
 - [[anora|Anora]] ↔ [[borok|Borok]] — Ve el objeto de Borok como una alternativa para conseguir una disipacion de maximo nivel.
 - [[aylor-indel|Aylor Indel]] ↔ [[te-de-medianoche|Te de Medianoche]] — Los ayuda a llegar a la Metropolis y aporta contexto sobre Siltris, Tali y las limitaciones de la magia elfica.
 - [[mysha|Mysha]] ↔ [[tana|Tana]] — La contacta por Sending y recibe noticias de la muerte de Felan y la ciudad dracónida.

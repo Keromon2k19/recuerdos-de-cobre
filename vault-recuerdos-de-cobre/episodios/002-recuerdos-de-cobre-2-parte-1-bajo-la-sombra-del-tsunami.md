@@ -12,7 +12,7 @@ menciones:
     - '[[david-ilcard|David Ilcard]]'
     - '[[io-campbell|Io Campbell]]'
     - '[[champi|Champi]]'
-    - '[[senor-johnson|Señor Johnson]]'
+    - '[[personajes/carl-johnson|Señor Johnson]]'
     - '[[andrew-mironov|Andrew Mironov]]'
   lugares:
     - '[[alcantarillas-antiguas|Alcantarillas antiguas]]'
@@ -104,7 +104,7 @@ Afuera, Io descubre que la capa de Narcissa esconde una **serpiente negra**. Sue
 - **[[david-ilcard|David Ilcard]]** — Lidera la negociación que recluta a Carl Johnson y le explica el contrato; conoce el mapa de las alcantarillas y elige el desvío que salva al grupo del caudal principal del pre-tsunami.
 - **[[io-campbell|Io Campbell]]** — Juega con Layra en la playa, descubre la serpiente negra de Narcissa al intentar pegarle, y tiende una liana pegajosa para que el grupo trepe por la boca de tormenta hacia la ciudad.
 - **[[champi|Champi]]** — Sobrevuela la playa vigilando sin novedad, baja a comer una galletita y guía a Veltra de vuelta a la Metrópolis por las calles.
-- **[[senor-johnson|Señor Johnson]]** — Se revela como Carl Johnson, granjero viejo de barba gris, sombrero de paja, bastón y palmas marcadas; representa a su comunidad asediada por gnolls y, angustiado por sus dos hijas, firma el contrato para afiliarse a la Hermandad de Cobre. Revela el rumor sobre el concejal Mironov.
+- **[[personajes/carl-johnson|Señor Johnson]]** — Se revela como Carl Johnson, granjero viejo de barba gris, sombrero de paja, bastón y palmas marcadas; representa a su comunidad asediada por gnolls y, angustiado por sus dos hijas, firma el contrato para afiliarse a la Hermandad de Cobre. Revela el rumor sobre el concejal Mironov.
 - **[[andrew-mironov|Andrew Mironov]]** — Concejal de justicia y administración de bienes; según el rumor que cuenta Johnson, intenta comprar o despojar las tierras de los granjeros. No aparece.
 
 ### Lugares
@@ -144,11 +144,11 @@ Afuera, Io descubre que la capa de Narcissa esconde una **serpiente negra**. Sue
 
 ### Relaciones
 - [[mysha|Mysha]] ↔ [[champi|Champi]] — familiar que la guía de vuelta
-- [[senor-johnson|Señor Johnson]] ↔ [[facciones/hermandad-de-cobre|Hermandad de Cobre]] — se afilia firmando el contrato
-- [[david-ilcard|David Ilcard]] ↔ [[senor-johnson|Señor Johnson]] — negocia y cierra la afiliación
-- [[narcissa|Narcissa]] ↔ [[senor-johnson|Señor Johnson]] — lo presiona y persuade
-- [[anora|Anora]] ↔ [[senor-johnson|Señor Johnson]] — le ofreció el trato por carta
-- [[andrew-mironov|Andrew Mironov]] ↔ [[senor-johnson|Señor Johnson]] — intenta despojarle las tierras
+- [[personajes/carl-johnson|Señor Johnson]] ↔ [[facciones/hermandad-de-cobre|Hermandad de Cobre]] — se afilia firmando el contrato
+- [[david-ilcard|David Ilcard]] ↔ [[personajes/carl-johnson|Señor Johnson]] — negocia y cierra la afiliación
+- [[narcissa|Narcissa]] ↔ [[personajes/carl-johnson|Señor Johnson]] — lo presiona y persuade
+- [[anora|Anora]] ↔ [[personajes/carl-johnson|Señor Johnson]] — le ofreció el trato por carta
+- [[andrew-mironov|Andrew Mironov]] ↔ [[personajes/carl-johnson|Señor Johnson]] — intenta despojarle las tierras
 - [[narcissa|Narcissa]] ↔ [[borok|Borok]] — lo cura con Cure Wounds
 - [[narcissa|Narcissa]] ↔ [[mysha|Mysha]] — le da poción y le regala el button fox
 - [[narcissa|Narcissa]] ↔ [[io-campbell|Io Campbell]] — le da una poción curativa

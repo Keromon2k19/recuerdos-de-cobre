@@ -15,7 +15,7 @@ menciones:
     - '[[darko|Darko]]'
     - '[[barbara|Bárbara]]'
     - '[[tina|Tina]]'
-    - '[[padre-de-tina|Padre de Tina]]'
+    - '[[personajes/nestor|Padre de Tina]]'
     - '[[mujer-yadarkai|Mujer Yadarkai]]'
     - '[[vendedor-de-la-zona-de-las-capas|Vendedor de la zona de las capas]]'
     - '[[anora|Anora]]'
@@ -118,7 +118,7 @@ En la habitación de Tina, Layra (con su trato amable) y Narcissa ganan la confi
 - **[[darko|Darko]]** — Aparece en el rincón de Narcissa (a quien llama Sisa); reservado y sin demostrar emociones, curioso con los insectos pero les teme. Trae y pega la misión del asesino de caballos y aporta contexto sobre las muertes y desapariciones de niños y la zona de las capas.
 - **[[barbara|Bárbara]]** — Abre la puerta de Alvarado 1811 asustada y sumisa; hace pan para los que vinieron a ayudar y pide que no mencionen al gremio en voz alta. Explica que su hija Tina despierta gritando y lastimada; le había comprado a Narcissa los hongos anti-espíritus que no funcionaron.
 - **[[tina|Tina]]** — Niña de ~10 años, humana de orejas algo puntiagudas, asustada (~6-7/10). Despierta gritando diciendo que hay monstruos; tiene moretones de apresamiento (muñeca, tobillo) y cortes derechos y parejos —hechos, no de animal— casi todos antiguos salvo uno reciente sobre la rodilla; se queja de dolor de estómago y cabeza.
-- **[[padre-de-tina|Padre de Tina]]** — Maquinista de la estación (traje barato 'elegante', turno de día); no está durante la investigación y aparece caminando hacia la casa al cierre. Una de sus camisas tiene sangre seca ajena en el puño.
+- **[[personajes/nestor|Padre de Tina]]** — Maquinista de la estación (traje barato 'elegante', turno de día); no está durante la investigación y aparece caminando hacia la casa al cierre. Una de sus camisas tiene sangre seca ajena en el puño.
 - **[[mujer-yadarkai|Mujer Yadarkai]]** — Vigila la casa de Bárbara desde ~30 pies; piel blanca, ojos totalmente negros, marcas como de humo tatuadas, espada a la espalda. Dice que la Reina Cuervo marcó el lugar y que hay 'cosas oscuras', regala un ojo amarillo como bendición y desaparece como una sombra al llegar el padre.
 - **[[vendedor-de-la-zona-de-las-capas|Vendedor de la zona de las capas]]** — Anciano flaco y desnutrido, verruga en la nariz, pelo gris largo, ojos verdosos; rasga madera contra metal para llamar la atención y vende la droga vegetal dandrium / green eye. Le cambia mercancía a Mysha por un sándwich.
 - **[[anora|Anora]]** — No aparece: en la zona de las capas su imagen está en grafitis tachada con equis y con soga al cuello, profundamente odiada donde idolatran a los concejales.
@@ -165,7 +165,7 @@ En la habitación de Tina, Layra (con su trato amable) y Narcissa ganan la confi
 - [[darko|Darko]] ↔ [[facciones/hermandad-de-cobre|Hermandad de Cobre]] — trae la misión y aporta contexto
 - [[narcissa|Narcissa]] ↔ [[barbara|Bárbara]] — le vendió los hongos y atiende su contrato
 - [[barbara|Bárbara]] ↔ [[tina|Tina]] — madre
-- [[padre-de-tina|Padre de Tina]] ↔ [[tina|Tina]] — padre (sospecha de maltrato/ritual)
+- [[personajes/nestor|Padre de Tina]] ↔ [[tina|Tina]] — padre (sospecha de maltrato/ritual)
 - [[barbara|Bárbara]] ↔ [[facciones/hermandad-de-cobre|Hermandad de Cobre]] — contrató al gremio (visiones extrañas)
 - [[layra|Layra]] ↔ [[tina|Tina]] — gana su confianza
 - [[narcissa|Narcissa]] ↔ [[tina|Tina]] — le revisa las heridas y le da un bálsamo
@@ -177,7 +177,7 @@ En la habitación de Tina, Layra (con su trato amable) y Narcissa ganan la confi
 - [[david-ilcard|David Ilcard]] ↔ [[zona-de-las-capas|Zona de las capas]] — proviene de ahí
 - [[borok|Borok]] ↔ [[facciones/renegados|Renegados]] — proviene de esa tribu
 - [[anora|Anora]] ↔ [[zona-de-las-capas|Zona de las capas]] — es odiada allí (grafitis con soga)
-- [[david-ilcard|David Ilcard]] ↔ [[padre-de-tina|Padre de Tina]] — lo ve llegar mientras vigila
+- [[david-ilcard|David Ilcard]] ↔ [[personajes/nestor|Padre de Tina]] — lo ve llegar mientras vigila
 
 ### Misterios
 - ¿Qué causa realmente las 'visiones', pesadillas y marcas de Tina? Los cortes parejos y hechos y los moretones de apresamiento apuntan a maltrato o ritual, no a un monstruo.

@@ -4,6 +4,8 @@ nombre: Darko
 alias:
   - el de la marca blanca
   - Daga Invisible
+  - Marco
+  - Darko
 apariciones:
   - 4
   - 6
@@ -12,6 +14,7 @@ apariciones:
   - 11
   - 12
   - 13
+  - 21
   - 22
   - 66
   - 67
@@ -155,3 +158,7 @@ Darko es un NPC de la [[facciones/hermandad-de-cobre|Hermandad de Cobre]] en la 
 ### [[081-recuerdos-de-cobre-65-los-esclavos-de-siltris|Ep. 81 — Recuerdos de Cobre 65: Los esclavos de Siltris]]
 - No aparece directamente, pero Eryon le deja una nota prometiendo corregir el error y volver con Narcissa.
 
+## Menciones importadas de personajes/marco
+
+### [[021-recuerdos-de-cobre-14-el-inicio-de-los-liver-pebbles-kidney|Ep. 21 — Recuerdos de cobre 14: El inicio de los Liver Pebbles (kidney)]]
+- Aliado mencionado por Anora y Celeste como parte de la investigacion que conecta el culto con un concejal.

@@ -14,7 +14,7 @@ menciones:
     - '[[champi|Champi]]'
     - '[[barbara|Bárbara]]'
     - '[[tina|Tina]]'
-    - '[[padre-de-tina|Padre de Tina]]'
+    - '[[personajes/nestor|Padre de Tina]]'
     - '[[lider-del-culto|Líder del culto]]'
     - '[[sacerdotisa-de-capa-negra|Sacerdotisa de capa negra]]'
     - '[[ocultistas-de-capa-roja|Ocultistas de capa roja]]'
@@ -106,7 +106,7 @@ Estalla el combate. Mysha cambia a **Veltra** (Blood Armor, espada gigante, inti
 - **[[champi|Champi]]** — Búho familiar de Mysha; está con ella durante la incursión al sótano.
 - **[[barbara|Bárbara]]** — Susurra 'no debería estar aquí todavía' al llegar el padre; se quiebra ante Narcissa y admite conocer el lado oscuro de su esposo; recibe oro y se lleva a Tina a pasear para protegerla.
 - **[[tina|Tina]]** — Sonríe de forma sincera y perturbadora al creer que llegó su padre; queda en su cuarto y luego es sacada a pasear por Bárbara mientras ocurre el combate.
-- **[[padre-de-tina|Padre de Tina]]** — Maquinista (~56-60, ojo izquierdo dañado, ojos marrones cansados) que llega furioso, llama criminales al grupo y niega el abuso; Narcissa lo duerme con Sleep y queda atado en su cama. Implicado con el culto del sótano.
+- **[[personajes/nestor|Padre de Tina]]** — Maquinista (~56-60, ojo izquierdo dañado, ojos marrones cansados) que llega furioso, llama criminales al grupo y niega el abuso; Narcissa lo duerme con Sleep y queda atado en su cama. Implicado con el culto del sótano.
 - **[[lider-del-culto|Líder del culto]]** — Sobre una tarima con un libro: calvo, sin cejas, rostro cortado. Ordena 'traer toda la evidencia' y se teletransporta huyendo en una estela de rayos azules, llevándose el libro.
 - **[[sacerdotisa-de-capa-negra|Sacerdotisa de capa negra]]** — Maneja magia necrótica (Arms of Hadar, Sword Burst, escudo de humo oscuro) y pisotea dos cadáveres de niños; rodeada, es noqueada con vida por Borok y capturada por el grupo.
 - **[[ocultistas-de-capa-roja|Ocultistas de capa roja]]** — Cultistas de rostros enfermos y ojos verdosos, con cimitarras y dagas, que atacan al grupo en el sótano; casi todos abatidos en el combate.
@@ -142,12 +142,12 @@ Estalla el combate. Mysha cambia a **Veltra** (Blood Armor, espada gigante, inti
 
 ### Relaciones
 - [[mysha|Mysha]] ↔ [[champi|Champi]] — familiar
-- [[padre-de-tina|Padre de Tina]] ↔ [[tina|Tina]] — padre (abuso y vínculo con el culto)
+- [[personajes/nestor|Padre de Tina]] ↔ [[tina|Tina]] — padre (abuso y vínculo con el culto)
 - [[barbara|Bárbara]] ↔ [[tina|Tina]] — madre que la protege
-- [[david-ilcard|David Ilcard]] ↔ [[padre-de-tina|Padre de Tina]] — lo demora afuera
-- [[narcissa|Narcissa]] ↔ [[padre-de-tina|Padre de Tina]] — lo duerme con Sleep y lo ata
+- [[david-ilcard|David Ilcard]] ↔ [[personajes/nestor|Padre de Tina]] — lo demora afuera
+- [[narcissa|Narcissa]] ↔ [[personajes/nestor|Padre de Tina]] — lo duerme con Sleep y lo ata
 - [[narcissa|Narcissa]] ↔ [[barbara|Bárbara]] — le confirma el abuso y el ritual
-- [[layra|Layra]] ↔ [[padre-de-tina|Padre de Tina]] — congela la cerradura de su cuarto
+- [[layra|Layra]] ↔ [[personajes/nestor|Padre de Tina]] — congela la cerradura de su cuarto
 - [[lider-del-culto|Líder del culto]] ↔ [[el-culto-de-la-zona-de-las-capas|El Culto de la zona de las capas]] — líder que escapa con el libro
 - [[sacerdotisa-de-capa-negra|Sacerdotisa de capa negra]] ↔ [[el-culto-de-la-zona-de-las-capas|El Culto de la zona de las capas]] — miembro capturada con vida
 - [[borok|Borok]] ↔ [[sacerdotisa-de-capa-negra|Sacerdotisa de capa negra]] — la noquea con vida

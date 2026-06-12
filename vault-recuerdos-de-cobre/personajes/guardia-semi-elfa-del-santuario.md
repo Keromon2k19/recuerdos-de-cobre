@@ -9,7 +9,7 @@ rol: NPC
 tags:
   - npc
 relaciones:
-  - con: '[[nim-iglazer|Nim Iglazer]]'
+  - con: '[[personajes/nim|Nim Iglazer]]'
     tipo: advierte que puede pedir ayuda
     episodio: 27
 facciones: []

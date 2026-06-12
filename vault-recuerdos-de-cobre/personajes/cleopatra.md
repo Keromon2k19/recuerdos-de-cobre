@@ -3,8 +3,7 @@ tipo: personaje
 nombre: Cleopatra
 image: /images/personajes/cleopatra.webp
 imageAlt: Cleopatra
-alias:
-  - Cleo
+alias: []
 apariciones:
   - 75
 ultima_actualizacion: '2026-05-23T12:34:11.704Z'

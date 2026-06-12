@@ -1,8 +1,7 @@
 ---
 tipo: personaje
 nombre: Selenne
-alias:
-  - Mysha
+alias: []
 apariciones:
   - 18
   - 19

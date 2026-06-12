@@ -16,7 +16,7 @@ menciones:
     - '[[layra|Layra]]'
     - '[[champi|Champi]]'
     - '[[sina|Sina]]'
-    - '[[familiar-de-la-matriarca|Familiar de la matriarca]]'
+    - '[[personajes/familiar-de-la-matriarca-del-coven-rojo|Familiar de la matriarca]]'
     - '[[Bijak]]'
     - '[[lexia|Lexia]]'
     - '[[raven-queen|Raven Queen]]'
@@ -354,7 +354,7 @@ El deva intenta quitárselo de encima, cae hacia atrás y Raylen queda aferrado 
 - **[[layra|Layra]]** — Sugiere investigar la escalera con ilusiones, corta el Darkness de Arya con Counterspell y crea una imagen silenciosa de un dragón azul durante el combate contra el deva.
 - **[[champi|Champi]]** — Acompaña a Mysha al plano espiritual, lamenta que hayan llegado tarde para salvar al familiar de Sina y se horroriza ante la amenaza final del vínculo corrompido.
 - **[[sina|Sina]]** — Matriarca del Coven Rojo cuya casa, libro, ropa ceremonial, familiar y advertencia sobre la escalera guían las revelaciones del episodio.
-- **[[familiar-de-la-matriarca|Familiar de la matriarca]]** — Zorro o lobo blanco ligado a Sina, cubierto por esencia rosada en el plano espiritual, que se disuelve tras decirle a Mysha que se vengará de ellos.
+- **[[personajes/familiar-de-la-matriarca-del-coven-rojo|Familiar de la matriarca]]** — Zorro o lobo blanco ligado a Sina, cubierto por esencia rosada en el plano espiritual, que se disuelve tras decirle a Mysha que se vengará de ellos.
 - **[[Bijak]]** — Compañero espiritual de Narcissa visto por Mysha como un hilo que sale del pecho de ella, un caso raro donde el animal parece haber encontrado a la humanoide.
 - **[[lexia|Lexia]]** — Matriarca del Coven Verde mencionada en el recuerdo de Mysha como responsable de buscar el ritual de ascensión y acusar al Coven Rojo de una traición milenaria.
 - **[[raven-queen|Raven Queen]]** — Diosa o figura vinculada por Arya y Mysha con la primera matriarca, el borrado de memorias y la posible ascensión del Coven Rojo.
@@ -480,8 +480,8 @@ El deva intenta quitárselo de encima, cae hacia atrás y Raylen queda aferrado 
 - [[mysha|Mysha]] ↔ [[veltra|Veltra]] — Comparte cuerpo y memoria; Veltra emerge cuando el trauma de la masacre se vuelve insoportable.
 - [[veltra|Veltra]] ↔ [[grupo-de-mysha|Grupo de Mysha]] — Les pide que no la abandonen ni mueran, buscando seguridad emocional tras el recuerdo recuperado.
 - [[mysha|Mysha]] ↔ [[sina|Sina]] — Investiga la casa, libro, ropa y familiar de la matriarca para recuperar la historia perdida de su madre.
-- [[mysha|Mysha]] ↔ [[familiar-de-la-matriarca|Familiar de la matriarca]] — Intenta hablar con él en el plano espiritual, pero lo ve disolverse tras una amenaza de venganza.
-- [[champi|Champi]] ↔ [[familiar-de-la-matriarca|Familiar de la matriarca]] — Se horroriza ante la amenaza final del familiar y afirma que él jamás diría algo así a Mysha.
+- [[mysha|Mysha]] ↔ [[personajes/familiar-de-la-matriarca-del-coven-rojo|Familiar de la matriarca]] — Intenta hablar con él en el plano espiritual, pero lo ve disolverse tras una amenaza de venganza.
+- [[champi|Champi]] ↔ [[personajes/familiar-de-la-matriarca-del-coven-rojo|Familiar de la matriarca]] — Se horroriza ante la amenaza final del familiar y afirma que él jamás diría algo así a Mysha.
 - [[borok|Borok]] ↔ [[mysha|Mysha]] — Acepta el Coven Companion porque quiere acompañarla y formar parte de su camino en el Coven.
 - [[mysha|Mysha]] ↔ [[borok|Borok]] — Oficia el ritual de sangre que lo vuelve hermano del Coven y lo calma cuando entra en pánico.
 - [[borok|Borok]] ↔ [[varita-de-borok|Varita de Borok]] — La recibe durante el ritual y queda conectado a ella cuando raíces entran en su mano y beben sangre.
@@ -559,7 +559,7 @@ El deva intenta quitárselo de encima, cae hacia atrás y Raylen queda aferrado 
 ### Decisiones clave
 - El grupo decide acompañar a Veltra y no dejarla sola después del recuerdo de la masacre. ([[veltra|Veltra]], [[grupo-de-mysha|Grupo de Mysha]])
 - Mysha decide entrar a la casa de la matriarca y revisar la escalera que no recuerda de su infancia. ([[mysha|Mysha]])
-- Mysha usa la Carta de las Estrellas para hablar con el familiar de Sina antes de que la esencia rosada lo consuma. ([[mysha|Mysha]], [[familiar-de-la-matriarca|Familiar de la matriarca]], [[champi|Champi]])
+- Mysha usa la Carta de las Estrellas para hablar con el familiar de Sina antes de que la esencia rosada lo consuma. ([[mysha|Mysha]], [[personajes/familiar-de-la-matriarca-del-coven-rojo|Familiar de la matriarca]], [[champi|Champi]])
 - El grupo decide no bajar inmediatamente por la escalera pese a ver una luz mágica al fondo. ([[mysha|Mysha]], [[grupo-de-mysha|Grupo de Mysha]])
 - Mysha decide retirar y ordenar los restos del Coven para usarlos más adelante en un ritual. ([[mysha|Mysha]], [[narcissa|Narcissa]], [[grupo-de-mysha|Grupo de Mysha]])
 - Narcissa decide hacer un adorno floral con Lycoris Radiata como gesto de respeto hacia los huesos. ([[narcissa|Narcissa]])

@@ -72,7 +72,7 @@ relaciones:
   - con: '[[io-campbell|Io Campbell]]'
     tipo: compañeros de misión en las alcantarillas
     episodio: 1
-  - con: '[[senor-johnson|Señor Johnson]]'
+  - con: '[[personajes/carl-johnson|Señor Johnson]]'
     tipo: negocia y cierra la afiliación
     episodio: 2
   - con: '[[borok|Borok]]'
@@ -99,10 +99,10 @@ relaciones:
   - con: '[[zona-de-las-capas|Zona de las capas]]'
     tipo: proviene de ahí
     episodio: 4
-  - con: '[[padre-de-tina|Padre de Tina]]'
+  - con: '[[personajes/nestor|Padre de Tina]]'
     tipo: lo ve llegar mientras vigila
     episodio: 4
-  - con: '[[padre-de-tina|Padre de Tina]]'
+  - con: '[[personajes/nestor|Padre de Tina]]'
     tipo: lo demora afuera
     episodio: 5
   - con: '[[ocultistas-de-capa-roja|Ocultistas de capa roja]]'
@@ -171,7 +171,7 @@ relaciones:
   - con: '[[io-campbell|Io Campbell]]'
     tipo: rescata de la carpa
     episodio: 25
-  - con: '[[nim-iglazer|Nim Iglazer]]'
+  - con: '[[personajes/nim|Nim Iglazer]]'
     tipo: descubre historia de
     episodio: 27
   - con: '[[lidia|Lidia]]'

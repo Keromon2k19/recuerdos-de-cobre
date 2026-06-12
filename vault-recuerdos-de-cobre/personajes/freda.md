@@ -10,7 +10,7 @@ rol: NPC
 tags:
   - npc
 relaciones:
-  - con: '[[nim-iglazer|Nim Iglazer]]'
+  - con: '[[personajes/nim|Nim Iglazer]]'
     tipo: vende
     episodio: 27
 facciones:

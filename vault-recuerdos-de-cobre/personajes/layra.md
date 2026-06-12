@@ -125,7 +125,7 @@ relaciones:
   - con: '[[tina|Tina]]'
     tipo: gana su confianza
     episodio: 4
-  - con: '[[padre-de-tina|Padre de Tina]]'
+  - con: '[[personajes/nestor|Padre de Tina]]'
     tipo: congela la cerradura de su cuarto
     episodio: 5
   - con: '[[narcissa|Narcissa]]'
@@ -275,7 +275,7 @@ relaciones:
       Encuentra su flor de hielo rota en el pecho de Teodora y la reconstruye
       con lluvia.
     episodio: 35
-  - con: '[[teodora|Teodora]]'
+  - con: '[[personajes/teodora-malister|Teodora]]'
     tipo: Se disculpa y le regala una rosa de hielo eterno.
     episodio: 28
   - con: '[[rylen|Rylen]]'
@@ -636,7 +636,7 @@ Layra aprendió la magia de su padre y creció con el deseo de que el mundo cono
 
 - **Familia:** [[corinn|Corinn]] (padre) · [[laais|Laais]] (madre).
 - **Party:** [[io-campbell|Io]] · [[mysha|Misha]] · [[narcissa|Narcissa]] · [[rylen|Raylen]] · [[eryon|Eryon]] · [[borok|Borok]] · [[david-ilcard|David]] · [[pilar|Pilar]] · [[pat-pat|Pat Pat]] · [[darko|Darko]].
-- **Amistades:** [[pablo|Pablo]] · [[Cat-ty]] · [[teodora|Teodora]] · [[nabish|Nabish]] · [[anora|Annora]] · [[talisa-talashon|Talisa]] · [[Leira]] · [[Utuk]] · [[zhaar|Zhaar]] · [[dracelas-luminis|Drazelas Luminis]] · [[Lacky]] · los sapos que viven en su casa.
+- **Amistades:** [[pablo|Pablo]] · [[Cat-ty]] · [[personajes/teodora-malister|Teodora]] · [[nabish|Nabish]] · [[anora|Annora]] · [[talisa-talashon|Talisa]] · [[Leira]] · [[Utuk]] · [[personajes/sar|Zhaar]] · [[dracelas-luminis|Drazelas Luminis]] · [[Lacky]] · los sapos que viven en su casa.
 - **Conocidos:** [[personajes/creador-de-glaciares|El creador de Glaciares]] · [[amari-zaled|Amari Zaled]] · [[personajes/bandido-verde|El Bandido Verde]] · [[capitan-foster|Capitan Foster]].
 - **Enemigos:** [[lebruktik|Lebrudik]] · [[personajes/wendigo|El Wendigo]] · [[el-emperador|The Emperor]].
 

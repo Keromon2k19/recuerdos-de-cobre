@@ -3,11 +3,17 @@ tipo: personaje
 nombre: Nim
 alias:
   - Nym
+  - Nim Iglazer
+  - Nip
+  - Iglazer
+  - Nim
 apariciones:
+  - 27
   - 30
   - 31
   - 33
   - 35
+  - 66
   - 80
 ultima_actualizacion: '2026-05-23T13:04:35.591Z'
 rol: NPC
@@ -32,6 +38,18 @@ relaciones:
   - con: '[[el-corruptor|El Corruptor]]'
     tipo: Usa su cabeza como mensaje y prueba de amenaza.
     episodio: 80
+  - con: '[[david-ilcard|David Ilcard]]'
+    tipo: descubre historia de
+    episodio: 27
+  - con: '[[narcissa|Narcissa]]'
+    tipo: compra y cura
+    episodio: 27
+  - con: '[[freda|Freda]]'
+    tipo: vende
+    episodio: 27
+  - con: '[[guardia-semi-elfa-del-santuario|Guardia semi-elfa del Santuario]]'
+    tipo: advierte que puede pedir ayuda
+    episodio: 27
 facciones: []
 relacion_party: aliado
 ---
@@ -53,3 +71,12 @@ relacion_party: aliado
 ### [[080-recuerdos-de-cobre-63-el-secreto-de-la-biblioteca|Ep. 80 — Recuerdos de Cobre 63: El Secreto de la Biblioteca]]
 - Niño salvado por el grupo cuya cabeza aparece como mensaje del Corruptor junto a la corona de Aldinak.
 
+## Menciones importadas de personajes/nim-iglazer
+
+### [[027-recuerdos-de-cobre-20-nuevos-amigos-relatos-salvajes-el-precio-de-la-libertad|Ep. 27 — Recuerdos de cobre 20: Nuevos amigos (relatos salvajes) [El precio de la libertad]]]
+- Joven elfo esclavizado en la granja de Larren y Freda, capturado junto a su familia y comprado por el grupo para llevarlo al Santuario.
+
+## Menciones importadas de personajes/nym
+
+### [[066-recuerdos-de-cobre-535-lore-con-tesito|Ep. 66 — Recuerdos de Cobre 53.5: Lore con tesito]]
+- Es recordado como esclavo rescatado por el grupo al llegar al Santuario de los Libres.

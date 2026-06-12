@@ -48,7 +48,7 @@ Como lugar, el Coven Rojo es un pequeño asentamiento de unas cinco cabañas —
 
 Este coven de brujas de sangre aparece en la campaña bajo varios nombres que son **el mismo linaje a lo largo del tiempo**:
 
-- **Coven Rosa** es el nombre **original**, registrado en el libro de la matriarca: fundado alrededor de las runas de [[mystra|Mystra]] y la contención de [[caminantes-etereos|caminantes etéreos]] en los solsticios.
+- **Coven Rosa** es el nombre **original**, registrado en el libro de la matriarca: fundado alrededor de las runas de [[personajes/mystra|Mystra]] y la contención de [[personajes/caminantes-etereos|caminantes etéreos]] en los solsticios.
 - **Coven Rojo** es la encarnación en la que [[mysha|Mysha]] creció y vivió, destruida en la masacre del [[personajes/wendigo|Wendigo]] y el [[facciones/coven-verde|Coven Verde]]. Tras la caída, Mysha queda como su última matriarca y decide **volver al origen y refundar el coven desde cero**.
 - **«Coven de sangre»**, **«Brujas de Sangre»** y **«Hermanas del Coven Rojo»** son variantes de transcripción / formas de nombrar a la misma tradición y sus miembros.
 

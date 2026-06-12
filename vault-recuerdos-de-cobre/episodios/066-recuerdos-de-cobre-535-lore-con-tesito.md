@@ -22,11 +22,11 @@ menciones:
     - '[[davis|Davis]]'
     - '[[amari-zaled|Amari Zaled]]'
     - '[[apolo-iorxan|Apolo Iorxan]]'
-    - '[[campbell|Campbell]]'
-    - '[[cyranus|Cyranus]]'
-    - '[[zhaar|Zhaar]]'
+    - '[[personajes/miriel-campbell|Campbell]]'
+    - '[[personajes/siranus|Cyranus]]'
+    - '[[personajes/sar|Zhaar]]'
     - '[[aria|Aria]]'
-    - '[[nym|Nym]]'
+    - '[[personajes/nim|Nym]]'
     - '[[rylen|Rylen]]'
     - '[[el-corruptor|El Corruptor]]'
     - '[[lebruktik|Lebruktik]]'
@@ -240,11 +240,11 @@ El cierre formula la gran aclaracion: la guerra divina de hace alrededor de diez
 - **[[davis|Davis]]** — Asume como concejal tras la caida de Andrew Mironov, reforzando el poder politico de Nora.
 - **[[amari-zaled|Amari Zaled]]** — Tras el Torneo de la Libertad, acepta aportar un ejercito para ayudar a Layra a cambio de parte del oro.
 - **[[apolo-iorxan|Apolo Iorxan]]** — Su negociacion con Nora y los dracónidos metálicos se activa porque el grupo elimina a Ebrukdik.
-- **[[campbell|Campbell]]** — Informa a los Halcones Grises que el problema de Feywild ya estaba resuelto y ayuda a tranquilizar a las voces de los Renegados.
-- **[[cyranus|Cyranus]]** — Habia ofrecido responder preguntas si el grupo resolvia la guerra de Feywild; su biblioteca queda como pendiente importante.
-- **[[zhaar|Zhaar]]** — Guia del Desierto de los Espejos recordado por tener cartas de tarot muy poderosas.
+- **[[personajes/miriel-campbell|Campbell]]** — Informa a los Halcones Grises que el problema de Feywild ya estaba resuelto y ayuda a tranquilizar a las voces de los Renegados.
+- **[[personajes/siranus|Cyranus]]** — Habia ofrecido responder preguntas si el grupo resolvia la guerra de Feywild; su biblioteca queda como pendiente importante.
+- **[[personajes/sar|Zhaar]]** — Guia del Desierto de los Espejos recordado por tener cartas de tarot muy poderosas.
 - **[[aria|Aria]]** — Miembro de los Sonadores que tambien tenia visiones de Vecna y compartia el sueno del orbe de Talos.
-- **[[nym|Nym]]** — Es recordado como esclavo rescatado por el grupo al llegar al Santuario de los Libres.
+- **[[personajes/nim|Nym]]** — Es recordado como esclavo rescatado por el grupo al llegar al Santuario de los Libres.
 - **[[rylen|Rylen]]** — Es mencionado retrospectivamente como mercenario ligado a Los Nefarios durante el arco del Santuario de los Libres.
 - **[[el-corruptor|El Corruptor]]** — Su subtrama queda ubicada dentro del arco del Santuario de los Libres y los Renegados.
 - **[[lebruktik|Lebruktik]]** — Lider de la Revolucion Cromatica eliminado por el grupo, lo que permite abrir negociaciones entre Nora y Apolo.
@@ -340,7 +340,7 @@ El cierre formula la gran aclaracion: la guerra divina de hace alrededor de diez
 - [[coven-rojo|Coven Rojo]] ↔ [[personajes/mystra|Mystra]] — los libros, cuadros y visiones del Coven Rojo sugieren una alianza antigua con Mystra
 - [[personajes/tyr|Tyr]] ↔ [[coven-rojo|Coven Rojo]] — un angel de Tyr custodiaba informacion bajo el Cobre en Rojo, indicando una alianza antigua
 - [[facciones/renegados|Renegados]] ↔ [[facciones/halcones-grises|Halcones Grises]] — envian a los Halcones Grises al Bosque de las Memorias para investigar movimientos elficos
-- [[campbell|Campbell]] ↔ [[facciones/halcones-grises|Halcones Grises]] — les informa que la crisis de Feywild ya estaba resuelta
+- [[personajes/miriel-campbell|Campbell]] ↔ [[facciones/halcones-grises|Halcones Grises]] — les informa que la crisis de Feywild ya estaba resuelta
 - [[Nora]] ↔ [[apolo-iorxan|Apolo Iorxan]] — abre negociaciones con el tras la caida de Ebrukdik
 - [[amari-zaled|Amari Zaled]] ↔ [[layra|Layra]] — acepta aportar un ejercito para ayudarla despues del Torneo de la Libertad
 

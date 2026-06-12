@@ -1,8 +1,7 @@
 ---
 tipo: personaje
 nombre: Matriarca Verde
-alias:
-  - Matriarca del Coven Verde
+alias: []
 apariciones:
   - 39
 ultima_actualizacion: '2026-05-21T23:12:10.105Z'

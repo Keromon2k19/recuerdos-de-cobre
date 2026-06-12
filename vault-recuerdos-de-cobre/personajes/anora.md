@@ -122,7 +122,7 @@ relaciones:
       Acepta considerar su oferta para dirigir o construir la defensa de la
       Metropolis.
     episodio: 75
-  - con: '[[tali|Tali]]'
+  - con: '[[personajes/talisa-talashon|Tali]]'
     tipo: >-
       La considera una posible clave para liberar a Narcissa mediante Dispel
       Magic de gran poder.
@@ -159,7 +159,7 @@ relaciones:
   - con: '[[borok|Borok]]'
     tipo: le propone el voto de confianza
     episodio: 1
-  - con: '[[senor-johnson|Señor Johnson]]'
+  - con: '[[personajes/carl-johnson|Señor Johnson]]'
     tipo: encarga interceptarlo y hacerlo firmar
     episodio: 1
   - con: '[[celeste|Celeste]]'

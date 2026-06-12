@@ -8,6 +8,7 @@ alias:
   - Draceras
   - Dracela
 apariciones:
+  - 31
   - 33
   - 51
   - 52
@@ -87,6 +88,14 @@ relaciones:
       Elimina con Dispel Magic nivel 9 la runa que identificaba al portador como
       demonio.
     episodio: 80
+  - con: '[[objetos/libro-de-mysha|Libro de Mysha]]'
+    tipo: 'Lo identifica como un artefacto, no como un objeto mágico común.'
+    episodio: 31
+  - con: '[[diario-infernal|Diario infernal]]'
+    tipo: >-
+      Identifica su maldición sadista y advierte que requeriría un lugar sagrado
+      para quitarla.
+    episodio: 31
 facciones: []
 relacion_party: aliado
 relacion_party_nota: mas aliado que neutral
@@ -125,3 +134,7 @@ Dracelas Luminis es un NPC dracónido dorado que regentea la tienda de objetos m
 ### [[080-recuerdos-de-cobre-63-el-secreto-de-la-biblioteca|Ep. 80 — Recuerdos de Cobre 63: El Secreto de la Biblioteca]]
 - Revela que el Corruptor le envio la corona de Aldinak con la cabeza de Nim, modifica Demogorgon's Skin y huye con Elliot hacia Sigil.
 
+## Menciones importadas de personajes/dracelas
+
+### [[031-recuerdos-de-cobre-24-la-gata-rompehogares|Ep. 31 — Recuerdos de Cobre 24: La gata rompehogares]]
+- Dracónido dorado que atiende el Oráculo Encantado, vende objetos mágicos, identifica el diario infernal y maneja con calma la petrificación de Raylen.

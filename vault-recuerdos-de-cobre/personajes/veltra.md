@@ -1,8 +1,7 @@
 ---
 tipo: personaje
 nombre: Veltra
-alias:
-  - Mysha
+alias: []
 apariciones:
   - 18
   - 20

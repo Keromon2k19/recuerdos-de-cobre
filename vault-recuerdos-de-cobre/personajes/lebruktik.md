@@ -6,7 +6,6 @@ alias:
   - Lebruckdick
   - Leibrock Dick
   - Ebrukdik
-  - Dragon de Fuego
   - Lebrukdik
   - Ebrokdik
 apariciones:
@@ -60,7 +59,7 @@ relaciones:
   - con: '[[pilar|Pilar]]'
     tipo: explica que en Aldan era visto como líder de los cromáticos
     episodio: 53
-  - con: '[[dragon-rojo|Dragón rojo]]'
+  - con: '[[personajes/devorador-de-lava|Dragón rojo]]'
     tipo: queda señalado como responsable o controlador de la amenaza
     episodio: 45
 facciones: []

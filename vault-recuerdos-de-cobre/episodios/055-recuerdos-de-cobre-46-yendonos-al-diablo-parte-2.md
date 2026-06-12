@@ -13,7 +13,7 @@ menciones:
     - '[[pilar|Pilar]]'
     - '[[pat-pat|Pat-Pat]]'
     - '[[Navish]]'
-    - '[[cautivo-con-bozal|Cautivo con bozal]]'
+    - '[[personajes/randy|Cautivo con bozal]]'
     - '[[personajes/bandido-verde|Bandido Verde]]'
     - '[[dracelas-luminis|Dracelas Luminis]]'
   lugares:
@@ -121,7 +121,7 @@ La sesión termina dentro de la Cárcel Viviente: Rylen está junto a un cautivo
 - **[[pilar|Pilar]]** — Usa la piedra del Bandido Verde para escapar de Acheron, guía al grupo en Pazunia, advierte sobre las flores, el cazador de carne y la necesidad de no llamar la atención.
 - **[[pat-pat|Pat-Pat]]** — Acompaña a Pilar y al grupo durante el nuevo intento de llegar al Abismo y casi reacciona cuando el cazador empieza a tragarse a Rylen.
 - **[[Navish]]** — Su carta es usada de nuevo para viajar al Plano Abisal, esta vez con éxito hacia Pazunia.
-- **[[cautivo-con-bozal|Cautivo con bozal]]** — Ser pequeño de capa verde, ojos rojos, olor terrible y bozal metálico que está prisionero en la Cárcel Viviente. Rylen rompe o golpea su bozal y le permite hablar.
+- **[[personajes/randy|Cautivo con bozal]]** — Ser pequeño de capa verde, ojos rojos, olor terrible y bozal metálico que está prisionero en la Cárcel Viviente. Rylen rompe o golpea su bozal y le permite hablar.
 - **[[personajes/bandido-verde|Bandido Verde]]** — Su piedra mágica de retorno permite al grupo escapar de Acheron y volver al plano material antes de reintentar el viaje.
 - **[[dracelas-luminis|Dracelas Luminis]]** — Es el proveedor implícito al que el grupo recurre para comprar un pergamino de Teleport antes de volver a intentar el viaje.
 
@@ -171,7 +171,7 @@ La sesión termina dentro de la Cárcel Viviente: Rylen está junto a un cautivo
 - [[pilar|Pilar]] ↔ [[cazador-de-carne|Cazador de carne]] — advierte al grupo que no lo ataque y que piense en pecados
 - [[narcissa|Narcissa]] ↔ [[objetos/flores-del-ultimo-lamento|Flores del Último Lamento]] — las recolecta y sufre visiones traumáticas por tocarlas
 - [[narcissa|Narcissa]] ↔ [[lugares/carcel-viviente|Cárcel Viviente]] — le arranca discretamente un diente antes de entrar
-- [[rylen|Rylen]] ↔ [[cautivo-con-bozal|Cautivo con bozal]] — rompe o golpea su bozal y le permite hablar
+- [[rylen|Rylen]] ↔ [[personajes/randy|Cautivo con bozal]] — rompe o golpea su bozal y le permite hablar
 - [[pat-pat|Pat-Pat]] ↔ [[rylen|Rylen]] — casi reacciona para ayudarlo cuando el cazador empieza a tragárselo
 - [[Navish]] ↔ [[te-de-medianoche|Té de Medianoche]] — su carta permite el segundo intento exitoso de llegar al Abismo
 
@@ -200,4 +200,4 @@ La sesión termina dentro de la Cárcel Viviente: Rylen está junto a un cautivo
 - El grupo decide no atacar al cazador de carne mientras examina y luego traga a Rylen. ([[te-de-medianoche|Té de Medianoche]], [[pilar|Pilar]], [[rylen|Rylen]])
 - El grupo decide perseguir al cazador hasta la Cárcel Viviente para rescatar a Rylen. ([[te-de-medianoche|Té de Medianoche]], [[pilar|Pilar]])
 - Narcissa decide arrancar y guardar un diente de la Cárcel Viviente. ([[narcissa|Narcissa]])
-- Rylen decide resistirse a las ataduras y liberar el bozal del cautivo pequeño. ([[rylen|Rylen]], [[cautivo-con-bozal|Cautivo con bozal]])
+- Rylen decide resistirse a las ataduras y liberar el bozal del cautivo pequeño. ([[rylen|Rylen]], [[personajes/randy|Cautivo con bozal]])

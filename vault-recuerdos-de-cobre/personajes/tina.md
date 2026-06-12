@@ -15,7 +15,7 @@ relaciones:
   - con: '[[barbara|Bárbara]]'
     tipo: madre
     episodio: 4
-  - con: '[[padre-de-tina|Padre de Tina]]'
+  - con: '[[personajes/nestor|Padre de Tina]]'
     tipo: padre (sospecha de maltrato/ritual)
     episodio: 4
   - con: '[[layra|Layra]]'
@@ -24,7 +24,7 @@ relaciones:
   - con: '[[narcissa|Narcissa]]'
     tipo: le revisa las heridas y le da un bálsamo
     episodio: 4
-  - con: '[[padre-de-tina|Padre de Tina]]'
+  - con: '[[personajes/nestor|Padre de Tina]]'
     tipo: padre (abuso y vínculo con el culto)
     episodio: 5
   - con: '[[barbara|Bárbara]]'

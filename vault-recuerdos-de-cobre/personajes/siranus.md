@@ -9,6 +9,7 @@ alias:
 apariciones:
   - 58
   - 59
+  - 66
 ultima_actualizacion: '2026-05-21T22:38:48.536Z'
 rol: NPC
 tags:
@@ -48,3 +49,8 @@ facciones: []
 
 ### [[059-recuerdos-de-cobre-49-princesa|Ep. 59 — Recuerdos De Cobre 49: Princesa?]]
 - Semidiós creado por Druidia, con forma de águila humanoide, capacidad de ver el futuro cercano y autoridad sobre animales espirituales del bosque.
+
+## Menciones importadas de personajes/cyranus
+
+### [[066-recuerdos-de-cobre-535-lore-con-tesito|Ep. 66 — Recuerdos de Cobre 53.5: Lore con tesito]]
+- Habia ofrecido responder preguntas si el grupo resolvia la guerra de Feywild; su biblioteca queda como pendiente importante.

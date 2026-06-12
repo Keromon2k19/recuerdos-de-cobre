@@ -18,7 +18,7 @@ menciones:
     - '[[Corinne]]'
     - '[[Navish]]'
     - '[[personajes/creador-de-glaciares|Creador de Glaciares]]'
-    - '[[dragon-rojo|Dragón rojo]]'
+    - '[[personajes/devorador-de-lava|Dragón rojo]]'
     - '[[Dracónidos de Letgeris]]'
   lugares:
     - '[[guarida-de-gigantes-de-hielo|Guarida de gigantes de hielo]]'
@@ -158,7 +158,7 @@ Al final de la noche, Mysha escucha a **Navish** en su cabeza. Él señala que h
 - **[[Corinne]]** — Padre de Layra y antiguo líder del pueblo. No aparece, pero su collar con dragón grabado es recuperado del cofre del saqueo.
 - **[[Navish]]** — Habla en la mente de Mysha al final de la sesión y sugiere que el árbol de cristal tiene una energía extraña que podría explicar el interés de Lebruktik, Tiamat y el dragón.
 - **[[personajes/creador-de-glaciares|Creador de Glaciares]]** — Dragón de hielo ligado a la cultura de Letgeris. Huye del árbol de cristal con elementales de fuego encima, congela a varios y atraviesa nieve o hielo hacia una zona inferior.
-- **[[dragon-rojo|Dragón rojo]]** — Llega a Letgeris, amenaza al grupo mediante un mensaje escrito en las nubes y patrulla alrededor del pueblo buscándolos.
+- **[[personajes/devorador-de-lava|Dragón rojo]]** — Llega a Letgeris, amenaza al grupo mediante un mensaje escrito en las nubes y patrulla alrededor del pueblo buscándolos.
 - **[[Dracónidos de Letgeris]]** — Supervivientes esclavizados del pueblo de Layra, obligados a saquear sus propias casas y entregar objetos de valor. Algunos logran escapar a la pecera y reconocen a Layra como salvadora.
 
 ### Lugares
@@ -217,7 +217,7 @@ Al final de la noche, Mysha escucha a **Navish** en su cabeza. Él señala que h
 - [[rylen|Rylen]] ↔ [[azer-de-tiamat|Azer de Tiamat]] — lo deja ciego con Blinding Shot bajo el agua
 - [[azer-de-tiamat|Azer de Tiamat]] ↔ [[david-ilcard|David Ilcard]] — lo deja casi muerto con hacha y smite de fuego
 - [[Navish]] ↔ [[arbol-de-cristal|Árbol de cristal]] — percibe una energía extraña que debería investigarse
-- [[dragon-rojo|Dragón rojo]] ↔ [[grupo-de-mysha|Grupo de Mysha]] — les advierte desde las nubes que abandonen su territorio o serán cenizas
+- [[personajes/devorador-de-lava|Dragón rojo]] ↔ [[grupo-de-mysha|Grupo de Mysha]] — les advierte desde las nubes que abandonen su territorio o serán cenizas
 - [[personajes/creador-de-glaciares|Creador de Glaciares]] ↔ [[elementales-de-fuego|Elementales de fuego]] — huye herido mientras congela a varios con su aliento
 
 ### Misterios

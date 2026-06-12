@@ -10,7 +10,7 @@ rol: NPC
 tags:
   - npc
 relaciones:
-  - con: '[[meri|Meri]]'
+  - con: '[[personajes/mary|Meri]]'
     tipo: >-
       Intenta reclamar su cuerpo debilitado para poder sobrevivir con una forma
       fisica.
