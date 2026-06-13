@@ -101,6 +101,15 @@
   margin: 0.85rem 0 0.65rem;
   font-family: var(--av2-display);
   font-weight: 600;
+  width: 100%;
+}
+.heroLogo {
+  display: block;
+  width: min(680px, 85vw);
+  height: auto;
+  margin: 0 auto;
+  filter: drop-shadow(0 12px 32px oklch(0.04 0.010 58 / 0.75));
+  animation: av2-rise var(--av2-dur) var(--av2-ease) both;
 }
 .titleMain {
   display: block;

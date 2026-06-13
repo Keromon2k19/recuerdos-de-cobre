@@ -55,26 +55,14 @@ const heroBackground = resolveHeroBackground(undefined);
 
       {/* — Título principal — */}
       <div className={styles.heroTop}>
-        <p className={styles.heroEyebrow}>Antología · Tomo I</p>
-
-        <div className={styles.ornament} aria-hidden="true">
-          <span className={styles.ornamentDiamond} />
-        </div>
-
         <h1 className={styles.heroTitle}>
-          <span className={styles.titleMain}>Recuerdos</span>
-          <span className={styles.titleDe}>de</span>
-          <span className={`${styles.titleMain} ${styles.titleCopper}`}>Cobre</span>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/assets/atlas/brand/logo-rdc.webp"
+            alt="Recuerdos de Cobre"
+            className={styles.heroLogo}
+          />
         </h1>
-
-        <div className={styles.ornament} aria-hidden="true">
-          <span className={styles.ornamentDiamond} />
-        </div>
-
-        <p className={styles.heroSub}>
-          El archivo de lo que el grupo vivió: crónicas episodio por episodio,
-          los personajes que cruzaron su camino y los misterios que siguen sin respuesta.
-        </p>
       </div>
 
       {/* — Últimas crónicas + cast contextual — */}
