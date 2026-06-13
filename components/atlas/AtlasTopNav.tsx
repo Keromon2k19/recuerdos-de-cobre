@@ -163,7 +163,7 @@ export default function AtlasTopNav() {
         aria-label="Recuerdos de Cobre · Inicio"
       >
         <Image
-          src="/assets/atlas/brand/logo-rdc.webp"
+          src="/assets/atlas/brand/logo-rc-nav.webp"
           alt="Recuerdos de Cobre"
           width={120}
           height={72}
