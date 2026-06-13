@@ -45,7 +45,7 @@ export default function AtlasChapterList({ chapters, selectedId, onSelect }: Pro
         ))}
       </ul>
 
-      <Link href="/v2/buscar" className="av2-chapter-list-foot">
+      <Link href="/buscar" className="av2-chapter-list-foot">
         Buscar en el atlas
       </Link>
     </aside>

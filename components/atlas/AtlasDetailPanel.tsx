@@ -120,7 +120,7 @@ export default function AtlasDetailPanel({ entity, onClose }: Props) {
       </div>
 
       <Link
-        href={`/v2/personajes/${entity.slug}`}
+        href={`/personajes/${entity.slug}`}
         className="av2-btn av2-btn--primary av2-detail-cta"
       >
         Ver ficha completa

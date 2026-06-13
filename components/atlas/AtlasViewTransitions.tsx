@@ -32,8 +32,14 @@ function clearTransitionType() {
 }
 
 function routeTransitionType(from: string, to: string) {
-  if (to.startsWith(from + "/")) return "route-detail";
-  if (from.startsWith(to + "/")) return "route-back";
+  if (to === "/") return "route-back";
+  if (from === "/") return "route-detail";
+
+  const fromNormalized = from.endsWith("/") ? from : from + "/";
+  const toNormalized = to.endsWith("/") ? to : to + "/";
+
+  if (toNormalized.startsWith(fromNormalized)) return "route-detail";
+  if (fromNormalized.startsWith(toNormalized)) return "route-back";
   return "route-forward";
 }
 
@@ -100,12 +106,13 @@ export default function AtlasViewTransitions() {
       const isNav = anchor.closest(".av2-nav") !== null;
       const isBack = anchor.closest(".av2-entity-detail-back") !== null || anchor.classList.contains("av2-entity-detail-back");
       const isChapterNeighbors = anchor.closest(".av2-chapter-detail-neighbors") !== null;
-      const isHomeShortcut = anchor.closest(".av2-latest-actions") !== null || anchor.closest(".av2-latest-feature") !== null;
+      const isHomeShortcut = anchor.closest(".av2-latest-actions") !== null || anchor.closest(".av2-latest-feature") !== null || anchor.closest(".av2-latest") !== null;
       const isDetailCta = anchor.closest(".av2-detail-cta") !== null || anchor.classList.contains("av2-detail-cta") || anchor.closest(".av2-chapter-cta") !== null || anchor.classList.contains("av2-chapter-cta");
       const isTimelineCard = anchor.closest(".av2-tl-card") !== null || anchor.classList.contains("av2-tl-card");
       const isChapterFoot = anchor.closest(".av2-chapter-list-foot") !== null || anchor.classList.contains("av2-chapter-list-foot");
+      const isCastCarousel = anchor.closest(".av2-cast-carousel") !== null;
 
-      const isStructural = isNav || isBack || isChapterNeighbors || isHomeShortcut || isDetailCta || isTimelineCard || isChapterFoot;
+      const isStructural = isNav || isBack || isChapterNeighbors || isHomeShortcut || isDetailCta || isTimelineCard || isChapterFoot || isCastCarousel;
       if (!isStructural) return;
 
       const url = new URL(anchor.href, window.location.href);

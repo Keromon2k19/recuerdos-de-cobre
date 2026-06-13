@@ -65,7 +65,7 @@ export default function AtlasHomeFeature({ slides }: Props) {
               Los capítulos aparecerán aquí a medida que se procesen episodios.
             </p>
             <div className="av2-latest-actions">
-              <Link href="/v2/capitulos" className="av2-btn av2-btn--ghost">
+              <Link href="/capitulos" className="av2-btn av2-btn--ghost">
                 Ver archivo
               </Link>
             </div>

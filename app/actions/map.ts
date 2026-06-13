@@ -41,8 +41,8 @@ export async function saveMapOverrides(
       };
     }
     saveOverrides(merged);
-    revalidatePath("/v2/mapa");
-    revalidatePath("/v2/lugares");
+    revalidatePath("/mapa");
+    revalidatePath("/lugares");
     return { ok: true, count: Object.keys(merged).length };
   } catch (e: unknown) {
     const error = e instanceof Error ? e.message : "Error desconocido";
@@ -53,8 +53,8 @@ export async function saveMapOverrides(
 export async function resetMapOverrides(): Promise<SaveMapResult> {
   try {
     saveOverrides({});
-    revalidatePath("/v2/mapa");
-    revalidatePath("/v2/lugares");
+    revalidatePath("/mapa");
+    revalidatePath("/lugares");
     return { ok: true, count: 0 };
   } catch (e: unknown) {
     const error = e instanceof Error ? e.message : "Error desconocido";
@@ -98,8 +98,8 @@ export async function addMapLocation(input: AddLocationInput): Promise<AddLocati
           hideFromMap: false,
         },
       });
-      revalidatePath("/v2/mapa");
-      revalidatePath("/v2/lugares");
+      revalidatePath("/mapa");
+      revalidatePath("/lugares");
       return { ok: true, slug: baseRegion.slug };
     }
 
@@ -143,8 +143,8 @@ export async function addMapLocation(input: AddLocationInput): Promise<AddLocati
         hideFromMap: false,
       };
       saveAdditions(additions);
-      revalidatePath("/v2/mapa");
-      revalidatePath("/v2/lugares");
+      revalidatePath("/mapa");
+      revalidatePath("/lugares");
       return { ok: true, slug: existingAddition.slug };
     }
 
@@ -182,8 +182,8 @@ export async function addMapLocation(input: AddLocationInput): Promise<AddLocati
     additions.push(region);
     saveAdditions(additions);
 
-    revalidatePath("/v2/mapa");
-    revalidatePath("/v2/lugares");
+    revalidatePath("/mapa");
+    revalidatePath("/lugares");
     return { ok: true, slug };
   } catch (e: unknown) {
     const error = e instanceof Error ? e.message : "Error desconocido";
@@ -200,8 +200,8 @@ export async function deleteMapLocation(slug: string): Promise<SaveMapResult> {
       delete overrides[slug];
       saveOverrides(overrides);
     }
-    revalidatePath("/v2/mapa");
-    revalidatePath("/v2/lugares");
+    revalidatePath("/mapa");
+    revalidatePath("/lugares");
     return { ok: true, count: additions.length };
   } catch (e: unknown) {
     const error = e instanceof Error ? e.message : "Error desconocido";
