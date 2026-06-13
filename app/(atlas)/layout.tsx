@@ -4,6 +4,7 @@
 import "../globals.css";
 import "./atlas-tokens.css";
 import "./atlas-layout.css";
+import "./atlas-narrative.css";
 import "./atlas-nav.css";
 import "./atlas-home.css";
 import "./atlas-reproductor.css";
