@@ -135,7 +135,7 @@
 .av2-buscar-filter[data-active="true"] {
   color: var(--av2-copper);
   border-color: var(--av2-copper-dim);
-  background: oklch(0.490 0.075 53 / 0.12);
+  background: var(--av2-copper-dim-12);
 }
 
 /* Meta count */
@@ -190,7 +190,7 @@
 
 .av2-buscar-result-link:hover {
   border-color: var(--av2-copper-dim);
-  background: oklch(0.08 0.010 58 / 0.75);
+  background: var(--av2-bg-panel-75);
 }
 
 .av2-buscar-result-link:active {
@@ -211,7 +211,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(160deg, oklch(0.17 0.022 58), oklch(0.10 0.014 58));
+  background: linear-gradient(160deg, oklch(0.17 0.022 58), var(--av2-bg-input));
   border: 1px solid var(--av2-rule-up);
   border-radius: var(--av2-r-sm);
 }

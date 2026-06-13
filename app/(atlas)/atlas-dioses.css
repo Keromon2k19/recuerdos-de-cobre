@@ -21,9 +21,7 @@
   overflow: hidden;
 }
 
-.av2-gods-index,
-.av2-god-profile,
-.av2-god-detail {
+.av2-gods-index, .av2-god-profile, .av2-god-detail {
   min-height: 0;
   min-width: 0;
   max-height: 100%;
@@ -39,8 +37,7 @@
   -webkit-backdrop-filter: blur(8px);
 }
 
-.av2-gods-index,
-.av2-god-detail {
+.av2-gods-index, .av2-god-detail {
   display: flex;
   flex-direction: column;
   gap: 0.9rem;
@@ -50,7 +47,7 @@
 .av2-gods-index {
   padding: 1rem 0.95rem;
   border: 1px solid var(--av2-rule-copper);
-  background: oklch(0.06 0.01 58 / 0.55);
+  background: var(--av2-bg-dark-55);
   backdrop-filter: blur(12px) saturate(1.1);
   -webkit-backdrop-filter: blur(12px) saturate(1.1);
 }
@@ -137,8 +134,7 @@
     transform var(--av2-dur) var(--av2-ease);
 }
 
-.av2-gods-tab:hover,
-.av2-gods-tab[data-active="true"] {
+.av2-gods-tab:hover, .av2-gods-tab[data-active="true"] {
   color: var(--av2-copper-hi);
   border-color: var(--av2-copper-dim);
   background: oklch(0.17 0.025 56 / 0.62);
@@ -183,8 +179,7 @@
     transform var(--av2-dur) var(--av2-ease);
 }
 
-.av2-god-list-item:hover,
-.av2-god-list-item[data-active="true"] {
+.av2-god-list-item:hover, .av2-god-list-item[data-active="true"] {
   color: var(--av2-ink);
   border-color: var(--av2-copper-dim);
   background:
@@ -271,8 +266,7 @@
   overflow: hidden;
 }
 
-.av2-god-profile-art::before,
-.av2-god-profile-art::after {
+.av2-god-profile-art::before, .av2-god-profile-art::after {
   content: "";
   position: absolute;
   border-radius: 50%;
@@ -297,53 +291,43 @@
   animation: av2-god-spin-rev 56s linear infinite;
 }
 
-.av2-god-profile-art[data-tone="memory"],
-.av2-god-detail-sigil[data-tone="memory"] {
+.av2-god-profile-art[data-tone="memory"] {
   --god-accent: oklch(0.69 0.070 268);
 }
 
-.av2-god-profile-art[data-tone="arcane"],
-.av2-god-detail-sigil[data-tone="arcane"] {
+.av2-god-profile-art[data-tone="arcane"] {
   --god-accent: oklch(0.72 0.080 174);
 }
 
-.av2-god-profile-art[data-tone="justice"],
-.av2-god-detail-sigil[data-tone="justice"] {
+.av2-god-profile-art[data-tone="justice"] {
   --god-accent: oklch(0.78 0.090 86);
 }
 
-.av2-god-profile-art[data-tone="moon"],
-.av2-god-detail-sigil[data-tone="moon"] {
+.av2-god-profile-art[data-tone="moon"] {
   --god-accent: oklch(0.78 0.045 230);
 }
 
-.av2-god-profile-art[data-tone="flame"],
-.av2-god-detail-sigil[data-tone="flame"] {
+.av2-god-profile-art[data-tone="flame"] {
   --god-accent: oklch(0.76 0.135 62);
 }
 
-.av2-god-profile-art[data-tone="death"],
-.av2-god-detail-sigil[data-tone="death"] {
+.av2-god-profile-art[data-tone="death"] {
   --god-accent: oklch(0.65 0.050 145);
 }
 
-.av2-god-profile-art[data-tone="secret"],
-.av2-god-detail-sigil[data-tone="secret"] {
+.av2-god-profile-art[data-tone="secret"] {
   --god-accent: oklch(0.62 0.050 305);
 }
 
-.av2-god-profile-art[data-tone="dragon"],
-.av2-god-detail-sigil[data-tone="dragon"] {
+.av2-god-profile-art[data-tone="dragon"] {
   --god-accent: oklch(0.72 0.105 36);
 }
 
-.av2-god-profile-art[data-tone="storm"],
-.av2-god-detail-sigil[data-tone="storm"] {
+.av2-god-profile-art[data-tone="storm"] {
   --god-accent: oklch(0.75 0.070 212);
 }
 
-.av2-god-profile-art[data-tone="origin"],
-.av2-god-detail-sigil[data-tone="origin"] {
+.av2-god-profile-art[data-tone="origin"] {
   --god-accent: oklch(0.82 0.070 92);
 }
 
@@ -366,8 +350,7 @@
     0 20px 70px oklch(0.03 0.008 58 / 0.72);
 }
 
-.av2-god-symbol-orbit,
-.av2-god-symbol-needle {
+.av2-god-symbol-orbit, .av2-god-symbol-needle {
   position: absolute;
   pointer-events: none;
 }
@@ -541,8 +524,7 @@
   overflow: hidden;
 }
 
-.av2-god-domain::before,
-.av2-god-domain::after {
+.av2-god-domain::before, .av2-god-domain::after {
   content: "";
   position: absolute;
   top: 50%;
@@ -569,48 +551,15 @@
   scrollbar-color: var(--av2-rule-up) transparent;
 }
 
-.av2-god-detail-head {
-  display: grid;
-  grid-template-columns: 56px minmax(0, 1fr);
-  gap: 0.8rem;
-  align-items: center;
-  padding-bottom: 0.82rem;
-  border-bottom: 1px solid var(--av2-rule);
-}
 
-.av2-god-detail-sigil {
-  display: grid;
-  place-items: center;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 1px solid oklch(0.72 0.090 74 / 0.38);
-  background:
-    radial-gradient(circle at 50% 40%, oklch(0.21 0.024 56), oklch(0.048 0.008 58) 72%),
-    conic-gradient(from 10deg, var(--av2-copper-deep), var(--god-accent, var(--av2-copper)), var(--av2-copper-deep));
-  color: var(--av2-gold);
-  font-family: var(--av2-display);
-  font-size: 1.22rem;
-  line-height: 1;
-  box-shadow: inset 0 0 0 6px oklch(0.04 0.008 58 / 0.76);
-}
 
-.av2-god-detail-sigil img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  padding: 6px;
-  border-radius: inherit;
-}
 
-.av2-god-detail-head h2 {
-  color: var(--av2-gold);
-  font-size: 1.7rem;
-}
 
-.av2-god-detail-meta,
-.av2-god-detail-stats {
+
+
+
+
+.av2-god-detail-meta, .av2-god-detail-stats {
   margin: 0;
   display: grid;
   gap: 0.55rem;
@@ -620,8 +569,7 @@
   grid-template-columns: 1fr;
 }
 
-.av2-god-detail-meta div,
-.av2-god-detail-stats div {
+.av2-god-detail-meta div, .av2-god-detail-stats div {
   min-width: 0;
   border: 1px solid var(--av2-rule);
   border-radius: var(--av2-r-sm);
@@ -632,8 +580,7 @@
   padding: 0.62rem 0.68rem;
 }
 
-.av2-god-detail-meta dt,
-.av2-god-detail-stats dt {
+.av2-god-detail-meta dt, .av2-god-detail-stats dt {
   color: var(--av2-ink-faint);
   font-family: var(--av2-mono);
   font-size: 7.8px;
@@ -641,8 +588,7 @@
   text-transform: uppercase;
 }
 
-.av2-god-detail-meta dd,
-.av2-god-detail-stats dd {
+.av2-god-detail-meta dd, .av2-god-detail-stats dd {
   margin: 0.22rem 0 0;
   color: var(--av2-ink);
   font-family: var(--av2-display);
@@ -669,9 +615,7 @@
   text-transform: uppercase;
 }
 
-.av2-god-principles,
-.av2-god-places,
-.av2-god-links {
+.av2-god-principles, .av2-god-places, .av2-god-links {
   margin: 0;
   padding: 0;
 }
@@ -691,16 +635,14 @@
   font-family: var(--av2-mono);
 }
 
-.av2-god-places,
-.av2-god-links {
+.av2-god-places, .av2-god-links {
   list-style: none;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
 
-.av2-god-places li,
-.av2-god-links li {
+.av2-god-places li, .av2-god-links li {
   display: flex;
   flex-direction: column;
   gap: 0.16rem;
@@ -708,9 +650,7 @@
   border-left: 1px solid var(--av2-rule-up);
 }
 
-.av2-god-places strong,
-.av2-god-links a,
-.av2-god-links span {
+.av2-god-places strong, .av2-god-links a, .av2-god-links span {
   color: var(--av2-copper);
   font-family: var(--av2-display);
   font-size: 0.96rem;
@@ -722,8 +662,7 @@
   color: var(--av2-copper-hi);
 }
 
-.av2-god-places span,
-.av2-god-links small {
+.av2-god-places span, .av2-god-links small {
   color: var(--av2-ink-soft);
   font-size: 0.84rem;
   line-height: 1.42;
@@ -863,9 +802,7 @@
     grid-column: 1 / -1;
   }
 
-  .av2-gods-index,
-  .av2-god-profile,
-  .av2-god-detail {
+  .av2-gods-index, .av2-god-profile, .av2-god-detail {
     max-height: none;
     overflow: visible;
   }
@@ -986,19 +923,18 @@
   border: 1px solid var(--av2-rule-copper);
   border-radius: 0;
   background:
-    radial-gradient(70% 95% at 20% 8%, oklch(0.49 0.075 53 / 0.12), transparent 62%),
-    linear-gradient(145deg, oklch(0.29 0.04 58 / 0.16), transparent 42%),
+    radial-gradient(70% 95% at 20% 8%, var(--av2-copper-dim-12), transparent 62%),
+    linear-gradient(145deg, var(--av2-bg-gradient-start), transparent 42%),
     oklch(0.075 0.012 56 / 0.9);
   box-shadow:
-    0 22px 60px -32px oklch(0.03 0.01 55 / 0.96),
-    inset 0 1px 0 oklch(0.9 0.05 70 / 0.05),
-    inset 0 0 0 5px oklch(0.04 0.01 55 / 0.32);
+    0 22px 60px -32px var(--av2-shadow-base),
+    inset 0 1px 0 var(--av2-rule-inset),
+    inset 0 0 0 5px var(--av2-bg-dark-32);
   backdrop-filter: blur(12px) saturate(1.1);
   -webkit-backdrop-filter: blur(12px) saturate(1.1);
 }
 
-.av2-god-dossier::before,
-.av2-god-dossier::after {
+.av2-god-dossier::before, .av2-god-dossier::after {
   content: "";
   position: absolute;
   z-index: 3;
@@ -1023,8 +959,7 @@
   border-bottom: 1px solid currentColor;
 }
 
-.av2-god-identity,
-.av2-god-archive {
+.av2-god-identity, .av2-god-archive {
   position: relative;
   min-width: 0;
   min-height: 0;
@@ -1047,10 +982,7 @@
   overflow: visible;
 }
 
-.av2-god-dossier .av2-god-profile-art::before,
-.av2-god-dossier .av2-god-profile-art::after,
-.av2-god-dossier .av2-god-symbol-orbit,
-.av2-god-dossier .av2-god-symbol-needle {
+.av2-god-dossier .av2-god-profile-art::before, .av2-god-dossier .av2-god-profile-art::after, .av2-god-dossier .av2-god-symbol-orbit, .av2-god-dossier .av2-god-symbol-needle {
   display: none;
   animation: none;
 }
@@ -1070,8 +1002,7 @@
     0 2rem 5.5rem oklch(0.02 0.008 55 / 0.76);
 }
 
-.av2-god-dossier .av2-god-symbol::before,
-.av2-god-dossier .av2-god-symbol::after {
+.av2-god-dossier .av2-god-symbol::before, .av2-god-dossier .av2-god-symbol::after {
   content: "";
   position: absolute;
   width: 3.2rem;
@@ -1136,9 +1067,7 @@
   text-transform: none;
 }
 
-.av2-god-dossier .av2-god-title,
-.av2-god-dossier .av2-god-copy,
-.av2-god-dossier .av2-god-quote {
+.av2-god-dossier .av2-god-title, .av2-god-dossier .av2-god-copy, .av2-god-dossier .av2-god-quote {
   max-width: 58ch;
 }
 
@@ -1185,23 +1114,18 @@
   padding-top: 1rem;
 }
 
-.av2-god-dossier .av2-god-principles,
-.av2-god-dossier .av2-god-places,
-.av2-god-dossier .av2-god-links,
-.av2-god-dossier .av2-god-tension p {
+.av2-god-dossier .av2-god-principles, .av2-god-dossier .av2-god-places, .av2-god-dossier .av2-god-links, .av2-god-dossier .av2-god-tension p {
   font-size: 0.98rem;
   line-height: 1.58;
 }
 
-.av2-god-dossier .av2-god-places,
-.av2-god-dossier .av2-god-links {
+.av2-god-dossier .av2-god-places, .av2-god-dossier .av2-god-links {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.7rem;
 }
 
-.av2-god-dossier .av2-god-places li,
-.av2-god-dossier .av2-god-links li {
+.av2-god-dossier .av2-god-places li, .av2-god-dossier .av2-god-links li {
   min-height: 4.4rem;
   padding: 0.72rem 0.8rem;
   border: 1px solid oklch(0.49 0.072 54 / 0.32);
@@ -1254,8 +1178,7 @@
     column-gap: 1.2rem;
   }
 
-  .av2-god-dossier .av2-god-places,
-  .av2-god-dossier .av2-god-links {
+  .av2-god-dossier .av2-god-places, .av2-god-dossier .av2-god-links {
     grid-template-columns: 1fr;
   }
 }
@@ -1285,8 +1208,7 @@
     overflow: visible;
   }
 
-  .av2-god-dossier .av2-god-domains,
-  .av2-god-dossier-footer {
+  .av2-god-dossier .av2-god-domains, .av2-god-dossier-footer {
     grid-column: 1;
   }
 }
@@ -1296,9 +1218,7 @@
     grid-template-columns: 1fr;
   }
 
-  .av2-god-identity,
-  .av2-god-dossier .av2-god-detail-meta,
-  .av2-god-dossier-footer {
+  .av2-god-identity, .av2-god-dossier .av2-god-detail-meta, .av2-god-dossier-footer {
     grid-template-columns: 1fr;
   }
 

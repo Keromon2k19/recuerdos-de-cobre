@@ -128,7 +128,7 @@
   inset: 0;
   z-index: 1;
   overflow: hidden;
-  background: oklch(0.11 0.016 58);
+  background: var(--av2-bg-empty);
   margin: 0;
   pointer-events: none;
 }
@@ -341,45 +341,3 @@
   letter-spacing: 0.13em;
 }
 
-/* Paginación entre capítulos — debajo del CTA, alineada con el borde inferior del panel */
-.av2-latest-pagination {
-  display: flex;
-  align-items: center;
-  gap: 0.7rem;
-  margin-top: 0.85rem;
-  font-family: var(--av2-mono);
-  font-size: 10.5px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: oklch(0.62 0.018 76);
-}
-
-.av2-latest-pag-arrow {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 22px;
-  height: 22px;
-  border: 1px solid oklch(0.40 0.060 60 / 0.55);
-  border-radius: 2px;
-  color: var(--av2-copper-dim);
-  font-size: 13px;
-  line-height: 1;
-  background: oklch(0.085 0.011 58 / 0.6);
-  transition: color var(--av2-dur) var(--av2-ease), border-color var(--av2-dur) var(--av2-ease);
-}
-
-a.av2-latest-pag-arrow:hover {
-  color: var(--av2-copper-hi);
-  border-color: var(--av2-copper);
-}
-
-.av2-latest-pag-arrow[aria-disabled="true"] {
-  opacity: 0.35;
-  cursor: default;
-}
-
-.av2-latest-pag-count {
-  font-variant-numeric: tabular-nums;
-  color: oklch(0.78 0.018 76);
-}

@@ -70,6 +70,45 @@ body {
   --av2-shadow-deep: 0 8px 60px -12px oklch(0.04 0.01 58 / 0.95);
   --av2-glow-copper: 0 0 40px oklch(0.715 0.118 56 / 0.28);
 
+  /* Consolidated Opacity Tokens */
+  --av2-copper-08: oklch(0.715 0.118 56 / 0.08);
+  --av2-copper-16: oklch(0.715 0.118 56 / 0.16);
+  --av2-copper-18: oklch(0.715 0.118 56 / 0.18);
+  --av2-copper-22: oklch(0.715 0.118 56 / 0.22);
+  --av2-copper-28: oklch(0.715 0.118 56 / 0.28);
+  --av2-copper-42: oklch(0.715 0.118 56 / 0.42);
+  --av2-copper-55: oklch(0.715 0.118 56 / 0.55);
+
+  --av2-bg-opacity-85: oklch(0.092 0.010 58 / 0.85);
+  --av2-bg-opacity-55: oklch(0.092 0.010 58 / 0.55);
+  --av2-bg-opacity-35: oklch(0.092 0.010 58 / 0.35);
+  --av2-bg-opacity-92: oklch(0.092 0.010 58 / 0.92);
+  --av2-bg-panel-30: oklch(0.07 0.009 58 / 0.30);
+  --av2-bg-panel-48: oklch(0.07 0.009 58 / 0.48);
+  --av2-bg-panel-72: oklch(0.065 0.008 58 / 0.72);
+  --av2-bg-dark-55: oklch(0.06 0.01 58 / 0.55);
+  --av2-bg-dark-65: oklch(0.06 0.01 58 / 0.65);
+  --av2-bg-dark-85: oklch(0.04 0.01 58 / 0.85);
+  --av2-bg-dark-96: oklch(0.06 0.010 58 / 0.96);
+
+  --av2-rule-copper-18: oklch(0.490 0.072 54 / 0.18);
+  --av2-rule-copper-34: oklch(0.49 0.072 54 / 0.34);
+  --av2-ink-faint-opacity: oklch(0.472 0.011 70 / 0.4);
+  --av2-bg-panel-10: oklch(0.24 0.044 55 / 0.10);
+  --av2-bg-input: oklch(0.10 0.014 58);
+  --av2-rule-inset: oklch(0.9 0.05 70 / 0.05);
+  --av2-bg-dark-95: oklch(0.04 0.01 58 / 0.95);
+  --av2-shadow-base: oklch(0.03 0.01 55 / 0.96);
+  --av2-copper-dim-12: oklch(0.490 0.075 53 / 0.12);
+  --av2-copper-10: oklch(0.715 0.118 56 / 0.10);
+  --av2-bg-empty: oklch(0.11 0.016 58);
+  --av2-bg-gradient-start: oklch(0.29 0.04 58 / 0.16);
+  --av2-bg-dark-32: oklch(0.04 0.01 55 / 0.32);
+  --av2-bg-panel-75: oklch(0.08 0.010 58 / 0.75);
+  --av2-black-36: oklch(0 0 0 / 0.36);
+  --av2-bg-raised-50: oklch(0.13 0.018 58 / 0.50);
+  --av2-copper-05: oklch(0.715 0.118 56 / 0.055);
+
   /* Base */
   background: var(--av2-bg);
   color: var(--av2-ink);
@@ -88,9 +127,7 @@ body {
   user-select: none;
 }
 
-.av2 *,
-.av2 *::before,
-.av2 *::after {
+.av2 *, .av2 *::before, .av2 *::after {
   box-sizing: border-box;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -99,8 +136,7 @@ body {
   -webkit-user-drag: none;
 }
 
-.av2 input,
-.av2 textarea {
+.av2 input, .av2 textarea {
   -webkit-user-select: text;
   -moz-user-select: text;
   -ms-user-select: text;
@@ -126,10 +162,7 @@ body {
   font: inherit;
 }
 
-.av2 h1,
-.av2 h2,
-.av2 h3,
-.av2 h4 {
+.av2 h1, .av2 h2, .av2 h3, .av2 h4 {
   font-family: var(--av2-display);
   font-weight: 600;
   line-height: 1.06;
@@ -152,85 +185,6 @@ body {
   padding-bottom: 0;
   z-index: 1;
 }
-
-/* Capa de engranajes (fija, detrás del contenido) */
-.av2-gear-layer {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  overflow: hidden;
-}
-
-.av2-gear-wrap {
-  position: absolute;
-  color: var(--av2-copper);
-  transform-origin: center;
-}
-
-.av2-gear-wrap svg {
-  width: 100%;
-  height: 100%;
-  fill: currentColor;
-  transform-origin: center;
-}
-
-.av2-gear-wrap--left {
-  left: -120px;
-  top: 30%;
-  transform: translateY(-50%);
-  opacity: 0.12;
-  width: 380px;
-  height: 380px;
-}
-
-.av2-gear-wrap--right {
-  right: -90px;
-  top: 14%;
-  opacity: 0.10;
-  width: 290px;
-  height: 290px;
-}
-
-.av2-gear-wrap--right-sm {
-  right: 65px;
-  top: 52%;
-  opacity: 0.08;
-  width: 155px;
-  height: 155px;
-}
-
-/* En el hero los gears toman protagonismo (matchea home-reference). */
-body:has(.av2-hero) .av2-gear-wrap--left {
-  opacity: 0.32;
-  left: -90px;
-  top: 36%;
-}
-
-body:has(.av2-hero) .av2-gear-wrap--right {
-  opacity: 0.28;
-  right: -70px;
-  top: 18%;
-}
-
-body:has(.av2-hero) .av2-gear-wrap--right-sm {
-  opacity: 0.22;
-  right: 80px;
-  top: 60%;
-}
-
-.av2-gear-wrap--left svg {
-  animation: av2-spin 82s linear infinite;
-}
-
-.av2-gear-wrap--right svg {
-  animation: av2-spin-rev 60s linear infinite;
-}
-
-.av2-gear-wrap--right-sm svg {
-  animation: av2-spin 38s linear infinite;
-}
-
 /* ── Navegación top ─────────────────────────────────────────────────── */
 /* Navbar 100% transparente — los iconos flotan sobre el hero,
    con margen superior para respiración respecto al borde */

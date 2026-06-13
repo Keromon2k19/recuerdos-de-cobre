@@ -14,13 +14,12 @@
   z-index: -1;
   overflow: hidden;
   pointer-events: none;
-  background: oklch(0.092 0.010 58);
+  background: var(--av2-bg);
 }
 
 /* Cuando una página inyecta un fondo inmersivo, .av2 y body deben ser
    transparentes — sino el background sólido tapa el bg fixed z-index -1. */
-body:has(.av2-immersive-bg),
-.av2:has(.av2-immersive-bg) {
+body:has(.av2-immersive-bg), .av2:has(.av2-immersive-bg) {
   background: transparent;
 }
 
@@ -49,38 +48,26 @@ body:has(.av2-immersive-bg),
   inset: 0;
   background:
     radial-gradient(58% 70% at 50% 100%,
-      oklch(0.092 0.010 58 / 0.85) 0%,
+      var(--av2-bg-opacity-85) 0%,
       oklch(0.092 0.010 58 / 0.30) 60%,
       transparent 100%),
     radial-gradient(70% 50% at 50% 0%,
-      oklch(0.092 0.010 58 / 0.55) 0%,
+      var(--av2-bg-opacity-55) 0%,
       transparent 70%),
     linear-gradient(180deg,
       oklch(0.092 0.010 58 / 0.65) 0%,
-      oklch(0.092 0.010 58 / 0.35) 35%,
-      oklch(0.092 0.010 58 / 0.55) 80%,
-      oklch(0.092 0.010 58 / 0.92) 100%);
+      var(--av2-bg-opacity-35) 35%,
+      var(--av2-bg-opacity-55) 80%,
+      var(--av2-bg-opacity-92) 100%);
 }
 
-.av2-immersive-bg--soft .av2-immersive-bg-veil {
-  opacity: 0.65;
-}
 
-.av2-immersive-bg--normal .av2-immersive-bg-veil {
-  opacity: 1.00;
-}
 
-.av2-immersive-bg--strong .av2-immersive-bg-veil {
-  opacity: 1.00;
-  mix-blend-mode: multiply;
-}
 
-.av2-immersive-bg--strong::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: oklch(0.060 0.010 58 / 0.55);
-}
+
+
+
+
 
 @media (prefers-reduced-motion: reduce) {
   .av2-immersive-bg-img {
@@ -146,13 +133,13 @@ body:has(.av2-immersive-bg),
       oklch(0.06 0.01 58 / 0.40) 0%,
       transparent 18%,
       transparent 52%,
-      oklch(0.06 0.01 58 / 0.85) 100%),
+      var(--av2-bg-dark-85) 100%),
     /* Lados: oscurece sutil para enmarcar al texto */
     linear-gradient(90deg,
-      oklch(0.06 0.01 58 / 0.55) 0%,
+      var(--av2-bg-dark-55) 0%,
       transparent 22%,
       transparent 78%,
-      oklch(0.06 0.01 58 / 0.55) 100%);
+      var(--av2-bg-dark-55) 100%);
   pointer-events: none;
   z-index: 1;
 }
@@ -209,7 +196,7 @@ body:has(.av2-immersive-bg),
   align-items: center;
   gap: 0.4rem;
   white-space: nowrap;
-  text-shadow: 0 1px 10px oklch(0.04 0.01 58 / 0.95);
+  text-shadow: 0 1px 10px var(--av2-bg-dark-95);
 }
 
 .av2-hc-stat-bullet {
@@ -226,7 +213,7 @@ body:has(.av2-immersive-bg),
   color: var(--av2-ink);
   text-shadow:
     0 1px 3px oklch(0.04 0.01 58 / 1),
-    0 2px 16px oklch(0.04 0.01 58 / 0.85);
+    0 2px 16px var(--av2-bg-dark-85);
   white-space: nowrap;
 }
 
@@ -238,7 +225,7 @@ body:has(.av2-immersive-bg),
   text-transform: uppercase;
   color: var(--av2-gold-dim);
   margin: 0 0 0.9rem;
-  text-shadow: 0 1px 12px oklch(0.04 0.01 58 / 0.95);
+  text-shadow: 0 1px 12px var(--av2-bg-dark-95);
   position: relative;
   padding-left: 1.4rem;
 }
@@ -271,7 +258,7 @@ body:has(.av2-immersive-bg),
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--av2-ink);
-  background: oklch(0.06 0.01 58 / 0.65);
+  background: var(--av2-bg-dark-65);
   border: 1px solid var(--av2-rule-copper);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -285,7 +272,7 @@ body:has(.av2-immersive-bg),
 }
 
 .av2-hc-cta-btn:hover {
-  background: oklch(0.715 0.118 56 / 0.16);
+  background: var(--av2-copper-16);
   border-color: var(--av2-copper-hi);
   color: var(--av2-gold);
   transform: translateY(-1px);
@@ -315,8 +302,8 @@ body:has(.av2-immersive-bg),
   margin: 0 0 0.9rem;
   max-width: 13ch;
   text-shadow:
-    0 2px 28px oklch(0.04 0.01 58 / 0.95),
-    0 0 60px oklch(0.715 0.118 56 / 0.28);
+    0 2px 28px var(--av2-bg-dark-95),
+    0 0 60px var(--av2-copper-28);
 }
 
 .av2-hc-tagline {
@@ -374,7 +361,7 @@ body:has(.av2-immersive-bg),
   color: var(--av2-copper-hi);
   margin: 0 0 0.15rem;
   letter-spacing: 0.01em;
-  text-shadow: 0 1px 14px oklch(0.04 0.01 58 / 0.95);
+  text-shadow: 0 1px 14px var(--av2-bg-dark-95);
   line-height: 1.15;
 }
 
@@ -385,7 +372,7 @@ body:has(.av2-immersive-bg),
   text-transform: uppercase;
   color: var(--av2-ink-soft);
   margin: 0;
-  text-shadow: 0 1px 10px oklch(0.04 0.01 58 / 0.95);
+  text-shadow: 0 1px 10px var(--av2-bg-dark-95);
   line-height: 1.3;
 }
 
@@ -448,7 +435,7 @@ body:has(.av2-immersive-bg),
   display: inline-flex;
   align-items: baseline;
   gap: 0.18rem;
-  text-shadow: 0 1px 6px oklch(0.04 0.01 58 / 0.95);
+  text-shadow: 0 1px 6px var(--av2-bg-dark-95);
   font-feature-settings: "tnum";
 }
 
@@ -470,7 +457,7 @@ body:has(.av2-immersive-bg),
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: oklch(0.06 0.01 58 / 0.55);
+  background: var(--av2-bg-dark-55);
   border: 1px solid var(--av2-rule-copper);
   color: var(--av2-copper-hi);
   display: inline-flex;
@@ -486,7 +473,7 @@ body:has(.av2-immersive-bg),
 }
 
 .av2-hc-zoom:hover {
-  background: oklch(0.715 0.118 56 / 0.18);
+  background: var(--av2-copper-18);
   border-color: var(--av2-copper-hi);
   color: var(--av2-gold);
 }
@@ -538,7 +525,7 @@ body:has(.av2-immersive-bg),
   position: relative;
   background: linear-gradient(180deg,
       oklch(0.06 0.01 58 / 0.92) 0%,
-      oklch(0.06 0.01 58 / 0.55) 100%);
+      var(--av2-bg-dark-55) 100%);
   padding: 1.6rem 0 2rem;
 }
 
@@ -617,8 +604,8 @@ body:has(.av2-immersive-bg),
   transform: translateY(-4px);
   box-shadow:
     0 0 0 1px var(--av2-copper-hi),
-    0 0 24px oklch(0.715 0.118 56 / 0.55),
-    0 8px 20px -4px oklch(0.04 0.01 58 / 0.85);
+    0 0 24px var(--av2-copper-55),
+    0 8px 20px -4px var(--av2-bg-dark-85);
 }
 
 /* Dot indicador del thumb activo — sentado en el padding del li */
@@ -658,8 +645,7 @@ body:has(.av2-immersive-bg),
 
 @media (prefers-reduced-motion: reduce) {
 
-  .av2-hc-img,
-  .av2-hc-img.is-active {
+  .av2-hc-img, .av2-hc-img.is-active {
     animation: none;
     transition: none;
     transform: scale(1.02);
@@ -718,7 +704,7 @@ body:has(.av2-immersive-bg),
       var(--av2-bg-panel) 60%,
       var(--av2-bg-raised) 100%);
   border-left: 1px solid var(--av2-rule-copper);
-  box-shadow: -32px 0 80px -20px oklch(0.04 0.01 58 / 0.85);
+  box-shadow: -32px 0 80px -20px var(--av2-bg-dark-85);
   display: flex;
   flex-direction: column;
   transform: translateX(102%);
@@ -739,7 +725,7 @@ body:has(.av2-immersive-bg),
   padding: clamp(1.3rem, 3vh, 2rem) clamp(1.4rem, 3vw, 2.2rem) 1rem;
   border-bottom: 1px solid var(--av2-rule-copper);
   background: linear-gradient(180deg,
-      oklch(0.06 0.01 58 / 0.55) 0%,
+      var(--av2-bg-dark-55) 0%,
       transparent 100%);
 }
 
@@ -770,7 +756,7 @@ body:has(.av2-immersive-bg),
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: oklch(0.06 0.01 58 / 0.55);
+  background: var(--av2-bg-dark-55);
   border: 1px solid var(--av2-rule-copper);
   color: var(--av2-copper-hi);
   display: inline-flex;
@@ -784,7 +770,7 @@ body:has(.av2-immersive-bg),
 }
 
 .av2-ld-drawer-close:hover {
-  background: oklch(0.715 0.118 56 / 0.18);
+  background: var(--av2-copper-18);
   color: var(--av2-gold);
   border-color: var(--av2-copper-hi);
 }
@@ -869,8 +855,7 @@ body:has(.av2-immersive-bg),
 
 @media (prefers-reduced-motion: reduce) {
 
-  .av2-ld-drawer,
-  .av2-ld-drawer-backdrop {
+  .av2-ld-drawer, .av2-ld-drawer-backdrop {
     transition: none;
   }
 }
@@ -917,7 +902,7 @@ body:has(.av2-immersive-bg),
   background:
     radial-gradient(ellipse 80% 70% at 50% 40%,
       oklch(0.18 0.04 55) 0%,
-      oklch(0.092 0.010 58) 70%),
+      var(--av2-bg) 70%),
     var(--av2-bg);
 }
 
@@ -957,7 +942,7 @@ body:has(.av2-immersive-bg),
   font-family: var(--av2-mono);
   font-size: 0.85em;
   color: var(--av2-copper-hi);
-  background: oklch(0.06 0.01 58 / 0.55);
+  background: var(--av2-bg-dark-55);
   padding: 0.08em 0.4em;
   border-radius: 3px;
   border: 1px solid var(--av2-rule);
@@ -979,262 +964,65 @@ body:has(.av2-immersive-bg),
 }
 
 /* ── Hero ────────────────────────────────────────────────────────────── */
-.av2-ld-hero {
-  position: relative;
-  width: 100%;
-  height: clamp(360px, 62vh, 640px);
-  overflow: hidden;
-  isolation: isolate;
-  border-bottom: 1px solid var(--av2-rule-copper);
-}
 
-.av2-ld-hero-img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: saturate(0.92) contrast(1.04);
-}
 
-.av2-ld-hero-veil {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 70% 80% at 50% 60%,
-      transparent 0%,
-      oklch(0.092 0.010 58 / 0.20) 45%,
-      oklch(0.092 0.010 58 / 0.85) 100%),
-    linear-gradient(180deg,
-      oklch(0.092 0.010 58 / 0.55) 0%,
-      transparent 30%,
-      transparent 55%,
-      oklch(0.092 0.010 58 / 0.95) 100%);
-}
 
-.av2-ld-hero-text {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: clamp(2rem, 6vh, 4.5rem);
-  width: min(92%, var(--av2-maxw));
-  text-align: center;
-  z-index: 1;
-}
 
-.av2-ld-title {
-  font-size: clamp(2.4rem, 5.4vw, 4.6rem);
-  letter-spacing: 0.005em;
-  text-shadow:
-    0 2px 24px oklch(0.04 0.01 58 / 0.9),
-    0 0 60px oklch(0.715 0.118 56 / 0.35);
-  margin: 0.4rem 0 0.8rem;
-}
 
-.av2-ld-tagline {
-  font-family: var(--av2-display);
-  font-size: clamp(1.05rem, 1.6vw, 1.4rem);
-  font-style: italic;
-  color: var(--av2-gold-dim);
-  max-width: 50ch;
-  margin: 0 auto;
-  text-shadow: 0 1px 12px oklch(0.04 0.01 58 / 0.8);
-}
+
+
+
+
+
+
 
 /* ── Ficha + descripción ─────────────────────────────────────────────── */
-.av2-ld-grid {
-  width: min(92%, var(--av2-maxw));
-  margin: clamp(2rem, 5vh, 4rem) auto;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(260px, 320px);
-  gap: clamp(2rem, 4vw, 4rem);
-  align-items: start;
-}
 
-.av2-ld-grid--single {
-  grid-template-columns: minmax(0, 1fr);
-  max-width: 760px;
-}
 
-.av2-ld-prose p {
-  font-size: 1.05rem;
-  color: var(--av2-ink-soft);
-  line-height: 1.78;
-  max-width: 64ch;
-}
 
-.av2-ld-section-title {
-  font-family: var(--av2-display);
-  font-size: clamp(1.4rem, 2.2vw, 1.8rem);
-  font-weight: 600;
-  color: var(--av2-copper-hi);
-  margin: 0 0 1rem;
-  padding-bottom: 0.6rem;
-  border-bottom: 1px solid var(--av2-rule-copper);
-  letter-spacing: 0.012em;
-}
 
-.av2-ld-card {
-  background:
-    linear-gradient(180deg,
-      var(--av2-bg-panel-up) 0%,
-      var(--av2-bg-panel) 100%);
-  border: 1px solid var(--av2-rule-up);
-  border-radius: var(--av2-r-lg);
-  padding: 1.6rem 1.5rem;
-  box-shadow: var(--av2-shadow);
-  position: relative;
-}
 
-.av2-ld-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  border: 1px solid var(--av2-rule-copper);
-  pointer-events: none;
-  opacity: 0.4;
-  margin: 4px;
-}
 
-.av2-ld-card-title {
-  font-family: var(--av2-display);
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--av2-gold);
-  margin: 0 0 1rem;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  font-style: normal;
-}
 
-.av2-ld-dl {
-  margin: 0;
-  display: grid;
-  grid-template-columns: max-content 1fr;
-  gap: 0.45rem 1.2rem;
-  font-size: 0.94rem;
-}
 
-.av2-ld-dl dt {
-  font-family: var(--av2-mono);
-  font-size: 0.72rem;
-  color: var(--av2-ink-faint);
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-  align-self: center;
-}
 
-.av2-ld-dl dd {
-  margin: 0;
-  color: var(--av2-ink);
-  font-family: var(--av2-display);
-  font-size: 1rem;
-}
+
+
+
+
+
+
+
+
+
+
 
 /* ── Galería ─────────────────────────────────────────────────────────── */
-.av2-ld-gallery-wrap {
-  width: min(92%, var(--av2-maxw));
-  margin: 0 auto clamp(3rem, 8vh, 6rem);
-}
 
-.av2-ld-gallery-head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 1.4rem;
-  flex-wrap: wrap;
-}
 
-.av2-ld-gallery-head .av2-ld-section-title {
-  margin-bottom: 0;
-}
 
-.av2-ld-gallery-sub {
-  font-family: var(--av2-mono);
-  font-size: 0.78rem;
-  color: var(--av2-ink-faint);
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-}
 
-.av2-ld-gallery {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1rem;
-}
 
-.av2-ld-gthumb {
-  position: relative;
-}
 
-.av2-ld-gthumb-link {
-  display: block;
-  position: relative;
-  aspect-ratio: 4 / 3;
-  overflow: hidden;
-  border-radius: var(--av2-r);
-  border: 1px solid var(--av2-rule-up);
-  background: var(--av2-bg-raised);
-  transition: transform var(--av2-dur) var(--av2-ease),
-    box-shadow var(--av2-dur) var(--av2-ease),
-    border-color var(--av2-dur) var(--av2-ease);
-}
 
-.av2-ld-gthumb-link:hover {
-  transform: translateY(-2px);
-  border-color: var(--av2-copper-dim);
-  box-shadow: 0 12px 28px -14px oklch(0.04 0.01 58 / 0.9),
-    0 0 0 1px var(--av2-rule-copper);
-}
 
-.av2-ld-gthumb-link img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 400ms var(--av2-ease), filter var(--av2-dur) var(--av2-ease);
-  filter: saturate(0.95);
-}
 
-.av2-ld-gthumb-link:hover img {
-  transform: scale(1.04);
-  filter: saturate(1.05);
-}
 
-.av2-ld-gthumb-cap {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 1.2rem 0.85rem 0.7rem;
-  background: linear-gradient(180deg,
-      transparent 0%,
-      oklch(0.04 0.01 58 / 0.85) 100%);
-  display: flex;
-  flex-direction: column;
-  gap: 0.1rem;
-}
 
-.av2-ld-gthumb-name {
-  font-family: var(--av2-display);
-  font-size: 0.98rem;
-  color: var(--av2-ink);
-  line-height: 1.2;
-}
 
-.av2-ld-gthumb-sub {
-  font-family: var(--av2-mono);
-  font-size: 0.66rem;
-  color: var(--av2-gold-dim);
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* ── Lightbox sin JS (CSS :target) ───────────────────────────────────── */
 .av2-ld-lb {
@@ -1280,7 +1068,7 @@ body:has(.av2-immersive-bg),
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: oklch(0.06 0.01 58 / 0.85);
+  background: var(--av2-bg-dark-85);
   border: 1px solid var(--av2-rule-copper);
   color: var(--av2-copper-hi);
   display: inline-flex;
@@ -1301,7 +1089,7 @@ body:has(.av2-immersive-bg),
 }
 
 .av2-ld-lb-close:hover {
-  background: oklch(0.715 0.118 56 / 0.18);
+  background: var(--av2-copper-18);
   border-color: var(--av2-copper-hi);
   color: var(--av2-gold);
 }
@@ -1316,16 +1104,7 @@ body:has(.av2-immersive-bg),
 }
 
 /* ── Responsive ──────────────────────────────────────────────────────── */
-@media (max-width: 880px) {
-  .av2-ld-grid {
-    grid-template-columns: 1fr;
-  }
 
-  .av2-ld-gallery {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 0.7rem;
-  }
-}
 
 
 /* Lugares: indice separado del mapa */
@@ -1355,27 +1134,23 @@ body:has(.av2-immersive-bg),
   }
 }
 
-.av2-lugares-feature,
-.av2-lugar-card {
+.av2-lugares-feature, .av2-lugar-card {
   position: relative;
   border: 1px solid var(--av2-rule-copper);
   border-radius: 0;
   background:
-    radial-gradient(70% 95% at 22% 6%, oklch(0.49 0.075 53 / 0.12), transparent 100%),
+    radial-gradient(70% 95% at 22% 6%, var(--av2-copper-dim-12), transparent 100%),
     linear-gradient(145deg, oklch(0.29 0.04 58 / 0.14), transparent 100%),
     linear-gradient(180deg, oklch(0.075 0.012 26 / 0.26), oklch(0.045 0.01 25 / 0.24));
   box-shadow:
-    0 22px 60px -32px oklch(0.03 0.01 55 / 0.96),
-    inset 0 1px 0 oklch(0.9 0.05 70 / 0.05),
+    0 22px 60px -32px var(--av2-shadow-base),
+    inset 0 1px 0 var(--av2-rule-inset),
     inset 0 0 0 5px oklch(0.04 0.01 55 / 0.30);
   backdrop-filter: blur(12px) saturate(1.1);
   -webkit-backdrop-filter: blur(12px) saturate(1.1);
 }
 
-.av2-lugares-feature::before,
-.av2-lugar-card::before,
-.av2-lugares-feature::after,
-.av2-lugar-card::after {
+.av2-lugares-feature::before, .av2-lugar-card::before, .av2-lugares-feature::after, .av2-lugar-card::after {
   content: "";
   position: absolute;
   z-index: 3;
@@ -1386,16 +1161,14 @@ body:has(.av2-immersive-bg),
   pointer-events: none;
 }
 
-.av2-lugares-feature::before,
-.av2-lugar-card::before {
+.av2-lugares-feature::before, .av2-lugar-card::before {
   top: 0.42rem;
   left: 0.42rem;
   border-top: 1px solid currentColor;
   border-left: 1px solid currentColor;
 }
 
-.av2-lugares-feature::after,
-.av2-lugar-card::after {
+.av2-lugares-feature::after, .av2-lugar-card::after {
   right: 0.42rem;
   bottom: 0.42rem;
   border-right: 1px solid currentColor;
@@ -1437,7 +1210,7 @@ body:has(.av2-immersive-bg),
 }
 
 .av2-lugares-map-link:hover {
-  background: oklch(0.715 0.118 56 / 0.10);
+  background: var(--av2-copper-10);
   border-color: var(--av2-copper-hi);
   transform: translateY(-1px);
 }
@@ -1505,15 +1278,12 @@ body:has(.av2-immersive-bg),
   pointer-events: none;
 }
 
-.av2-lugares-feature:has(.av2-lugares-feature-media-wrap:hover),
-.av2-lugares-feature:has(.av2-lugares-feature-content:hover),
-.av2-lugar-card:hover {
+.av2-lugares-feature:has(.av2-lugares-feature-media-wrap:hover), .av2-lugares-feature:has(.av2-lugares-feature-content:hover), .av2-lugar-card:hover {
   border-color: var(--av2-copper-hi);
   transform: translateY(-2px);
 }
 
-.av2-lugares-feature-media,
-.av2-lugar-card-media {
+.av2-lugares-feature-media, .av2-lugar-card-media {
   position: relative;
   z-index: 1;
   overflow: hidden;
@@ -1522,8 +1292,7 @@ body:has(.av2-immersive-bg),
     oklch(0.04 0.01 55 / 0.82);
 }
 
-.av2-lugares-feature-media::after,
-.av2-lugar-card-media::after {
+.av2-lugares-feature-media::after, .av2-lugar-card-media::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -1533,8 +1302,7 @@ body:has(.av2-immersive-bg),
   pointer-events: none;
 }
 
-.av2-lugares-feature-media img,
-.av2-lugar-card-media img {
+.av2-lugares-feature-media img, .av2-lugar-card-media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -1542,14 +1310,12 @@ body:has(.av2-immersive-bg),
   transition: transform 420ms var(--av2-ease), filter 420ms var(--av2-ease);
 }
 
-.av2-lugares-feature:has(.av2-lugares-feature-media-wrap:hover) .av2-lugares-feature-media img,
-.av2-lugar-card:hover .av2-lugar-card-media img {
+.av2-lugares-feature:has(.av2-lugares-feature-media-wrap:hover) .av2-lugares-feature-media img, .av2-lugar-card:hover .av2-lugar-card-media img {
   transform: scale(1.035);
   filter: saturate(1.02) contrast(1.06);
 }
 
-.av2-lugares-feature-media span,
-.av2-lugar-card-media span {
+.av2-lugares-feature-media span, .av2-lugar-card-media span {
   display: grid;
   place-items: center;
   width: 100%;
@@ -1785,8 +1551,7 @@ body:has(.av2-immersive-bg),
     font-size: clamp(2.35rem, 15vw, 4.2rem);
   }
 
-  .av2-lugares-grid,
-  .av2-lugar-card {
+  .av2-lugares-grid, .av2-lugar-card {
     grid-template-columns: 1fr;
   }
 
