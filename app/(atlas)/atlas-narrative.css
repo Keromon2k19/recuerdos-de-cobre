@@ -829,7 +829,7 @@
   grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
   gap: 0.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.2rem;
   width: 100%;
 }
 
@@ -837,42 +837,50 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.5rem 0.25rem;
-  border: 1px solid var(--av2-rule);
+  padding: 0.58rem 0.25rem;
+  border: 1px solid var(--av2-copper-dim); /* standing out copper border */
   border-radius: 4px;
-  background: oklch(0.04 0.01 55 / 0.52);
-  color: var(--av2-ink-faint);
+  background: var(--av2-copper-08); /* subtle copper background */
+  color: var(--av2-ink); /* highly readable text color */
   font-family: var(--av2-mono);
-  font-size: 0.56rem;
-  letter-spacing: 0.08em;
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   text-decoration: none;
   text-align: center;
   transition:
     border-color var(--av2-dur) var(--av2-ease),
     color var(--av2-dur) var(--av2-ease),
-    background var(--av2-dur) var(--av2-ease);
+    background var(--av2-dur) var(--av2-ease),
+    box-shadow var(--av2-dur) var(--av2-ease);
 }
 
 .av2-chapter-detail-top-nav .nav-btn:hover:not(.disabled) {
   border-color: var(--av2-copper);
-  background: oklch(0.06 0.015 55 / 0.70);
-  color: var(--av2-ink);
+  background: var(--av2-copper-16);
+  color: var(--av2-copper-hi);
+  box-shadow: 0 0 12px var(--av2-copper-18);
 }
 
 .av2-chapter-detail-top-nav .nav-btn.disabled {
-  opacity: 0.35;
+  border-color: var(--av2-rule);
+  background: transparent;
+  color: var(--av2-ink-faint);
+  opacity: 0.25;
   pointer-events: none;
 }
 
 .av2-chapter-detail-top-nav .nav-btn.back {
-  border-color: var(--av2-rule-up);
-  color: var(--av2-copper-dim);
+  border-color: var(--av2-copper);
+  background: var(--av2-copper-16);
+  color: var(--av2-copper-hi);
 }
 
 .av2-chapter-detail-top-nav .nav-btn.back:hover {
-  border-color: var(--av2-copper);
-  color: var(--av2-copper-hi);
+  border-color: var(--av2-copper-hi);
+  background: var(--av2-copper-22);
+  color: var(--av2-ink);
+  box-shadow: 0 0 16px var(--av2-copper-28);
 }
 
 .av2-dioses-layout {
