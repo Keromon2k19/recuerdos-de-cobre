@@ -1154,3 +1154,95 @@
     max-height: 100%;
   }
 }
+
+/* Pestañas de navegación interna de capítulo (Opción A - Integrated Reader) */
+.av2-chapter-tabs {
+  display: flex;
+  gap: 0.35rem;
+  padding: 0.25rem;
+  background: var(--av2-bg-panel-30);
+  border: 1px solid var(--av2-rule);
+  border-radius: calc(var(--av2-r) - 2px);
+  margin-bottom: 1.25rem;
+  flex-shrink: 0;
+}
+
+.av2-chapter-tab {
+  flex: 1;
+  font-family: var(--av2-mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  padding: 0.45rem 0.85rem;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--av2-ink-faint);
+  cursor: pointer;
+  border-radius: calc(var(--av2-r) - 4px);
+  transition: all 0.22s var(--av2-ease);
+}
+
+.av2-chapter-tab:hover {
+  color: var(--av2-ink-soft);
+  background: var(--av2-bg-panel-48);
+}
+
+.av2-chapter-tab[data-active="true"] {
+  color: var(--av2-copper);
+  background: var(--av2-copper-08);
+  border: 1px solid var(--av2-rule-copper-34);
+  box-shadow: inset 0 0 6px var(--av2-copper-16);
+}
+
+/* Envoltorio del lector integrado */
+.av2-chapter-reader-wrap {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.av2-chapter-reader-wrap .av2-entity-reader {
+  border: none;
+  background: transparent;
+  padding: 0;
+  box-shadow: none;
+  height: 100%;
+}
+
+/* Animación micro-fade-in al cambiar de capítulo */
+.av2-preview-fade-in {
+  animation: av2-preview-fade-in 240ms var(--av2-ease) both;
+}
+
+@keyframes av2-preview-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Respiración en selección activa de capítulos lateral */
+.av2-chapter-item[data-active="true"] {
+  animation: av2-selected-glow-breath 3.5s ease-in-out infinite alternate;
+}
+
+@keyframes av2-selected-glow-breath {
+  0% {
+    box-shadow: 
+      inset 0 0 12px var(--av2-copper-08),
+      0 0 0 1px var(--av2-rule-copper-34);
+    border-color: var(--av2-rule-copper-34);
+  }
+  100% {
+    box-shadow: 
+      inset 0 0 20px var(--av2-copper-18),
+      0 0 4px var(--av2-copper-16),
+      0 0 0 1px var(--av2-copper-42);
+    border-color: var(--av2-copper-42);
+  }
+}

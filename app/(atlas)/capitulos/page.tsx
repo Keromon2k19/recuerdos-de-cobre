@@ -5,6 +5,10 @@ import { cachedListByType, cachedListEpisodes } from "@/lib/public-cache";
 import { parseEpisodioRef } from "@/lib/episode-number";
 import { publicVaultPath } from "@/lib/public-vault-path";
 import type { V2Chapter } from "@/data/atlas/chapters";
+import { parseAtlasChapterDetail } from "@/lib/atlas-chapter";
+import { renderMarkdown } from "@/lib/markdown-render";
+import { readEpisode } from "@/lib/vault";
+import { cachedBuildAtlasWikiResolver } from "@/lib/wiki-resolver";
 
 export const dynamic = "force-static";
 
@@ -104,7 +108,7 @@ function toV2Chapter(ep: VaultEpisode, roles: Map<string, string>): V2Chapter {
   const personajes = sortPersonajes(ep.menciones?.personajes, roles);
   const lugar = ep.menciones?.lugares?.[0]
     ? stripWikilink(ep.menciones.lugares[0])
-    : "";
+    : "Varios";
 
   return {
     id: String(ep.numero),
@@ -123,12 +127,31 @@ function toV2Chapter(ep: VaultEpisode, roles: Map<string, string>): V2Chapter {
 
 export default async function CapitulosPage() {
   const vp = publicVaultPath();
-  const [episodes, personajes] = await Promise.all([
+  const [episodes, personajes, resolve] = await Promise.all([
     cachedListEpisodes(vp),
     cachedListByType(vp, "personaje"),
+    cachedBuildAtlasWikiResolver(vp),
   ]);
   const roles = buildRoleIndex(personajes);
-  const chapters = episodes.map((ep) => toV2Chapter(ep, roles)).reverse();
+
+  const chapters = await Promise.all(
+    episodes.map(async (ep) => {
+      const base = toV2Chapter(ep, roles);
+      const content = await readEpisode(vp, ep.numero);
+      const detail = content ? parseAtlasChapterDetail(content, ep.numero) : null;
+      const sections = detail
+        ? detail.sections.map((section) => ({
+            id: section.id,
+            title: section.title,
+            kind: section.kind,
+            html: renderMarkdown(section.markdown, resolve),
+          }))
+        : [];
+      return { ...base, sections };
+    })
+  );
+
+  const reversedChapters = chapters.reverse();
 
   return (
     <AtlasPageScene
@@ -137,7 +160,7 @@ export default async function CapitulosPage() {
       subtitle="Cada sesión como un registro: qué pasó, quién estuvo, qué quedó abierto."
       variant="chapter"
     >
-      <CapitulosClient chapters={chapters} />
+      <CapitulosClient chapters={reversedChapters} />
     </AtlasPageScene>
   );
 }

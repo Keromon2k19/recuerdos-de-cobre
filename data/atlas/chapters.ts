@@ -11,6 +11,8 @@ export type V2Reward = {
   glyph: string;
 };
 
+import type { AtlasEntityReaderSection } from "@/components/atlas/AtlasEntityReader";
+
 export type V2Chapter = {
   id: string;
   numero: number;
@@ -33,6 +35,8 @@ export type V2Chapter = {
   imageSrc: string;
   /** 4 recompensas desbloqueadas en el capítulo */
   rewards?: V2Reward[];
+  /** Secciones completas del capítulo (HTML renderizado) */
+  sections?: AtlasEntityReaderSection[];
 };
 
 const SCENE = "/assets/atlas/backgrounds/hero.png";
