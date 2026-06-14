@@ -21,6 +21,7 @@ menciones:
     - '[[mind-flayers-arcanistas|Mind flayers arcanistas]]'
     - '[[githyankis-cautivos|Githyankis cautivos]]'
     - '[[personajes/dama-de-hierro|Dama de Hierro]]'
+    - '[[leira-umbra|Leira Umbra]]'
   lugares:
     - '[[lugares/underdark|Underdark]]'
     - '[[objetos/tortuga-magica|Tortuga magica]]'
@@ -134,7 +135,7 @@ Mary rompe la tension al recordar que le habian prometido dejarle comer a una pe
 
 Kilith explica su objetivo: destruir al Elder Brain. Para el, la colonia es un cancer que consume mundos, constelaciones y planos. Si madre muere, la colonia muere con ella. Eso genera miedo inmediato por Uthuk y por las posibles conexiones recientes de Io y Layra. Layra no sabe con certeza si ellas caerian con madre; el riesgo mas fuerte parece estar en Uthuk, porque podria provenir de esa colonia, aunque su alma esta dañada de una forma extraña.
 
-El grupo acepta ayudar a Kilith, aunque no confia en el. Es arrogante, trata a los demas como istiks inferiores y se muestra dispuesto a usar al grupo como herramientas. Pero su espada inhibe la colmena, conoce la amenaza y ofrece una via para eliminar el problema sin aceptar el anclaje psiquico de madre. Uthuk declara que ira donde este la lealtad de Layra, y todos deciden avanzar.
+El grupo acepta ayudar a Kilith, aunque no confia en el. Es arrogante, trata a los demas como istiks inferiores y se muestra dispuesto a usar al grupo como herramientas. Pero su espada inhibe la colmena, conoce la amenaza y ofrece una via para eliminar el problema sin aceptar el anclaje psiquico de madre. Uthuk declara que ira donde este la lealtad de [[leira-umbra|Leira Umbra]], y todos deciden avanzar.
 
 La marcha hacia el Elder Brain se hace en sigilo. Ven duergars esclavizados, mind flayers patrullando, capsulas con drows y duergars en proceso de transformacion, y recuerdan que hay dos mind flayers cercanos a convertirse en Elder Brains, arcanistas poderosos con poliformadores de maldicion. El grupo elige una ruta mas lenta por el brazo del esqueleto titanico en vez de avanzar por la columna vertebral, porque el camino central es mas rapido pero mucho mas visible.
 

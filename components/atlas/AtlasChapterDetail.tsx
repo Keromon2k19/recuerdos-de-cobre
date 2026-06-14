@@ -26,10 +26,38 @@ export default function AtlasChapterDetail({
         variant="secondary"
         className="av2-chapter-detail-cover"
       >
-        <Link href="/capitulos" className="av2-entity-detail-back">
-          <span aria-hidden="true">←</span>
-          Volver a capítulos
-        </Link>
+        <nav
+          className="av2-chapter-detail-top-nav"
+          aria-label="Navegación del registro"
+        >
+          {previous ? (
+            <Link
+              href={`/capitulos/${previous.number}`}
+              className="nav-btn previous"
+              title={previous.title}
+            >
+              ← Reg. {previous.number}
+            </Link>
+          ) : (
+            <span className="nav-btn disabled">← Reg. --</span>
+          )}
+
+          <Link href="/capitulos" className="nav-btn back">
+            Volver
+          </Link>
+
+          {next ? (
+            <Link
+              href={`/capitulos/${next.number}`}
+              className="nav-btn next"
+              title={next.title}
+            >
+              Reg. {next.number} →
+            </Link>
+          ) : (
+            <span className="nav-btn disabled">Reg. -- →</span>
+          )}
+        </nav>
 
         <div className="av2-chapter-detail-image">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -42,32 +70,6 @@ export default function AtlasChapterDetail({
           <h1>{detail.title}</h1>
           <span>{detail.description}</span>
         </div>
-
-        <nav
-          className="av2-chapter-detail-neighbors"
-          aria-label="Navegación entre capítulos"
-        >
-          {previous ? (
-            <Link href={`/capitulos/${previous.number}`} className="previous">
-              <small>← Registro anterior</small>
-              <span>{previous.title}</span>
-            </Link>
-          ) : (
-            <span className="av2-chapter-detail-neighbor-empty">
-              Inicio del archivo
-            </span>
-          )}
-          {next ? (
-            <Link href={`/capitulos/${next.number}`} className="next">
-              <small>Registro siguiente →</small>
-              <span>{next.title}</span>
-            </Link>
-          ) : (
-            <span className="av2-chapter-detail-neighbor-empty">
-              Fin del archivo
-            </span>
-          )}
-        </nav>
       </AtlasNarrativeFrame>
 
       <AtlasNarrativeFrame
