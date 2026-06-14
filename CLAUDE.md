@@ -47,6 +47,7 @@ protocolo obligatorio de referencias PNG + screenshots + comparación P0/P1/P2.
 
 - Responder siempre en **español**. Llamar al usuario por su nick **Kero** al
   inicio de cada conversación / mensaje que le envíes.
+- **Planificación y alineación previa (REGLA MANDATORIA)**: Antes de realizar cualquier cambio en el código, crear archivos nuevos o ejecutar comandos modificadores en la terminal, debes explicar primero a Kero tu análisis del problema y proponer detalladamente la solución para obtener su consentimiento. No realices modificaciones directas de forma unilateral.
 - El usuario trabaja desde Claude Code CLI y Antigravity (IDE de Google).
 - **Resúmenes**: seguir `PROMPT_RESUMEN.md` al pie de la letra. **Extracción**:
   a mano, sin API, conforme a `lib/schema.ts` (`ExtractionResult`) y
