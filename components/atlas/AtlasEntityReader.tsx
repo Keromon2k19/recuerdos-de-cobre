@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, type ReactNode } from "react";
 
 export type AtlasEntityReaderSection = {
   id: string;
@@ -28,7 +28,7 @@ const getTabConfig = (title: string, id: string) => {
 
   // Match icon by keyword, but always use the section's original title as the label
   // to prevent duplicate labels when multiple sections match the same keyword.
-  const iconMap: Array<{ test: (nId: string, nTitle: string) => boolean; icon: JSX.Element }> = [
+  const iconMap: Array<{ test: (nId: string, nTitle: string) => boolean; icon: ReactNode }> = [
     {
       test: (nId, nTitle) => nId.includes("resumen-cronologico") || nTitle.includes("cronologico") || nId.includes("cronología") || nId.includes("cronologia"),
       icon: (

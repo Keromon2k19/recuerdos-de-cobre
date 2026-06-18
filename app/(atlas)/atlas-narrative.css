@@ -573,16 +573,15 @@
   transform: translateX(0);
 }
 
-/* Marco fino dorado interno (Línea decorativa interna) */
+/* Marco fino interno — línea decorativa de bronce patinado */
 .av2-entity-reader-page::before {
   content: "";
   position: absolute;
   inset: 12px;
-  border: 1px solid rgba(139, 90, 43, 0.35);
+  border: 2px solid oklch(0.44 0.055 65 / 0.28);
   pointer-events: none;
-  border-radius: inherit;
+  border-radius: 0 6px 6px 0 / 0 8px 5px 0;
   z-index: 7;
-  /* Linea decorativa interna */
 }
 
 /* Segundo marco concéntrico para efecto de doble borde dorado/bronce (Borde iluminado interno) */
@@ -603,8 +602,8 @@
   inset: 0;
   border-radius: inherit;
   padding: 2px;
-  /* Grosor del borde interno */
-  background: linear-gradient(90deg, #ffd480, #c89a58);
+  /* Tarnished brass gradient — aged, not bright gold */
+  background: linear-gradient(135deg, #c9943e, #a07030, #c9943e);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
