@@ -1,16 +1,13 @@
 "use client";
 
 // components/atlas/AtlasChapterPreview.tsx
-// Panel derecho: detalle del capítulo seleccionado.
+// Panel derecho: card de preview del capítulo seleccionado.
 //
-// Estructura (basado en capitulos-reference.png):
-//   eyebrow "CAPÍTULO XX"
-//   título grande poético
-//   imagen panorámica
-//   descripción larga (2-3 párrafos)
-//   meta grid (Fecha · Lugar · Personajes · Estado)
-//   recompensas grid (4 íconos con valor)
-//   CTA "Continuar lectura"
+// Estructura:
+//   título grande + "Continuar lectura →"
+//   pergamino con descripción
+//   meta grid (Fecha · Lugar · Personajes)
+//   imagen panorámica de la escena
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -42,19 +39,22 @@ export default function AtlasChapterPreview({ chapter }: Props) {
     >
       <header className="av2-chapter-head">
         <div className="av2-chapter-head-top">
-          <div>
-            <p className="av2-chapter-eyebrow">{chapter.eyebrow}</p>
-            <h2 className="av2-chapter-title">{chapter.titulo}</h2>
-          </div>
+          <h2 className="av2-chapter-title">{chapter.titulo}</h2>
+          <Link
+            href={`/capitulos/${chapter.numero}`}
+            className="av2-chapter-link-more"
+          >
+            Continuar lectura <span className="av2-arrow" aria-hidden="true">→</span>
+          </Link>
         </div>
       </header>
 
       <div className="av2-chapter-resumen-body">
-        <div className="av2-chapter-resumen-info">
-          {chapter.descripcion && (
-            <p className="av2-chapter-summary">{chapter.descripcion}</p>
-          )}
+        {chapter.descripcion && (
+          <p className="av2-chapter-summary">{chapter.descripcion}</p>
+        )}
 
+        <div className="av2-chapter-resumen-details">
           <dl className="av2-chapter-meta">
             {chapter.fecha && (
               <div className="av2-chapter-meta-row">
@@ -74,40 +74,14 @@ export default function AtlasChapterPreview({ chapter }: Props) {
                 <dd>{chapter.personajes.join(" · ")}</dd>
               </div>
             )}
-            <div className="av2-chapter-meta-row">
-              <dt>Estado</dt>
-              <dd>{chapter.estado}</dd>
-            </div>
           </dl>
 
-          <Link
-            href={`/capitulos/${chapter.numero}`}
-            className="av2-btn av2-btn--primary av2-chapter-cta"
-          >
-            Continuar lectura
-          </Link>
-        </div>
-
-        <div className="av2-chapter-resumen-media">
-          <div className="av2-chapter-scene">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={src} alt="" onError={handleError} />
+          <div className="av2-chapter-resumen-media">
+            <div className="av2-chapter-scene">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={src} alt="" onError={handleError} />
+            </div>
           </div>
-
-          {(chapter.rewards?.length ?? 0) > 0 && (
-            <section className="av2-chapter-rewards" aria-label="Recompensas desbloqueadas">
-              <h3 className="av2-chapter-rewards-title">Recompensas desbloqueadas</h3>
-              <div className="av2-chapter-rewards-grid">
-                {chapter.rewards!.map((r) => (
-                  <div key={r.key} className="av2-reward">
-                    <span className="av2-reward-glyph" aria-hidden="true">{r.glyph}</span>
-                    <span className="av2-reward-label">{r.label}</span>
-                    <span className="av2-reward-value">{r.value}</span>
-                  </div>
-                ))}
-              </div>
-            </section>
-          )}
         </div>
       </div>
     </article>

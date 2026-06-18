@@ -95,6 +95,8 @@ image: /images/episodios/ep82.jpg
 
 ## Resumen
 
+En el Underdark, el grupo rechaza la oferta de conexión del Elder Brain "madre" e infiltra la colonia junto al githyanki Kilith. Tras una caótica batalla, Mysha paraliza a madre con un Blood Veil de nivel 9, permitiendo a Kilith destruirla y liberar a los cautivos. El colapso de la colmena causa la muerte de Uthuk, pero Layra logra reencarnarlo milagrosamente como gnomo mediante una Intervención Divina de Myrkul.
+
 El capitulo empieza en el Underdark, con el grupo refugiado alrededor de la tortuga magica. La mision es conseguir un cristal que pueda servir para salvar a Narcissa, pero el camino los puso frente a una posibilidad mucho mas peligrosa: conectarse con "madre", el Elder Brain que gobierna la colonia mind flayer. Talisa intenta calmar el ambiente contando una historia para dormir, transformando a Te de Medianoche en animales absurdos dentro de una fabula, pero la tension no desaparece.
 
 Dentro de la tortuga, Talisa cuida a Io y Mysha mientras Mary, el devorador de intelectos, prepara la conexion. Mary se muestra como era originalmente dentro del espacio mental: una niña dracónida de seis o siete años, capturada con su familia y convertida en algo incompleto porque no podia transformarse en mind flayer de la manera usual. Su confianza en madre es sincera. Ella cree que la mente colmena puede dar pertenencia, belleza y continuidad.

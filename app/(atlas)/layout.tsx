@@ -21,6 +21,7 @@ import "./atlas-transitions.css";
 import AtlasShell from "@/components/atlas/AtlasShell";
 import AtlasTopNav from "@/components/atlas/AtlasTopNav";
 import AtlasViewTransitions from "@/components/atlas/AtlasViewTransitions";
+import AtlasWikilinkModal from "@/components/atlas/AtlasWikilinkModal";
 
 export const metadata = {
   title: "Grimorio de Lore · Recuerdos de Cobre",
@@ -41,6 +42,7 @@ export default function V2Layout({ children }: { children: React.ReactNode }) {
         <AtlasViewTransitions />
         <AtlasTopNav />
         <main className="av2-route-surface">{children}</main>
+        <AtlasWikilinkModal />
       </AtlasShell>
     </>
   );

@@ -328,7 +328,7 @@ function truncateText(raw: string, maxLen: number): string {
   return `${lastSpace > 90 ? truncated.slice(0, lastSpace) : truncated}...`;
 }
 
-export function extractEpisodeExcerpt(body: string, maxLen = 190): string {
+export function extractEpisodeExcerpt(body: string, maxLen = 450): string {
   const resumen = extractHeadingSection(body, /^##\s+Resumen\s*$/i);
   const resumenCronologico = extractHeadingSection(
     body,

@@ -3,14 +3,6 @@
 // Tipo V2Chapter exportado; se reemplaza por cachedListEpisodes() cuando
 // la UI esté aprobada.
 
-export type V2Reward = {
-  key: string;
-  label: string;
-  value: string;
-  /** Glyph SVG path o emoji-libre símbolo. Usamos texto unicode para placeholder. */
-  glyph: string;
-};
-
 import type { AtlasEntityReaderSection } from "@/components/atlas/AtlasEntityReader";
 
 export type V2Chapter = {
@@ -33,22 +25,13 @@ export type V2Chapter = {
   descripcion: string;
   /** Path a imagen panorámica de la escena */
   imageSrc: string;
-  /** 4 recompensas desbloqueadas en el capítulo */
-  rewards?: V2Reward[];
   /** Secciones completas del capítulo (HTML renderizado) */
   sections?: AtlasEntityReaderSection[];
 };
 
 const SCENE = "/assets/atlas/backgrounds/hero.png";
 
-function rewards(memoria: number, fragmento: number, exp: number, bronce: number): V2Reward[] {
-  return [
-    { key: "memoria",    label: "Memoria de cobre",   value: `+${memoria}`,   glyph: "❦" },
-    { key: "fragmento",  label: "Fragmento de memoria", value: `+${fragmento}`, glyph: "❧" },
-    { key: "experiencia", label: "Experiencia",        value: `+${exp}`,       glyph: "✦" },
-    { key: "bronce",     label: "Reportaje de bronce", value: `+${bronce}`,   glyph: "❖" },
-  ];
-}
+
 
 export const MOCK_CHAPTERS: V2Chapter[] = [
   {
@@ -63,7 +46,6 @@ export const MOCK_CHAPTERS: V2Chapter[] = [
     descripcion:
       "La ciudad reanima el aliento. Sobre el vapor y la sal, un acento olvidado comienza a coser los hilos del pasado con los del presente.\n\nLo que parecía concedido bajo capas de óxido y mecánica, ahora vibra bajo la superficie, esperando a quienes despierten lo que queden sin recuerdos.",
     imageSrc: SCENE,
-    rewards: rewards(125, 1, 250, 80),
   },
   {
     id: "ep-41",
@@ -77,7 +59,6 @@ export const MOCK_CHAPTERS: V2Chapter[] = [
     descripcion:
       "Las velas del cáliz arden con un fuego que no es del todo fuego. Mysha lee tres veces el mismo verso antes de entender que la tinta cambia entre lecturas.",
     imageSrc: SCENE,
-    rewards: rewards(90, 0, 180, 60),
   },
   {
     id: "ep-40",
@@ -91,7 +72,6 @@ export const MOCK_CHAPTERS: V2Chapter[] = [
     descripcion:
       "El Coven Rosa recibe a Mysha con cortesía de juramento. Bajo los pétalos, los acuerdos se firman en aceite caliente y promesas que se astillan.",
     imageSrc: SCENE,
-    rewards: rewards(110, 1, 220, 70),
   },
   {
     id: "ep-39",
@@ -105,7 +85,6 @@ export const MOCK_CHAPTERS: V2Chapter[] = [
     descripcion:
       "La Hermandad de Cobre cobra sus deudas con intereses calculados al milímetro. Borok y Io descubren que el precio del vapor incluye un nombre.",
     imageSrc: SCENE,
-    rewards: rewards(100, 1, 200, 65),
   },
   {
     id: "ep-38",
@@ -119,7 +98,6 @@ export const MOCK_CHAPTERS: V2Chapter[] = [
     descripcion:
       "El puente cruje en una sola sílaba. Layra y David se encuentran a oscuras con un mensaje escrito en lengua que ninguno reconoce del todo.",
     imageSrc: SCENE,
-    rewards: rewards(95, 0, 190, 55),
   },
   {
     id: "ep-37",
@@ -133,7 +111,6 @@ export const MOCK_CHAPTERS: V2Chapter[] = [
     descripcion:
       "Las reliquias del archivo susurran con voces que no terminan de ser suyas. Narcissa registra cada palabra; Annora exige que pare antes de que las paredes contesten.",
     imageSrc: SCENE,
-    rewards: rewards(80, 2, 160, 50),
   },
   {
     id: "ep-36",
@@ -147,7 +124,6 @@ export const MOCK_CHAPTERS: V2Chapter[] = [
     descripcion:
       "El cartógrafo dibuja una ruta que no existe sobre un mapa que ya fue corregido cinco veces. La cuadrilla cree entender el destino — el cartógrafo se ríe.",
     imageSrc: SCENE,
-    rewards: rewards(70, 1, 140, 45),
   },
   {
     id: "ep-35",
@@ -161,6 +137,5 @@ export const MOCK_CHAPTERS: V2Chapter[] = [
     descripcion:
       "Champi cruza el Velo por primera vez sin advertirlo. Cuando vuelve, Mysha advierte que el plumaje tiene un brillo nuevo, como si hubiese tomado prestada una memoria que no era suya.",
     imageSrc: SCENE,
-    rewards: rewards(105, 1, 210, 75),
   },
 ];

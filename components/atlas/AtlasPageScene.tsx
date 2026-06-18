@@ -21,11 +21,14 @@ export default function AtlasPageScene({
   className = "",
   children,
 }: Props) {
+  const hasHeader = !!(eyebrow || title || subtitle);
+
   return (
     <section
       className={`av2-page-scene ${className}`.trim()}
       data-variant={variant}
       data-bg={backgroundSrc ? "image" : "material"}
+      data-has-header={hasHeader ? "true" : "false"}
     >
       <div className="av2-page-scene-bg" aria-hidden="true">
         {backgroundSrc ? (
@@ -34,7 +37,9 @@ export default function AtlasPageScene({
         ) : null}
       </div>
 
-      <AtlasPageHeader eyebrow={eyebrow} title={title} intro={subtitle} />
+      {hasHeader && (
+        <AtlasPageHeader eyebrow={eyebrow} title={title} intro={subtitle} />
+      )}
 
       <div className="av2-page-scene-content">{children}</div>
     </section>

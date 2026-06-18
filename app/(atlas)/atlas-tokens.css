@@ -47,6 +47,7 @@ body {
   /* Tipografía */
   --av2-display: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
   --av2-body: "Spectral", Georgia, "Times New Roman", serif;
+  --av2-serif: var(--av2-body);
   --av2-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
 
   /* Layout */
