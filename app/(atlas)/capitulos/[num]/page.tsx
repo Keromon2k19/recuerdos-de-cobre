@@ -7,16 +7,22 @@ import { renderMarkdown } from "@/lib/markdown-render";
 import { cachedListEpisodes } from "@/lib/public-cache";
 import { readEpisode } from "@/lib/vault";
 import { cachedBuildAtlasWikiResolver } from "@/lib/wiki-resolver";
+import { publicVaultPath, publicEpisodeStaticParams } from "@/lib/public-vault-path";
 
-export const dynamic = "force-dynamic";
+// Pre-render all episodes at build time (SSG) so Vercel can serve them
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return publicEpisodeStaticParams();
+}
 
 type Props = { params: Promise<{ num: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const number = Number.parseInt((await params).num, 10);
-  const vaultPath = process.env.VAULT_PATH?.trim() || "";
-  const content = vaultPath && Number.isFinite(number)
-    ? await readEpisode(vaultPath, number)
+  const vp = publicVaultPath();
+  const content = vp && Number.isFinite(number)
+    ? await readEpisode(vp, number)
     : null;
   if (!content) return { title: "Registro no encontrado · Grimorio de Lore" };
   const detail = parseAtlasChapterDetail(content, number);
@@ -25,13 +31,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ChapterDetailPage({ params }: Props) {
   const number = Number.parseInt((await params).num, 10);
-  const vaultPath = process.env.VAULT_PATH?.trim() || "";
-  if (!vaultPath || !Number.isFinite(number)) notFound();
+  const vp = publicVaultPath();
+  if (!vp || !Number.isFinite(number)) notFound();
 
   const [content, episodes, resolve] = await Promise.all([
-    readEpisode(vaultPath, number),
-    cachedListEpisodes(vaultPath),
-    cachedBuildAtlasWikiResolver(vaultPath),
+    readEpisode(vp, number),
+    cachedListEpisodes(vp),
+    cachedBuildAtlasWikiResolver(vp),
   ]);
   if (!content) notFound();
 
