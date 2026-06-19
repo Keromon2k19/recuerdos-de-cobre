@@ -7,6 +7,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { embedText, cosineSimilarity, type SearchIndex } from "@/lib/embeddings";
+import { publicVaultPath } from "@/lib/public-vault-path";
 
 export type SearchHit = {
   tipo: string;
@@ -24,7 +25,7 @@ let cachedIndex: SearchIndex | null = null;
 let cachedAt = 0;
 
 async function loadIndex(): Promise<SearchIndex | null> {
-  const vaultPath = process.env.VAULT_PATH?.trim();
+  const vaultPath = publicVaultPath();
   if (!vaultPath) return null;
   const indexPath = path.join(vaultPath, "_search-index.json");
   // Cache 30s para no leer el JSON (~1MB) en cada tecleo

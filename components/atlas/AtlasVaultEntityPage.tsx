@@ -10,6 +10,7 @@ import { cachedAtlasEntityDetail } from "@/lib/public-cache";
 import { cachedBuildAtlasWikiResolver } from "@/lib/wiki-resolver";
 import type { GraphNode, GraphLink } from "./AtlasRelationsGraph";
 import { slugify } from "@/lib/slugify";
+import { publicVaultPath } from "@/lib/public-vault-path";
 
 type Props = {
   kind: AtlasEntityKind;
@@ -24,7 +25,7 @@ export async function buildAtlasEntityMetadata(
   kind: AtlasEntityKind,
   slug: string,
 ): Promise<Metadata> {
-  const vaultPath = process.env.VAULT_PATH?.trim() || "";
+  const vaultPath = publicVaultPath();
   const detail = vaultPath
     ? await cachedAtlasEntityDetail(vaultPath, kind, slug)
     : null;
@@ -150,7 +151,7 @@ export default async function AtlasVaultEntityPage({
   backLabel,
   eyebrow,
 }: Props) {
-  const vaultPath = process.env.VAULT_PATH?.trim() || "";
+  const vaultPath = publicVaultPath();
   if (!vaultPath) notFound();
 
   const [detail, resolve] = await Promise.all([

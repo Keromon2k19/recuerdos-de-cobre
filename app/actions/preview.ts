@@ -2,7 +2,7 @@
 
 import { cachedAtlasEntityDetail } from "@/lib/public-cache";
 import type { AtlasEntityKind } from "@/lib/atlas-content";
-import { loadConfig } from "@/lib/config";
+import { publicVaultPath } from "@/lib/public-vault-path";
 
 export type EntityPreviewData = {
   success: boolean;
@@ -31,8 +31,7 @@ const ROUTE_TO_KIND: Record<string, AtlasEntityKind> = {
  */
 export async function getEntityPreviewAction(href: string): Promise<EntityPreviewData> {
   try {
-    const config = loadConfig();
-    const vaultPath = config.vaultPath;
+    const vaultPath = publicVaultPath();
 
     // Quitar barras laterales y parsear partes
     const cleanPath = href.replace(/^\/+|\/+$/g, "");
