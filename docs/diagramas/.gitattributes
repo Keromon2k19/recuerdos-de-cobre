@@ -1,0 +1,3 @@
+# Los diagramas de archify son artifacts verificados por SHA-256.
+# Cualquier conversion de finales de linea rompe esa correspondencia.
+*.html -text
