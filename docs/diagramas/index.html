@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recuerdos de Cobre — Diagramas del sistema</title>
+<style>
+  :root{--bg:#0b0f14;--panel:#111820;--line:#1e2b38;--fg:#e6edf3;--dim:#8b9cad;--accent:#3fb950;--accent2:#a371f7}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);
+    font:15px/1.6 ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+    padding:clamp(24px,6vw,80px) clamp(20px,6vw,40px)}
+  main{max-width:820px;margin:0 auto}
+  h1{font-size:clamp(22px,4vw,32px);margin:0 0 8px;letter-spacing:-.01em}
+  .sub{color:var(--dim);margin:0 0 40px}
+  a.card{display:block;text-decoration:none;color:inherit;background:var(--panel);
+    border:1px solid var(--line);border-radius:10px;padding:20px 22px;margin-bottom:16px;
+    transition:border-color .15s ease,transform .15s ease}
+  a.card:hover{border-color:var(--accent);transform:translateY(-2px)}
+  a.card h2{margin:0 0 6px;font-size:17px;color:var(--accent)}
+  a.card p{margin:0;color:var(--dim);font-size:13.5px}
+  .meta{margin-top:12px;font-size:12px;color:var(--dim)}
+  .meta code{color:var(--accent2)}
+  footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);
+    color:var(--dim);font-size:12.5px}
+  footer a{color:var(--accent)}
+</style>
+</head>
+<body>
+<main>
+  <h1>Recuerdos de Cobre</h1>
+  <p class="sub">Diagramas interactivos del sistema. Tema claro/oscuro, zoom, foco por nodo y recorridos guiados.</p>
+
+  <a class="card" href="pipeline.html">
+    <h2>Pipeline de ingesta &rarr;</h2>
+    <p>De audio de YouTube y Discord a un vault de Markdown estructurado. Cinco etapas, con la parada humana explícita en <code>esperando_resumen</code>.</p>
+  </a>
+
+  <a class="card" href="arquitectura.html">
+    <h2>Arquitectura local-first &rarr;</h2>
+    <p>Dos aplicaciones que comparten un directorio de archivos Markdown. Sin base de datos. Los nodos enlazan a código real del repo.</p>
+    <div class="meta">7 referencias verificadas contra <code>2c6d4ef</code></div>
+  </a>
+
+  <footer>
+    Generados con <a href="https://github.com/tt-a1i/archify">archify</a> ·
+    Código en <a href="https://github.com/Keromon2k19/recuerdos-de-cobre">Keromon2k19/recuerdos-de-cobre</a>
+  </footer>
+</main>
+</body>
+</html>
