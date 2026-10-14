@@ -10,6 +10,7 @@
   img{ max-width: 100%; }
   [hidden]{ display: none !important; }
 </style>
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Grimorio de la Vena Carmesí</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -240,6 +241,21 @@ h4.sub{
 .row:last-child{ border-bottom: none; }
 .row .k{ color: var(--ash); font-size: 15px; }
 .row .v{ font-family: var(--m); font-size: 15px; font-weight: 600; color: var(--bone); font-variant-numeric: tabular-nums; white-space: nowrap; }
+/* Habilidades: la competencia se lee de un vistazo por el punto, y las que no
+   tenés quedan más apagadas pero igual de legibles. */
+.row .k{ display: flex; align-items: center; gap: 8px; }
+.prof{
+  width: 8px; height: 8px; border-radius: 99px; flex: none;
+  border: 1px solid var(--ash-dim); background: transparent;
+}
+.prof.on{ background: var(--blood-lit); border-color: var(--blood-lit); }
+.prof.exp{ background: transparent; border: 2px solid var(--blood-lit); width: 9px; height: 9px; }
+.ab{
+  font-family: var(--m); font-size: 8.5px; letter-spacing: .1em;
+  color: var(--ash-dim); font-style: normal; margin-left: 2px;
+}
+.row.nc .k{ color: var(--ash-dim); }
+.row.nc .v{ color: var(--ash); font-weight: 400; }
 
 /* Avisos */
 .note{
@@ -1116,7 +1132,9 @@ window.MSV_SPELLS_A = [
       "You can drop a single drop of your blood into a bloodstain or sample of another creature's blood while casting this spell to created a magical resonance. This tells you the creature's current condition (if it is alive, wounded, or dead), its creature type, its general distance from you (nearby -300ft, distant -3000fp, or far away 3000ft+), and its general direction.",
       "If the blood is more than 24 hours old, the spell becomes more difficult, and you must pass DC 10 spellcasting check to gain any information, with the DC increasing to 15 if the blood is more than a week old, and 20 if the DC is more than a month old."
     ],
-    nota: "Es la versi\u00f3n vigente: reemplaz\u00f3 a **Blood Revelation**, que qued\u00f3 en el vault de nivel 16 como hist\u00f3rico. Pendiente del DM: confirmar si al pagarlo con Blood Magic sigue haciendo falta la gota propia."
+    historico: true,
+    aviso: "**No vale en mesa.** Lo reemplaza **Blood Revelation** (nivel 2, tambi\u00e9n ritual), que hace lo mismo pero con escalado completo de nivel 2 a 9. Queda ac\u00e1 solo como referencia.",
+    nota: "Pendiente del DM: confirmar si al pagar Blood Revelation con Blood Magic sigue haciendo falta la gota propia."
   },
   {
     id: "blood-storm",
@@ -2134,9 +2152,7 @@ window.MSV_SPELLS_C = [
       "**Declaraci\u00f3n de Verdad (1 por lanzamiento).** Como acci\u00f3n, si la criatura est\u00e1 en el mismo plano, debe realizar una salvaci\u00f3n de Carisma. Si falla, pierde una resistencia al da\u00f1o que elijas \u2014no inmunidad\u2014 durante 1 minuto; si no tiene resistencias, sufre desventaja en su pr\u00f3xima salvaci\u00f3n antes del final de su siguiente turno. Si la supera, no sufre penalizaci\u00f3n pero se da cuenta de que fue examinada m\u00edsticamente.",
       "**Juicio de Sangre.** Si la criatura muere dentro de las 24 horas de duraci\u00f3n, no puede ser devuelta a la vida por hechizos de nivel 8 o inferior. Solo Deseo, intervenci\u00f3n divina o efectos m\u00edticos equivalentes pueden traerla de vuelta. No atrapa el alma: impide la magia de resurrecci\u00f3n convencional."
     ],
-    historico: true,
-    aviso: "**No vale en mesa.** Kero confirm\u00f3 que Blood Revelation qued\u00f3 reemplazado por **Blood Divination**, que es la versi\u00f3n vigente en el vault de nivel 17. Se deja ac\u00e1 solo como referencia hist\u00f3rica del escalado que lleg\u00f3 a tener.",
-    nota: "Estaba marcado como ritual en el archivo de nivel 16."
+    nota: "**Es el vigente.** Reemplaza a Blood Divination, que queda como hist\u00f3rico. Est\u00e1 marcado como ritual, as\u00ed que Mysha puede lanzarlo sin gastar espacio con Quick Ritual."
   },
   {
     id: "word-of-crimson-recall",
@@ -2231,14 +2247,28 @@ window.MSV = {
         { nombre: "Sabidur\u00eda", valor: 8 },
         { nombre: "Carisma", valor: 11 }
       ],
+      // Las 18 habilidades. Sin competencia = solo el modificador de
+      // caracter\u00edstica. comp: true = +6 de competencia. comp: "exp" = pericia
+      // (competencia doble, +12), que Observant le da a Percepci\u00f3n.
       habilidades: [
-        { nombre: "Acrobacias", valor: 7 },
-        { nombre: "Arcana", valor: 10 },
-        { nombre: "Perspicacia", valor: 8 },
-        { nombre: "Medicina", valor: 8 },
-        { nombre: "Persuasi\u00f3n", valor: 11 },
-        { nombre: "Percepci\u00f3n", valor: 14 },
-        { nombre: "Juego de manos", valor: 7 }
+        { nombre: "Acrobacias", car: "DES", valor: 7, comp: true },
+        { nombre: "Arcana", car: "INT", valor: 10, comp: true },
+        { nombre: "Atletismo", car: "FUE", valor: -1 },
+        { nombre: "Enga\u00f1o", car: "CAR", valor: 5 },
+        { nombre: "Historia", car: "INT", valor: 4 },
+        { nombre: "Interpretaci\u00f3n", car: "CAR", valor: 5 },
+        { nombre: "Intimidaci\u00f3n", car: "CAR", valor: 5 },
+        { nombre: "Investigaci\u00f3n", car: "INT", valor: 4 },
+        { nombre: "Juego de manos", car: "DES", valor: 7, comp: true },
+        { nombre: "Medicina", car: "SAB", valor: 8, comp: true },
+        { nombre: "Naturaleza", car: "SAB", valor: 2 },
+        { nombre: "Percepci\u00f3n", car: "SAB", valor: 14, comp: "exp" },
+        { nombre: "Perspicacia", car: "SAB", valor: 8, comp: true },
+        { nombre: "Persuasi\u00f3n", car: "CAR", valor: 11, comp: true },
+        { nombre: "Religi\u00f3n", car: "INT", valor: 4 },
+        { nombre: "Sigilo", car: "DES", valor: 1 },
+        { nombre: "Supervivencia", car: "SAB", valor: 2 },
+        { nombre: "Trato con Animales", car: "SAB", valor: 2 }
       ],
       percepcionPasiva: 29,
       investigacionPasiva: 19,
@@ -2265,13 +2295,24 @@ window.MSV = {
         { nombre: "Carisma", valor: 11 }
       ],
       habilidades: [
-        { nombre: "Acrobacias", valor: 7 },
-        { nombre: "Arcana", valor: 10 },
-        { nombre: "Historia", valor: 10 },
-        { nombre: "Investigaci\u00f3n", valor: 10 },
-        { nombre: "Intimidaci\u00f3n", valor: 11 },
-        { nombre: "Persuasi\u00f3n", valor: 11 },
-        { nombre: "Percepci\u00f3n", valor: 12 }
+        { nombre: "Acrobacias", car: "DES", valor: 7, comp: true },
+        { nombre: "Arcana", car: "INT", valor: 10, comp: true },
+        { nombre: "Atletismo", car: "FUE", valor: -1 },
+        { nombre: "Enga\u00f1o", car: "CAR", valor: 5 },
+        { nombre: "Historia", car: "INT", valor: 10, comp: true },
+        { nombre: "Interpretaci\u00f3n", car: "CAR", valor: 5 },
+        { nombre: "Intimidaci\u00f3n", car: "CAR", valor: 11, comp: true },
+        { nombre: "Investigaci\u00f3n", car: "INT", valor: 10, comp: true },
+        { nombre: "Juego de manos", car: "DES", valor: 1 },
+        { nombre: "Medicina", car: "SAB", valor: 0 },
+        { nombre: "Naturaleza", car: "SAB", valor: 0 },
+        { nombre: "Percepci\u00f3n", car: "SAB", valor: 12, comp: "exp" },
+        { nombre: "Perspicacia", car: "SAB", valor: 0 },
+        { nombre: "Persuasi\u00f3n", car: "CAR", valor: 11, comp: true },
+        { nombre: "Religi\u00f3n", car: "INT", valor: 4 },
+        { nombre: "Sigilo", car: "DES", valor: 1 },
+        { nombre: "Supervivencia", car: "SAB", valor: 0 },
+        { nombre: "Trato con Animales", car: "SAB", valor: 0 }
       ],
       percepcionPasiva: 27,
       investigacionPasiva: 25,
@@ -2298,13 +2339,24 @@ window.MSV = {
         { nombre: "Carisma", valor: 11 }
       ],
       habilidades: [
-        { nombre: "Acrobacias", valor: 8 },
-        { nombre: "Arcana", valor: 10 },
-        { nombre: "Intimidaci\u00f3n", valor: 11 },
-        { nombre: "Percepci\u00f3n", valor: 13 },
-        { nombre: "Juego de manos", valor: 8 },
-        { nombre: "Sigilo", valor: 8 },
-        { nombre: "Supervivencia", valor: 7 }
+        { nombre: "Acrobacias", car: "DES", valor: 8, comp: true },
+        { nombre: "Arcana", car: "INT", valor: 10, comp: true },
+        { nombre: "Atletismo", car: "FUE", valor: -1 },
+        { nombre: "Enga\u00f1o", car: "CAR", valor: 5 },
+        { nombre: "Historia", car: "INT", valor: 4 },
+        { nombre: "Interpretaci\u00f3n", car: "CAR", valor: 5 },
+        { nombre: "Intimidaci\u00f3n", car: "CAR", valor: 11, comp: true },
+        { nombre: "Investigaci\u00f3n", car: "INT", valor: 4 },
+        { nombre: "Juego de manos", car: "DES", valor: 8, comp: true },
+        { nombre: "Medicina", car: "SAB", valor: 1 },
+        { nombre: "Naturaleza", car: "SAB", valor: 1 },
+        { nombre: "Percepci\u00f3n", car: "SAB", valor: 13, comp: "exp" },
+        { nombre: "Perspicacia", car: "SAB", valor: 1 },
+        { nombre: "Persuasi\u00f3n", car: "CAR", valor: 5 },
+        { nombre: "Religi\u00f3n", car: "INT", valor: 4 },
+        { nombre: "Sigilo", car: "DES", valor: 8, comp: true },
+        { nombre: "Supervivencia", car: "SAB", valor: 7, comp: true },
+        { nombre: "Trato con Animales", car: "SAB", valor: 1 }
       ],
       percepcionPasiva: 28,
       investigacionPasiva: 19,
@@ -3006,7 +3058,7 @@ window.MSV = {
     "\u26a0\ufe0f **Decaying Touch sigue roto.** Est\u00e1 cortado en la misma frase en LOS DOS vaults: \u00abincreases by 1d6 when you rea\u2026\u00bb. No se puede recuperar del material del personaje, hay que ped\u00edrselo al DM.",
     "\u26a0\ufe0f **Blood Bolt es id\u00e9ntico en los dos vaults.** La contradicci\u00f3n del frontmatter (3d6) contra el texto (4d6 a nivel 17) no la resuelve el vault viejo. Se sostiene 4d6 + 4d6 y 4 PV, que es lo que dice el texto.",
     "\u26a0\ufe0f **Contradicciones entre los dos vaults** (gana el de nivel 17 salvo que el DM diga otra cosa): Bloody Friend \u2014 concentraci\u00f3n `false` en N17 contra `true` en N16 \u00b7 Curse of Doom \u2014 duraci\u00f3n `1 asalto` contra `Instant\u00e1neo` \u00b7 Sanguine Doom \u2014 `Instant\u00e1neo` contra `1 minuto` \u00b7 Flickering Strikes \u2014 escuela `Conjuraci\u00f3n` contra `Nigromancia` \u00b7 Temple of the Gods \u2014 `Conjuraci\u00f3n` contra `Hemomancia`.",
-    "\u2705 **RESUELTO \u2014 Blood Revelation es hist\u00f3rico.** Kero confirm\u00f3 que lo reemplaz\u00f3 **Blood Divination**. Queda tachado en la lista, solo como referencia.",
+    "\u2705 **RESUELTO \u2014 Blood Divination es el hist\u00f3rico.** Kero confirm\u00f3 que el vigente es **Blood Revelation**, el del escalado de nivel 2 a 9 que apareci\u00f3 en el vault de nivel 16. Blood Divination queda tachado en la lista.",
     "\u2705 **RESUELTO \u2014 Word of Crimson Recall es un hechizo propio**, la versi\u00f3n hemom\u00e1ntica del *Word of Recall* de cl\u00e9rigo (nivel 6, santuario designado, 6 criaturas). No tiene relaci\u00f3n con Sanguine Shift, que sigue esperando el redise\u00f1o del DM.",
     "**Sanguine Shift.md** contiene dos versiones contradictorias del mismo hechizo (5000 pies vs. 1 milla).",
     "**Oath of the Crimson Vein.md** numera las consecuencias 1, 2 y 4: falta el punto 3.",
@@ -3231,8 +3283,15 @@ function viewFicha(){
   p.salvaciones.forEach(function(s){ h += '<div class="row"><span class="k">' + esc(s.nombre) + '</span><span class="v">' + num(s.valor) + '</span></div>'; });
   h += '</div></div>';
 
-  h += '<div class="sec"><h3 class="s">Habilidades</h3><div class="rows">';
-  p.habilidades.forEach(function(s){ h += '<div class="row"><span class="k">' + esc(s.nombre) + '</span><span class="v">' + num(s.valor) + '</span></div>'; });
+  h += '<div class="sec"><h3 class="s">Habilidades</h3>' +
+    '<p class="count" style="margin:-4px 0 8px">Punto lleno = competencia · anillo = pericia</p><div class="rows">';
+  p.habilidades.forEach(function(s){
+    var cls = s.comp === 'exp' ? 'exp' : (s.comp ? 'on' : '');
+    h += '<div class="row' + (s.comp ? '' : ' nc') + '">' +
+      '<span class="k"><i class="prof ' + cls + '"></i>' + esc(s.nombre) +
+      (s.car ? '<em class="ab">' + s.car + '</em>' : '') + '</span>' +
+      '<span class="v">' + num(s.valor) + '</span></div>';
+  });
   h += '<div class="row"><span class="k">Percepción pasiva</span><span class="v">' + p.percepcionPasiva + '</span></div>';
   h += '<div class="row"><span class="k">Investigación pasiva</span><span class="v">' + p.investigacionPasiva + '</span></div>';
   h += '</div></div>';
@@ -3865,5 +3924,7 @@ if (window.claude && typeof window.claude.use === 'function'){
 }
 })();
 </script>
+
+</body></html>
 </body>
 </html>
