@@ -645,6 +645,21 @@ details.orig .en p{ margin-bottom: 8px; }
 }
 
 .sync{ font-family: var(--m); font-size: 9px; letter-spacing: .12em; text-transform: uppercase; color: var(--ash-dim); text-align: center; margin-top: 18px; }
+/* Enlace al pie: lo que no es de mesa, sin peso visual. */
+.footlink{
+  display: block;
+  width: 100%;
+  text-align: left;
+  font-family: var(--m);
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--ash-dim);
+  padding: 16px 0 4px;
+  margin-top: 6px;
+  border-top: 1px solid var(--edge-soft);
+  min-height: 44px;
+}
 .sync b{ color: var(--ok); font-weight: 400; }
 
 /* Acordeón */
@@ -3264,9 +3279,6 @@ function viewFicha(){
     cell('Dados golpe', D.cuerpo.dadosGolpe) +
     cell('Perc. pasiva', p.percepcionPasiva) +
     '</div>';
-  h += '<div class="note bad"><span class="lab">Un cuerpo, una vida</span>' +
-    'Los ' + stat('hpMax') + ' PV son <strong>los mismos para las tres</strong>. Cambiar de personalidad no cambia la vida, ni las condiciones, ni el agotamiento, ni la concentración, ni los espacios, ni los recursos. Si Veltra recibe daño, Mysha y Selenne lo tienen igual.</div>';
-  h += '<div class="note"><span class="lab">Cálculo de PV</span>' + fmt(D.cuerpo.hpCalculo) + '<br>' + fmt(D.cuerpo.hpNota) + '</div>';
   h += '</div>';
 
   // Atributos
@@ -3296,29 +3308,49 @@ function viewFicha(){
   h += '<div class="row"><span class="k">Investigación pasiva</span><span class="v">' + p.investigacionPasiva + '</span></div>';
   h += '</div></div>';
 
-  // Sentidos y dotes
-  h += '<div class="sec"><h3 class="s">Sentidos y defensas compartidas</h3><div class="card">' + block(D.sentidos.map(function(x){ return '- ' + x; })) + '</div></div>';
-
   h += '<div class="sec"><h3 class="s">Dotes</h3>';
   D.dotes.forEach(function(d){
     h += '<details class="acc"><summary><span class="ttl">' + esc(d.nombre) + '</span><span class="car">›</span></summary><div class="in">' + block([d.texto]) + '</div></details>';
   });
   h += '</div>';
 
-  // Cambio de personalidad
-  h += '<div class="sec"><h3 class="s">Regla del cambio</h3><div class="card">' + block(D.reglasCambio.map(function(x){ return '- ' + x; })) + '</div></div>';
+  // ── Lo que casi nunca se mira, plegado ──────────────────────────────────
+  h += '<div class="sec"><h3 class="s">Si hace falta</h3>';
 
-  // Mystra's Gift
-  h += '<div class="sec"><h3 class="s">Mystra’s Gift</h3><div class="card"><p>' + fmt(D.mystraGift.texto) + '</p><div class="rows" style="margin-top:6px">';
+  h += acc('Un cuerpo, una vida', 'qué se comparte al cambiar',
+    '<p>Los ' + stat('hpMax') + ' PV son <strong>los mismos para las tres</strong>. Cambiar de personalidad no cambia la vida, ni las condiciones, ni el agotamiento, ni la concentración, ni los espacios, ni los recursos. Si Veltra recibe daño, Mysha y Selenne lo tienen igual.</p>' +
+    '<h4 class="sub">Cálculo de PV</h4><p>' + fmt(D.cuerpo.hpCalculo) + '</p><p>' + fmt(D.cuerpo.hpNota) + '</p>');
+
+  h += acc('Sentidos y defensas compartidas', 'oscuridad, Blood Sense, resistencias',
+    block(D.sentidos.map(function(x){ return '- ' + x; })));
+
+  h += acc('Regla del cambio', '14 Cambios por descanso largo',
+    block(D.reglasCambio.map(function(x){ return '- ' + x; })));
+
+  var mg = '<p>' + fmt(D.mystraGift.texto) + '</p><div class="rows" style="margin-top:6px">';
   D.mystraGift.porPersonalidad.forEach(function(m){
-    h += '<div class="row" style="align-items:flex-start"><span class="k" style="color:var(--' + m.id + ');flex:none;width:72px">' + esc(pers(m.id).nombre) + '</span><span style="text-align:right;font-size:14px">' + fmt(m.texto) + '</span></div>';
+    mg += '<div class="row" style="align-items:flex-start"><span class="k" style="color:var(--' + m.id + ');flex:none;width:72px">' + esc(pers(m.id).nombre) + '</span><span style="text-align:right;font-size:14px">' + fmt(m.texto) + '</span></div>';
   });
-  h += '</div><div class="note warn"><span class="lab">Pendiente del DM</span>' + block(D.mystraGift.pendientes.map(function(x){ return '- ' + x; })) + '</div></div></div>';
+  mg += '</div><div class="note warn"><span class="lab">Pendiente del DM</span>' + block(D.mystraGift.pendientes.map(function(x){ return '- ' + x; })) + '</div>';
+  h += acc('Mystra’s Gift', 'cuando caés a 0', mg);
 
-  // Personalidades: lore
-  h += '<div class="sec"><h3 class="s">Las tres, en la mesa</h3>';
+  h += '</div>';
+
+  // Lo que no es de mesa no vive en la Ficha: se abre aparte.
+  h += '<button class="footlink" data-info="1">Lore, personalidades y estado de las fuentes ›</button>';
+
+  return h;
+}
+
+// Hoja aparte para lo que no se usa jugando.
+function sheetInfo(){
+  var h = '<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="Referencia">';
+  h += '<header><button class="back" id="closeSheet">‹ Ficha</button></header><div class="body">';
+  h += '<p class="eyebrow">Fuera de la mesa</p><h2 class="t">Referencia</h2>';
+
+  h += '<div class="sec" style="margin-top:24px"><h3 class="s">Las tres, en la mesa</h3>';
   D.personalidades.forEach(function(x){
-    h += '<details class="acc"' + (x.id === S.p ? ' open' : '') + '><summary><span class="ttl" style="color:var(--' + x.id + ')">' + esc(x.nombre) +
+    h += '<details class="acc"><summary><span class="ttl" style="color:var(--' + x.id + ')">' + esc(x.nombre) +
       '<span class="mt">' + esc(x.voz) + '</span></span><span class="car">›</span></summary><div class="in"><div class="rows">' +
       ['Lenguaje corporal|' + x.cuerpoLenguaje, 'Intereses|' + x.intereses, 'Hobbies|' + x.hobbies,
        'Ante la sangre|' + x.sangre, 'En conflicto|' + x.conflicto, 'Cómo pelea|' + x.pelea].map(function(r){
@@ -3328,20 +3360,21 @@ function viewFicha(){
   });
   h += '</div>';
 
-  // Lore
   h += '<div class="sec"><h3 class="s">De dónde viene</h3>';
   h += acc('Origen y coven', '', block(D.lore.origen.map(function(x){ return '- ' + x; })));
   h += acc('La noche del ataque', '', block(D.lore.ataque.map(function(x){ return '- ' + x; })));
   h += acc('Ritos del Coven Rojo', '', block(D.lore.coven.map(function(x){ return '- ' + x; })));
   h += '</div>';
 
-  // Erratas
   h += '<div class="sec"><h3 class="s">Estado de las fuentes</h3>' +
-    acc('Erratas detectadas en los .md', D.erratas.length + ' problemas',
+    acc('Erratas detectadas en los .md', D.erratas.length + ' puntos',
       '<p style="color:var(--ash);font-size:14px">Cosas que están mal o incompletas en los archivos de Obsidian. Ninguna se inventó acá: se muestran tal cual y se marcan en el hechizo correspondiente.</p>' +
       block(D.erratas.map(function(x){ return '- ' + x; }))) + '</div>';
 
-  return h;
+  h += '</div></div>';
+  var wrap = document.createElement('div');
+  wrap.innerHTML = h;
+  document.body.appendChild(wrap.firstChild);
 }
 function cell(k, v){ return '<div class="cell"><span class="k">' + k + '</span><span class="v">' + v + '</span></div>'; }
 function acc(t, meta, inner, open){
@@ -3787,8 +3820,9 @@ document.addEventListener('click', function(e){
     later(repaintList); return;
   }
 
-  // Abrir hechizo
+  // Abrir hechizo o la referencia
   if (t.dataset.s){ sheetHechizo(t.dataset.s); return; }
+  if (t.dataset.info){ sheetInfo(); return; }
   if (t.id === 'closeSheet'){ var sh = document.getElementById('sheet'); if (sh) sh.remove(); return; }
 
   // Lanzar desde la hoja
