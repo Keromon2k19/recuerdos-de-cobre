@@ -22,19 +22,25 @@
 :root{
   color-scheme: dark;
 
-  --ink:        #0A0608;   /* negro con sesgo rojo, no gris puro */
-  --ink-2:      #120B0E;   /* superficie elevada */
-  --ink-3:      #1A0F13;   /* superficie doble */
-  --edge:       #2A171D;   /* borde */
-  --edge-soft:  #1F1216;
+  /* Escalera de superficies en OKLCH, todas con el mismo sesgo rojo (18°).
+     Los saltos de luminosidad son amplios a propósito: con pasos chicos las
+     secciones se confunden entre sí en una pantalla grande. */
+  --ink:        oklch(0.145 0.011 18);  /* fondo: sigue siendo noche */
+  --ink-2:      oklch(0.265 0.017 18);  /* superficie elevada */
+  --ink-3:      oklch(0.335 0.021 18);  /* superficie doble */
+  --edge:       oklch(0.450 0.025 18);  /* borde visible */
+  --edge-soft:  oklch(0.340 0.019 18);
 
   --blood:      #A31621;   /* carmesí arterial: el acento */
   --blood-dim:  #6E0F17;
-  --blood-lit:  #E0485A;   /* estados activos, énfasis alto */
+  --blood-lit:  oklch(0.685 0.165 18); /* estados activos y texto de acento;
+                                          calibrado para pasar 4.5:1 sobre
+                                          las superficies elevadas */
 
   --bone:       #EFE6DC;   /* texto principal, hueso cálido */
-  --ash:        #A2908F;   /* texto secundario, gris con sesgo rojo */
-  --ash-dim:    #6E5D60;
+  --ash:        oklch(0.70 0.014 18);   /* texto secundario */
+  --ash-dim:    oklch(0.650 0.014 18);  /* etiquetas; sube con las superficies
+                                           para no perder legibilidad */
 
   --mysha:      #D293B7;   /* rosa — Blessing of the Pink Coven */
   --selenne:    #8FA4D4;   /* azul lunar — la que estudia */
@@ -187,15 +193,17 @@ h2.t{
   color: var(--blood-lit);
   margin: 0 0 14px;
 }
+/* El encabezado es lo que marca dónde empieza cada sección: tiene que leerse
+   de lejos, no susurrar. */
 h3.s{
   font-family: var(--m);
   font-size: 10px;
   letter-spacing: .18em;
   text-transform: uppercase;
-  color: var(--ash);
-  margin: 0 0 9px;
-  padding-bottom: 6px;
-  border-bottom: 1px solid var(--edge-soft);
+  color: var(--bone);
+  margin: 0 0 11px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--edge);
 }
 p{ margin: 0 0 10px; }
 p:last-child{ margin-bottom: 0; }
@@ -230,6 +238,15 @@ h4.sub{
 
 /* Filas etiqueta / valor */
 .rows{ display: grid; }
+/* Una lista que es toda una sección se apoya en su propia superficie, para
+   que pese lo mismo que las secciones hechas de acordeones. Solo las de
+   primer nivel: una lista dentro de una tarjeta no lleva otra tarjeta. */
+.sec > .rows{
+  background: var(--ink-2);
+  border: 1px solid var(--edge-soft);
+  border-radius: var(--r);
+  padding: 2px 15px;
+}
 .row{
   display: flex;
   justify-content: space-between;
@@ -811,7 +828,7 @@ table.dmg td:last-child, table.dmg th:last-child{ text-align: right; font-varian
   main[data-tab="poderes"] > .sec,
   main[data-tab="objetos"] > .sec{
     break-inside: avoid;
-    margin-bottom: 34px;
+    margin-bottom: 48px;   /* el aire también separa secciones */
   }
 
   /* Hechizos: el buscador no necesita ser ancho, la lista sí. */
