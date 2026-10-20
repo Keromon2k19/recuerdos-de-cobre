@@ -710,6 +710,64 @@ table.dmg td:last-child, table.dmg th:last-child{ text-align: right; font-varian
 .port .who .nm{ font-family: var(--d); font-size: 22px; font-weight: 600; line-height: 1.1; }
 .port .who .rl{ font-family: var(--m); font-size: 10.5px; color: var(--ash); margin-top: 3px; line-height: 1.4; }
 
+/* ─────────── Tiradas ─────────── */
+.tirable{
+  cursor: pointer;
+  width: 100%;
+  font: inherit;
+  color: inherit;
+  text-align: inherit;
+}
+/* La banda de hover llega a los bordes del panel, no al texto nada más. */
+.sec > .rows .row.tirable{ margin: 0 -15px; padding-left: 15px; padding-right: 15px; }
+.row.tirable:hover, .cell.tirable:hover{ background: var(--ink-3); }
+.row.tirable:active, .cell.tirable:active{ background: var(--edge-soft); }
+
+.rolls{
+  position: fixed;
+  left: 0; right: 0;
+  bottom: calc(54px + env(safe-area-inset-bottom, 0px));
+  z-index: 30;
+  background: var(--ink-2);
+  border-top: 1px solid var(--edge);
+  padding: 8px var(--gut);
+}
+.rollmode{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
+.rm{
+  font-family: var(--m);
+  font-size: 10.5px;
+  letter-spacing: .08em;
+  padding: 9px 4px;
+  min-height: 38px;
+  border: 1px solid var(--edge);
+  border-radius: var(--r);
+  background: var(--ink);
+  color: var(--ash);
+}
+.rm[aria-pressed="true"]{ background: var(--blood-dim); border-color: var(--blood); color: #F7E2E4; }
+.rolllog{ display: none; }            /* en el celular alcanza con el aviso */
+.rolllog .vacio{
+  font-family: var(--m); font-size: 10px; line-height: 1.6;
+  color: var(--ash-dim); margin: 0;
+}
+.tir{
+  display: flex; align-items: center; gap: 11px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--edge-soft);
+}
+.tir:last-child{ border-bottom: none; }
+.tir.viejo{ opacity: .5; }
+.tir .tot{
+  font-family: var(--m); font-size: 21px; font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  min-width: 42px; text-align: right;
+}
+.tir.crit .tot{ color: var(--ok); }
+.tir.pif .tot{ color: var(--danger); }
+.tir .det{ display: grid; min-width: 0; }
+.tir .det b{ font-size: 14px; font-weight: 400; line-height: 1.25; }
+.tir .det small{ font-family: var(--m); font-size: 9.5px; color: var(--ash-dim); }
+
 /* ═══════════════════════════════════════════════════════════════════════
    ESCRITORIO
    Misma información, otro reparto: la navegación pasa a una columna fija a
@@ -720,11 +778,29 @@ table.dmg td:last-child, table.dmg th:last-child{ text-align: right; font-varian
   .app{
     max-width: none;
     grid-template-columns: 272px minmax(0, 1fr);
-    grid-template-rows: auto minmax(0, 1fr);
+    grid-template-rows: auto auto minmax(0, 1fr);
     grid-template-areas:
       "head main"
-      "nav  main";
+      "nav  main"
+      "roll main";
   }
+
+  /* El registro de tiradas ocupa el hueco que quedaba bajo la navegación. */
+  .rolls{
+    grid-area: roll;
+    position: static;
+    z-index: auto;
+    border-top: 1px solid var(--edge);
+    border-right: 1px solid var(--edge);
+    padding: 16px 12px;
+    display: grid;
+    gap: 12px;
+    align-content: start;
+    min-height: 0;
+    overflow-y: auto;
+  }
+  .rolllog{ display: block; }
+  .rm{ font-size: 10px; }
 
   /* La columna izquierda son dos filas: identidad arriba, navegación debajo. */
   .topbar{
@@ -892,6 +968,11 @@ table.dmg td:last-child, table.dmg th:last-child{ text-align: right; font-varian
   <main id="view"></main>
 
   <nav class="tabbar" id="tabs" role="tablist"></nav>
+
+  <aside class="rolls" id="rolls">
+    <div class="rollmode" id="rollmode" role="group" aria-label="Modo de tirada"></div>
+    <div class="rolllog" id="rolllog" aria-live="polite"></div>
+  </aside>
 </div>
 
 <script>
@@ -2422,7 +2503,10 @@ window.MSV = {
     ca: 17,
     velocidad: 30,
     dadosGolpe: "17d6",
-    cd: 20,
+    // Kero confirm\u00f3 21 en mesa. Ojo: 8 + 6 de competencia + 5 de Carisma da 19
+    // de base, y la Capa suma 1 \u2192 20. El +1 que falta no aparece en el vault
+    // ni en el export de Foundry; hay que encontrarlo revisando los objetos.
+    cd: 21,
     ataque: 12,
     cambios: 14,
     bloodMagic: 17,
@@ -3370,6 +3454,45 @@ function stat(k){
   if (k === 'hpMax') return D.cuerpo.hpMax;
   return 0;
 }
+/* ══════════ Tiradas ══════════ */
+var MODO = 'normal';
+var TIRADAS = [];
+function d20(){ return 1 + Math.floor(Math.random() * 20); }
+
+function tirar(mod, que){
+  var a = d20(), b = null, dado = a;
+  if (MODO === 'ventaja'){ b = d20(); dado = Math.max(a, b); }
+  else if (MODO === 'desventaja'){ b = d20(); dado = Math.min(a, b); }
+  TIRADAS.unshift({ que: que, mod: mod, a: a, b: b, dado: dado, total: dado + mod, modo: MODO });
+  if (TIRADAS.length > 8) TIRADAS.pop();
+  paintRolls();
+  toast(que + ' · ' + (dado + mod) + (dado === 20 ? '  ¡natural 20!' : dado === 1 ? '  natural 1' : ''));
+}
+
+function paintRolls(){
+  var mm = document.getElementById('rollmode');
+  if (mm) mm.innerHTML = [['normal','Normal'],['ventaja','Ventaja'],['desventaja','Desventaja']]
+    .map(function(m){
+      return '<button class="rm" data-modo="' + m[0] + '" aria-pressed="' + (MODO === m[0]) + '">' + m[1] + '</button>';
+    }).join('');
+
+  var lg = document.getElementById('rolllog');
+  if (!lg) return;
+  if (!TIRADAS.length){
+    lg.innerHTML = '<p class="vacio">Tocá una habilidad, una salvación o un atributo para tirar.</p>';
+    return;
+  }
+  lg.innerHTML = TIRADAS.map(function(t, i){
+    var cls = t.dado === 20 ? ' crit' : (t.dado === 1 ? ' pif' : '');
+    var dados = t.b === null ? ('d20 ' + t.dado)
+      : (t.modo === 'ventaja' ? 'máx' : 'mín') + ' de ' + t.a + ' y ' + t.b;
+    return '<div class="tir' + cls + (i ? ' viejo' : '') + '">' +
+      '<span class="tot">' + t.total + '</span>' +
+      '<span class="det"><b>' + esc(t.que) + '</b>' +
+      '<small>' + dados + ' ' + (t.mod >= 0 ? '+' : '−') + ' ' + Math.abs(t.mod) + '</small></span></div>';
+  }).join('');
+}
+
 var toastT = null;
 function toast(msg){
   var old = document.querySelector('.toast');
@@ -3465,26 +3588,32 @@ function viewFicha(){
 
   // Atributos
   h += '<div class="sec"><h3 class="s">Atributos · ' + esc(p.nombre) + '</h3><div class="grid6">';
-  [['FUE','fue'],['DES','des'],['CON','con'],['INT','int'],['SAB','sab'],['CAR','car']].forEach(function(a){
+  [['FUE','fue','Fuerza'],['DES','des','Destreza'],['CON','con','Constitución'],
+   ['INT','int','Inteligencia'],['SAB','sab','Sabiduría'],['CAR','car','Carisma']].forEach(function(a){
     var v = p.abilities[a[1]];
-    h += '<div class="cell"><span class="k">' + a[0] + '</span><span class="v">' + v +
-         '</span><span class="k" style="color:var(--ash)">' + num(Math.floor((v - 10) / 2)) + '</span></div>';
+    var mod = Math.floor((v - 10) / 2);
+    h += '<button class="cell tirable" data-roll="' + mod + '" data-que="' + esc(a[2]) + '">' +
+         '<span class="k">' + a[0] + '</span><span class="v">' + v +
+         '</span><span class="k" style="color:var(--ash)">' + num(mod) + '</span></button>';
   });
   h += '</div></div>';
 
   // Salvaciones y habilidades
   h += '<div class="sec"><h3 class="s">Salvaciones competentes</h3><div class="rows">';
-  p.salvaciones.forEach(function(s){ h += '<div class="row"><span class="k">' + esc(s.nombre) + '</span><span class="v">' + num(s.valor) + '</span></div>'; });
+  p.salvaciones.forEach(function(s){
+    h += '<button class="row tirable" data-roll="' + s.valor + '" data-que="Salvación de ' + esc(s.nombre) + '">' +
+      '<span class="k">' + esc(s.nombre) + '</span><span class="v">' + num(s.valor) + '</span></button>';
+  });
   h += '</div></div>';
 
   h += '<div class="sec"><h3 class="s">Habilidades</h3>' +
     '<p class="count" style="margin:-4px 0 8px">Punto lleno = competencia · anillo = pericia</p><div class="rows">';
   p.habilidades.forEach(function(s){
     var cls = s.comp === 'exp' ? 'exp' : (s.comp ? 'on' : '');
-    h += '<div class="row' + (s.comp ? '' : ' nc') + '">' +
+    h += '<button class="row tirable' + (s.comp ? '' : ' nc') + '" data-roll="' + s.valor + '" data-que="' + esc(s.nombre) + '">' +
       '<span class="k"><i class="prof ' + cls + '"></i>' + esc(s.nombre) +
       (s.car ? '<em class="ab">' + s.car + '</em>' : '') + '</span>' +
-      '<span class="v">' + num(s.valor) + '</span></div>';
+      '<span class="v">' + num(s.valor) + '</span></button>';
   });
   h += '<div class="row"><span class="k">Percepción pasiva</span><span class="v">' + p.percepcionPasiva + '</span></div>';
   h += '<div class="row"><span class="k">Investigación pasiva</span><span class="v">' + p.investigacionPasiva + '</span></div>';
@@ -3985,6 +4114,10 @@ document.addEventListener('click', function(e){
   if (document.getElementById('sheet') && !t.closest('#sheet') &&
       !t.closest('.tabbar') && !t.closest('.topbar')) return;
 
+  // Tiradas
+  if (t.dataset.roll !== undefined){ tirar(parseInt(t.dataset.roll, 10), t.dataset.que); return; }
+  if (t.dataset.modo){ MODO = t.dataset.modo; paintRolls(); return; }
+
   // Personalidad
   if (t.dataset.p){ S.p = t.dataset.p; save(); later(render); return; }
 
@@ -4134,6 +4267,7 @@ document.addEventListener('keydown', function(e){
 /* ══════════ Arranque ══════════ */
 load();
 render();
+paintRolls();
 
 // Sincronización durable, si el visor la concede. La página funciona sin esto.
 if (window.claude && typeof window.claude.use === 'function'){
