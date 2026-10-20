@@ -761,7 +761,8 @@ table.dmg td:last-child, table.dmg th:last-child{ text-align: right; font-varian
   z-index: 60;
   display: grid;
   place-items: center;
-  pointer-events: none;       /* nunca se interpone entre vos y la ficha */
+  pointer-events: auto;       /* un toque afuera lo cierra */
+  cursor: pointer;
   animation: pop .18s cubic-bezier(.22, 1, .36, 1);
 }
 .tirada-pop .velo{
@@ -778,7 +779,7 @@ table.dmg td:last-child, table.dmg th:last-child{ text-align: right; font-varian
   text-align: center;
   box-shadow: 0 26px 70px rgba(0,0,0,.72);
 }
-.tirada-pop .ficha{ pointer-events: auto; }   /* los botones tienen que andar */
+.tirada-pop .ficha{ cursor: default; }
 .tirada-pop .que{
   font-family: var(--m); font-size: 11px; letter-spacing: .18em;
   text-transform: uppercase; color: var(--ash);
@@ -896,12 +897,12 @@ table.dmg td:last-child, table.dmg th:last-child{ text-align: right; font-varian
 @media (min-width: 900px){
   .app{
     max-width: none;
-    grid-template-columns: 272px minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) 272px;
     grid-template-rows: auto auto minmax(0, 1fr);
     grid-template-areas:
-      "head main"
-      "nav  main"
-      "roll main";
+      "main head"
+      "main nav"
+      "main roll";
   }
 
   /* El registro de tiradas ocupa el hueco que quedaba bajo la navegación. */
@@ -910,7 +911,7 @@ table.dmg td:last-child, table.dmg th:last-child{ text-align: right; font-varian
     position: static;
     z-index: auto;
     border-top: 1px solid var(--edge);
-    border-right: 1px solid var(--edge);
+    border-left: 1px solid var(--edge);
     padding: 16px 12px;
     display: grid;
     gap: 12px;
@@ -942,7 +943,8 @@ table.dmg td:last-child, table.dmg th:last-child{ text-align: right; font-varian
   .topbar{
     grid-area: head;
     border-bottom: 1px solid var(--edge);
-    border-right: 1px solid var(--edge);
+    border-left: 1px solid var(--edge);
+    border-right: none;
     padding: 20px 18px 16px;
     gap: 16px;
   }
@@ -953,7 +955,7 @@ table.dmg td:last-child, table.dmg th:last-child{ text-align: right; font-varian
     gap: 2px;
     padding: 12px;
     border-top: none;
-    border-right: 1px solid var(--edge);
+    border-left: 1px solid var(--edge);
   }
   .tabbar button{
     display: flex;
@@ -1061,7 +1063,7 @@ table.dmg td:last-child, table.dmg th:last-child{ text-align: right; font-varian
   #list .lvlhead{ break-after: avoid; }
   .sheet{
     left: auto;
-    right: 0;
+    right: 272px;              /* se detiene en el borde de la barra lateral */
     width: min(800px, 38vw);
     border-left: 1px solid var(--edge);
     box-shadow: -28px 0 60px rgba(0,0,0,.55);
@@ -3639,7 +3641,7 @@ function d20svg(n, estado){
 var popT = null;
 function programarCierre(el){
   clearTimeout(popT);
-  popT = setTimeout(function(){ el.remove(); }, 5200);
+  popT = setTimeout(function(){ el.remove(); }, 2400);
 }
 
 function mostrarTirada(t){
@@ -3684,6 +3686,13 @@ function mostrarTirada(t){
       '</div>' +
     '</div>';
   document.body.appendChild(el);
+
+  // Un toque fuera de la tarjeta lo cierra; los botones de adentro siguen vivos.
+  el.addEventListener('click', function(ev){
+    if (ev.target.closest('.rh')) return;
+    clearTimeout(popT);
+    el.remove();
+  });
 
   // Mientras tengas el puntero encima no se cierra: el cartel tiene botones.
   var f = el.querySelector('.ficha');
