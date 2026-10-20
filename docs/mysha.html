@@ -747,20 +747,68 @@ table.dmg td:last-child, table.dmg th:last-child{ text-align: right; font-varian
   text-align: center;
   box-shadow: 0 26px 70px rgba(0,0,0,.72);
 }
+.tirada-pop .ficha{ pointer-events: auto; }   /* los botones tienen que andar */
 .tirada-pop .que{
   font-family: var(--m); font-size: 11px; letter-spacing: .18em;
   text-transform: uppercase; color: var(--ash);
 }
-.tirada-pop .tot{
-  font-family: var(--m); font-size: 82px; font-weight: 600;
-  line-height: 1; letter-spacing: -.03em;
-  font-variant-numeric: tabular-nums;
-  margin: 12px 0 8px;
+
+/* dado + modificadores = total, en una sola línea legible */
+.cuenta{
+  display: flex; align-items: center; justify-content: center;
+  gap: 14px; flex-wrap: wrap; margin: 18px 0 2px;
 }
-.tirada-pop .det{ font-family: var(--m); font-size: 12.5px; color: var(--ash-dim); }
-.tirada-pop .nat{ font-family: var(--d); font-size: 16px; font-weight: 600; margin-top: 11px; }
+.dados{ display: flex; gap: 8px; }
+.d20{
+  position: relative; display: inline-grid; place-items: center;
+  width: 76px; height: 76px;
+}
+.d20 svg{ position: absolute; inset: 0; width: 100%; height: 100%; }
+.d20 .cuerpo{ fill: var(--ink); stroke: var(--edge); stroke-width: 3; stroke-linejoin: round; }
+.d20 .cara{ fill: var(--ink-2); stroke: var(--edge-soft); stroke-width: 2; stroke-linejoin: round; }
+.d20 b{
+  position: relative; font-family: var(--m); font-size: 25px; font-weight: 600;
+  font-variant-numeric: tabular-nums; transform: translateY(3px);
+}
+.d20.descartado{ opacity: .32; }
+
+.chips{ display: grid; gap: 5px; }
+.chipmod{
+  display: flex; align-items: baseline; gap: 7px;
+  background: var(--ink); border: 1px solid var(--edge-soft);
+  border-radius: var(--r); padding: 5px 10px;
+}
+.chipmod b{ font-family: var(--m); font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.chipmod small{
+  font-family: var(--m); font-size: 9px; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--ash-dim);
+}
+.igual{ font-family: var(--m); font-size: 20px; color: var(--ash-dim); }
+.tirada-pop .tot{
+  font-family: var(--m); font-size: 54px; font-weight: 600;
+  line-height: 1; letter-spacing: -.03em; font-variant-numeric: tabular-nums;
+}
+.tirada-pop .nat{ font-family: var(--d); font-size: 16px; font-weight: 600; margin-top: 12px; }
 .tirada-pop.crit .tot, .tirada-pop.crit .nat{ color: var(--ok); }
 .tirada-pop.pif .tot, .tirada-pop.pif .nat{ color: var(--danger); }
+.tirada-pop.crit .d20:not(.descartado) .cara{ fill: #1B3220; stroke: var(--ok); }
+.tirada-pop.crit .d20:not(.descartado) b{ color: var(--ok); }
+.tirada-pop.pif .d20:not(.descartado) .cara{ fill: #3A1A1E; stroke: var(--danger); }
+.tirada-pop.pif .d20:not(.descartado) b{ color: var(--danger); }
+
+.rehacer{
+  display: flex; gap: 6px; justify-content: center; flex-wrap: wrap;
+  margin-top: 18px; padding-top: 15px;
+  border-top: 1px solid var(--edge-soft);
+}
+.rh{
+  font-family: var(--m); font-size: 10px; letter-spacing: .08em;
+  text-transform: uppercase; padding: 9px 13px; min-height: 40px;
+  border: 1px solid var(--edge); border-radius: var(--r);
+  background: var(--ink); color: var(--ash);
+}
+.rh:hover{ background: var(--ink-2); color: var(--bone); border-color: var(--ash-dim); }
+.rh:active{ background: var(--edge-soft); }
 @keyframes pop{ from{ transform: scale(.94); opacity: 0; } to{ transform: none; opacity: 1; } }
 
 .rolls{
@@ -843,11 +891,18 @@ table.dmg td:last-child, table.dmg th:last-child{ text-align: right; font-varian
   .rm{ font-size: 10px; }
 
   /* En pantalla grande el resultado se ve desde el otro lado de la mesa. */
-  .tirada-pop .ficha{ padding: 38px 64px 34px; min-width: 360px; border-radius: 6px; }
-  .tirada-pop .tot{ font-size: 128px; margin: 16px 0 10px; }
+  .tirada-pop .ficha{ padding: 34px 48px 28px; min-width: 420px; border-radius: 6px; }
   .tirada-pop .que{ font-size: 13px; }
-  .tirada-pop .det{ font-size: 15px; }
-  .tirada-pop .nat{ font-size: 21px; }
+  .tirada-pop .tot{ font-size: 72px; }
+  .tirada-pop .nat{ font-size: 20px; }
+  .cuenta{ gap: 18px; }
+  .d20{ width: 96px; height: 96px; }
+  .d20 b{ font-size: 32px; }
+  .chipmod{ padding: 7px 12px; }
+  .chipmod b{ font-size: 16px; }
+  .chipmod small{ font-size: 10px; }
+  .igual{ font-size: 24px; }
+  .rh{ font-size: 11px; padding: 10px 15px; }
 
   /* La columna izquierda son dos filas: identidad arriba, navegación debajo. */
   .topbar{
@@ -3491,6 +3546,13 @@ function block(lines){
   return out;
 }
 function pers(id){ for (var i = 0; i < D.personalidades.length; i++) if (D.personalidades[i].id === id) return D.personalidades[i]; return D.personalidades[1]; }
+
+// De qué partes se compone cada tirada, para poder mostrarlas desglosadas.
+var CLAVE_ABR = { FUE:'fue', DES:'des', CON:'con', INT:'int', SAB:'sab', CAR:'car' };
+var CLAVE_SALV = { 'Fuerza':'fue', 'Destreza':'des', 'Constitución':'con',
+                   'Inteligencia':'int', 'Sabiduría':'sab', 'Carisma':'car' };
+var ABR_DE = { fue:'FUE', des:'DES', con:'CON', int:'INT', sab:'SAB', car:'CAR' };
+function modDe(p, clave){ return Math.floor((p.abilities[clave] - 10) / 2); }
 function num(v){ return (v >= 0 ? '+' : '') + v; }
 function clamp(v, lo, hi){ return Math.max(lo, Math.min(hi, v)); }
 function stat(k){
@@ -3508,43 +3570,84 @@ var MODO = 'normal';
 var TIRADAS = [];
 function d20(){ return 1 + Math.floor(Math.random() * 20); }
 
-function tirar(mod, que){
+var ULTIMA = null;   // para poder repetir la misma tirada con otro modo
+
+function tirar(mod, que, mods, modoForzado){
+  var m = modoForzado || MODO;
   var a = d20(), b = null, dado = a;
-  if (MODO === 'ventaja'){ b = d20(); dado = Math.max(a, b); }
-  else if (MODO === 'desventaja'){ b = d20(); dado = Math.min(a, b); }
-  var t = { que: que, mod: mod, a: a, b: b, dado: dado, total: dado + mod, modo: MODO };
+  if (m === 'ventaja'){ b = d20(); dado = Math.max(a, b); }
+  else if (m === 'desventaja'){ b = d20(); dado = Math.min(a, b); }
+  var t = { que: que, mod: mod, mods: mods, a: a, b: b, dado: dado, total: dado + mod, modo: m };
+  ULTIMA = { mod: mod, que: que, mods: mods };
   TIRADAS.unshift(t);
   if (TIRADAS.length > 8) TIRADAS.pop();
   paintRolls();
   mostrarTirada(t);
 }
 
-// El resultado se lee de lejos, en el centro. No bloquea nada: podés encadenar
-// tiradas sin cerrarlo, porque cada una reemplaza a la anterior.
-var popT = null;
-function detalleDados(t){
-  return (t.b === null ? 'd20 ' + t.dado
-    : (t.modo === 'ventaja' ? 'máx' : 'mín') + ' de ' + t.a + ' y ' + t.b) +
-    ' ' + (t.mod >= 0 ? '+' : '−') + ' ' + Math.abs(t.mod);
+// El dado, dibujado como un d20 de verdad.
+function d20svg(n, estado){
+  return '<span class="d20' + (estado ? ' ' + estado : '') + '">' +
+    '<svg viewBox="0 0 100 100" aria-hidden="true">' +
+      '<polygon class="cuerpo" points="50,3 91,26.5 91,73.5 50,97 9,73.5 9,26.5"/>' +
+      '<polygon class="cara" points="50,19 77,67 23,67"/>' +
+    '</svg><b>' + n + '</b></span>';
 }
+
+var popT = null;
+function programarCierre(el){
+  clearTimeout(popT);
+  popT = setTimeout(function(){ el.remove(); }, 5200);
+}
+
 function mostrarTirada(t){
   var old = document.querySelector('.tirada-pop');
   if (old) old.remove();
   var cls = t.dado === 20 ? ' crit' : (t.dado === 1 ? ' pif' : '');
+
+  var dados;
+  if (t.b === null){
+    dados = d20svg(t.a, '');
+  } else {
+    var ganaA = t.dado === t.a;
+    dados = d20svg(t.a, ganaA ? '' : 'descartado') + d20svg(t.b, ganaA ? 'descartado' : '');
+  }
+
+  var chips = (t.mods || [{ v: t.mod, l: 'modificador' }]).map(function(m){
+    return '<span class="chipmod"><b>' + (m.v >= 0 ? '+' : '−') + Math.abs(m.v) + '</b>' +
+           '<small>' + esc(m.l) + '</small></span>';
+  }).join('');
+
+  var modoTxt = t.modo === 'ventaja' ? ' · con ventaja'
+              : t.modo === 'desventaja' ? ' · con desventaja' : '';
+
   var el = document.createElement('div');
   el.className = 'tirada-pop' + cls;
   el.setAttribute('role', 'status');
   el.innerHTML =
     '<div class="velo"></div><div class="ficha">' +
-      '<div class="que">' + esc(t.que) + '</div>' +
-      '<div class="tot">' + t.total + '</div>' +
-      '<div class="det">' + detalleDados(t) + '</div>' +
+      '<div class="que">' + esc(t.que) + modoTxt + '</div>' +
+      '<div class="cuenta">' +
+        '<span class="dados">' + dados + '</span>' +
+        '<span class="chips">' + chips + '</span>' +
+        '<span class="igual">=</span>' +
+        '<span class="tot">' + t.total + '</span>' +
+      '</div>' +
       (t.dado === 20 ? '<div class="nat">Natural 20</div>'
         : t.dado === 1 ? '<div class="nat">Natural 1</div>' : '') +
+      '<div class="rehacer">' +
+        '<button class="rh" data-retirar="normal">Repetir</button>' +
+        '<button class="rh" data-retirar="ventaja">Con ventaja</button>' +
+        '<button class="rh" data-retirar="desventaja">Con desventaja</button>' +
+      '</div>' +
     '</div>';
   document.body.appendChild(el);
-  clearTimeout(popT);
-  popT = setTimeout(function(){ el.remove(); }, 2600);
+
+  // Mientras tengas el puntero encima no se cierra: el cartel tiene botones.
+  var f = el.querySelector('.ficha');
+  f.addEventListener('pointerenter', function(){ clearTimeout(popT); });
+  f.addEventListener('pointerleave', function(){ programarCierre(el); });
+  programarCierre(el);
 }
 
 function paintRolls(){
@@ -3670,7 +3773,8 @@ function viewFicha(){
    ['INT','int','Inteligencia'],['SAB','sab','Sabiduría'],['CAR','car','Carisma']].forEach(function(a){
     var v = p.abilities[a[1]];
     var mod = Math.floor((v - 10) / 2);
-    h += '<button class="cell tirable" data-roll="' + mod + '" data-que="' + esc(a[2]) + '">' +
+    h += '<button class="cell tirable" data-roll="' + mod + '" data-que="' + esc(a[2]) + '"' +
+         ' data-mods="' + esc(JSON.stringify([{ v: mod, l: a[0] }])) + '">' +
          '<span class="k">' + a[0] + '</span><span class="v">' + v +
          '</span><span class="k" style="color:var(--ash)">' + num(mod) + '</span></button>';
   });
@@ -3679,7 +3783,17 @@ function viewFicha(){
   // Salvaciones y habilidades
   h += '<div class="sec"><h3 class="s">Salvaciones competentes</h3><div class="rows">';
   p.salvaciones.forEach(function(s){
-    h += '<button class="row tirable" data-roll="' + s.valor + '" data-que="Salvación de ' + esc(s.nombre) + '">' +
+    var clave = CLAVE_SALV[s.nombre];
+    var mods = [];
+    if (clave){
+      var mb = modDe(p, clave);
+      mods.push({ v: mb, l: ABR_DE[clave] });
+      if (s.valor - mb) mods.push({ v: s.valor - mb, l: 'competencia' });
+    } else {
+      mods.push({ v: s.valor, l: 'total' });
+    }
+    h += '<button class="row tirable" data-roll="' + s.valor + '" data-que="Salvación de ' + esc(s.nombre) + '"' +
+      ' data-mods="' + esc(JSON.stringify(mods)) + '">' +
       '<span class="k">' + esc(s.nombre) + '</span><span class="v">' + num(s.valor) + '</span></button>';
   });
   h += '</div></div>';
@@ -3688,7 +3802,17 @@ function viewFicha(){
     '<p class="count" style="margin:-4px 0 8px">Punto lleno = competencia · anillo = pericia</p><div class="rows">';
   p.habilidades.forEach(function(s){
     var cls = s.comp === 'exp' ? 'exp' : (s.comp ? 'on' : '');
-    h += '<button class="row tirable' + (s.comp ? '' : ' nc') + '" data-roll="' + s.valor + '" data-que="' + esc(s.nombre) + '">' +
+    var mods = [];
+    var clave = CLAVE_ABR[s.car];
+    if (clave){
+      mods.push({ v: modDe(p, clave), l: s.car });
+      var pr = s.valor - modDe(p, clave);
+      if (pr) mods.push({ v: pr, l: s.comp === 'exp' ? 'pericia' : 'competencia' });
+    } else {
+      mods.push({ v: s.valor, l: 'total' });
+    }
+    h += '<button class="row tirable' + (s.comp ? '' : ' nc') + '" data-roll="' + s.valor + '" data-que="' + esc(s.nombre) + '"' +
+      ' data-mods="' + esc(JSON.stringify(mods)) + '">' +
       '<span class="k"><i class="prof ' + cls + '"></i>' + esc(s.nombre) +
       (s.car ? '<em class="ab">' + s.car + '</em>' : '') + '</span>' +
       '<span class="v">' + num(s.valor) + '</span></button>';
@@ -4190,10 +4314,19 @@ document.addEventListener('click', function(e){
   // Con una hoja abierta no se atraviesa hacia el contenido, pero en escritorio
   // la nav queda visible al costado y tiene que seguir respondiendo.
   if (document.getElementById('sheet') && !t.closest('#sheet') &&
-      !t.closest('.tabbar') && !t.closest('.topbar')) return;
+      !t.closest('.tabbar') && !t.closest('.topbar') && !t.closest('.tirada-pop')) return;
 
   // Tiradas
-  if (t.dataset.roll !== undefined){ tirar(parseInt(t.dataset.roll, 10), t.dataset.que); return; }
+  if (t.dataset.roll !== undefined){
+    var ms = null;
+    try{ ms = JSON.parse(t.dataset.mods || 'null'); }catch(e){}
+    tirar(parseInt(t.dataset.roll, 10), t.dataset.que, ms);
+    return;
+  }
+  if (t.dataset.retirar){
+    if (ULTIMA) tirar(ULTIMA.mod, ULTIMA.que, ULTIMA.mods, t.dataset.retirar);
+    return;
+  }
   if (t.dataset.modo){ MODO = t.dataset.modo; paintRolls(); return; }
 
   // Personalidad
