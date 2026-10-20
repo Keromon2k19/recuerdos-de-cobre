@@ -481,7 +481,38 @@ details.orig summary{ font-family: var(--m); font-size: 10px; letter-spacing: .1
 details.orig .en{ font-size: 14px; color: var(--ash); margin-top: 8px; }
 details.orig .en p{ margin-bottom: 8px; }
 
-.cast{ display: flex; gap: 8px; margin: 16px 0 4px; flex-wrap: wrap; }
+/* Selector de nivel de lanzamiento */
+.nivsel{ display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
+.nivsel .lab{
+  font-family: var(--m); font-size: 9.5px; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--ash-dim);
+}
+.nivs{ display: flex; gap: 5px; flex-wrap: wrap; }
+.niv{
+  display: grid; place-items: center;
+  width: 44px; min-height: 46px; padding: 5px 0;
+  border: 1px solid var(--edge); border-radius: var(--r);
+  background: var(--ink); color: var(--ash);
+  font-family: var(--m); font-size: 15px; font-weight: 600;
+  font-variant-numeric: tabular-nums; line-height: 1.15;
+}
+.niv small{ font-size: 8.5px; font-weight: 400; color: var(--ash-dim); }
+.niv:hover{ border-color: var(--ash-dim); }
+.niv.on{ background: var(--blood-dim); border-color: var(--blood); color: #F7E2E4; }
+.niv.on small{ color: #E7BFC4; }
+.cartabtn{
+  display: block; width: 100%; margin-top: 10px;
+  padding: 11px 12px; min-height: 46px;
+  border: 1px solid var(--edge); border-radius: var(--r);
+  background: var(--ink); color: var(--ash);
+  font-family: var(--m); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase;
+}
+.cartabtn:hover:not(:disabled){ border-color: var(--warn); color: var(--warn); }
+.cartabtn.on{ background: #3B2B11; border-color: var(--warn); color: #F2E0B8; }
+.cartabtn:disabled{ opacity: .36; }
+.costenota{ font-family: var(--m); font-size: 10.5px; color: var(--ash-dim); margin-top: 5px; }
+
+.cast{ display: flex; gap: 8px; margin: 14px 0 4px; flex-wrap: wrap; }
 .cast button{
   flex: 1 1 140px;
   padding: 13px 10px;
@@ -772,7 +803,7 @@ table.dmg td:last-child, table.dmg th:last-child{ text-align: right; font-varian
 }
 .d20.descartado{ opacity: .32; }
 
-.chips{ display: grid; gap: 5px; }
+.modlist{ display: grid; gap: 5px; }
 .chipmod{
   display: flex; align-items: baseline; gap: 7px;
   background: var(--ink); border: 1px solid var(--edge-soft);
@@ -903,6 +934,9 @@ table.dmg td:last-child, table.dmg th:last-child{ text-align: right; font-varian
   .chipmod small{ font-size: 10px; }
   .igual{ font-size: 24px; }
   .rh{ font-size: 11px; padding: 10px 15px; }
+  .niv{ width: 50px; min-height: 52px; font-size: 17px; }
+  .niv small{ font-size: 9.5px; }
+  .nivsel .lab, .cartabtn, .costenota{ font-size: 11px; }
 
   /* La columna izquierda son dos filas: identidad arriba, navegación debajo. */
   .topbar{
@@ -1011,9 +1045,17 @@ table.dmg td:last-child, table.dmg th:last-child{ text-align: right; font-varian
 
   /* Hechizos: el buscador no necesita ser ancho, la lista sí. */
   main[data-tab="hechizos"] .seek,
-  main[data-tab="hechizos"] .chips,
   main[data-tab="hechizos"] h2.t,
   main[data-tab="hechizos"] .eyebrow{ max-width: 880px; }
+  /* Con puntero no hay scroll horizontal cómodo: los filtros se acomodan en
+     varias líneas y se ven todos de una. */
+  main[data-tab="hechizos"] .chips{
+    max-width: 1100px;
+    flex-wrap: wrap;
+    overflow-x: visible;
+    padding-bottom: 0;
+    margin-bottom: 8px;
+  }
   #list{ column-count: 2; column-gap: 32px; }
   #list .spell{ break-inside: avoid; }
   #list .lvlhead{ break-after: avoid; }
@@ -3629,7 +3671,7 @@ function mostrarTirada(t){
       '<div class="que">' + esc(t.que) + modoTxt + '</div>' +
       '<div class="cuenta">' +
         '<span class="dados">' + dados + '</span>' +
-        '<span class="chips">' + chips + '</span>' +
+        '<span class="modlist">' + chips + '</span>' +
         '<span class="igual">=</span>' +
         '<span class="tot">' + t.total + '</span>' +
       '</div>' +
@@ -3974,6 +4016,9 @@ function sheetHechizo(id){
   var s = null;
   for (var i = 0; i < SPELLS.length; i++) if (SPELLS[i].id === id) s = SPELLS[i];
   if (!s) return;
+  HECHIZO_ABIERTO = s;
+  NIVEL_LANZAR = Math.max(1, s.nivel);   // arranca en el mínimo del hechizo
+  CON_CARTA = false;
   var col = s.duena === 'mysha' ? 'mysha' : 'selenne';
   var h = '<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="' + esc(s.nombre) + '">';
   h += '<header><button class="back" id="closeSheet">‹ Grimorio</button></header><div class="body">';
@@ -3994,16 +4039,7 @@ function sheetHechizo(id){
   if (s.n17) h += '<div class="note"><span class="lab">A nivel 17</span>' + fmt(s.n17) + '</div>';
   if (s.aviso) h += '<div class="note bad"><span class="lab">Revisar la fuente</span>' + fmt(s.aviso) + '</div>';
 
-  if (s.nivel > 0){
-    var bm = D.bloodMagic.tabla[s.nivel - 1];
-    h += '<div class="cast">' +
-      '<button data-cast="slot" data-lv="' + s.nivel + '"' + (S.slots[s.nivel] >= D.espaciosMax[s.nivel] ? ' disabled' : '') + '>' +
-        'Gastar espacio ' + s.nivel + ' (' + (D.espaciosMax[s.nivel] - S.slots[s.nivel]) + ')</button>' +
-      '<button class="ghost" data-cast="blood" data-lv="' + s.nivel + '"' + (S.res.bloodmagic >= D.bloodMagic_max() ? ' disabled' : '') + '>' +
-        'Blood Magic · ' + bm.coste + '</button></div>';
-    h += '<p style="font-family:var(--m);font-size:10.5px;color:var(--ash-dim);margin-top:2px">' +
-      'Blood Magic: ' + bm.coste + ' PV (prom. ' + bm.promedio + ')' + (bm.agotamiento ? ' · ' + bm.agotamiento + ' de agotamiento' : ' · sin agotamiento') + '</p>';
-  }
+  if (s.nivel > 0) h += castBlock(s);
 
   h += '<div style="margin-top:20px">' + block(s.t) + '</div>';
 
@@ -4037,6 +4073,60 @@ function killSheet(){
   document.body.classList.remove('has-sheet');
 }
 function mcell(k, v){ return '<div><span class="k">' + k + '</span><span class="v">' + esc(v || '—') + '</span></div>'; }
+
+/* ══════════ Lanzar: a qué nivel y con qué se paga ══════════ */
+var NIVEL_LANZAR = 1;    // nivel que se PAGA
+var CON_CARTA = false;   // Carta de las Estrellas: resuelve un nivel más arriba
+var HECHIZO_ABIERTO = null;
+
+function castBlock(s){
+  var n = NIVEL_LANZAR;
+  var bm = D.bloodMagic.tabla[n - 1];
+  var libres = D.espaciosMax[n] - S.slots[n];
+  var sinCarta = S.res.cartaestrellas >= 1;
+  var resuelve = n + (CON_CARTA ? 1 : 0);
+
+  var h = '<div id="castblock">';
+
+  h += '<div class="nivsel"><span class="lab">Lanzar a nivel</span><span class="nivs">';
+  for (var L = s.nivel; L <= 9; L++){
+    h += '<button class="niv' + (L === n ? ' on' : '') + '" data-niv="' + L + '">' +
+         L + '<small>' + (D.espaciosMax[L] - S.slots[L]) + '</small></button>';
+  }
+  h += '</span></div>';
+
+  h += '<button class="cartabtn' + (CON_CARTA ? ' on' : '') + '" data-carta="1"' +
+       (sinCarta && !CON_CARTA ? ' disabled' : '') + '>★ Carta de las Estrellas · +1 nivel</button>';
+
+  if (CON_CARTA){
+    h += '<div class="note warn"><span class="lab">Se resuelve a nivel ' + resuelve + '</span>' +
+      'Pagás el nivel ' + n + ' pero el hechizo se resuelve como nivel ' + resuelve +
+      ', y <strong>todo su daño se convierte en fuerza</strong>. Antes de lanzar volvés del Plano Etéreo al Material. Gasta el uso de la Carta.' +
+      (resuelve === 10 ? ' Los efectos concretos de nivel 10 los decide el DM.' : '') + '</div>';
+  } else if (sinCarta){
+    h += '<p class="costenota">La Carta de las Estrellas ya está usada este descanso.</p>';
+  }
+
+  h += '<div class="cast">' +
+    '<button data-cast="slot" data-lv="' + n + '"' + (libres <= 0 ? ' disabled' : '') + '>' +
+      'Gastar espacio ' + n + ' (' + libres + ')</button>' +
+    '<button class="ghost" data-cast="blood" data-lv="' + n + '"' +
+      (S.res.bloodmagic >= D.bloodMagic_max() ? ' disabled' : '') + '>' +
+      'Blood Magic · ' + bm.coste + '</button>' +
+  '</div>';
+
+  h += '<p class="costenota">Blood Magic: ' + bm.coste + ' PV (prom. ' + bm.promedio + ')' +
+    (bm.agotamiento ? ' · ' + bm.agotamiento + ' de agotamiento' : ' · sin agotamiento') +
+    (CON_CARTA ? ' · el coste no cambia por la Carta' : '') + '</p>';
+
+  h += '</div>';
+  return h;
+}
+
+function repintarCast(){
+  var el = document.getElementById('castblock');
+  if (el && HECHIZO_ABIERTO) el.outerHTML = castBlock(HECHIZO_ABIERTO);
+}
 D.bloodMagic_max = function(){ return D.recursos.filter(function(r){ return r.id === 'bloodmagic'; })[0].max; };
 
 /* ══════════ Vista: MESA ══════════ */
@@ -4329,6 +4419,10 @@ document.addEventListener('click', function(e){
   }
   if (t.dataset.modo){ MODO = t.dataset.modo; paintRolls(); return; }
 
+  // Nivel de lanzamiento y Carta de las Estrellas
+  if (t.dataset.niv){ NIVEL_LANZAR = parseInt(t.dataset.niv, 10); later(repintarCast); return; }
+  if (t.dataset.carta){ CON_CARTA = !CON_CARTA; later(repintarCast); return; }
+
   // Personalidad
   if (t.dataset.p){ S.p = t.dataset.p; save(); later(render); return; }
 
@@ -4368,19 +4462,26 @@ document.addEventListener('click', function(e){
   // Lanzar desde la hoja
   if (t.dataset.cast){
     var lv = parseInt(t.dataset.lv, 10);
+    var usaCarta = CON_CARTA && S.res.cartaestrellas < 1;
+    var resuelveEn = lv + (usaCarta ? 1 : 0);
+    var cola = usaCarta ? ' · se resuelve a nivel ' + resuelveEn + ', daño en fuerza' : '';
+
     if (t.dataset.cast === 'slot'){
       if (S.slots[lv] < D.espaciosMax[lv]){
-        S.slots[lv]++; save();
-        toast('Espacio de nivel ' + lv + ' gastado. Quedan ' + (D.espaciosMax[lv] - S.slots[lv]) + '.');
+        S.slots[lv]++;
+        if (usaCarta) S.res.cartaestrellas = 1;
+        save();
+        toast('Espacio de nivel ' + lv + ' gastado. Quedan ' + (D.espaciosMax[lv] - S.slots[lv]) + '.' + cola);
       }
     } else {
       var b = D.bloodMagic.tabla[lv - 1];
       var r = roll(2 * lv, 8);
       if (S.res.bloodmagic < D.bloodMagic_max()) S.res.bloodmagic++;
+      if (usaCarta) S.res.cartaestrellas = 1;
       applyDamage(r);
       S.agot = clamp(S.agot + b.agotamiento, 0, 6);
       save();
-      toast('Blood Magic nivel ' + lv + ': ' + b.coste + ' = ' + r + ' PV' + (b.agotamiento ? ' · +' + b.agotamiento + ' agotamiento' : ''));
+      toast('Blood Magic nivel ' + lv + ': ' + b.coste + ' = ' + r + ' PV' + (b.agotamiento ? ' · +' + b.agotamiento + ' agotamiento' : '') + cola);
     }
     killSheet();
     paintGlance();
