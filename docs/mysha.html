@@ -692,6 +692,171 @@ table.dmg td:last-child, table.dmg th:last-child{ text-align: right; font-varian
 .port .pic .sig{ font-family: var(--d); font-size: 28px; font-weight: 600; color: var(--pc); }
 .port .who .nm{ font-family: var(--d); font-size: 22px; font-weight: 600; line-height: 1.1; }
 .port .who .rl{ font-family: var(--m); font-size: 10.5px; color: var(--ash); margin-top: 3px; line-height: 1.4; }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   ESCRITORIO
+   Misma información, otro reparto: la navegación pasa a una columna fija a
+   la izquierda, el cuerpo del texto crece, y el contenido se divide en
+   columnas en vez de estirarse hasta volverse ilegible.
+   ═══════════════════════════════════════════════════════════════════════ */
+@media (min-width: 900px){
+  .app{
+    max-width: none;
+    grid-template-columns: 272px minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
+    grid-template-areas:
+      "head main"
+      "nav  main";
+  }
+
+  /* La columna izquierda son dos filas: identidad arriba, navegación debajo. */
+  .topbar{
+    grid-area: head;
+    border-bottom: 1px solid var(--edge);
+    border-right: 1px solid var(--edge);
+    padding: 20px 18px 16px;
+    gap: 16px;
+  }
+  .tabbar{
+    grid-area: nav;
+    align-content: start;
+    grid-template-columns: 1fr;
+    gap: 2px;
+    padding: 12px;
+    border-top: none;
+    border-right: 1px solid var(--edge);
+  }
+  .tabbar button{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 13px;
+    padding: 12px 14px;
+    min-height: 48px;
+    border-top: none;
+    border-radius: var(--r);
+    margin-top: 0;
+  }
+  .tabbar svg{ width: 18px; height: 18px; }
+  .tabbar span{ font-size: 10.5px; letter-spacing: .14em; }
+  .tabbar button[aria-selected="true"]{ background: var(--ink-3); }
+  .tabbar button:hover{ background: var(--ink); }
+  .tabbar button[aria-selected="true"]:hover{ background: var(--ink-3); }
+
+  /* La vida pasa a leerse en vertical, que es donde hay lugar. */
+  .glance{ flex-direction: column; align-items: stretch; gap: 7px; }
+  .glance .flags{ max-width: none; justify-content: flex-start; }
+  .glance .hpnum b{ font-size: 15px; }
+
+  main{
+    grid-area: main;
+    padding: 34px 40px 64px;
+  }
+
+  /* Tipografía: el motivo por el que esto existe. */
+  body{ font-size: 18px; }
+  h2.t{ font-size: 31px; }
+  h3.s{ font-size: 11px; }
+  h4.sub{ font-size: 18px; }
+  .eyebrow{ font-size: 10.5px; }
+  .count{ font-size: 11.5px; }
+  .row .k, .row .v{ font-size: 17px; }
+  .row{ padding: 11px 0; }
+  .note{ font-size: 16px; }
+  .cell .v{ font-size: 24px; }
+  .cell .k{ font-size: 10px; }
+  .cell{ padding: 14px 8px; }
+  .meta .v{ font-size: 16px; }
+  .meta div{ padding: 12px 14px; }
+  .spell{ padding: 14px 15px; }
+  .spell .nm{ font-size: 20px; }
+  .spell .mt{ font-size: 13px; }
+  .acc > summary .ttl{ font-size: 19px; }
+  .acc > summary .mt{ font-size: 12px; }
+  .acc > summary{ padding: 15px 17px; }
+  .acc .in{ padding: 14px 17px 17px; }
+  details.orig .en{ font-size: 16px; }
+  .chip{ font-size: 12px; padding: 8px 14px; min-height: 36px; }
+  .cond{ font-size: 13px; padding: 11px 14px; min-height: 44px; }
+  .resrow .nm{ font-size: 16.5px; }
+  .stepper .val{ font-size: 16px; min-width: 62px; }
+  table.dmg{ font-size: 14.5px; }
+  .hpbig .num{ font-size: 58px; }
+  .ov input{ font-size: 19px; }
+  .ov label{ font-size: 10px; }
+  .seek input{ font-size: 18px; padding: 14px 0; }
+  .footlink{ font-size: 11px; }
+  .sheet header .back{ font-size: 12px; }
+  .sheet .body{ padding: 28px 36px 64px; }
+
+  /* Con puntero hay estados de hover que en el celular no tienen sentido. */
+  .spell:hover{ background: var(--ink-3); border-color: var(--edge-soft); }
+  .acc > summary:hover .ttl{ color: var(--blood-lit); }
+  .pip:hover{ border-color: var(--ash-dim); }
+  .cond:hover{ border-color: var(--ash-dim); }
+}
+
+/* Dos columnas: el contenido deja de ser una tira larguísima. */
+@media (min-width: 1400px){
+  main[data-tab="ficha"],
+  main[data-tab="mesa"],
+  main[data-tab="poderes"],
+  main[data-tab="objetos"]{
+    column-count: 2;
+    column-gap: 48px;
+  }
+  main[data-tab="ficha"] > .sec,
+  main[data-tab="mesa"] > .sec,
+  main[data-tab="poderes"] > .sec,
+  main[data-tab="objetos"] > .sec{
+    break-inside: avoid;
+    margin-bottom: 34px;
+  }
+
+  /* Hechizos: el buscador no necesita ser ancho, la lista sí. */
+  main[data-tab="hechizos"] .seek,
+  main[data-tab="hechizos"] .chips,
+  main[data-tab="hechizos"] h2.t,
+  main[data-tab="hechizos"] .eyebrow{ max-width: 880px; }
+  #list{ column-count: 2; column-gap: 32px; }
+  #list .spell{ break-inside: avoid; }
+  #list .lvlhead{ break-after: avoid; }
+  .sheet{
+    left: auto;
+    right: 0;
+    width: min(800px, 38vw);
+    border-left: 1px solid var(--edge);
+    box-shadow: -28px 0 60px rgba(0,0,0,.55);
+    animation: slide .2s cubic-bezier(.22,1,.36,1);
+  }
+  @keyframes slide{ from{ transform: translateX(26px); opacity: 0; } to{ transform: none; opacity: 1; } }
+  body.has-sheet main{ padding-right: calc(min(800px, 38vw) + 40px); }
+}
+
+/* Tres columnas en un 2K: cada columna queda en un ancho de lectura cómodo
+   en vez de una línea de texto de punta a punta del monitor. */
+@media (min-width: 1900px){
+  /* A 19px la línea de una columna cae en ~74 caracteres, dentro del rango
+     cómodo de lectura. A 18px se iba a 78. */
+  body{ font-size: 19px; }
+  .row .k, .row .v{ font-size: 18px; }
+  .note{ font-size: 17px; }
+  h2.t{ font-size: 33px; }
+
+  main[data-tab="ficha"],
+  main[data-tab="mesa"],
+  main[data-tab="poderes"],
+  main[data-tab="objetos"]{ column-count: 3; }
+  body.has-sheet main[data-tab="ficha"],
+  body.has-sheet main[data-tab="mesa"],
+  body.has-sheet main[data-tab="poderes"],
+  body.has-sheet main[data-tab="objetos"]{ column-count: 2; }
+  #list{ column-count: 3; }
+  body.has-sheet #list{ column-count: 2; }
+}
+
+@media (prefers-reduced-motion: reduce){ .sheet{ animation: none !important; } }
 </style>
 </head>
 <body>
@@ -3372,9 +3537,7 @@ function sheetInfo(){
       block(D.erratas.map(function(x){ return '- ' + x; }))) + '</div>';
 
   h += '</div></div>';
-  var wrap = document.createElement('div');
-  wrap.innerHTML = h;
-  document.body.appendChild(wrap.firstChild);
+  openSheet(h);
 }
 function cell(k, v){ return '<div class="cell"><span class="k">' + k + '</span><span class="v">' + v + '</span></div>'; }
 function acc(t, meta, inner, open){
@@ -3507,10 +3670,23 @@ function sheetHechizo(id){
   }
 
   h += '</div></div>';
-  var wrap = document.createElement('div');
-  wrap.innerHTML = h;
-  document.body.appendChild(wrap.firstChild);
+  openSheet(h);
   document.getElementById('sheet').querySelector('.body').scrollTop = 0;
+}
+
+// En el celular la hoja tapa la pantalla; en escritorio se acopla a la derecha
+// y la lista queda visible al lado. La clase en el body es lo que el CSS mira.
+function openSheet(html){
+  killSheet();
+  var wrap = document.createElement('div');
+  wrap.innerHTML = html;
+  document.body.appendChild(wrap.firstChild);
+  document.body.classList.add('has-sheet');
+}
+function killSheet(){
+  var sh = document.getElementById('sheet');
+  if (sh) sh.remove();
+  document.body.classList.remove('has-sheet');
 }
 function mcell(k, v){ return '<div><span class="k">' + k + '</span><span class="v">' + esc(v || '—') + '</span></div>'; }
 D.bloodMagic_max = function(){ return D.recursos.filter(function(r){ return r.id === 'bloodmagic'; })[0].max; };
@@ -3745,6 +3921,7 @@ function render(){
     : tab === 'poderes' ? viewPoderes()
     : viewObjetos();
   view.innerHTML = html;
+  view.dataset.tab = tab; // el CSS de escritorio arma cada pestaña distinto
   paintSwitch();
   paintTabs();
   paintGlance();
@@ -3786,14 +3963,16 @@ document.addEventListener('click', function(e){
   var t = e.target.closest('button, summary');
   if (!t) return;
 
-  // No dejar que un click atraviese hacia la app mientras hay una hoja abierta.
-  if (document.getElementById('sheet') && !t.closest('#sheet')) return;
+  // Con una hoja abierta no se atraviesa hacia el contenido, pero en escritorio
+  // la nav queda visible al costado y tiene que seguir respondiendo.
+  if (document.getElementById('sheet') && !t.closest('#sheet') &&
+      !t.closest('.tabbar') && !t.closest('.topbar')) return;
 
   // Personalidad
   if (t.dataset.p){ S.p = t.dataset.p; save(); later(render); return; }
 
   // Pestaña
-  if (t.dataset.t){ tab = t.dataset.t; later(render); return; }
+  if (t.dataset.t){ tab = t.dataset.t; killSheet(); later(render); return; }
 
   // Hechizos: filtros — solo se repinta la lista, no la vista entera.
   if (t.dataset.n !== undefined && t.classList.contains('chip')){
@@ -3823,7 +4002,7 @@ document.addEventListener('click', function(e){
   // Abrir hechizo o la referencia
   if (t.dataset.s){ sheetHechizo(t.dataset.s); return; }
   if (t.dataset.info){ sheetInfo(); return; }
-  if (t.id === 'closeSheet'){ var sh = document.getElementById('sheet'); if (sh) sh.remove(); return; }
+  if (t.id === 'closeSheet'){ killSheet(); return; }
 
   // Lanzar desde la hoja
   if (t.dataset.cast){
@@ -3842,7 +4021,7 @@ document.addEventListener('click', function(e){
       save();
       toast('Blood Magic nivel ' + lv + ': ' + b.coste + ' = ' + r + ' PV' + (b.agotamiento ? ' · +' + b.agotamiento + ' agotamiento' : ''));
     }
-    var sh2 = document.getElementById('sheet'); if (sh2) sh2.remove();
+    killSheet();
     paintGlance();
     if (tab === 'mesa') later(rerender);
     return;
@@ -3932,7 +4111,7 @@ function stat0(k){
 }
 
 document.addEventListener('keydown', function(e){
-  if (e.key === 'Escape'){ var sh = document.getElementById('sheet'); if (sh) sh.remove(); }
+  if (e.key === 'Escape'){ killSheet(); }
 });
 
 /* ══════════ Arranque ══════════ */
