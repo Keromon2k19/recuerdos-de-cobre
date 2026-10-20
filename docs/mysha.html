@@ -723,6 +723,46 @@ table.dmg td:last-child, table.dmg th:last-child{ text-align: right; font-varian
 .row.tirable:hover, .cell.tirable:hover{ background: var(--ink-3); }
 .row.tirable:active, .cell.tirable:active{ background: var(--edge-soft); }
 
+/* Resultado al centro de la pantalla */
+.tirada-pop{
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  pointer-events: none;       /* nunca se interpone entre vos y la ficha */
+  animation: pop .18s cubic-bezier(.22, 1, .36, 1);
+}
+.tirada-pop .velo{
+  position: absolute; inset: 0;
+  background: radial-gradient(55% 45% at 50% 50%, rgba(0,0,0,.86), rgba(0,0,0,.55) 62%, rgba(0,0,0,.18));
+}
+.tirada-pop .ficha{
+  position: relative;
+  background: var(--ink-3);   /* un nivel por encima de todo lo demás */
+  border: 1px solid var(--edge);
+  border-radius: 5px;
+  padding: 26px 40px 24px;
+  min-width: 250px;
+  text-align: center;
+  box-shadow: 0 26px 70px rgba(0,0,0,.72);
+}
+.tirada-pop .que{
+  font-family: var(--m); font-size: 11px; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--ash);
+}
+.tirada-pop .tot{
+  font-family: var(--m); font-size: 82px; font-weight: 600;
+  line-height: 1; letter-spacing: -.03em;
+  font-variant-numeric: tabular-nums;
+  margin: 12px 0 8px;
+}
+.tirada-pop .det{ font-family: var(--m); font-size: 12.5px; color: var(--ash-dim); }
+.tirada-pop .nat{ font-family: var(--d); font-size: 16px; font-weight: 600; margin-top: 11px; }
+.tirada-pop.crit .tot, .tirada-pop.crit .nat{ color: var(--ok); }
+.tirada-pop.pif .tot, .tirada-pop.pif .nat{ color: var(--danger); }
+@keyframes pop{ from{ transform: scale(.94); opacity: 0; } to{ transform: none; opacity: 1; } }
+
 .rolls{
   position: fixed;
   left: 0; right: 0;
@@ -801,6 +841,13 @@ table.dmg td:last-child, table.dmg th:last-child{ text-align: right; font-varian
   }
   .rolllog{ display: block; }
   .rm{ font-size: 10px; }
+
+  /* En pantalla grande el resultado se ve desde el otro lado de la mesa. */
+  .tirada-pop .ficha{ padding: 38px 64px 34px; min-width: 360px; border-radius: 6px; }
+  .tirada-pop .tot{ font-size: 128px; margin: 16px 0 10px; }
+  .tirada-pop .que{ font-size: 13px; }
+  .tirada-pop .det{ font-size: 15px; }
+  .tirada-pop .nat{ font-size: 21px; }
 
   /* La columna izquierda son dos filas: identidad arriba, navegación debajo. */
   .topbar{
@@ -949,7 +996,9 @@ table.dmg td:last-child, table.dmg th:last-child{ text-align: right; font-varian
   body.has-sheet #list{ column-count: 2; }
 }
 
-@media (prefers-reduced-motion: reduce){ .sheet{ animation: none !important; } }
+@media (prefers-reduced-motion: reduce){
+  .sheet, .tirada-pop{ animation: none !important; }
+}
 </style>
 </head>
 <body>
@@ -3463,10 +3512,39 @@ function tirar(mod, que){
   var a = d20(), b = null, dado = a;
   if (MODO === 'ventaja'){ b = d20(); dado = Math.max(a, b); }
   else if (MODO === 'desventaja'){ b = d20(); dado = Math.min(a, b); }
-  TIRADAS.unshift({ que: que, mod: mod, a: a, b: b, dado: dado, total: dado + mod, modo: MODO });
+  var t = { que: que, mod: mod, a: a, b: b, dado: dado, total: dado + mod, modo: MODO };
+  TIRADAS.unshift(t);
   if (TIRADAS.length > 8) TIRADAS.pop();
   paintRolls();
-  toast(que + ' · ' + (dado + mod) + (dado === 20 ? '  ¡natural 20!' : dado === 1 ? '  natural 1' : ''));
+  mostrarTirada(t);
+}
+
+// El resultado se lee de lejos, en el centro. No bloquea nada: podés encadenar
+// tiradas sin cerrarlo, porque cada una reemplaza a la anterior.
+var popT = null;
+function detalleDados(t){
+  return (t.b === null ? 'd20 ' + t.dado
+    : (t.modo === 'ventaja' ? 'máx' : 'mín') + ' de ' + t.a + ' y ' + t.b) +
+    ' ' + (t.mod >= 0 ? '+' : '−') + ' ' + Math.abs(t.mod);
+}
+function mostrarTirada(t){
+  var old = document.querySelector('.tirada-pop');
+  if (old) old.remove();
+  var cls = t.dado === 20 ? ' crit' : (t.dado === 1 ? ' pif' : '');
+  var el = document.createElement('div');
+  el.className = 'tirada-pop' + cls;
+  el.setAttribute('role', 'status');
+  el.innerHTML =
+    '<div class="velo"></div><div class="ficha">' +
+      '<div class="que">' + esc(t.que) + '</div>' +
+      '<div class="tot">' + t.total + '</div>' +
+      '<div class="det">' + detalleDados(t) + '</div>' +
+      (t.dado === 20 ? '<div class="nat">Natural 20</div>'
+        : t.dado === 1 ? '<div class="nat">Natural 1</div>' : '') +
+    '</div>';
+  document.body.appendChild(el);
+  clearTimeout(popT);
+  popT = setTimeout(function(){ el.remove(); }, 2600);
 }
 
 function paintRolls(){
